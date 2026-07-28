@@ -30,14 +30,13 @@ body:
         > [Existing Architecture Proposals](https://feanus.github.io/archspace/web).
         > 
         > - Enter the parent Issue number in the format `#123`.
-        > - Enter `None` only when proposing a root architecture.
     
   - type: input
     id: base_architecture_issue
     attributes:
       label: Parent issue
-      description: Enter an Architecture Proposal issue number such as `#123`, or `None` for the root architecture.
-      placeholder: "Example: #123 or None"
+      description: Enter an Architecture Proposal issue number such as `#123`.
+      placeholder: "Example: #123"
     validations:
       required: true
 
