@@ -27,7 +27,7 @@ body:
       value: |
         > [!IMPORTANT]
         > Select the parent from the
-        > [Existing Architecture Proposals](https://feanus.github.io/archspace/web).
+        > [Existing Architecture Proposals](https://archspace.live).
         > 
         > - Enter the parent Issue number in the format `#123`.
     
