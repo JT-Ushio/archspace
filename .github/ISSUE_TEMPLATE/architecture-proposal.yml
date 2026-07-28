@@ -1,0 +1,92 @@
+name: 🏗️ Architecture proposal
+description: Propose and validate one change to the LLM architecture.
+title: "[ARCH-PROP] "
+labels:
+  - architecture proposal
+  - under review
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # Architecture proposal
+
+        Use this form to propose one architecture change. Keep the proposal focused and submit unrelated changes separately.
+        
+  - type: input
+    id: proposal_name
+    attributes:
+      label: Architecture Name
+      description: Provide a short, descriptive name for the proposed architecture or modification.
+      placeholder: "Example: OLMo3"
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        > [!IMPORTANT]
+        > Select the parent from the
+        > [Existing Architecture Proposals](https://feanus.github.io/archspace/web).
+        > 
+        > - Enter the parent Issue number in the format `#123`.
+        > - Enter `None` only when proposing a root architecture.
+    
+  - type: input
+    id: base_architecture_issue
+    attributes:
+      label: Parent issue
+      description: Enter an Architecture Proposal issue number such as `#123`, or `None` for the root architecture.
+      placeholder: "Example: #123 or None"
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem_and_hypothesis
+    attributes:
+      label: Motivations
+      description: Explain the problem and why it matters, identify the limitation or gap in the base architecture, and state the hypothesis or insight motivating this proposal.
+      placeholder: Describe the problem, its significance, the architectural gap, and the hypothesis behind this proposal.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed_change
+    attributes:
+      label: Proposed Architecture
+      description: Describe the proposed architecture and how it differs from the base architecture. Specify what changes and the expected impact.
+      placeholder: Define the architecture change, its relationship to the base architecture.
+    validations:
+      required: true
+
+  - type: textarea
+    id: existing_results
+    attributes:
+      label: Preliminary Results (if any)
+      description: Summarize relevant prior work and any existing experiments, prototypes, analyses, or observations that support or challenge the proposal.
+      placeholder: Cite related work(s) and summarize any available evidence, experimental results, comparisons, and limitations.
+    validations:
+      required: false
+
+  - type: textarea
+    id: validation_plan
+    attributes:
+      label: Experiments Plan
+      description: Define how the proposal will be evaluated, including research questions, baselines, datasets or tasks, metrics, ablations, and evaluation protocol. Specify measurable success criteria and compute or data requirements.
+      placeholder: Describe the experiments, comparisons, metrics, ablations, success criteria, and required resources.
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+
+        Maintainers review the proposal before implementation starts:
+
+        - `under review`: waiting for a maintainer decision
+        - `in-progress`: approved for implementation
+        - `declined`: rejected or deferred; the Issue is closed
+        - `verified`: a linked implementation PR was merged; the Issue is closed
+
+        Status labels are mutually exclusive and maintained by repository automation.
