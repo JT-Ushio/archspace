@@ -1,8 +1,13 @@
-> **Architecture Proposal (issue #)**: 
-<!-- Link to the corresponding Architecture Proposal issue -->
-<!-- Example: #123 -->
+### Architecture Proposal
 
-## Implementation Details:
+<!-- [!IMPORTANT]
+Link to the corresponding proposal from the existing Architecture Proposals (https://archspace.live).
+Enter the Issue number here, eg. `#123`.
+-->
+
+
+
+### Implementation Details
 <!-- Describe the implemented architecture modification.
 Include:
 - Modified components
@@ -11,25 +16,24 @@ Include:
 - Any deviations from the original proposal
 -->
 
-## Experimental Validation:
+### Experimental Validation
 
 #### Research Question 1
 
 <!-- What hypothesis does this experiment aim to validate? -->
-*Hypothesis:* 
+*Hypothesis*: 
 
 <!-- Analyze experimental results.
 Explain observations, comparisons, and potential reasons.
 -->
-*Results & Analysis:* 
+*Results & Analysis*: 
 
 <!-- Summarize the findings for this research question -->
-*Findings:* 
+*Findings*: 
 
 <!-- Add more research questions if needed -->
 
-
-## Archive:
+### Archive
 
 <!-- Example: https://wandb.ai/.../reports/... -->
 - WandB Report (include training and evaluation logs): 
@@ -39,7 +43,7 @@ Explain observations, comparisons, and potential reasons.
 
 ---
 
-## Reviewer Assessment (for repo reviewers):
+### Reviewer Assessment (for repo reviewers)
 <!-- Repository reviewers provide an overall assessment of the implementation and experimental validation.
 Examples:
 - The implementation is correct and the experimental results support the proposed architecture.

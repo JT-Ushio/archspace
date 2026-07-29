@@ -21,15 +21,6 @@ body:
       placeholder: "Example: OLMo3"
     validations:
       required: true
-
-  - type: markdown
-    attributes:
-      value: |
-        > [!IMPORTANT]
-        > Select the parent from the
-        > [Existing Architecture Proposals](https://archspace.live).
-        > 
-        > - Enter the parent Issue number in the format `#123`.
     
   - type: input
     id: base_architecture_issue
@@ -40,12 +31,17 @@ body:
     validations:
       required: true
 
+  - type: markdown
+    attributes:
+      value: |
+        > [!IMPORTANT]
+        > Select the parent issue from [Existing Architecture Proposals](https://archspace.live).
+
   - type: textarea
     id: problem_and_hypothesis
     attributes:
       label: Motivations
       description: Explain the problem and why it matters, identify the limitation or gap in the base architecture, and state the hypothesis or insight motivating this proposal.
-      placeholder: Describe the problem, its significance, the architectural gap, and the hypothesis behind this proposal.
     validations:
       required: true
 
@@ -54,7 +50,6 @@ body:
     attributes:
       label: Proposed Architecture
       description: Describe the proposed architecture and how it differs from the base architecture. Specify what changes and the expected impact.
-      placeholder: Define the architecture change, its relationship to the base architecture.
     validations:
       required: true
 
@@ -62,8 +57,7 @@ body:
     id: existing_results
     attributes:
       label: Preliminary Results (if any)
-      description: Summarize relevant prior work and any existing experiments, prototypes, analyses, or observations that support or challenge the proposal.
-      placeholder: Cite related work(s) and summarize any available evidence, experimental results, comparisons, and limitations.
+      description: Summarize or cite any preliminary results of the proposed architecture with existing experiments, prototypes, analyses, or observations that support or challenge the proposal.
     validations:
       required: false
 
@@ -72,7 +66,6 @@ body:
     attributes:
       label: Experiments Plan
       description: Define how the proposal will be evaluated, including research questions, baselines, datasets or tasks, metrics, ablations, and evaluation protocol. Specify measurable success criteria and compute or data requirements.
-      placeholder: Describe the experiments, comparisons, metrics, ablations, success criteria, and required resources.
     validations:
       required: true
 
