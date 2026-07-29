@@ -17,7 +17,7 @@
     </p>
 </h4>
 <h3 align="center">
-    <p>Turning every architecture exploration into reusable knowledge for the field</p>
+    <p>Turning LLM architecture exploration into reusable knowledge for the community. 🌳</p>
 </h3>
 
 ArchSpace is an open experiment for large language model (LLM) architecture innovation. We place architecture hypotheses proposed by the community into transparent, traceable, and reproducible training and evaluation workflows, then turn successful findings, negative results, and design trade-offs into shared knowledge assets.
