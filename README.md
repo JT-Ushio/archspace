@@ -1,4 +1,4 @@
-<h1 align="center">ArchSpace</h1>
+<h1 align="center"><img src=".assets/ArchSpace.svg" alt="ArchSpace" height="80" /></h1>
 <p align="center">
     <a href="https://www.archspace.live/">
         <img alt="Website" src="https://img.shields.io/badge/website-online-brightgreen">
@@ -42,7 +42,7 @@ You can participate in ArchSpace by:
 2. Contributing implementations, tests, evaluations, or documentation for approved proposals.
 3. Sending pull requests with incremental implementations and experiment updates.
 4. Help reproduce results, verify implementation correctness, and discuss public experiment results.
-⭐ Accepted proposals may receive joint appointment or internship collaboration opportunities from the lab.
+   ⭐ Accepted proposals may receive joint appointment or internship collaboration opportunities from the lab.
 
 🏆 Point architecture innovations adopted by the next-generation InternLM architecture will receive open-source contribution recognition from the lab and the community.
 

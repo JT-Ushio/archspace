@@ -1,4 +1,4 @@
-<h1 align="center">ArchSpace</h1>
+<h1 align="center"><img src=".assets/ArchSpace.svg" alt="ArchSpace" height="80" /></h1>
 <p align="center">
     <a href="https://www.archspace.live/">
         <img alt="Website" src="https://img.shields.io/badge/website-online-brightgreen">
@@ -66,4 +66,3 @@ ArchSpace 是一个面向大语言模型（LLM）架构创新的开放实验。�
 - [Next Concept Prediction in Discrete Latent Space Leads to Stronger Language Models](https://arxiv.org/abs/2602.08984)
 - [Olmo 3](https://arxiv.org/abs/2512.13961)
 - [习近平在 2026 世界人工智能大会暨人工智能全球治理高级别会议开幕式上的主旨讲话](https://www.news.cn/politics/leaders/20260717/72728b6f94154d63b3eaaaf9808b51eb/c.html)
-
