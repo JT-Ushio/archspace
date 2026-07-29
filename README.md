@@ -17,7 +17,7 @@
     </p>
 </h4>
 <h3 align="center">
-    <p>Turning LLM architecture exploration into reusable knowledge for the community. 🌳</p>
+    <p>🌳 Turning LLM architecture exploration into reusable knowledge for the community. 🌳</p>
 </h3>
 
 ArchSpace is an open experiment for large language model (LLM) architecture innovation. We place architecture hypotheses proposed by the community into transparent, traceable, and reproducible training and evaluation workflows, then turn successful findings, negative results, and design trade-offs into shared knowledge assets.
@@ -42,7 +42,8 @@ You can participate in ArchSpace by:
 2. Contributing implementations, tests, evaluations, or documentation for approved proposals.
 3. Sending pull requests with incremental implementations and experiment updates.
 4. Help reproduce results, verify implementation correctness, and discuss public experiment results.
-   ⭐ Accepted proposals may receive joint appointment or internship collaboration opportunities from the lab.
+
+⭐ Accepted proposals may receive joint appointment or internship collaboration opportunities from the lab.
 
 🏆 Point architecture innovations adopted by the next-generation InternLM architecture will receive open-source contribution recognition from the lab and the community.
 
