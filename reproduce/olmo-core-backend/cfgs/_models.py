@@ -29,11 +29,12 @@ def build_mla(tokenizer: TokenizerConfig, norm_type: MLANormType) -> Transformer
         TransformerConfig.olmo3_1B(
             vocab_size=tokenizer.padded_vocab_size(),
             attn_backend=AttentionBackendName.flash_3,
+            head_dim=192,
         ),
         q_lora_rank=512,
         kv_lora_rank=256,
         rope_dim=64,
-        head_dim=192,
+        value_head_dim=128,
         norm_type=norm_type,
         return_max_logits=True,
         log_max_logits_per_head=True,

@@ -102,12 +102,19 @@ train/block 00/attention max logit
 train/attention max logit
 ```
 
-The supplied configs enable `WandBCallback`. Set `WANDB_API_KEY`, and optionally override:
+The supplied configs enable `MaxLogitsWandBCallback`. Set `WANDB_API_KEY`, and optionally override:
 
 ```bash
 --trainer.callbacks.wandb.project=my-project \
 --trainer.callbacks.wandb.entity=my-entity \
 --trainer.callbacks.wandb.group=my-group
+```
+
+Max-logit metrics are uploaded every 100 training steps by default while all other W&B metrics
+retain their original cadence. Override the max-logit interval independently with:
+
+```bash
+--trainer.callbacks.wandb.max_logits_log_interval=500
 ```
 
 To disable the 1,024 per-head W&B series while retaining layer/model summaries:
@@ -120,8 +127,8 @@ To disable the 1,024 per-head W&B series while retaining layer/model summaries:
 --model.block.sequence_mixer.log_max_logits_per_head=false
 ```
 
-`metrics_collect_interval` batches metric communication but W&B still receives values for every
-training step.
+`metrics_collect_interval` batches metric communication but does not control W&B cadence. Filtering
+the W&B metrics does not skip the max-logit kernel output or distributed metric reduction.
 
 ## Server Installation
 

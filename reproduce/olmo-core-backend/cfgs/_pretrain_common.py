@@ -22,13 +22,13 @@ from olmo_core.train.callbacks import (
     DownstreamEvaluatorCallbackConfig,
     LMEvaluatorCallbackConfig,
     MonkeyPatcherCallback,
-    WandBCallback,
 )
 from olmo_core.train.train_module import (
     TransformerDataParallelConfig,
     TransformerDataParallelWrappingStrategy,
     TransformerTrainModuleConfig,
 )
+from olmo_mla_morphnorm import MaxLogitsWandBCallback
 
 DEFAULT_SEQUENCE_LENGTH = 4096
 GLOBAL_BATCH_SIZE = 4096 * 512  # ~4M tokens
@@ -111,13 +111,14 @@ def build_pretrain_config(
         )
         .with_callback(
             "wandb",
-            WandBCallback(
+            MaxLogitsWandBCallback(
                 name=opts.name,
                 entity="archspace",
                 project="MorphNorm",
                 group="olmo3-1b-mla-baseline",
                 cancel_tags=[],
                 enabled=True,
+                max_logits_log_interval=100,
             ),
         )
         .with_callback("config_saver", ConfigSaverCallback())
