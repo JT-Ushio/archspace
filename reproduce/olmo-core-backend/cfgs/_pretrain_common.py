@@ -34,7 +34,7 @@ from olmo_mose import SerializableMuonConfig
 
 DEFAULT_SEQUENCE_LENGTH = 4096
 GLOBAL_BATCH_SIZE = 4096 * 512  # ~2M tokens
-LR = 3e-2
+LR = 5e-3
 EVAL_LM_STEPS = 500
 EVAL_DOWN_STEPS = 12_500
 N_BATCH_PER_GPU = 4
@@ -96,7 +96,7 @@ def build_pretrain_config(
         ),
         float8_config=Float8Config(enabled=False),
         z_loss_multiplier=1e-5,
-        max_grad_norm=None,
+        max_grad_norm=1.0,
     )
     trainer_config = (
         TrainerConfig(
@@ -113,7 +113,7 @@ def build_pretrain_config(
                 save_interval=2500,
                 ephemeral_save_interval=None,
                 max_checkpoints=1,
-                save_async=False,
+                save_async=True,
             ),
         )
         .with_callback(
