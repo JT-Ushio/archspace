@@ -22,6 +22,7 @@ def build_mose_olmo3_1b(
     tokenizer: TokenizerConfig,
     control: SwiGLUChannelControl,
     *,
+    mose_start_layer: int = 0,
     r1: int = 880,
     r2: int = 880,
     down_r1: int = 880,
@@ -35,6 +36,7 @@ def build_mose_olmo3_1b(
     return patch_mose_swiglu(
         config,
         control=control,
+        mose_start_layer=mose_start_layer,
         r1=r1,
         r2=r2,
         down_r1=down_r1,

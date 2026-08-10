@@ -18,7 +18,22 @@ CFGS_DIR = Path(__file__).parents[1] / "cfgs"
 sys.path.insert(0, str(CFGS_DIR))
 
 from _models import build_mose_olmo3_1b, build_olmo3_1b  # noqa: E402
-from _pretrain_common import N_BATCH_PER_GPU, build_pretrain_config  # noqa: E402
+from _pretrain_common import (  # noqa: E402
+    N_BATCH_PER_GPU,
+    build_pretrain_config,
+    get_mose_cli_parser,
+)
+
+
+def test_mose_cli_parser_accepts_start_layer() -> None:
+    opts = get_mose_cli_parser().parse_args(
+        [
+            "--save-folder=/tmp/checkpoints",
+            "--mose-start-layer=2",
+        ]
+    )
+
+    assert opts.mose_start_layer == 2
 
 
 def test_experiment_config_round_trips(tmp_path: Path) -> None:

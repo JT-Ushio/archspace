@@ -259,6 +259,21 @@ The nonlinear expert functions can be overridden independently from any MoSE ent
 --model.block.feed_forward.down_nonlinearity=silu
 ```
 
+By default, MoSE starts at zero-based layer 0, so every transformer layer uses it. Set
+`--mose-start-layer` on any MoSE entry point to leave the earlier layers dense while retaining the
+same channel control (standard control uses native SwiGLU). For example, this keeps layers 0 and 1
+dense and enables MoSE from layer 2 onward:
+
+```bash
+torchrun --nproc-per-node=8 \
+  cfgs/OLMo3-1B-stage1-mose-asymmetric-rational-clip.py \
+  --mose-start-layer=2 \
+  --save-folder=/path/to/checkpoints/mose-from-layer-2 \
+  --work-dir=/path/to/work/mose-from-layer-2 \
+  --data-root=/path/to/tokenized-data \
+  --name=olmo3-1b-mose-from-layer-2
+```
+
 `--data-root` must provide the layouts required by `OLMo_mix_0625_150Bsample` and
 `v3_small_ppl_validation`. For an initial server smoke test without external logging or evaluation:
 
