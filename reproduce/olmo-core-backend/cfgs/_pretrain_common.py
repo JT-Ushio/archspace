@@ -37,7 +37,7 @@ GLOBAL_BATCH_SIZE = 4096 * 512  # ~2M tokens
 LR = 5e-3
 EVAL_LM_STEPS = 500
 EVAL_DOWN_STEPS = 12_500
-N_BATCH_PER_GPU = 4
+N_BATCH_PER_GPU = 16
 
 ModelBuilder = Callable[[TokenizerConfig], TransformerConfig]
 
