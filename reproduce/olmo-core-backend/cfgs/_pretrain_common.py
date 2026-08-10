@@ -61,7 +61,7 @@ def build_pretrain_config(
         )
     if GLOBAL_BATCH_SIZE % rank_microbatch_size != 0:
         raise OLMoConfigurationError(
-            "global batch size must be divisible by 4 * sequence_length"
+            f"global batch size must be divisible by {N_BATCH_PER_GPU} * sequence_length"
         )
     tokenizer_config = TokenizerConfig.dolma2()
 

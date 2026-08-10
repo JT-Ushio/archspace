@@ -74,11 +74,20 @@ Gate and up share each low-dimensional U projection, then use independent V proj
 
 ```python
 linear_latent = linear_u(x)
-nonlinear_latent = F.silu(nonlinear_u(x))
+nonlinear_latent = nonlinear_u(x)
 
-gate = gate_linear_v(linear_latent) + gate_nonlinear_v(nonlinear_latent)
-up = up_linear_v(linear_latent) + up_nonlinear_v(nonlinear_latent)
+gate = gate_linear_v(linear_latent) + gate_nonlinear_v(
+    apply_nonlinearity(nonlinear_latent, gate_nonlinearity)
+)
+up = up_linear_v(linear_latent) + up_nonlinear_v(
+    apply_nonlinearity(nonlinear_latent, up_nonlinearity)
+)
 ```
+
+`gate_nonlinearity`, `up_nonlinearity`, and `down_nonlinearity` are independently configurable as
+`silu` or parameter-free `rms_norm`. All three default to `silu`, preserving the
+original behavior and checkpoint topology. RMSNorm is evaluated over the final latent dimension
+with `eps=1e-5`, using FP32 math for FP16/BF16 inputs.
 
 The selected SiTU or Asymmetric RationalClip function is applied after the two experts have been
 summed into the final gate and up channels. The fixed `4.0/25.0` constants and FP32 control math are
@@ -88,7 +97,9 @@ The down projection uses the corresponding two-expert sum when either down rank 
 
 ```python
 out = down_linear_v(down_linear_u(hidden))
-out += down_nonlinear_v(F.silu(down_nonlinear_u(hidden)))
+out += down_nonlinear_v(
+    apply_nonlinearity(down_nonlinear_u(hidden), down_nonlinearity)
+)
 ```
 
 If both down ranks are zero, it instead uses one dense `w_down` projection. All four ranks are
@@ -102,8 +113,11 @@ down_r2 = 880
 ```
 
 At the defaults, OLMo3-1B has `1,487,013,888` parameters, compared with `1,484,916,736` for the
-native model. Every U/V projection uses OLMo's deterministic `InitMethod.normal` truncated-normal
-initialization with `std=0.02`.
+native model. Each low-rank approximation uses `R = r1 + r2` (and
+`R = down_r1 + down_r2` for down). OLMo's deterministic `InitMethod.normal` initializes both the
+linear and nonlinear U factors with `TruncNormal(0, 0.02)`, and all corresponding V factors with
+`TruncNormal(0, 1 / sqrt(R))`, so the corresponding summed U/V matrix has target standard
+deviation `0.02`. A dense `w_down` fallback continues to use `TruncNormal(0, 0.02)`.
 
 ## Ablations
 
@@ -112,6 +126,7 @@ initialization with `std=0.02`.
 | `OLMo3-1B-stage1-baseline.py` | native | standard SwiGLU | 1,484,916,736 |
 | `OLMo3-1B-stage1-situ.py` | native | SiTU | 1,484,916,736 |
 | `OLMo3-1B-stage1-asymmetric-rational-clip.py` | native | Asymmetric RationalClip | 1,484,916,736 |
+| `OLMo3-1B-stage1-mose-rmsnorm-silu.py` | MoSE, RMSNorm gate/up + SiLU down | standard SwiGLU | 1,487,013,888 |
 | `OLMo3-1B-stage1-mose-situ.py` | MoSE | SiTU | 1,487,013,888 |
 | `OLMo3-1B-stage1-mose-asymmetric-rational-clip.py` | MoSE | Asymmetric RationalClip | 1,487,013,888 |
 
@@ -124,7 +139,7 @@ src/olmo_mose/optim.py         serializable Muon parameter-group integration
 src/olmo_mose/patch.py         non-mutating TransformerConfig patches
 cfgs/_models.py                official OLMo3-1B model builders
 cfgs/_pretrain_common.py       shared 150B-sample Muon recipe
-cfgs/OLMo3-1B-stage1-*.py      five ablation entry points
+cfgs/OLMo3-1B-stage1-*.py      six ablation entry points
 tests/                         CPU formula, config, and integration tests
 ```
 
@@ -178,7 +193,7 @@ PyTorch to be present and must be built with `--no-build-isolation`.
 
 ## Training
 
-Run these commands from `/path/to/archspace/reproduce/olmo-core-backend`. The five entry points
+Run these commands from `/path/to/archspace/reproduce/olmo-core-backend`. The six entry points
 share the same tokenizer, data recipe, Muon settings, batch size, evaluator callbacks, and W&B
 project.
 
@@ -205,6 +220,13 @@ torchrun --nproc-per-node=8 \
   --name=olmo3-1b-asymmetric-rational-clip
 
 torchrun --nproc-per-node=8 \
+  cfgs/OLMo3-1B-stage1-mose-rmsnorm-silu.py \
+  --save-folder=/path/to/checkpoints/mose-rmsnorm-silu \
+  --work-dir=/path/to/work/mose-rmsnorm-silu \
+  --data-root=/path/to/tokenized-data \
+  --name=olmo3-1b-mose-rmsnorm-silu
+
+torchrun --nproc-per-node=8 \
   cfgs/OLMo3-1B-stage1-mose-situ.py \
   --save-folder=/path/to/checkpoints/mose-situ \
   --work-dir=/path/to/work/mose-situ \
@@ -229,11 +251,19 @@ dense down projection:
 --model.block.feed_forward.down_r2=0
 ```
 
+The nonlinear expert functions can be overridden independently from any MoSE entry point:
+
+```bash
+--model.block.feed_forward.gate_nonlinearity=rms_norm \
+--model.block.feed_forward.up_nonlinearity=rms_norm \
+--model.block.feed_forward.down_nonlinearity=silu
+```
+
 `--data-root` must provide the layouts required by `OLMo_mix_0625_150Bsample` and
 `v3_small_ppl_validation`. For an initial server smoke test without external logging or evaluation:
 
 `--sequence-length` must be positive, divide `max(4096, sequence_length)`, and produce a
-`4 * sequence_length` rank microbatch that divides the global token batch. The per-rank microbatch
+`16 * sequence_length` rank microbatch that divides the global token batch. The per-rank microbatch
 token count scales with the selected sequence length.
 
 ```bash

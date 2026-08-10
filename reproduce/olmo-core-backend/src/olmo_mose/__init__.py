@@ -1,6 +1,7 @@
 from .feed_forward import (
     ChannelControlledFeedForward,
     ChannelControlledFeedForwardConfig,
+    MoSENonlinearity,
     MoSESwiGLU,
     MoSESwiGLUConfig,
     SwiGLUChannelControl,
@@ -14,6 +15,7 @@ install_runtime_hooks()
 __all__ = [
     "ChannelControlledFeedForward",
     "ChannelControlledFeedForwardConfig",
+    "MoSENonlinearity",
     "MoSESwiGLU",
     "MoSESwiGLUConfig",
     "SerializableMuonConfig",

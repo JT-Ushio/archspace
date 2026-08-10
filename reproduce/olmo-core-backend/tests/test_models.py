@@ -10,6 +10,7 @@ from olmo_core.nn.feed_forward import FeedForwardConfig
 from olmo_core.nn.transformer import TransformerConfig
 from olmo_mose import (
     ChannelControlledFeedForwardConfig,
+    MoSENonlinearity,
     MoSESwiGLU,
     MoSESwiGLUConfig,
     SerializableMuonConfig,
@@ -115,6 +116,9 @@ def test_mose_rank_and_control_overrides_round_trip() -> None:
             "block.feed_forward.down_r1=16",
             "block.feed_forward.down_r2=0",
             "block.feed_forward.control=asymmetric_rational_clip",
+            "block.feed_forward.gate_nonlinearity=rms_norm",
+            "block.feed_forward.up_nonlinearity=silu",
+            "block.feed_forward.down_nonlinearity=rms_norm",
         ]
     )
     feed_forward = overridden.block.feed_forward
@@ -123,6 +127,26 @@ def test_mose_rank_and_control_overrides_round_trip() -> None:
     assert (feed_forward.r1, feed_forward.r2) == (64, 32)
     assert (feed_forward.down_r1, feed_forward.down_r2) == (16, 0)
     assert feed_forward.control == SwiGLUChannelControl.asymmetric_rational_clip
+    assert feed_forward.gate_nonlinearity == MoSENonlinearity.rms_norm
+    assert feed_forward.up_nonlinearity == MoSENonlinearity.silu
+    assert feed_forward.down_nonlinearity == MoSENonlinearity.rms_norm
+
+
+def test_mose_rmsnorm_silu_baseline_reaches_model_config() -> None:
+    config = build_mose_olmo3_1b(
+        _Tokenizer(),
+        SwiGLUChannelControl.standard,
+        gate_nonlinearity=MoSENonlinearity.rms_norm,
+        up_nonlinearity=MoSENonlinearity.rms_norm,
+        down_nonlinearity=MoSENonlinearity.silu,
+    )
+    feed_forward = config.block.feed_forward
+
+    assert isinstance(feed_forward, MoSESwiGLUConfig)
+    assert feed_forward.control == SwiGLUChannelControl.standard
+    assert feed_forward.gate_nonlinearity == MoSENonlinearity.rms_norm
+    assert feed_forward.up_nonlinearity == MoSENonlinearity.rms_norm
+    assert feed_forward.down_nonlinearity == MoSENonlinearity.silu
 
 
 def test_native_control_patch_rejects_mose_topology() -> None:

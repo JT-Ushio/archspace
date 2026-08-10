@@ -8,6 +8,7 @@ from olmo_core.exceptions import OLMoConfigurationError
 from olmo_core.script_utils import ExperimentConfig
 from olmo_mose import (
     ChannelControlledFeedForwardConfig,
+    MoSENonlinearity,
     MoSESwiGLUConfig,
     SwiGLUChannelControl,
 )
@@ -17,7 +18,7 @@ CFGS_DIR = Path(__file__).parents[1] / "cfgs"
 sys.path.insert(0, str(CFGS_DIR))
 
 from _models import build_mose_olmo3_1b, build_olmo3_1b  # noqa: E402
-from _pretrain_common import build_pretrain_config  # noqa: E402
+from _pretrain_common import N_BATCH_PER_GPU, build_pretrain_config  # noqa: E402
 
 
 def test_experiment_config_round_trips(tmp_path: Path) -> None:
@@ -58,6 +59,9 @@ def test_mose_experiment_config_round_trips_rank_overrides(tmp_path: Path) -> No
             "model.block.feed_forward.r2=32",
             "model.block.feed_forward.down_r1=16",
             "model.block.feed_forward.down_r2=0",
+            "model.block.feed_forward.gate_nonlinearity=rms_norm",
+            "model.block.feed_forward.up_nonlinearity=rms_norm",
+            "model.block.feed_forward.down_nonlinearity=silu",
         ],
         lambda tokenizer: build_mose_olmo3_1b(
             tokenizer,
@@ -73,6 +77,9 @@ def test_mose_experiment_config_round_trips_rank_overrides(tmp_path: Path) -> No
     assert (feed_forward.r1, feed_forward.r2) == (64, 32)
     assert (feed_forward.down_r1, feed_forward.down_r2) == (16, 0)
     assert feed_forward.control == SwiGLUChannelControl.asymmetric_rational_clip
+    assert feed_forward.gate_nonlinearity == MoSENonlinearity.rms_norm
+    assert feed_forward.up_nonlinearity == MoSENonlinearity.rms_norm
+    assert feed_forward.down_nonlinearity == MoSENonlinearity.silu
 
 
 def test_sequence_length_updates_rank_microbatch_size(tmp_path: Path) -> None:
@@ -91,7 +98,7 @@ def test_sequence_length_updates_rank_microbatch_size(tmp_path: Path) -> None:
         variant="baseline",
     )
 
-    assert config.train_module.rank_microbatch_size == 4 * 8192
+    assert config.train_module.rank_microbatch_size == N_BATCH_PER_GPU * 8192
 
 
 @pytest.mark.parametrize("sequence_length", [0, 3072, 12_288])

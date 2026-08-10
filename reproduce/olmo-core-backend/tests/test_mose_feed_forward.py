@@ -1,9 +1,33 @@
+import math
+
 import pytest
 import torch
 import torch.nn.functional as F
 
 from olmo_core.exceptions import OLMoConfigurationError
-from olmo_mose import MoSESwiGLU, MoSESwiGLUConfig, SwiGLUChannelControl
+from olmo_core.nn.transformer.init import InitMethod
+from olmo_mose import (
+    MoSENonlinearity,
+    MoSESwiGLU,
+    MoSESwiGLUConfig,
+    SwiGLUChannelControl,
+)
+from olmo_mose import hooks
+
+
+def _apply_nonlinearity(
+    x: torch.Tensor,
+    nonlinearity: MoSENonlinearity,
+) -> torch.Tensor:
+    if nonlinearity == MoSENonlinearity.silu:
+        return F.silu(x)
+    if nonlinearity == MoSENonlinearity.rms_norm:
+        input_dtype = x.dtype
+        if input_dtype in (torch.float16, torch.bfloat16):
+            x = x.float()
+        variance = x.square().mean(dim=-1, keepdim=True)
+        return (x * torch.rsqrt(variance + 1e-5)).to(input_dtype)
+    raise NotImplementedError(nonlinearity)
 
 
 def _controlled_hidden(
@@ -32,9 +56,13 @@ def _reference_forward(module: MoSESwiGLU, x: torch.Tensor) -> torch.Tensor:
         gate = module.gate_linear_v(latent)
         up = module.up_linear_v(latent)
     if module.nonlinear_u is not None:
-        latent = F.silu(module.nonlinear_u(x))
-        nonlinear_gate = module.gate_nonlinear_v(latent)
-        nonlinear_up = module.up_nonlinear_v(latent)
+        latent = module.nonlinear_u(x)
+        nonlinear_gate = module.gate_nonlinear_v(
+            _apply_nonlinearity(latent, module.gate_nonlinearity)
+        )
+        nonlinear_up = module.up_nonlinear_v(
+            _apply_nonlinearity(latent, module.up_nonlinearity)
+        )
         gate = nonlinear_gate if gate is None else gate + nonlinear_gate
         up = nonlinear_up if up is None else up + nonlinear_up
 
@@ -51,7 +79,12 @@ def _reference_forward(module: MoSESwiGLU, x: torch.Tensor) -> torch.Tensor:
     if module.down_linear_u is not None:
         out = module.down_linear_v(module.down_linear_u(hidden))
     if module.down_nonlinear_u is not None:
-        nonlinear_out = module.down_nonlinear_v(F.silu(module.down_nonlinear_u(hidden)))
+        nonlinear_out = module.down_nonlinear_v(
+            _apply_nonlinearity(
+                module.down_nonlinear_u(hidden),
+                module.down_nonlinearity,
+            )
+        )
         out = nonlinear_out if out is None else out + nonlinear_out
     assert out is not None
     if module.down_bias is not None:
@@ -84,6 +117,37 @@ def test_mose_forward_matches_reference(
         module.up_bias.fill_(-0.5)
         if module.down_bias is not None:
             module.down_bias.fill_(0.75)
+    x = torch.randn(2, 3, 4, dtype=torch.float64)
+
+    torch.testing.assert_close(module(x), _reference_forward(module, x))
+
+
+@pytest.mark.parametrize(
+    ("gate_nonlinearity", "up_nonlinearity", "down_nonlinearity"),
+    [
+        (MoSENonlinearity.silu, MoSENonlinearity.rms_norm, MoSENonlinearity.rms_norm),
+        (MoSENonlinearity.rms_norm, MoSENonlinearity.rms_norm, MoSENonlinearity.silu),
+    ],
+)
+def test_mose_configurable_nonlinearities_match_reference(
+    gate_nonlinearity: MoSENonlinearity,
+    up_nonlinearity: MoSENonlinearity,
+    down_nonlinearity: MoSENonlinearity,
+) -> None:
+    torch.manual_seed(11)
+    module = MoSESwiGLU(
+        d_model=4,
+        hidden_size=7,
+        r1=3,
+        r2=2,
+        down_r1=3,
+        down_r2=2,
+        dtype=torch.float64,
+        control=SwiGLUChannelControl.standard,
+        gate_nonlinearity=gate_nonlinearity,
+        up_nonlinearity=up_nonlinearity,
+        down_nonlinearity=down_nonlinearity,
+    )
     x = torch.randn(2, 3, 4, dtype=torch.float64)
 
     torch.testing.assert_close(module(x), _reference_forward(module, x))
@@ -156,6 +220,53 @@ def test_mose_default_rank_and_checkpoint_keys() -> None:
         "down_nonlinear_u.weight",
         "down_nonlinear_v.weight",
     }
+
+
+def test_mose_defaults_preserve_silu_nonlinearities() -> None:
+    config = MoSESwiGLUConfig(hidden_size=16)
+
+    assert config.gate_nonlinearity == MoSENonlinearity.silu
+    assert config.up_nonlinearity == MoSENonlinearity.silu
+    assert config.down_nonlinearity == MoSENonlinearity.silu
+
+
+def test_mose_initializes_uv_factors_for_target_matrix_std(monkeypatch) -> None:
+    module = MoSESwiGLU(
+        d_model=4,
+        hidden_size=7,
+        r1=3,
+        r2=2,
+        down_r1=4,
+        down_r2=3,
+    )
+    calls = {}
+
+    def record_init(projection, *, std, generator):
+        del generator
+        calls[id(projection)] = std
+
+    monkeypatch.setattr(hooks, "init_linear", record_init)
+    InitMethod.normal.init_feed_forward(
+        module,
+        d_model=4,
+        block_idx=0,
+        num_blocks=1,
+        std=0.02,
+    )
+
+    for projection in (module.linear_u, module.nonlinear_u):
+        assert calls[id(projection)] == 0.02
+    for projection in (
+        module.gate_linear_v,
+        module.up_linear_v,
+        module.gate_nonlinear_v,
+        module.up_nonlinear_v,
+    ):
+        assert calls[id(projection)] == pytest.approx(1.0 / math.sqrt(5))
+    for projection in (module.down_linear_u, module.down_nonlinear_u):
+        assert calls[id(projection)] == 0.02
+    for projection in (module.down_linear_v, module.down_nonlinear_v):
+        assert calls[id(projection)] == pytest.approx(1.0 / math.sqrt(7))
 
 
 def test_mose_controls_share_checkpoint_topology() -> None:

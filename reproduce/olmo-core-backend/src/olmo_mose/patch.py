@@ -4,6 +4,7 @@ from olmo_core.nn.transformer import TransformerBlockConfig, TransformerConfig
 
 from .feed_forward import (
     ChannelControlledFeedForwardConfig,
+    MoSENonlinearity,
     MoSESwiGLUConfig,
     SwiGLUChannelControl,
 )
@@ -101,9 +102,15 @@ def patch_mose_swiglu(
     r2: int = 880,
     down_r1: int = 880,
     down_r2: int = 880,
+    gate_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
+    up_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
+    down_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
 ) -> TransformerConfig:
     """Return a copy of an OLMo config using MoSE-SwiGLU in every dense block."""
     control = SwiGLUChannelControl(control)
+    gate_nonlinearity = MoSENonlinearity(gate_nonlinearity)
+    up_nonlinearity = MoSENonlinearity(up_nonlinearity)
+    down_nonlinearity = MoSENonlinearity(down_nonlinearity)
     patched = config.copy()
 
     def patch_block(block: TransformerBlockConfig) -> None:
@@ -129,6 +136,9 @@ def patch_mose_swiglu(
             down_r1=down_r1,
             down_r2=down_r2,
             control=control,
+            gate_nonlinearity=gate_nonlinearity,
+            up_nonlinearity=up_nonlinearity,
+            down_nonlinearity=down_nonlinearity,
         )
 
     if isinstance(patched.block, dict):

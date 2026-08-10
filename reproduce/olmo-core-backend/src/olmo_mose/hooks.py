@@ -1,4 +1,5 @@
 import functools
+import math
 from typing import Optional
 
 import torch
@@ -42,8 +43,36 @@ def install_runtime_hooks() -> None:
             raise OLMoConfigurationError(
                 "MoSE-SwiGLU currently supports only OLMo InitMethod.normal"
             )
-        for projection in module.projection_modules():
-            init_linear(projection, std=std, generator=generator)
+        # The linear and nonlinear experts jointly span R = r1 + r2, so both
+        # kinds of U use the requested matrix std while every corresponding V
+        # uses 1 / sqrt(R).
+        gate_up_v_std = 1.0 / math.sqrt(module.r1 + module.r2)
+        projection_stds = (
+            (module.linear_u, std),
+            (module.gate_linear_v, gate_up_v_std),
+            (module.up_linear_v, gate_up_v_std),
+            (module.nonlinear_u, std),
+            (module.gate_nonlinear_v, gate_up_v_std),
+            (module.up_nonlinear_v, gate_up_v_std),
+        )
+        for projection, projection_std in projection_stds:
+            if projection is not None:
+                init_linear(projection, std=projection_std, generator=generator)
+
+        if module.down_is_mose:
+            down_v_std = 1.0 / math.sqrt(module.down_r1 + module.down_r2)
+            down_projection_stds = (
+                (module.down_linear_u, std),
+                (module.down_linear_v, down_v_std),
+                (module.down_nonlinear_u, std),
+                (module.down_nonlinear_v, down_v_std),
+            )
+            for projection, projection_std in down_projection_stds:
+                if projection is not None:
+                    init_linear(projection, std=projection_std, generator=generator)
+        else:
+            assert module.w_down is not None
+            init_linear(module.w_down, std=std, generator=generator)
         for bias in (module.gate_bias, module.up_bias, module.down_bias):
             if bias is not None:
                 nn.init.zeros_(bias)

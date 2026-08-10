@@ -25,6 +25,30 @@ class SwiGLUChannelControl(StrEnum):
     asymmetric_rational_clip = "asymmetric_rational_clip"
 
 
+class MoSENonlinearity(StrEnum):
+    """Parameter-free function applied to a MoSE nonlinear U projection."""
+
+    silu = "silu"
+    rms_norm = "rms_norm"
+
+
+def _apply_mose_nonlinearity(
+    x: torch.Tensor,
+    nonlinearity: MoSENonlinearity,
+) -> torch.Tensor:
+    if nonlinearity == MoSENonlinearity.silu:
+        return F.silu(x)
+    if nonlinearity == MoSENonlinearity.rms_norm:
+        # Keep this parameter-free so changing the function does not alter the
+        # model size or checkpoint topology.
+        input_dtype = x.dtype
+        if input_dtype in (torch.float16, torch.bfloat16):
+            x = x.float()
+        variance = x.square().mean(dim=-1, keepdim=True)
+        return (x * torch.rsqrt(variance + 1e-5)).to(input_dtype)
+    raise NotImplementedError(nonlinearity)
+
+
 def _rational_clip(x: torch.Tensor, beta: float) -> torch.Tensor:
     """Evaluate ``x * rsqrt(1 + (x / beta)^2)`` without overflow."""
     abs_x = x.abs()
@@ -178,11 +202,17 @@ class MoSESwiGLUConfig(FeedForwardConfig):
     down_r1: int = 880
     down_r2: int = 880
     control: SwiGLUChannelControl = SwiGLUChannelControl.situ
+    gate_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu
+    up_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu
+    down_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu
 
     def __post_init__(self) -> None:
         self.name = FeedForwardType(self.name)
         self.activation = ActivationFunction(self.activation)
         self.control = SwiGLUChannelControl(self.control)
+        self.gate_nonlinearity = MoSENonlinearity(self.gate_nonlinearity)
+        self.up_nonlinearity = MoSENonlinearity(self.up_nonlinearity)
+        self.down_nonlinearity = MoSENonlinearity(self.down_nonlinearity)
 
         if self.name != FeedForwardType.default:
             raise OLMoConfigurationError(
@@ -248,6 +278,9 @@ class MoSESwiGLU(nn.Module):
         init_device: str = "cpu",
         activation: ActivationFunction = ActivationFunction.silu,
         control: SwiGLUChannelControl = SwiGLUChannelControl.situ,
+        gate_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
+        up_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
+        down_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
     ):
         super().__init__()
         activation = ActivationFunction(activation)
@@ -262,6 +295,9 @@ class MoSESwiGLU(nn.Module):
         self.down_r1 = down_r1
         self.down_r2 = down_r2
         self.control = SwiGLUChannelControl(control)
+        self.gate_nonlinearity = MoSENonlinearity(gate_nonlinearity)
+        self.up_nonlinearity = MoSENonlinearity(up_nonlinearity)
+        self.down_nonlinearity = MoSENonlinearity(down_nonlinearity)
         self.beta_gate = 4.0
         self.beta_up = 25.0
 
@@ -361,10 +397,21 @@ class MoSESwiGLU(nn.Module):
             up = self.up_linear_v(linear_latent)
 
         if self.nonlinear_u is not None:
-            nonlinear_latent = F.silu(self.nonlinear_u(x))
+            nonlinear_latent = self.nonlinear_u(x)
+            gate_nonlinear_latent = _apply_mose_nonlinearity(
+                nonlinear_latent,
+                self.gate_nonlinearity,
+            )
+            if self.up_nonlinearity == self.gate_nonlinearity:
+                up_nonlinear_latent = gate_nonlinear_latent
+            else:
+                up_nonlinear_latent = _apply_mose_nonlinearity(
+                    nonlinear_latent,
+                    self.up_nonlinearity,
+                )
             assert self.gate_nonlinear_v is not None and self.up_nonlinear_v is not None
-            gate_nonlinear = self.gate_nonlinear_v(nonlinear_latent)
-            up_nonlinear = self.up_nonlinear_v(nonlinear_latent)
+            gate_nonlinear = self.gate_nonlinear_v(gate_nonlinear_latent)
+            up_nonlinear = self.up_nonlinear_v(up_nonlinear_latent)
             gate = gate_nonlinear if gate is None else gate + gate_nonlinear
             up = up_nonlinear if up is None else up + up_nonlinear
 
@@ -391,7 +438,11 @@ class MoSESwiGLU(nn.Module):
             out = self.down_linear_v(self.down_linear_u(hidden))
         if self.down_nonlinear_u is not None:
             assert self.down_nonlinear_v is not None
-            nonlinear_out = self.down_nonlinear_v(F.silu(self.down_nonlinear_u(hidden)))
+            down_nonlinear_latent = _apply_mose_nonlinearity(
+                self.down_nonlinear_u(hidden),
+                self.down_nonlinearity,
+            )
+            nonlinear_out = self.down_nonlinear_v(down_nonlinear_latent)
             out = nonlinear_out if out is None else out + nonlinear_out
 
         assert out is not None
