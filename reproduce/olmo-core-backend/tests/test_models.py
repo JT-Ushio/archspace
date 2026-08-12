@@ -19,3 +19,4 @@ def test_mla_model_uses_separate_qk_and_value_head_dimensions() -> None:
 
     assert isinstance(attention, MLAAttentionConfig)
     assert attention._resolved_dims(config.d_model) == (192, 128, 16, 128)
+    assert attention.use_ckv_layer_residual is False

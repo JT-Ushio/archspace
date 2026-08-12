@@ -62,6 +62,19 @@ authoritative whenever `rope_dim > 0`.
 `norm_type=baseline` means the **MLA baseline**. The true standard-attention OLMo baseline has its
 own config below.
 
+### Cross-Layer cKV Residual
+
+Set `use_ckv_layer_residual=true` to pass the unnormalized KV latent between transformer layers:
+
+```text
+raw_ckv_i = w_kv_a_i(x_i)[:kv_lora_rank] + raw_ckv_(i-1)
+normalized_ckv_i = kv_a_layernorm_i(raw_ckv_i)
+```
+
+Layer 0 omits the addition. The default is `false`, and the option adds no parameters or checkpoint
+keys. It currently targets OLMo's reordered-norm blocks used by the supplied configs; pipeline
+parallelism is rejected because OLMo's pipeline-stage interface does not carry `raw_ckv`.
+
 The reference removal flags map to:
 
 ```text
@@ -243,6 +256,7 @@ Additional MLA overrides include:
 --model.block.sequence_mixer.rope_dim=0
 --model.block.sequence_mixer.use_q_a_layernorm=false
 --model.block.sequence_mixer.use_kv_a_layernorm=false
+--model.block.sequence_mixer.use_ckv_layer_residual=true
 --model.block.sequence_mixer.q_lora_rank=1536
 --model.block.sequence_mixer.kv_lora_rank=512
 ```

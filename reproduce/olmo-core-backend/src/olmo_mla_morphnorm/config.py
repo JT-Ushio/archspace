@@ -23,6 +23,7 @@ class MLAAttentionConfig(AttentionConfig):
     norm_type: MLANormType = MLANormType.morphnorm
     use_q_a_layernorm: bool = True
     use_kv_a_layernorm: Optional[bool] = None
+    use_ckv_layer_residual: bool = False
     morphnorm_eps: float = 1e-6
     morphnorm_update_stats: bool = True
     softmax_scale: Optional[float] = None
@@ -160,6 +161,7 @@ class MLAAttentionConfig(AttentionConfig):
             norm_type=self.norm_type,
             use_q_a_layernorm=self.use_q_a_layernorm,
             use_kv_a_layernorm=self._use_kv_a_layernorm(),
+            use_ckv_layer_residual=self.use_ckv_layer_residual,
             norm_config=self.qk_norm,
             rope=rope,
             dropout=self.dropout or 0.0,

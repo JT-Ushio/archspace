@@ -51,6 +51,7 @@ class MLAAttention(Attention):
         norm_type: MLANormType,
         use_q_a_layernorm: bool,
         use_kv_a_layernorm: bool,
+        use_ckv_layer_residual: bool = False,
         norm_config: Optional[LayerNormConfig],
         rope: Optional[RoPEConfig],
         dropout: float,
@@ -79,6 +80,7 @@ class MLAAttention(Attention):
         self.norm_type = MLANormType(norm_type)
         self.use_q_a_layernorm = use_q_a_layernorm
         self.use_kv_a_layernorm = use_kv_a_layernorm
+        self.use_ckv_layer_residual = use_ckv_layer_residual
         self.morphnorm_eps = morphnorm_eps
         self.morphnorm_update_stats = morphnorm_update_stats
         self.dropout = dropout
@@ -251,8 +253,8 @@ class MLAAttention(Attention):
         return rms(x, eps)
 
     def _project(
-        self, x: torch.Tensor
-    ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
+        self, x: torch.Tensor, prev_raw_ckv: Optional[torch.Tensor] = None
+    ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
         batch_size, seq_len, _ = x.shape
         if self.w_q is not None:
             q = self.w_q(x)
@@ -268,13 +270,32 @@ class MLAAttention(Attention):
         q_nope, q_rope = q.split((self.nope_dim, self.rope_dim), dim=-1)
 
         compressed_kv = self.w_kv_a(x)
-        latent, k_rope = compressed_kv.split((self.kv_lora_rank, self.rope_dim), dim=-1)
+        raw_ckv, k_rope = compressed_kv.split((self.kv_lora_rank, self.rope_dim), dim=-1)
+        if self.use_ckv_layer_residual and prev_raw_ckv is not None:
+            if raw_ckv.shape != prev_raw_ckv.shape:
+                raise ValueError(
+                    "Cross-layer cKV residual shape mismatch: "
+                    f"current={tuple(raw_ckv.shape)}, previous={tuple(prev_raw_ckv.shape)}"
+                )
+            if raw_ckv.dtype != prev_raw_ckv.dtype:
+                raise ValueError(
+                    "Cross-layer cKV residual dtype mismatch: "
+                    f"current={raw_ckv.dtype}, previous={prev_raw_ckv.dtype}"
+                )
+            if raw_ckv.device != prev_raw_ckv.device:
+                raise ValueError(
+                    "Cross-layer cKV residual device mismatch: "
+                    f"current={raw_ckv.device}, previous={prev_raw_ckv.device}"
+                )
+            raw_ckv = raw_ckv + prev_raw_ckv
+
+        normalized_ckv = raw_ckv
         if self.kv_a_layernorm is not None:
-            latent = self.kv_a_layernorm(latent)
+            normalized_ckv = self.kv_a_layernorm(raw_ckv)
         k_rope = k_rope.view(batch_size, seq_len, 1, self.rope_dim)
         if self.k_rope_norm is not None:
             k_rope = self.k_rope_norm(k_rope)
-        return q_nope, q_rope, latent, k_rope
+        return q_nope, q_rope, normalized_ckv, k_rope, raw_ckv
 
     def _apply_rope_components(
         self,
@@ -325,7 +346,8 @@ class MLAAttention(Attention):
         pos_cos: Optional[torch.Tensor] = None,
         freqs_cis: Optional[torch.Tensor] = None,
         cache_leftpad: Optional[torch.Tensor] = None,
-    ) -> torch.Tensor:
+        prev_raw_ckv: Optional[torch.Tensor] = None,
+    ) -> torch.Tensor | Tuple[torch.Tensor, torch.Tensor]:
         """Apply MLA to an input of shape ``[batch, sequence, d_model]``."""
         batch_size, seq_len, _ = x.shape
         if self.kv_cache_manager is not None and self.cp_enabled:
@@ -346,13 +368,13 @@ class MLAAttention(Attention):
                 "Packed-document/context-parallel inputs are not supported with cache"
             )
 
-        q_nope, q_rope, latent, k_rope = self._project(x)
+        q_nope, q_rope, normalized_ckv, k_rope, raw_ckv = self._project(x, prev_raw_ckv)
         if self.kv_cache_manager is not None:
-            self.kv_cache_manager.ensure_compatible(latent)
+            self.kv_cache_manager.ensure_compatible(normalized_ckv)
             self.kv_cache_manager.record_leftpad(cache_leftpad)
 
         if self.kv_cache_manager is not None and self.kv_cache_manager.has_data:
-            _, value_latent = self._prepare_cache_latents(latent)
+            _, value_latent = self._prepare_cache_latents(normalized_ckv)
             q_rope, k_rope = self._apply_rope_components(
                 q_rope,
                 k_rope,
@@ -364,7 +386,7 @@ class MLAAttention(Attention):
             latent_cache, rope_cache = self.kv_cache_manager.append(value_latent, k_rope.squeeze(2))
             output = mqa_attention(self, q_nope, q_rope, latent_cache, rope_cache)
         else:
-            k_nope, value, _, value_latent = self._materialize_kv(latent)
+            k_nope, value, _, value_latent = self._materialize_kv(normalized_ckv)
             if self.norm_type == MLANormType.standard_qk_norm:
                 assert self.k_norm is not None
                 expanded_k_rope = k_rope.expand(-1, -1, self.n_kv_heads, -1)
@@ -405,7 +427,10 @@ class MLAAttention(Attention):
             if self.kv_cache_manager is not None:
                 self.kv_cache_manager.append(value_latent, cache_rope_key.squeeze(2))
 
-        return self.w_out(output.reshape(batch_size, seq_len, -1))
+        attention_output = self.w_out(output.reshape(batch_size, seq_len, -1))
+        if self.use_ckv_layer_residual:
+            return attention_output, raw_ckv
+        return attention_output
 
     def init_kv_cache_manager(self, batch_size: int, max_seq_len: int) -> None:
         """Initialize the compressed single-head MLA inference cache."""
