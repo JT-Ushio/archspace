@@ -85,9 +85,13 @@ up = up_linear_v(linear_latent) + up_nonlinear_v(
 ```
 
 `gate_nonlinearity`, `up_nonlinearity`, and `down_nonlinearity` are independently configurable as
-`silu` or parameter-free `rms_norm`. All three default to `silu`, preserving the
-original behavior and checkpoint topology. RMSNorm is evaluated over the final latent dimension
-with `eps=1e-5`, using FP32 math for FP16/BF16 inputs.
+`silu` or `rms_norm`. All three default to `silu`. RMSNorm is evaluated over the final latent
+dimension with `eps=1e-5`, using FP32 math for FP16/BF16 inputs. Gate and up share one RMSNorm over
+the `r2` representation, while down has a separate RMSNorm over `down_r2`.
+
+`rms_norm_learnable_weight` controls the RMSNorm affine weight. It defaults to `false`, preserving
+the existing parameter count and checkpoint keys. When enabled, gate/up share one learnable gamma
+of size `r2`, and down gets another gamma of size `down_r2` when its nonlinearity is RMSNorm.
 
 The selected SiTU or Asymmetric RationalClip function is applied after the two experts have been
 summed into the final gate and up channels. The fixed `4.0/25.0` constants and FP32 control math are
@@ -146,12 +150,13 @@ tests/                         CPU formula, config, and integration tests
 Native SiTU and RationalClip checkpoints are strictly compatible with the native baseline. MoSE
 checkpoints use semantic U/V parameter names and are not compatible with native `w1/w2/w3`
 checkpoints. MoSE checkpoints are strictly compatible across controls only when all four ranks and
-the down topology match.
+the down topology match, and when their learnable RMSNorm-weight topology is identical.
 
 OLMo's built-in Hugging Face converter does not encode either custom channel-control function and
-does not map MoSE U/V weights. Do not use it for these checkpoints: native controlled checkpoints
-would be exported as ordinary SwiGLU, while MoSE conversion fails on unmapped keys. A dedicated HF
-architecture and converter are required later for publication.
+does not map MoSE U/V weights or the optional nonlinear RMSNorm weights. Do not use it for these
+checkpoints: native controlled checkpoints would be exported as ordinary SwiGLU, while MoSE
+conversion fails on unmapped keys. A dedicated HF architecture and converter are required later
+for publication.
 
 The supplied recipe uses HSDP, and every two-dimensional U/V weight is assigned to Muon. MoSE
 tensor parallelism is intentionally rejected because its two-stage shared projections require a
@@ -259,19 +264,27 @@ The nonlinear expert functions can be overridden independently from any MoSE ent
 --model.block.feed_forward.down_nonlinearity=silu
 ```
 
-By default, MoSE starts at zero-based layer 0, so every transformer layer uses it. Set
-`--mose-start-layer` on any MoSE entry point to leave the earlier layers dense while retaining the
-same channel control (standard control uses native SwiGLU). For example, this keeps layers 0 and 1
-dense and enables MoSE from layer 2 onward:
+Enable learnable RMSNorm gamma weights with:
+
+```bash
+--model.block.feed_forward.rms_norm_learnable_weight=true
+```
+
+MoSE uses the zero-based half-open layer range `[mose_start_layer, mose_end_layer)`. Start defaults
+to 0 and end defaults to the model's layer count, so every layer uses MoSE by default. Layers
+outside the range remain dense while retaining the same channel control (standard control uses
+native SwiGLU). For a 16-layer model, the following keeps layers 0 and 1 dense, enables MoSE for
+layers 2 through 14, and leaves index 15 (the 16th layer) dense:
 
 ```bash
 torchrun --nproc-per-node=8 \
   cfgs/OLMo3-1B-stage1-mose-asymmetric-rational-clip.py \
   --mose-start-layer=2 \
-  --save-folder=/path/to/checkpoints/mose-from-layer-2 \
-  --work-dir=/path/to/work/mose-from-layer-2 \
+  --mose-end-layer=15 \
+  --save-folder=/path/to/checkpoints/mose-layers-2-14 \
+  --work-dir=/path/to/work/mose-layers-2-14 \
   --data-root=/path/to/tokenized-data \
-  --name=olmo3-1b-mose-from-layer-2
+  --name=olmo3-1b-mose-layers-2-14
 ```
 
 `--data-root` must provide the layouts required by `OLMo_mix_0625_150Bsample` and

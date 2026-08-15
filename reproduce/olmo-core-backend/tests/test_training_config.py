@@ -25,15 +25,17 @@ from _pretrain_common import (  # noqa: E402
 )
 
 
-def test_mose_cli_parser_accepts_start_layer() -> None:
+def test_mose_cli_parser_accepts_layer_range() -> None:
     opts = get_mose_cli_parser().parse_args(
         [
             "--save-folder=/tmp/checkpoints",
             "--mose-start-layer=2",
+            "--mose-end-layer=15",
         ]
     )
 
     assert opts.mose_start_layer == 2
+    assert opts.mose_end_layer == 15
 
 
 def test_experiment_config_round_trips(tmp_path: Path) -> None:
@@ -77,6 +79,7 @@ def test_mose_experiment_config_round_trips_rank_overrides(tmp_path: Path) -> No
             "model.block.feed_forward.gate_nonlinearity=rms_norm",
             "model.block.feed_forward.up_nonlinearity=rms_norm",
             "model.block.feed_forward.down_nonlinearity=silu",
+            "model.block.feed_forward.rms_norm_learnable_weight=true",
         ],
         lambda tokenizer: build_mose_olmo3_1b(
             tokenizer,
@@ -95,6 +98,7 @@ def test_mose_experiment_config_round_trips_rank_overrides(tmp_path: Path) -> No
     assert feed_forward.gate_nonlinearity == MoSENonlinearity.rms_norm
     assert feed_forward.up_nonlinearity == MoSENonlinearity.rms_norm
     assert feed_forward.down_nonlinearity == MoSENonlinearity.silu
+    assert feed_forward.rms_norm_learnable_weight is True
 
 
 def test_sequence_length_updates_rank_microbatch_size(tmp_path: Path) -> None:

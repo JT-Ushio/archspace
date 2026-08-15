@@ -1,3 +1,5 @@
+from typing import Optional
+
 from olmo_core.data import TokenizerConfig
 from olmo_core.nn.transformer import TransformerConfig
 
@@ -23,6 +25,7 @@ def build_mose_olmo3_1b(
     control: SwiGLUChannelControl,
     *,
     mose_start_layer: int = 0,
+    mose_end_layer: Optional[int] = None,
     r1: int = 880,
     r2: int = 880,
     down_r1: int = 880,
@@ -30,6 +33,7 @@ def build_mose_olmo3_1b(
     gate_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
     up_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
     down_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
+    rms_norm_learnable_weight: bool = False,
 ) -> TransformerConfig:
     """Build OLMo3-1B with configurable MoSE-SwiGLU projections."""
     config = TransformerConfig.olmo3_1B(vocab_size=tokenizer.padded_vocab_size())
@@ -37,6 +41,7 @@ def build_mose_olmo3_1b(
         config,
         control=control,
         mose_start_layer=mose_start_layer,
+        mose_end_layer=mose_end_layer,
         r1=r1,
         r2=r2,
         down_r1=down_r1,
@@ -44,4 +49,5 @@ def build_mose_olmo3_1b(
         gate_nonlinearity=gate_nonlinearity,
         up_nonlinearity=up_nonlinearity,
         down_nonlinearity=down_nonlinearity,
+        rms_norm_learnable_weight=rms_norm_learnable_weight,
     )

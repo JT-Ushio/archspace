@@ -15,6 +15,7 @@ from olmo_core.nn.feed_forward import (
     FeedForwardConfig,
     FeedForwardType,
 )
+from olmo_core.nn.layer_norm import RMSNorm
 
 
 class SwiGLUChannelControl(StrEnum):
@@ -26,7 +27,7 @@ class SwiGLUChannelControl(StrEnum):
 
 
 class MoSENonlinearity(StrEnum):
-    """Parameter-free function applied to a MoSE nonlinear U projection."""
+    """Function applied to a MoSE nonlinear U projection."""
 
     silu = "silu"
     rms_norm = "rms_norm"
@@ -35,17 +36,15 @@ class MoSENonlinearity(StrEnum):
 def _apply_mose_nonlinearity(
     x: torch.Tensor,
     nonlinearity: MoSENonlinearity,
+    *,
+    rms_norm: Optional[RMSNorm] = None,
 ) -> torch.Tensor:
     if nonlinearity == MoSENonlinearity.silu:
         return F.silu(x)
     if nonlinearity == MoSENonlinearity.rms_norm:
-        # Keep this parameter-free so changing the function does not alter the
-        # model size or checkpoint topology.
-        input_dtype = x.dtype
-        if input_dtype in (torch.float16, torch.bfloat16):
-            x = x.float()
-        variance = x.square().mean(dim=-1, keepdim=True)
-        return (x * torch.rsqrt(variance + 1e-5)).to(input_dtype)
+        if rms_norm is None:
+            raise RuntimeError("RMSNorm nonlinearity requires an RMSNorm module")
+        return rms_norm(x)
     raise NotImplementedError(nonlinearity)
 
 
@@ -205,6 +204,7 @@ class MoSESwiGLUConfig(FeedForwardConfig):
     gate_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu
     up_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu
     down_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu
+    rms_norm_learnable_weight: bool = False
 
     def __post_init__(self) -> None:
         self.name = FeedForwardType(self.name)
@@ -213,6 +213,8 @@ class MoSESwiGLUConfig(FeedForwardConfig):
         self.gate_nonlinearity = MoSENonlinearity(self.gate_nonlinearity)
         self.up_nonlinearity = MoSENonlinearity(self.up_nonlinearity)
         self.down_nonlinearity = MoSENonlinearity(self.down_nonlinearity)
+        if not isinstance(self.rms_norm_learnable_weight, bool):
+            raise OLMoConfigurationError("rms_norm_learnable_weight must be a boolean")
 
         if self.name != FeedForwardType.default:
             raise OLMoConfigurationError(
@@ -236,6 +238,14 @@ class MoSESwiGLUConfig(FeedForwardConfig):
             params += (self.down_r1 + self.down_r2) * (hidden_size + d_model)
         if self.bias:
             params += d_model
+        if self.rms_norm_learnable_weight:
+            if self.r2 > 0 and MoSENonlinearity.rms_norm in (
+                self.gate_nonlinearity,
+                self.up_nonlinearity,
+            ):
+                params += self.r2
+            if self.down_r2 > 0 and self.down_nonlinearity == MoSENonlinearity.rms_norm:
+                params += self.down_r2
         return params
 
     def build(
@@ -281,6 +291,7 @@ class MoSESwiGLU(nn.Module):
         gate_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
         up_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
         down_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
+        rms_norm_learnable_weight: bool = False,
     ):
         super().__init__()
         activation = ActivationFunction(activation)
@@ -298,6 +309,9 @@ class MoSESwiGLU(nn.Module):
         self.gate_nonlinearity = MoSENonlinearity(gate_nonlinearity)
         self.up_nonlinearity = MoSENonlinearity(up_nonlinearity)
         self.down_nonlinearity = MoSENonlinearity(down_nonlinearity)
+        if not isinstance(rms_norm_learnable_weight, bool):
+            raise OLMoConfigurationError("rms_norm_learnable_weight must be a boolean")
+        self.rms_norm_learnable_weight = rms_norm_learnable_weight
         self.beta_gate = 4.0
         self.beta_up = 25.0
 
@@ -316,10 +330,25 @@ class MoSESwiGLU(nn.Module):
             self.nonlinear_u = nn.Linear(d_model, r2, **linear_kwargs)
             self.gate_nonlinear_v = nn.Linear(r2, hidden_size, **linear_kwargs)
             self.up_nonlinear_v = nn.Linear(r2, hidden_size, **linear_kwargs)
+            if MoSENonlinearity.rms_norm in (
+                self.gate_nonlinearity,
+                self.up_nonlinearity,
+            ):
+                self.gate_up_nonlinear_norm = RMSNorm(
+                    size=r2,
+                    eps=1e-5,
+                    elementwise_affine=rms_norm_learnable_weight,
+                    bias=False,
+                    dtype=dtype,
+                    init_device=init_device,
+                )
+            else:
+                self.gate_up_nonlinear_norm = None
         else:
             self.nonlinear_u = None
             self.gate_nonlinear_v = None
             self.up_nonlinear_v = None
+            self.gate_up_nonlinear_norm = None
 
         if bias:
             self.gate_bias = nn.Parameter(
@@ -345,6 +374,7 @@ class MoSESwiGLU(nn.Module):
             self.down_linear_v = None
             self.down_nonlinear_u = None
             self.down_nonlinear_v = None
+            self.down_nonlinear_norm = None
             self.register_parameter("down_bias", None)
         else:
             self.w_down = None
@@ -358,9 +388,21 @@ class MoSESwiGLU(nn.Module):
             if down_r2 > 0:
                 self.down_nonlinear_u = nn.Linear(hidden_size, down_r2, **linear_kwargs)
                 self.down_nonlinear_v = nn.Linear(down_r2, d_model, **linear_kwargs)
+                if self.down_nonlinearity == MoSENonlinearity.rms_norm:
+                    self.down_nonlinear_norm = RMSNorm(
+                        size=down_r2,
+                        eps=1e-5,
+                        elementwise_affine=rms_norm_learnable_weight,
+                        bias=False,
+                        dtype=dtype,
+                        init_device=init_device,
+                    )
+                else:
+                    self.down_nonlinear_norm = None
             else:
                 self.down_nonlinear_u = None
                 self.down_nonlinear_v = None
+                self.down_nonlinear_norm = None
 
             if bias:
                 self.down_bias = nn.Parameter(
@@ -401,6 +443,7 @@ class MoSESwiGLU(nn.Module):
             gate_nonlinear_latent = _apply_mose_nonlinearity(
                 nonlinear_latent,
                 self.gate_nonlinearity,
+                rms_norm=self.gate_up_nonlinear_norm,
             )
             if self.up_nonlinearity == self.gate_nonlinearity:
                 up_nonlinear_latent = gate_nonlinear_latent
@@ -408,6 +451,7 @@ class MoSESwiGLU(nn.Module):
                 up_nonlinear_latent = _apply_mose_nonlinearity(
                     nonlinear_latent,
                     self.up_nonlinearity,
+                    rms_norm=self.gate_up_nonlinear_norm,
                 )
             assert self.gate_nonlinear_v is not None and self.up_nonlinear_v is not None
             gate_nonlinear = self.gate_nonlinear_v(gate_nonlinear_latent)
@@ -441,6 +485,7 @@ class MoSESwiGLU(nn.Module):
             down_nonlinear_latent = _apply_mose_nonlinearity(
                 self.down_nonlinear_u(hidden),
                 self.down_nonlinearity,
+                rms_norm=self.down_nonlinear_norm,
             )
             nonlinear_out = self.down_nonlinear_v(down_nonlinear_latent)
             out = nonlinear_out if out is None else out + nonlinear_out

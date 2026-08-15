@@ -18,6 +18,7 @@ def build_config(opts: argparse.Namespace, overrides: List[str]) -> ExperimentCo
             tokenizer,
             SwiGLUChannelControl.asymmetric_rational_clip,
             mose_start_layer=getattr(opts, "mose_start_layer", 0),
+            mose_end_layer=getattr(opts, "mose_end_layer", None),
         ),
         variant="mose-asymmetric-rational-clip",
     )

@@ -51,6 +51,12 @@ def get_mose_cli_parser() -> argparse.ArgumentParser:
         default=0,
         help="Zero-based first transformer layer that uses MoSE (default: 0).",
     )
+    parser.add_argument(
+        "--mose-end-layer",
+        type=int,
+        default=None,
+        help="Exclusive end of the MoSE layer range (default: number of layers).",
+    )
     return parser
 
 

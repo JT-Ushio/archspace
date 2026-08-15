@@ -1,4 +1,5 @@
 import math
+from typing import Optional
 
 import pytest
 import torch
@@ -6,6 +7,7 @@ import torch.nn.functional as F
 
 from olmo_core.exceptions import OLMoConfigurationError
 from olmo_core.nn.transformer.init import InitMethod
+from olmo_core.nn.layer_norm import RMSNorm
 from olmo_mose import (
     MoSENonlinearity,
     MoSESwiGLU,
@@ -18,15 +20,20 @@ from olmo_mose import hooks
 def _apply_nonlinearity(
     x: torch.Tensor,
     nonlinearity: MoSENonlinearity,
+    *,
+    rms_norm: Optional[RMSNorm] = None,
 ) -> torch.Tensor:
     if nonlinearity == MoSENonlinearity.silu:
         return F.silu(x)
     if nonlinearity == MoSENonlinearity.rms_norm:
+        assert rms_norm is not None
         input_dtype = x.dtype
-        if input_dtype in (torch.float16, torch.bfloat16):
-            x = x.float()
+        x = x.float()
         variance = x.square().mean(dim=-1, keepdim=True)
-        return (x * torch.rsqrt(variance + 1e-5)).to(input_dtype)
+        x = x * torch.rsqrt(variance + rms_norm.eps)
+        if rms_norm.weight is not None:
+            x = rms_norm.weight.type_as(x) * x
+        return x.to(input_dtype)
     raise NotImplementedError(nonlinearity)
 
 
@@ -58,10 +65,18 @@ def _reference_forward(module: MoSESwiGLU, x: torch.Tensor) -> torch.Tensor:
     if module.nonlinear_u is not None:
         latent = module.nonlinear_u(x)
         nonlinear_gate = module.gate_nonlinear_v(
-            _apply_nonlinearity(latent, module.gate_nonlinearity)
+            _apply_nonlinearity(
+                latent,
+                module.gate_nonlinearity,
+                rms_norm=module.gate_up_nonlinear_norm,
+            )
         )
         nonlinear_up = module.up_nonlinear_v(
-            _apply_nonlinearity(latent, module.up_nonlinearity)
+            _apply_nonlinearity(
+                latent,
+                module.up_nonlinearity,
+                rms_norm=module.gate_up_nonlinear_norm,
+            )
         )
         gate = nonlinear_gate if gate is None else gate + nonlinear_gate
         up = nonlinear_up if up is None else up + nonlinear_up
@@ -83,6 +98,7 @@ def _reference_forward(module: MoSESwiGLU, x: torch.Tensor) -> torch.Tensor:
             _apply_nonlinearity(
                 module.down_nonlinear_u(hidden),
                 module.down_nonlinearity,
+                rms_norm=module.down_nonlinear_norm,
             )
         )
         out = nonlinear_out if out is None else out + nonlinear_out
@@ -151,6 +167,64 @@ def test_mose_configurable_nonlinearities_match_reference(
     x = torch.randn(2, 3, 4, dtype=torch.float64)
 
     torch.testing.assert_close(module(x), _reference_forward(module, x))
+
+
+@pytest.mark.parametrize("learnable_weight", [False, True])
+def test_mose_rms_norm_weight_is_optional_and_shared_for_gate_up(
+    learnable_weight: bool,
+) -> None:
+    torch.manual_seed(12)
+    config = MoSESwiGLUConfig(
+        hidden_size=7,
+        r1=3,
+        r2=2,
+        down_r1=4,
+        down_r2=3,
+        gate_nonlinearity=MoSENonlinearity.rms_norm,
+        up_nonlinearity=MoSENonlinearity.rms_norm,
+        down_nonlinearity=MoSENonlinearity.rms_norm,
+        rms_norm_learnable_weight=learnable_weight,
+    )
+    module = config.build(d_model=4, dtype=torch.float64)
+
+    assert module.gate_up_nonlinear_norm is not None
+    assert module.down_nonlinear_norm is not None
+    if learnable_weight:
+        assert module.gate_up_nonlinear_norm.weight is not None
+        assert module.gate_up_nonlinear_norm.weight.shape == (2,)
+        assert module.down_nonlinear_norm.weight is not None
+        assert module.down_nonlinear_norm.weight.shape == (3,)
+        with torch.no_grad():
+            module.gate_up_nonlinear_norm.weight.copy_(torch.tensor([0.5, 1.5]))
+            module.down_nonlinear_norm.weight.copy_(torch.tensor([0.5, 1.0, 1.5]))
+        assert "gate_up_nonlinear_norm.weight" in module.state_dict()
+        assert "down_nonlinear_norm.weight" in module.state_dict()
+    else:
+        assert module.gate_up_nonlinear_norm.weight is None
+        assert module.down_nonlinear_norm.weight is None
+        assert "gate_up_nonlinear_norm.weight" not in module.state_dict()
+        assert "down_nonlinear_norm.weight" not in module.state_dict()
+
+    x = torch.randn(2, 4, dtype=torch.float64, requires_grad=True)
+    torch.testing.assert_close(module(x), _reference_forward(module, x))
+    module(x).sum().backward()
+    if learnable_weight:
+        assert module.gate_up_nonlinear_norm.weight.grad is not None
+        assert module.down_nonlinear_norm.weight.grad is not None
+
+    expected_extra_params = 5 if learnable_weight else 0
+    base_config = MoSESwiGLUConfig(
+        hidden_size=7,
+        r1=3,
+        r2=2,
+        down_r1=4,
+        down_r2=3,
+        gate_nonlinearity=MoSENonlinearity.rms_norm,
+        up_nonlinearity=MoSENonlinearity.rms_norm,
+        down_nonlinearity=MoSENonlinearity.rms_norm,
+    )
+    assert config.num_params(4) == base_config.num_params(4) + expected_extra_params
+    assert config.num_params(4) == sum(parameter.numel() for parameter in module.parameters())
 
 
 @pytest.mark.parametrize(
@@ -228,6 +302,7 @@ def test_mose_defaults_preserve_silu_nonlinearities() -> None:
     assert config.gate_nonlinearity == MoSENonlinearity.silu
     assert config.up_nonlinearity == MoSENonlinearity.silu
     assert config.down_nonlinearity == MoSENonlinearity.silu
+    assert config.rms_norm_learnable_weight is False
 
 
 def test_mose_initializes_uv_factors_for_target_matrix_std(monkeypatch) -> None:
@@ -349,6 +424,10 @@ def test_mose_compiles_as_a_full_graph() -> None:
         down_r1=3,
         down_r2=2,
         control=SwiGLUChannelControl.asymmetric_rational_clip,
+        gate_nonlinearity=MoSENonlinearity.rms_norm,
+        up_nonlinearity=MoSENonlinearity.rms_norm,
+        down_nonlinearity=MoSENonlinearity.rms_norm,
+        rms_norm_learnable_weight=True,
     )
     compiled = torch.compile(module, backend="eager", fullgraph=True)
     x = torch.randn(2, 4, requires_grad=True)
@@ -383,4 +462,12 @@ def test_mose_rejects_invalid_ranks(
             r2=r2,
             down_r1=down_r1,
             down_r2=down_r2,
+        )
+
+
+def test_mose_rejects_non_boolean_rms_norm_weight_option() -> None:
+    with pytest.raises(OLMoConfigurationError, match="rms_norm_learnable_weight"):
+        MoSESwiGLUConfig(
+            hidden_size=8,
+            rms_norm_learnable_weight=1,  # type: ignore[arg-type]
         )
