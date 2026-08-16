@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "olmo-cubit"
+version = "0.1.0"
+description = "Cubit KRR token-mixer extensions for OLMo-core"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "ai2-olmo-core @ git+https://github.com/JT-Ushio/OLMo-core-muon-fix.git@f38e580063e48aa4b212837210df2e2038e80148",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff==0.15.9"]
+training = [
+    "ai2-olmo-eval==0.9.0",
+    "wandb",
+    "dion @ git+https://github.com/microsoft/dion.git@27318de168a2487c4edc0adf36200556d713d871 ; sys_platform == 'linux'",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["olmo_cubit*"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,80 +1,47 @@
-## Notes
-
-💡 To make your Proposal easier to validate and accept, provide implementation code that is **reproducible**, **runnable**, and **easy to use**, together with **clear and complete documentation**.
-
-💡 The model architecture code must be converted to a Hugging Face Transformers-compatible format and placed in the `archs/` directory. **Only changes within `archs/` will be merged**.
-
-💡 **All reproduction code must be placed in the `reproduce/` directory**, which you may also use as your working directory during development.
-
-# Architecture: `<Architecture Name>`
-
----
+# Architecture: Cubit
 
 ## 1. Basic Information
 
-| Item                 |                          Details                          |
-| -------------------- | :-------------------------------------------------------: |
-| Architecture Name    |                   `<Architecture Name>`                   |
-| Parent ARCH-PROP ID  | [Issue \#N](https://github.com/InternLM/archspace/issues) |
-| Current ARCH-PROP ID | [Issue \#N](https://github.com/InternLM/archspace/issues) |
+| Item | Details |
+|---|---|
+| Architecture Name | Cubit: Token Mixer with Kernel Ridge Regression |
+| Parent ARCH-PROP ID | [Issue #1](https://github.com/InternLM/archspace/issues/1) |
+| Current ARCH-PROP ID | [Issue #20](https://github.com/InternLM/archspace/issues/20) |
+| Paper | [Cubit: Token Mixer with Kernel Ridge Regression](https://arxiv.org/html/2605.06501) |
 
-## 2. Reproducing the Experiments
+## 2. Current Implementation
 
-### 2.1 Environment Setup
+The first implementation targets OLMo-core's OLMo3-1B training stack and follows the external
+patch-and-recipe organization used by the MoSE branch. It does not modify an OLMo-core checkout:
 
-> Specify the required hardware and software environment, and provide complete installation instructions. Pin key dependency versions to ensure the environment can be reproduced reliably.
+- `reproduce/olmo-core-backend/src/olmo_cubit/` contains the Cubit module, serializable config,
+  optimizer compatibility shim, and non-mutating `TransformerConfig` patch.
+- `reproduce/olmo-core-backend/cfgs/` contains matched OLMo3-1B baseline and Cubit recipes.
+- `reproduce/olmo-core-backend/tests/` verifies the paper formula, causal and packed-document
+  masks, gradients, model initialization, config round trips, and recipe construction on CPU.
 
-### 2.2 Data Preparation
+The KRR matrix construction and triangular solve are intentionally written as readable FP32
+PyTorch in this correctness-first version. The final attention aggregation uses OLMo's configured
+backend; the server recipe selects FlashAttention 3.
 
-> Architecture experiments should generally use the same data as the baseline. If the data or data-processing pipeline differs from the baseline, describe the data source and the complete preparation process here.
+See [`reproduce/olmo-core-backend/README.md`](reproduce/olmo-core-backend/README.md) for exact
+installation, verification, training, and override commands.
 
-### 2.3 Training Pipeline
+## 3. Status and Scope
 
-> Provide all training scripts, configuration files, and commands required to reproduce the training process. The commands should run without requiring modifications to the source code.
+Implemented:
 
-### 2.4 Evaluation Pipeline
+- OLMo3-1B baseline and Cubit recipes with identical data, optimizer, batch, evaluation, and W&B
+  settings.
+- Independent reference projection (paper default) and shared-key ablation.
+- Limited-Range Rescale (LRR), learnable reference scale, and positive learned ridge coefficient.
+- Causal, sliding-window, and packed-document masks.
+- Half-open Cubit layer selection `[cubit_start_layer, cubit_end_layer)`.
+- HSDP training with BF16 parameters/reductions and FP32 KRR math.
+- FlashAttention 3 for the final `A @ solution` aggregation on supported GPUs.
 
-> Provide all evaluation scripts, configuration files, and commands required to reproduce the reported results. Clearly specify the evaluation metrics and expected outputs.
+Deferred to later optimization/conversion work:
 
-### 2.5 Model Weights and Experiment Logs
-
-> 1. Use [Weights & Biases](https://wandb.ai/site/) to record training logs.
-> 2. After completing the validation experiments, convert the model architecture code to a [Hugging Face Transformers-compatible format](https://huggingface.co/docs/transformers/v5.14.0/en/main_classes/model).## Notes
->    💡 To make your Proposal easier to validate and accept, provide implementation code that is **reproducible**, **runnable**, and **easy to use**, together with **clear and complete documentation**.
->    💡 The model architecture code must be converted to a Hugging Face Transformers-compatible format and placed in the `archs/` directory. **Only changes within `archs/` will be merged**.
->    💡 **All reproduction code must be placed in the `reproduce/` directory**, which you may also use as your working directory during development.
-
-# Architecture: `<Architecture Name>`
-
----
-
-## 1. Basic Information
-
-| Item                 |                          Details                          |
-| -------------------- | :-------------------------------------------------------: |
-| Architecture Name    |                   `<Architecture Name>`                   |
-| Parent ARCH-PROP ID  | [Issue \#N](https://github.com/InternLM/archspace/issues) |
-| Current ARCH-PROP ID | [Issue \#N](https://github.com/InternLM/archspace/issues) |
-
-## 2. Reproducing the Experiments
-
-### 2.1 Environment Setup
-
-> Specify the required hardware and software environment, and provide complete installation instructions. Pin key dependency versions to ensure the environment can be reproduced reliably.
-
-### 2.2 Data Preparation
-
-> Architecture experiments should generally use the same data as the baseline. If the data or data-processing pipeline differs from the baseline, describe the data source and the complete preparation process here.
-
-### 2.3 Training Pipeline
-
-> Provide all training scripts, configuration files, and commands required to reproduce the training process. The commands should run without requiring modifications to the source code.
-
-### 2.4 Evaluation Pipeline
-
-> Provide all evaluation scripts, configuration files, and commands required to reproduce the reported results. Clearly specify the evaluation metrics and expected outputs.
-
-### 2.5 Model Weights and Experiment Logs
-
-> 1. Use [Weights & Biases](https://wandb.ai/site/) to record training logs.
-> 2. After completing the validation experiments, convert the model architecture code to a [Hugging Face Transformers-compatible format](https://huggingface.co/docs/transformers/v5.14.0/en/main_classes/model).
+- A fused or blockwise KRR kernel that removes the dense score matrix.
+- Tensor/context parallelism and KV-cached autoregressive decoding.
+- A Hugging Face architecture and OLMo-to-HF checkpoint converter under `archs/`.
