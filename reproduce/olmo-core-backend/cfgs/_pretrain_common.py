@@ -18,7 +18,6 @@ from olmo_core.script_utils import ExperimentConfig, get_cli_parser
 from olmo_core.train import Duration, TrainerConfig
 from olmo_core.train.callbacks import (
     CheckpointerCallback,
-    CometCallback,
     ConfigSaverCallback,
     DownstreamEvaluatorCallbackConfig,
     LMEvaluatorCallbackConfig,

@@ -14,6 +14,7 @@ sys.path.insert(0, str(CFGS_DIR))
 
 from _models import build_cubit_olmo3_1b  # noqa: E402
 from _pretrain_common import (  # noqa: E402
+    DEFAULT_SEQUENCE_LENGTH,
     RANK_MICROBATCH_SEQUENCES,
     build_pretrain_config,
     get_cubit_cli_parser,
@@ -56,7 +57,9 @@ def test_experiment_config_round_trips(tmp_path: Path) -> None:
     assert isinstance(attention, CubitAttentionConfig)
     assert attention.backend == AttentionBackendName.flash_3
     assert restored.trainer.callbacks["checkpointer"].save_interval == 2500
-    assert restored.train_module.rank_microbatch_size == 1024
+    assert restored.train_module.rank_microbatch_size == (
+        RANK_MICROBATCH_SEQUENCES * DEFAULT_SEQUENCE_LENGTH
+    )
 
 
 def test_sequence_length_updates_rank_microbatch_size(tmp_path: Path) -> None:
