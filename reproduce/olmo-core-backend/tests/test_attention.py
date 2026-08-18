@@ -2,6 +2,7 @@ import math
 
 import pytest
 import torch
+import torch.nn as nn
 
 from olmo_core.exceptions import OLMoConfigurationError
 from olmo_core.nn.attention import AttentionBackendName
@@ -19,6 +20,21 @@ def _tiny_cubit(**kwargs) -> CubitAttention:
         lrr_upper=2.0,
         **kwargs,
     )
+
+
+class _LastDimensionCheckingBackend(nn.Module):
+    """Small FA3-shaped stand-in that enforces its input layout contract."""
+
+    cp_enabled = False
+    scale = None
+
+    def forward(self, qkv, **kwargs):
+        del kwargs
+        q, k, v = qkv
+        assert q.stride(-1) == 1
+        assert k.stride(-1) == 1
+        assert v.stride(-1) == 1
+        return v
 
 
 def _paper_reference(module: CubitAttention, x: torch.Tensor) -> torch.Tensor:
@@ -82,6 +98,17 @@ def test_backward_is_finite_for_every_parameter() -> None:
     for parameter in module.parameters():
         assert parameter.grad is not None
         assert torch.isfinite(parameter.grad).all()
+
+
+def test_flash_backend_receives_contiguous_last_dimensions() -> None:
+    torch.manual_seed(13)
+    module = _tiny_cubit()
+    module.backend = _LastDimensionCheckingBackend()
+
+    output = module(torch.randn(2, 5, 8))
+
+    assert output.shape == (2, 5, 8)
+    assert torch.isfinite(output).all()
 
 
 def test_causal_mask_prevents_future_information_leakage() -> None:

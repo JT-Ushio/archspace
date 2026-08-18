@@ -412,14 +412,18 @@ class CubitAttention(Attention):
         )
         rhs = lrr * v.float().transpose(1, 2)
         solution = torch.linalg.solve_triangular(inverse_sigma, rhs, upper=False)
-        solution = solution.transpose(1, 2).to(q.dtype)
+        # ``solve_triangular`` commonly returns a column-major-like layout where the
+        # head dimension has a stride greater than one after transposing back to BTHD.
+        # FlashAttention 3 requires the final (head) dimension of every input to be
+        # contiguous, even when no dtype conversion is needed.
+        solution = solution.transpose(1, 2).to(q.dtype).contiguous()
 
         if isinstance(self.backend, TorchAttentionBackend):
             att = self._dense_output_attention(q, k, solution, mask)
         else:
             att = self.sdpa(
-                q,
-                k,
+                q.contiguous(),
+                k.contiguous(),
                 solution,
                 cu_doc_lens=cu_doc_lens,
                 max_doc_len=max_doc_len,

@@ -40,6 +40,8 @@ formula against an independent reference computation.
 - Causal and sliding-window masks are applied to both the KRR kernel and final aggregation.
 - Packed documents are separated in the KRR matrix; FlashAttention receives the same cumulative
   document lengths for the final aggregation.
+- Q, K, and the KRR solution are made last-dimension-contiguous at the FlashAttention boundary;
+  `torch.linalg.solve_triangular` does not guarantee the layout required by FA3.
 
 ### Reference projection
 
