@@ -32,12 +32,12 @@ from olmo_core.train.train_module import (
 )
 from olmo_cubit import SerializableMuonConfig
 
-DEFAULT_SEQUENCE_LENGTH = 1024
+DEFAULT_SEQUENCE_LENGTH = 4096
 GLOBAL_BATCH_SIZE = 4096 * 512  # Match the MoSE reference recipe: ~2M tokens.
 LR = 5e-3
 EVAL_LM_STEPS = 500
 EVAL_DOWN_STEPS = 12_500
-RANK_MICROBATCH_SEQUENCES = 1
+RANK_MICROBATCH_SEQUENCES = 8
 
 ModelBuilder = Callable[[TokenizerConfig], TransformerConfig]
 
@@ -94,7 +94,7 @@ def build_pretrain_config(
     data_loader_config = NumpyDataLoaderConfig(
         global_batch_size=GLOBAL_BATCH_SIZE,
         seed=34521,
-        num_workers=8,
+        num_workers=4,
     )
     train_module_config = TransformerTrainModuleConfig(
         rank_microbatch_size=rank_microbatch_size,
@@ -132,14 +132,6 @@ def build_pretrain_config(
                 ephemeral_save_interval=None,
                 max_checkpoints=1,
                 save_async=True,
-            ),
-        )
-        .with_callback(
-            "comet",
-            CometCallback(
-                name=opts.name,
-                cancel_check_interval=10,
-                enabled=False,
             ),
         )
         .with_callback(
