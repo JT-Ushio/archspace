@@ -165,6 +165,8 @@ def test_sliding_window_is_applied_to_krr_and_output_masks() -> None:
         {"lrr_lower": 2.0, "lrr_upper": 1.0},
         {"reference_norm_eps": 0.0},
         {"n_heads": 4, "n_kv_heads": 2},
+        {"krr_implementation": "unknown"},
+        {"krr_block_size": 0},
     ],
 )
 def test_config_rejects_invalid_cubit_settings(kwargs) -> None:

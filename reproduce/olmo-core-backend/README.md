@@ -24,8 +24,9 @@ output = attention(q, k, solution)
 
 `inverse_sigma` denotes the matrix that is inverted by the solve. Thus `solution` is
 `Sigma @ S @ V`, and the last line implements `A @ Sigma @ S @ V` from equation 13. The causal
-softmax makes `inverse_sigma` lower triangular, so the implementation uses
-`torch.linalg.solve_triangular` rather than explicitly forming a matrix inverse.
+softmax makes `inverse_sigma` lower triangular. The streaming implementation solves it one
+diagonal block at a time rather than explicitly forming a matrix inverse or a complete kernel
+matrix.
 
 The paper's Appendix H contains several typographical inconsistencies (`LRR`/`lrr` and
 `casual_mask`/`causal_mask`). This implementation uses consistent names and tests the complete
@@ -33,7 +34,9 @@ formula against an independent reference computation.
 
 ### Numerical behavior
 
-- Kernel scores, masked softmax, LRR, ridge regularization, and the triangular solve run in FP32.
+- Kernel scores, masked softmax, LRR, ridge regularization, and the triangular solve use FP32
+  tensors. The training recipe enables TF32 tensor cores for the batched kernel GEMMs while
+  retaining FP32 accumulation.
 - `regularization` is stored in log space and exponentiated in the forward pass.
 - Reference normalization uses a configurable epsilon (`1e-6` by default) to avoid division by
   zero.
@@ -56,22 +59,39 @@ post-QK-norm key representation.
 | `OLMo3-1B-stage1-cubit.py` | independent | 1,552,550,912 |
 | Cubit with `share_reference=true` | shared key | 1,485,442,048 |
 
-## Backend boundary
+## Streaming KRR kernel
 
-The correctness-first KRR path materializes dense `(batch, heads, sequence, sequence)` tensors.
-The final `A @ solution` operation is dispatched through OLMo-core's attention backend. The recipe
-selects `AttentionBackendName.flash_3`, so this final aggregation uses FlashAttention 3 on a
-supported server. FlashAttention cannot perform the KRR solve because it does not expose the full
-attention matrix required by this formulation.
+The default `krr_implementation=streaming` path applies the FlashAttention idea to Cubit's causal
+linear system. For each query block it computes only a `block_size x prefix_length` kernel tile,
+subtracts the contribution of already solved tokens, and solves the small diagonal triangular
+block. Its custom backward first performs the corresponding transposed block solve, then
+recomputes kernel tiles to obtain exact softmax and reference gradients.
 
-This version is therefore quadratic in activation memory and is intended to establish correctness,
-not peak throughput. The default recipe uses sequence length 1024 and one sequence per-rank
-microbatch. Start with length 128 or 512 for server smoke tests before increasing it.
+Consequently, Cubit no longer saves or materializes a complete
+`(batch, heads, sequence, sequence)` tensor. Per head, the KRR solve uses
+`O(T * D + T * block_size)` activation memory instead of `O(T^2)`. The exact exponential kernel
+still requires `O(T^2 * D)` arithmetic; unlike linear-attention approximations, this optimization
+does not change the paper's formula.
+
+The final `attention(q, k, solution)` remains dispatched through OLMo-core's
+`AttentionBackendName.flash_3` backend. A dense KRR implementation is retained only as a numerical
+reference and can be selected with `krr_implementation=dense`.
+
+Measure the isolated KRR forward and backward on the target GPU with:
+
+```bash
+PYTHONPATH=src python3 benchmarks/benchmark_krr.py \
+  --implementation=streaming --seq-len=4096 --block-size=64
+```
+
+Use a shorter sequence such as 512 or 1024 when benchmarking `--implementation=dense`; its full
+FP32 kernel matrix can exhaust device memory at the training sequence length.
 
 ## Layout
 
 ```text
 src/olmo_cubit/attention.py   Cubit module and serializable OLMo config
+src/olmo_cubit/krr.py         streaming causal KRR solve and custom backward
 src/olmo_cubit/patch.py       non-mutating TransformerConfig patch
 src/olmo_cubit/optim.py       serializable Muon parameter-group integration
 cfgs/_models.py               OLMo3-1B baseline and Cubit builders
@@ -161,6 +181,12 @@ torchrun --nproc-per-node=8 \
 `--data-root` must provide the layouts required by `OLMo_mix_0625_150Bsample` and
 `v3_small_ppl_validation`.
 
+The correctness-first recipes leave `torch.compile` disabled while continuing to use the
+FlashAttention 3 backend. Once eager-mode training is validated, opt into compilation with
+`--train-module.compile-model=true`. Keep `TORCHINDUCTOR_CACHE_DIR` on node-local storage and
+use a fresh directory after an interrupted run; a persistent shared directory can retain
+partially written FX-graph cache entries.
+
 For an initial smoke test, reduce sequence length and disable external callbacks:
 
 ```bash
@@ -195,8 +221,13 @@ Override KRR/LRR settings:
 ```bash
 --model.block.sequence_mixer.regularization=1e-6 \
 --model.block.sequence_mixer.lrr_lower=0.5 \
---model.block.sequence_mixer.lrr_upper=2.0
+--model.block.sequence_mixer.lrr_upper=2.0 \
+--model.block.sequence_mixer.krr_block_size=64
 ```
+
+Use `krr_block_size=32` to reduce peak temporary memory or `128` to trade more memory for fewer
+kernel launches. For correctness comparisons only, set
+`--model.block.sequence_mixer.krr_implementation=dense`.
 
 The layer range is zero-based and half-open. Dotlist overrides on
 `model.block.sequence_mixer.*` affect Cubit layers; dense layers created by a partial range retain
@@ -207,6 +238,6 @@ the original OLMo attention config.
 - Tensor parallelism and context parallelism raise explicit `NotImplementedError`; the supplied
   recipe uses HSDP only.
 - KV-cached decoding is not implemented because KRR coefficients depend on the complete prefix.
-- Float8 is disabled. KRR correction math is intentionally FP32.
+- Float8 is disabled. KRR correction state and triangular solves remain FP32.
 - The native OLMo Hugging Face converter does not encode Cubit parameters or computation. A
   dedicated architecture and checkpoint converter are required before publishing weights.

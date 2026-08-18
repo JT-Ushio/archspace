@@ -56,6 +56,9 @@ def test_experiment_config_round_trips(tmp_path: Path) -> None:
 
     assert isinstance(attention, CubitAttentionConfig)
     assert attention.backend == AttentionBackendName.flash_3
+    assert attention.krr_implementation == "streaming"
+    assert attention.krr_block_size == 64
+    assert restored.train_module.compile_model is False
     assert restored.trainer.callbacks["checkpointer"].save_interval == 2500
     assert restored.train_module.rank_microbatch_size == (
         RANK_MICROBATCH_SEQUENCES * DEFAULT_SEQUENCE_LENGTH
@@ -71,6 +74,17 @@ def test_sequence_length_updates_rank_microbatch_size(tmp_path: Path) -> None:
     )
 
     assert config.train_module.rank_microbatch_size == RANK_MICROBATCH_SEQUENCES * 512
+
+
+def test_compile_model_can_be_enabled_by_override(tmp_path: Path) -> None:
+    config = build_pretrain_config(
+        _opts(tmp_path),
+        ["train_module.compile_model=true"],
+        build_cubit_olmo3_1b,
+        variant="cubit-fa3",
+    )
+
+    assert config.train_module.compile_model is True
 
 
 @pytest.mark.parametrize("sequence_length", [0, 768, 12_288])

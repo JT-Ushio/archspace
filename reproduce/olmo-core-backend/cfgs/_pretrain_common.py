@@ -1,6 +1,8 @@
 import argparse
 from typing import Callable, List
 
+import torch
+
 from olmo_core.config import DType
 from olmo_core.data import (
     DataMix,
@@ -66,6 +68,10 @@ def build_pretrain_config(
     variant: str,
 ) -> ExperimentConfig:
     """Build the shared OLMo3-1B stage-1 recipe around one token-mixer variant."""
+    # Cubit's streaming KRR path uses FP32 batched GEMMs. Allow H100/H200 TF32 tensor cores while
+    # retaining FP32 accumulation; this also removes PyTorch's slow-matmul warning.
+    torch.set_float32_matmul_precision("high")
+
     sequence_length = (
         DEFAULT_SEQUENCE_LENGTH if opts.sequence_length is None else opts.sequence_length
     )
@@ -104,7 +110,9 @@ def build_pretrain_config(
             betas=(0.9, 0.95),
         ),
         scheduler=CosWithWarmup(warmup=2000),
-        compile_model=True,
+        # Keep the first correctness-oriented recipe independent of Inductor's
+        # persistent cache. This still uses the configured FlashAttention backend.
+        compile_model=False,
         dp_config=TransformerDataParallelConfig(
             name=DataParallelType.hsdp,
             param_dtype=DType.bfloat16,

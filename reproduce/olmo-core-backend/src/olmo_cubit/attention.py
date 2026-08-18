@@ -23,6 +23,8 @@ from olmo_core.nn.buffer_cache import BufferCache
 from olmo_core.nn.layer_norm import LayerNormConfig
 from olmo_core.nn.rope import RoPEConfig
 
+from .krr import streaming_causal_krr_solve
+
 
 def _check_finite(name: str, value: float) -> None:
     if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
@@ -38,6 +40,8 @@ class CubitAttentionConfig(AttentionConfig):
     lrr_lower: float = 0.5
     lrr_upper: float = 2.0
     reference_norm_eps: float = 1e-6
+    krr_implementation: str = "streaming"
+    krr_block_size: int = 64
 
     def __post_init__(self, type: Optional[str] = None) -> None:
         del type
@@ -69,6 +73,16 @@ class CubitAttentionConfig(AttentionConfig):
             raise OLMoConfigurationError("LRR bounds must satisfy 0 < lrr_lower < lrr_upper")
         if self.reference_norm_eps <= 0:
             raise OLMoConfigurationError("reference_norm_eps must be greater than zero")
+        if self.krr_implementation not in ("streaming", "dense"):
+            raise OLMoConfigurationError(
+                "krr_implementation must be either 'streaming' or 'dense'"
+            )
+        if (
+            isinstance(self.krr_block_size, bool)
+            or not isinstance(self.krr_block_size, int)
+            or self.krr_block_size <= 0
+        ):
+            raise OLMoConfigurationError("krr_block_size must be a positive integer")
 
     def num_params(self, d_model: int) -> int:
         params = super().num_params(d_model)
@@ -129,9 +143,9 @@ class CubitAttentionConfig(AttentionConfig):
 class CubitAttention(Attention):
     """Cubit token mixer using a causal kernel-ridge-regression correction.
 
-    The KRR matrix and triangular solve intentionally use a dense FP32 implementation in v1.
-    The final ``A @ solution`` aggregation is delegated to the configured OLMo attention backend;
-    the supplied recipe selects FlashAttention 3 on supported servers.
+    By default the KRR solve streams over token blocks and recomputes kernel tiles in backward,
+    avoiding a persistent ``[T, T]`` matrix. The final ``A @ solution`` aggregation is delegated
+    to the configured OLMo attention backend; the supplied recipe selects FlashAttention 3.
     """
 
     def __init__(
@@ -160,6 +174,8 @@ class CubitAttention(Attention):
         lrr_lower: float = 0.5,
         lrr_upper: float = 2.0,
         reference_norm_eps: float = 1e-6,
+        krr_implementation: str = "streaming",
+        krr_block_size: int = 64,
     ):
         resolved_kv_heads = n_heads if n_kv_heads is None else n_kv_heads
         if resolved_kv_heads != n_heads:
@@ -190,6 +206,8 @@ class CubitAttention(Attention):
 
         self.share_reference = share_reference
         self.reference_norm_eps = reference_norm_eps
+        self.krr_implementation = krr_implementation
+        self.krr_block_size = krr_block_size
         self._initial_regularization = regularization
         self._initial_lrr_lower = lrr_lower
         self._initial_lrr_range = lrr_upper - lrr_lower
@@ -388,30 +406,52 @@ class CubitAttention(Attention):
                 cu_doc_lens,
             )
 
-        mask = self._build_attention_mask(
-            batch_size=batch_size,
-            seq_len=seq_len,
-            device=x.device,
-            cu_doc_lens=cu_doc_lens,
-        )
-
         r_heads = r.float().transpose(1, 2)
         normalized_r_heads = normalized_r.float().transpose(1, 2)
-        inverse_sigma = self._masked_softmax(
-            r_heads @ normalized_r_heads.transpose(-2, -1),
-            mask,
-        )
-        identity = torch.eye(seq_len, device=x.device, dtype=torch.float32)
-        regularization = self.log_regularization.float().exp().view(1, self.n_heads, 1, 1)
-        inverse_sigma = inverse_sigma + regularization * identity.view(1, 1, seq_len, seq_len)
-
         lrr_logits = self.w_lrr(x).float().transpose(1, 2).unsqueeze(-1)
         lrr = self.lrr_lower.float().view(1, self.n_heads, 1, 1)
         lrr = lrr + self.lrr_range.float().view(1, self.n_heads, 1, 1) * torch.sigmoid(
             lrr_logits
         )
         rhs = lrr * v.float().transpose(1, 2)
-        solution = torch.linalg.solve_triangular(inverse_sigma, rhs, upper=False)
+        regularization = self.log_regularization.float().exp()
+
+        mask: Optional[torch.Tensor] = None
+        if self.krr_implementation == "streaming":
+            doc_ids = None
+            if cu_doc_lens is not None:
+                doc_ids = self._document_ids(
+                    cu_doc_lens,
+                    batch_size=batch_size,
+                    seq_len=seq_len,
+                    device=x.device,
+                )
+            solution = streaming_causal_krr_solve(
+                r_heads,
+                normalized_r_heads,
+                rhs,
+                regularization,
+                doc_ids=doc_ids,
+                window_size=self.window_size,
+                block_size=self.krr_block_size,
+            )
+        else:
+            mask = self._build_attention_mask(
+                batch_size=batch_size,
+                seq_len=seq_len,
+                device=x.device,
+                cu_doc_lens=cu_doc_lens,
+            )
+            inverse_sigma = self._masked_softmax(
+                r_heads @ normalized_r_heads.transpose(-2, -1),
+                mask,
+            )
+            identity = torch.eye(seq_len, device=x.device, dtype=torch.float32)
+            inverse_sigma = inverse_sigma + regularization.view(
+                1, self.n_heads, 1, 1
+            ) * identity.view(1, 1, seq_len, seq_len)
+            solution = torch.linalg.solve_triangular(inverse_sigma, rhs, upper=False)
+
         # ``solve_triangular`` commonly returns a column-major-like layout where the
         # head dimension has a stride greater than one after transposing back to BTHD.
         # FlashAttention 3 requires the final (head) dimension of every input to be
@@ -419,6 +459,13 @@ class CubitAttention(Attention):
         solution = solution.transpose(1, 2).to(q.dtype).contiguous()
 
         if isinstance(self.backend, TorchAttentionBackend):
+            if mask is None:
+                mask = self._build_attention_mask(
+                    batch_size=batch_size,
+                    seq_len=seq_len,
+                    device=x.device,
+                    cu_doc_lens=cu_doc_lens,
+                )
             att = self._dense_output_attention(q, k, solution, mask)
         else:
             att = self.sdpa(
