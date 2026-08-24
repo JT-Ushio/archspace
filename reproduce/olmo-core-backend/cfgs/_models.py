@@ -1,6 +1,7 @@
 from typing import Optional
 
 from olmo_core.data import TokenizerConfig
+from olmo_core.nn.attention import AttentionBackendName
 from olmo_core.nn.transformer import TransformerConfig
 
 from olmo_mose import (
@@ -16,7 +17,10 @@ def build_olmo3_1b(
     control: SwiGLUChannelControl = SwiGLUChannelControl.standard,
 ) -> TransformerConfig:
     """Build the official OLMo3-1B architecture with the selected SwiGLU control."""
-    config = TransformerConfig.olmo3_1B(vocab_size=tokenizer.padded_vocab_size())
+    config = TransformerConfig.olmo3_1B(
+        vocab_size=tokenizer.padded_vocab_size(),
+        attn_backend=AttentionBackendName.flash_3,
+    )
     return patch_swiglu_channel_control(config, control=control)
 
 
@@ -36,7 +40,10 @@ def build_mose_olmo3_1b(
     rms_norm_learnable_weight: bool = False,
 ) -> TransformerConfig:
     """Build OLMo3-1B with configurable MoSE-SwiGLU projections."""
-    config = TransformerConfig.olmo3_1B(vocab_size=tokenizer.padded_vocab_size())
+    config = TransformerConfig.olmo3_1B(
+        vocab_size=tokenizer.padded_vocab_size(),
+        attn_backend=AttentionBackendName.flash_3,
+    )
     return patch_mose_swiglu(
         config,
         control=control,

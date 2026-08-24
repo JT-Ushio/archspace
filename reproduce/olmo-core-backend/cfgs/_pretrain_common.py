@@ -94,7 +94,7 @@ def build_pretrain_config(
     data_loader_config = NumpyDataLoaderConfig(
         global_batch_size=GLOBAL_BATCH_SIZE,
         seed=34521,
-        num_workers=8,
+        num_workers=4,
     )
     train_module_config = TransformerTrainModuleConfig(
         rank_microbatch_size=rank_microbatch_size,
