@@ -14,7 +14,7 @@ from olmo_core.exceptions import OLMoConfigurationError
 from olmo_core.float8 import Float8Config
 from olmo_core.nn.transformer import TransformerConfig
 from olmo_core.optim import CosWithWarmup
-from olmo_core.script_utils import ExperimentConfig, get_cli_parser
+from olmo_core.script_utils import ExperimentConfig
 from olmo_core.train import Duration, TrainerConfig
 from olmo_core.train.callbacks import (
     CheckpointerCallback,
@@ -40,24 +40,6 @@ EVAL_DOWN_STEPS = 12_500
 N_BATCH_PER_GPU = 16
 
 ModelBuilder = Callable[[TokenizerConfig], TransformerConfig]
-
-
-def get_mose_cli_parser() -> argparse.ArgumentParser:
-    """Build the shared CLI parser with MoSE layer selection enabled."""
-    parser = get_cli_parser()
-    parser.add_argument(
-        "--mose-start-layer",
-        type=int,
-        default=0,
-        help="Zero-based first transformer layer that uses MoSE (default: 0).",
-    )
-    parser.add_argument(
-        "--mose-end-layer",
-        type=int,
-        default=None,
-        help="Exclusive end of the MoSE layer range (default: number of layers).",
-    )
-    return parser
 
 
 def build_pretrain_config(

@@ -1,6 +1,5 @@
 import sys
 from pathlib import Path
-from typing import Optional
 
 import pytest
 import torch
@@ -10,13 +9,13 @@ from olmo_core.nn.attention import AttentionBackendName
 from olmo_core.nn.feed_forward import FeedForwardConfig
 from olmo_core.nn.transformer import TransformerConfig
 from olmo_mose import (
-    ChannelControlledFeedForward,
     ChannelControlledFeedForwardConfig,
     MoSENonlinearity,
     MoSESwiGLU,
     MoSESwiGLUConfig,
     SerializableMuonConfig,
     SwiGLUChannelControl,
+    SwiGLUChannelControlScope,
     patch_mose_swiglu,
     patch_swiglu_channel_control,
 )
@@ -33,7 +32,10 @@ class _Tokenizer:
 
 
 def test_standard_model_is_an_unchanged_olmo3_1b_config() -> None:
-    expected = TransformerConfig.olmo3_1B(vocab_size=100_352)
+    expected = TransformerConfig.olmo3_1B(
+        vocab_size=100_352,
+        attn_backend=AttentionBackendName.flash_3,
+    )
     actual = build_olmo3_1b(_Tokenizer(), SwiGLUChannelControl.standard)
 
     assert actual.as_config_dict() == expected.as_config_dict()
@@ -59,12 +61,14 @@ def test_custom_feed_forward_survives_control_override_round_trip() -> None:
     overridden = config.merge(
         [
             "block.feed_forward.control=asymmetric_rational_clip",
+            "block.feed_forward.control_scope=up",
         ]
     )
     feed_forward = overridden.block.feed_forward
 
     assert isinstance(feed_forward, ChannelControlledFeedForwardConfig)
     assert feed_forward.control == SwiGLUChannelControl.asymmetric_rational_clip
+    assert feed_forward.control_scope == SwiGLUChannelControlScope.up
 
 
 def test_standard_patch_restores_native_feed_forward_config() -> None:
@@ -89,11 +93,13 @@ def test_controlled_feed_forward_builds_inside_transformer() -> None:
         bias=config.block.feed_forward.bias,
         dtype=config.block.feed_forward.dtype,
         control=SwiGLUChannelControl.situ,
+        control_scope=SwiGLUChannelControlScope.gate,
     )
 
     model = config.build(init_device="meta")
 
     assert model.blocks["0"].feed_forward.control == SwiGLUChannelControl.situ
+    assert model.blocks["0"].feed_forward.control_scope == SwiGLUChannelControlScope.gate
 
 
 def test_mose_model_uses_configurable_default_ranks() -> None:
@@ -102,146 +108,26 @@ def test_mose_model_uses_configurable_default_ranks() -> None:
     feed_forward = config.block.feed_forward
 
     assert isinstance(feed_forward, MoSESwiGLUConfig)
+    assert feed_forward.control_scope == SwiGLUChannelControlScope.both
     assert (feed_forward.r1, feed_forward.r2) == (880, 880)
     assert (feed_forward.down_r1, feed_forward.down_r2) == (880, 880)
     assert config.num_params == 1_487_013_888
     assert config.num_params - baseline.num_params == 2_097_152
 
 
-@pytest.mark.parametrize("mose_start_layer", [0, 1, 2])
-def test_mose_can_start_from_a_selected_layer(mose_start_layer: int) -> None:
-    baseline = build_olmo3_1b(_Tokenizer(), SwiGLUChannelControl.situ)
-    config = build_mose_olmo3_1b(
-        _Tokenizer(),
-        SwiGLUChannelControl.situ,
-        mose_start_layer=mose_start_layer,
-    )
-    resolved_blocks = config.resolved_block_configs
-
-    assert isinstance(config.block.feed_forward, MoSESwiGLUConfig)
-    assert all(
-        isinstance(block.feed_forward, ChannelControlledFeedForwardConfig)
-        and block.feed_forward.control == SwiGLUChannelControl.situ
-        for block in resolved_blocks[:mose_start_layer]
-    )
-    assert all(
-        isinstance(block.feed_forward, MoSESwiGLUConfig)
-        for block in resolved_blocks[mose_start_layer:]
-    )
-
-    native_ff_params = baseline.block.feed_forward.num_params(config.d_model)
-    mose_ff_params = config.block.feed_forward.num_params(config.d_model)
-    expected_delta = (config.n_layers - mose_start_layer) * (
-        mose_ff_params - native_ff_params
-    )
-    assert config.num_params == baseline.num_params + expected_delta
-
-
-def test_mose_end_layer_is_exclusive_and_leaves_the_last_layer_dense() -> None:
-    baseline = build_olmo3_1b(
-        _Tokenizer(),
-        SwiGLUChannelControl.asymmetric_rational_clip,
-    )
+@pytest.mark.parametrize("control_scope", list(SwiGLUChannelControlScope))
+def test_mose_control_scope_applies_to_every_layer(
+    control_scope: SwiGLUChannelControlScope,
+) -> None:
     config = build_mose_olmo3_1b(
         _Tokenizer(),
         SwiGLUChannelControl.asymmetric_rational_clip,
-        mose_start_layer=2,
-        mose_end_layer=15,
+        control_scope=control_scope,
     )
-    resolved_blocks = config.resolved_block_configs
-
-    for block in (*resolved_blocks[:2], resolved_blocks[15]):
-        assert isinstance(block.feed_forward, ChannelControlledFeedForwardConfig)
-        assert block.feed_forward.control == SwiGLUChannelControl.asymmetric_rational_clip
-    assert all(
-        isinstance(block.feed_forward, MoSESwiGLUConfig)
-        for block in resolved_blocks[2:15]
-    )
-
-    native_ff_params = baseline.block.feed_forward.num_params(config.d_model)
-    assert isinstance(config.block.feed_forward, MoSESwiGLUConfig)
-    mose_ff_params = config.block.feed_forward.num_params(config.d_model)
-    expected_delta = (15 - 2) * (mose_ff_params - native_ff_params)
-    assert config.num_params == baseline.num_params + expected_delta
-
-
-def test_partial_mose_standard_control_keeps_early_layers_native() -> None:
-    config = build_mose_olmo3_1b(
-        _Tokenizer(),
-        SwiGLUChannelControl.standard,
-        mose_start_layer=2,
-        mose_end_layer=15,
-        gate_nonlinearity=MoSENonlinearity.rms_norm,
-        up_nonlinearity=MoSENonlinearity.rms_norm,
-    )
-    resolved_blocks = config.resolved_block_configs
-
-    assert type(resolved_blocks[0].feed_forward) is FeedForwardConfig
-    assert type(resolved_blocks[1].feed_forward) is FeedForwardConfig
-    assert type(resolved_blocks[15].feed_forward) is FeedForwardConfig
-    for block in resolved_blocks[2:15]:
+    assert len(config.resolved_block_configs) == config.n_layers
+    for block in config.resolved_block_configs:
         assert isinstance(block.feed_forward, MoSESwiGLUConfig)
-        assert block.feed_forward.control == SwiGLUChannelControl.standard
-        assert block.feed_forward.gate_nonlinearity == MoSENonlinearity.rms_norm
-        assert block.feed_forward.up_nonlinearity == MoSENonlinearity.rms_norm
-
-
-def test_partial_mose_config_round_trips_and_accepts_base_overrides() -> None:
-    config = build_mose_olmo3_1b(
-        _Tokenizer(),
-        SwiGLUChannelControl.asymmetric_rational_clip,
-        mose_start_layer=2,
-        mose_end_layer=15,
-    ).merge(
-        [
-            "block.feed_forward.r1=64",
-            "block.feed_forward.gate_nonlinearity=rms_norm",
-            "block.feed_forward.rms_norm_learnable_weight=true",
-        ]
-    )
-    restored = TransformerConfig.from_dict(config.as_config_dict())
-    resolved_blocks = restored.resolved_block_configs
-
-    for block in (*resolved_blocks[:2], resolved_blocks[15]):
-        assert isinstance(block.feed_forward, ChannelControlledFeedForwardConfig)
-        assert block.feed_forward.control == SwiGLUChannelControl.asymmetric_rational_clip
-    for block in resolved_blocks[2:15]:
-        assert isinstance(block.feed_forward, MoSESwiGLUConfig)
-        assert block.feed_forward.r1 == 64
-        assert block.feed_forward.gate_nonlinearity == MoSENonlinearity.rms_norm
-        assert block.feed_forward.rms_norm_learnable_weight is True
-
-
-@pytest.mark.parametrize(
-    ("mose_start_layer", "mose_end_layer"),
-    [
-        (-1, None),
-        (0, 0),
-        (2, 2),
-        (3, 2),
-        (0, 5),
-        (True, None),
-        (0, True),
-        (0, 1.5),
-    ],
-)
-def test_mose_rejects_invalid_layer_range(mose_start_layer, mose_end_layer) -> None:
-    config = TransformerConfig.olmo3_1M(
-        vocab_size=128,
-        attn_backend=AttentionBackendName.torch,
-    )
-
-    with pytest.raises(OLMoConfigurationError, match="layer range"):
-        patch_mose_swiglu(
-            config,
-            control=SwiGLUChannelControl.situ,
-            mose_start_layer=mose_start_layer,
-            mose_end_layer=mose_end_layer,
-            r1=4,
-            r2=3,
-            down_r1=4,
-            down_r2=3,
-        )
+        assert block.feed_forward.control_scope == control_scope
 
 
 def test_mose_rank_and_control_overrides_round_trip() -> None:
@@ -254,6 +140,7 @@ def test_mose_rank_and_control_overrides_round_trip() -> None:
             "block.feed_forward.down_r1=16",
             "block.feed_forward.down_r2=0",
             "block.feed_forward.control=asymmetric_rational_clip",
+            "block.feed_forward.control_scope=gate",
             "block.feed_forward.gate_nonlinearity=rms_norm",
             "block.feed_forward.up_nonlinearity=silu",
             "block.feed_forward.down_nonlinearity=rms_norm",
@@ -266,6 +153,7 @@ def test_mose_rank_and_control_overrides_round_trip() -> None:
     assert (feed_forward.r1, feed_forward.r2) == (64, 32)
     assert (feed_forward.down_r1, feed_forward.down_r2) == (16, 0)
     assert feed_forward.control == SwiGLUChannelControl.asymmetric_rational_clip
+    assert feed_forward.control_scope == SwiGLUChannelControlScope.gate
     assert feed_forward.gate_nonlinearity == MoSENonlinearity.rms_norm
     assert feed_forward.up_nonlinearity == MoSENonlinearity.silu
     assert feed_forward.down_nonlinearity == MoSENonlinearity.rms_norm
@@ -296,19 +184,13 @@ def test_native_control_patch_rejects_mose_topology() -> None:
         patch_swiglu_channel_control(config, control=SwiGLUChannelControl.standard)
 
 
-def _tiny_mose_config(
-    *,
-    mose_start_layer: int = 0,
-    mose_end_layer: Optional[int] = None,
-) -> TransformerConfig:
+def _tiny_mose_config() -> TransformerConfig:
     return patch_mose_swiglu(
         TransformerConfig.olmo3_1M(
             vocab_size=128,
             attn_backend=AttentionBackendName.torch,
         ),
         control=SwiGLUChannelControl.asymmetric_rational_clip,
-        mose_start_layer=mose_start_layer,
-        mose_end_layer=mose_end_layer,
         r1=4,
         r2=3,
         down_r1=4,
@@ -316,15 +198,12 @@ def _tiny_mose_config(
     )
 
 
-def test_partial_mose_transformer_builds_expected_feed_forward_types() -> None:
-    model = _tiny_mose_config(mose_start_layer=1, mose_end_layer=3).build(
-        init_device="meta"
-    )
+def test_mose_transformer_builds_mose_in_every_layer() -> None:
+    model = _tiny_mose_config().build(init_device="meta")
 
-    assert isinstance(model.blocks["0"].feed_forward, ChannelControlledFeedForward)
-    assert isinstance(model.blocks["1"].feed_forward, MoSESwiGLU)
-    assert isinstance(model.blocks["2"].feed_forward, MoSESwiGLU)
-    assert isinstance(model.blocks["3"].feed_forward, ChannelControlledFeedForward)
+    assert all(
+        isinstance(block.feed_forward, MoSESwiGLU) for block in model.blocks.values()
+    )
 
 
 def test_mose_transformer_initializes_all_projections_deterministically() -> None:

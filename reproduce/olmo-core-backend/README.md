@@ -64,6 +64,11 @@ parameters or checkpoint entries.
 Asymmetric RationalClip caps the up channel symmetrically and caps only the positive part of the
 gate's linear factor; the sigmoid still suppresses the uncapped negative tail.
 
+`control_scope` selects which projected channels receive SiTU or Asymmetric RationalClip:
+`both` (default), `gate`, `up`, or `none`. An uncontrolled gate uses standard `F.silu(gate)`, an
+uncontrolled up channel stays linear, and `none` is exactly standard SwiGLU. The `standard`
+control also remains standard SwiGLU regardless of this setting.
+
 Both controlled nonlinearities and their product are evaluated in FP32 when the projections are
 FP16 or BF16, then cast back before `w2`. RationalClip uses an algebraically equivalent reciprocal
 form above each cap to avoid overflow while retaining the stated function and positive derivative.
@@ -95,7 +100,8 @@ of size `r2`, and down gets another gamma of size `down_r2` when its nonlinearit
 
 The selected SiTU or Asymmetric RationalClip function is applied after the two experts have been
 summed into the final gate and up channels. The fixed `4.0/25.0` constants and FP32 control math are
-identical to the native-topology experiments.
+identical to the native-topology experiments. `control_scope` applies identically to native and
+MoSE feed-forward variants.
 
 The down projection uses the corresponding two-expert sum when either down rank is positive:
 
@@ -270,22 +276,14 @@ Enable learnable RMSNorm gamma weights with:
 --model.block.feed_forward.rms_norm_learnable_weight=true
 ```
 
-MoSE uses the zero-based half-open layer range `[mose_start_layer, mose_end_layer)`. Start defaults
-to 0 and end defaults to the model's layer count, so every layer uses MoSE by default. Layers
-outside the range remain dense while retaining the same channel control (standard control uses
-native SwiGLU). For a 16-layer model, the following keeps layers 0 and 1 dense, enables MoSE for
-layers 2 through 14, and leaves index 15 (the 16th layer) dense:
+Select the SiTU or Asymmetric RationalClip target channels from any corresponding native or MoSE
+entry point. The default is `both`:
 
 ```bash
-torchrun --nproc-per-node=8 \
-  cfgs/OLMo3-1B-stage1-mose-asymmetric-rational-clip.py \
-  --mose-start-layer=2 \
-  --mose-end-layer=15 \
-  --save-folder=/path/to/checkpoints/mose-layers-2-14 \
-  --work-dir=/path/to/work/mose-layers-2-14 \
-  --data-root=/path/to/tokenized-data \
-  --name=olmo3-1b-mose-layers-2-14
+--model.block.feed_forward.control_scope=both  # both | gate | up | none
 ```
+
+Every transformer layer uses MoSE in all MoSE entry points.
 
 `--data-root` must provide the layouts required by `OLMo_mix_0625_150Bsample` and
 `v3_small_ppl_validation`. For an initial server smoke test without external logging or evaluation:

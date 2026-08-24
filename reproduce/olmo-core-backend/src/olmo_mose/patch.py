@@ -1,5 +1,3 @@
-from typing import Optional
-
 from olmo_core.exceptions import OLMoConfigurationError
 from olmo_core.nn.feed_forward import ActivationFunction, FeedForwardConfig, FeedForwardType
 from olmo_core.nn.transformer import TransformerBlockConfig, TransformerConfig
@@ -9,6 +7,7 @@ from .feed_forward import (
     MoSENonlinearity,
     MoSESwiGLUConfig,
     SwiGLUChannelControl,
+    SwiGLUChannelControlScope,
 )
 
 
@@ -30,6 +29,7 @@ def _convert_feed_forward_config(
     feed_forward: FeedForwardConfig,
     *,
     control: SwiGLUChannelControl,
+    control_scope: SwiGLUChannelControlScope,
 ) -> ChannelControlledFeedForwardConfig:
     if feed_forward.name != FeedForwardType.default:
         raise OLMoConfigurationError(
@@ -47,6 +47,7 @@ def _convert_feed_forward_config(
         dtype=feed_forward.dtype,
         activation=feed_forward.activation,
         control=control,
+        control_scope=control_scope,
     )
 
 
@@ -54,9 +55,11 @@ def patch_swiglu_channel_control(
     config: TransformerConfig,
     *,
     control: SwiGLUChannelControl,
+    control_scope: SwiGLUChannelControlScope = SwiGLUChannelControlScope.both,
 ) -> TransformerConfig:
     """Return a copy of an OLMo config with dense SwiGLU channel control enabled."""
     control = SwiGLUChannelControl(control)
+    control_scope = SwiGLUChannelControlScope(control_scope)
     patched = config.copy()
 
     def patch_block(block: TransformerBlockConfig) -> None:
@@ -82,6 +85,7 @@ def patch_swiglu_channel_control(
         block.feed_forward = _convert_feed_forward_config(
             feed_forward,
             control=control,
+            control_scope=control_scope,
         )
 
     if isinstance(patched.block, dict):
@@ -100,8 +104,7 @@ def patch_mose_swiglu(
     config: TransformerConfig,
     *,
     control: SwiGLUChannelControl,
-    mose_start_layer: int = 0,
-    mose_end_layer: Optional[int] = None,
+    control_scope: SwiGLUChannelControlScope = SwiGLUChannelControlScope.both,
     r1: int = 880,
     r2: int = 880,
     down_r1: int = 880,
@@ -111,20 +114,9 @@ def patch_mose_swiglu(
     down_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
     rms_norm_learnable_weight: bool = False,
 ) -> TransformerConfig:
-    """Return a copy using MoSE-SwiGLU in ``[start_layer, end_layer)``."""
-    resolved_end_layer = config.n_layers if mose_end_layer is None else mose_end_layer
-    if (
-        isinstance(mose_start_layer, bool)
-        or not isinstance(mose_start_layer, int)
-        or isinstance(resolved_end_layer, bool)
-        or not isinstance(resolved_end_layer, int)
-        or not 0 <= mose_start_layer < resolved_end_layer <= config.n_layers
-    ):
-        raise OLMoConfigurationError(
-            "MoSE layer range must satisfy "
-            f"0 <= mose_start_layer < mose_end_layer <= {config.n_layers}"
-        )
+    """Return a copy using MoSE-SwiGLU in every transformer layer."""
     control = SwiGLUChannelControl(control)
+    control_scope = SwiGLUChannelControlScope(control_scope)
     gate_nonlinearity = MoSENonlinearity(gate_nonlinearity)
     up_nonlinearity = MoSENonlinearity(up_nonlinearity)
     down_nonlinearity = MoSENonlinearity(down_nonlinearity)
@@ -153,61 +145,20 @@ def patch_mose_swiglu(
             down_r1=down_r1,
             down_r2=down_r2,
             control=control,
+            control_scope=control_scope,
             gate_nonlinearity=gate_nonlinearity,
             up_nonlinearity=up_nonlinearity,
             down_nonlinearity=down_nonlinearity,
             rms_norm_learnable_weight=rms_norm_learnable_weight,
         )
 
-    def apply_dense_control(block: TransformerBlockConfig) -> None:
-        feed_forward = _require_supported_feed_forward(
-            block.feed_forward,
-            "patch_mose_swiglu",
-        )
-        if isinstance(feed_forward, MoSESwiGLUConfig):
-            raise OLMoConfigurationError(
-                "a partial MoSE layer range requires a dense input feed-forward config"
-            )
-        if control == SwiGLUChannelControl.standard:
-            if isinstance(feed_forward, ChannelControlledFeedForwardConfig):
-                block.feed_forward = FeedForwardConfig(
-                    hidden_size=feed_forward.hidden_size,
-                    name=feed_forward.name,
-                    bias=feed_forward.bias,
-                    dtype=feed_forward.dtype,
-                    activation=feed_forward.activation,
-                )
-        else:
-            block.feed_forward = _convert_feed_forward_config(
-                feed_forward,
-                control=control,
-            )
-
     if isinstance(patched.block, dict):
-        if mose_start_layer > 0 or resolved_end_layer < patched.n_layers:
-            raise OLMoConfigurationError(
-                "a partial MoSE layer range is not supported for named block patterns"
-            )
         for block in patched.block.values():
             patch_block(block)
-        return patched
-
-    block_overrides = dict(patched.block_overrides or {})
-    native_block = patched.block.copy()
-    if mose_start_layer > 0 or resolved_end_layer < patched.n_layers:
-        apply_dense_control(native_block)
-    patch_block(patched.block)
-    for block_idx, block in block_overrides.items():
-        if mose_start_layer <= block_idx < resolved_end_layer:
+    else:
+        patch_block(patched.block)
+    if patched.block_overrides is not None:
+        for block in patched.block_overrides.values():
             patch_block(block)
-        else:
-            apply_dense_control(block)
-    dense_block_indices = (
-        *range(mose_start_layer),
-        *range(resolved_end_layer, patched.n_layers),
-    )
-    for block_idx in dense_block_indices:
-        block_overrides.setdefault(block_idx, native_block.copy())
-    patched.block_overrides = block_overrides or None
 
     return patched

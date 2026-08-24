@@ -26,6 +26,15 @@ class SwiGLUChannelControl(StrEnum):
     asymmetric_rational_clip = "asymmetric_rational_clip"
 
 
+class SwiGLUChannelControlScope(StrEnum):
+    """SwiGLU channels to which the selected control function is applied."""
+
+    both = "both"
+    gate = "gate"
+    up = "up"
+    none = "none"
+
+
 class MoSENonlinearity(StrEnum):
     """Function applied to a MoSE nonlinear U projection."""
 
@@ -64,10 +73,14 @@ def _apply_swiglu_channel_control(
     up: torch.Tensor,
     *,
     control: SwiGLUChannelControl,
+    control_scope: SwiGLUChannelControlScope,
     beta_gate: float,
     beta_up: float,
 ) -> torch.Tensor:
-    if control == SwiGLUChannelControl.standard:
+    if (
+        control == SwiGLUChannelControl.standard
+        or control_scope == SwiGLUChannelControlScope.none
+    ):
         return F.silu(gate) * up
 
     projection_dtype = gate.dtype
@@ -75,22 +88,39 @@ def _apply_swiglu_channel_control(
         gate = gate.float()
         up = up.float()
 
+    control_gate = control_scope in (
+        SwiGLUChannelControlScope.both,
+        SwiGLUChannelControlScope.gate,
+    )
+    control_up = control_scope in (
+        SwiGLUChannelControlScope.both,
+        SwiGLUChannelControlScope.up,
+    )
+
     if control == SwiGLUChannelControl.situ:
-        gate_linear = beta_gate * torch.tanh(gate / beta_gate)
-        up = beta_up * torch.tanh(up / beta_up)
+        gate_factor = F.silu(gate)
+        if control_gate:
+            gate_linear = beta_gate * torch.tanh(gate / beta_gate)
+            gate_factor = gate_linear * torch.sigmoid(gate)
+        if control_up:
+            up = beta_up * torch.tanh(up / beta_up)
     elif control == SwiGLUChannelControl.asymmetric_rational_clip:
-        up = _rational_clip(up, beta_up)
-        gate_linear = torch.where(gate > 0, _rational_clip(gate, beta_gate), gate)
-        # The negative-tail limit of gate * sigmoid(gate) is zero, not inf * 0.
-        gate_linear = torch.where(
-            torch.isneginf(gate_linear),
-            torch.zeros_like(gate_linear),
-            gate_linear,
-        )
+        gate_factor = F.silu(gate)
+        if control_up:
+            up = _rational_clip(up, beta_up)
+        if control_gate:
+            gate_linear = torch.where(gate > 0, _rational_clip(gate, beta_gate), gate)
+            # The negative-tail limit of gate * sigmoid(gate) is zero, not inf * 0.
+            gate_linear = torch.where(
+                torch.isneginf(gate_linear),
+                torch.zeros_like(gate_linear),
+                gate_linear,
+            )
+            gate_factor = gate_linear * torch.sigmoid(gate)
     else:
         raise NotImplementedError(control)
 
-    return (gate_linear * torch.sigmoid(gate) * up).to(projection_dtype)
+    return (gate_factor * up).to(projection_dtype)
 
 
 @dataclass
@@ -98,11 +128,13 @@ class ChannelControlledFeedForwardConfig(FeedForwardConfig):
     """OLMo feed-forward config with fixed-scalar SwiGLU channel control."""
 
     control: SwiGLUChannelControl = SwiGLUChannelControl.situ
+    control_scope: SwiGLUChannelControlScope = SwiGLUChannelControlScope.both
 
     def __post_init__(self) -> None:
         self.name = FeedForwardType(self.name)
         self.activation = ActivationFunction(self.activation)
         self.control = SwiGLUChannelControl(self.control)
+        self.control_scope = SwiGLUChannelControlScope(self.control_scope)
 
         if self.name != FeedForwardType.default:
             raise OLMoConfigurationError(
@@ -147,6 +179,7 @@ class ChannelControlledFeedForward(FeedForward):
         init_device: str = "cpu",
         activation: ActivationFunction = ActivationFunction.silu,
         control: SwiGLUChannelControl = SwiGLUChannelControl.situ,
+        control_scope: SwiGLUChannelControlScope = SwiGLUChannelControlScope.both,
     ):
         activation = ActivationFunction(activation)
         if activation != ActivationFunction.silu:
@@ -161,6 +194,7 @@ class ChannelControlledFeedForward(FeedForward):
             activation=activation,
         )
         self.control = SwiGLUChannelControl(control)
+        self.control_scope = SwiGLUChannelControlScope(control_scope)
         self.beta_gate = 4.0
         self.beta_up = 25.0
 
@@ -171,6 +205,7 @@ class ChannelControlledFeedForward(FeedForward):
             gate,
             up,
             control=self.control,
+            control_scope=self.control_scope,
             beta_gate=self.beta_gate,
             beta_up=self.beta_up,
         )
@@ -201,6 +236,7 @@ class MoSESwiGLUConfig(FeedForwardConfig):
     down_r1: int = 880
     down_r2: int = 880
     control: SwiGLUChannelControl = SwiGLUChannelControl.situ
+    control_scope: SwiGLUChannelControlScope = SwiGLUChannelControlScope.both
     gate_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu
     up_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu
     down_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu
@@ -210,6 +246,7 @@ class MoSESwiGLUConfig(FeedForwardConfig):
         self.name = FeedForwardType(self.name)
         self.activation = ActivationFunction(self.activation)
         self.control = SwiGLUChannelControl(self.control)
+        self.control_scope = SwiGLUChannelControlScope(self.control_scope)
         self.gate_nonlinearity = MoSENonlinearity(self.gate_nonlinearity)
         self.up_nonlinearity = MoSENonlinearity(self.up_nonlinearity)
         self.down_nonlinearity = MoSENonlinearity(self.down_nonlinearity)
@@ -288,6 +325,7 @@ class MoSESwiGLU(nn.Module):
         init_device: str = "cpu",
         activation: ActivationFunction = ActivationFunction.silu,
         control: SwiGLUChannelControl = SwiGLUChannelControl.situ,
+        control_scope: SwiGLUChannelControlScope = SwiGLUChannelControlScope.both,
         gate_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
         up_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
         down_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
@@ -306,6 +344,7 @@ class MoSESwiGLU(nn.Module):
         self.down_r1 = down_r1
         self.down_r2 = down_r2
         self.control = SwiGLUChannelControl(control)
+        self.control_scope = SwiGLUChannelControlScope(control_scope)
         self.gate_nonlinearity = MoSENonlinearity(gate_nonlinearity)
         self.up_nonlinearity = MoSENonlinearity(up_nonlinearity)
         self.down_nonlinearity = MoSENonlinearity(down_nonlinearity)
@@ -468,6 +507,7 @@ class MoSESwiGLU(nn.Module):
             gate,
             up,
             control=self.control,
+            control_scope=self.control_scope,
             beta_gate=self.beta_gate,
             beta_up=self.beta_up,
         )

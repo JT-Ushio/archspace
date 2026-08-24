@@ -5,6 +5,7 @@ from .feed_forward import (
     MoSESwiGLU,
     MoSESwiGLUConfig,
     SwiGLUChannelControl,
+    SwiGLUChannelControlScope,
 )
 from .hooks import install_runtime_hooks
 from .optim import SerializableMuonConfig
@@ -20,6 +21,7 @@ __all__ = [
     "MoSESwiGLUConfig",
     "SerializableMuonConfig",
     "SwiGLUChannelControl",
+    "SwiGLUChannelControlScope",
     "patch_mose_swiglu",
     "patch_swiglu_channel_control",
 ]

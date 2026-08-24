@@ -11,6 +11,7 @@ from olmo_mose import (
     MoSENonlinearity,
     MoSESwiGLUConfig,
     SwiGLUChannelControl,
+    SwiGLUChannelControlScope,
 )
 
 
@@ -18,24 +19,7 @@ CFGS_DIR = Path(__file__).parents[1] / "cfgs"
 sys.path.insert(0, str(CFGS_DIR))
 
 from _models import build_mose_olmo3_1b, build_olmo3_1b  # noqa: E402
-from _pretrain_common import (  # noqa: E402
-    N_BATCH_PER_GPU,
-    build_pretrain_config,
-    get_mose_cli_parser,
-)
-
-
-def test_mose_cli_parser_accepts_layer_range() -> None:
-    opts = get_mose_cli_parser().parse_args(
-        [
-            "--save-folder=/tmp/checkpoints",
-            "--mose-start-layer=2",
-            "--mose-end-layer=15",
-        ]
-    )
-
-    assert opts.mose_start_layer == 2
-    assert opts.mose_end_layer == 15
+from _pretrain_common import N_BATCH_PER_GPU, build_pretrain_config  # noqa: E402
 
 
 def test_experiment_config_round_trips(tmp_path: Path) -> None:
@@ -76,6 +60,7 @@ def test_mose_experiment_config_round_trips_rank_overrides(tmp_path: Path) -> No
             "model.block.feed_forward.r2=32",
             "model.block.feed_forward.down_r1=16",
             "model.block.feed_forward.down_r2=0",
+            "model.block.feed_forward.control_scope=up",
             "model.block.feed_forward.gate_nonlinearity=rms_norm",
             "model.block.feed_forward.up_nonlinearity=rms_norm",
             "model.block.feed_forward.down_nonlinearity=silu",
@@ -95,6 +80,7 @@ def test_mose_experiment_config_round_trips_rank_overrides(tmp_path: Path) -> No
     assert (feed_forward.r1, feed_forward.r2) == (64, 32)
     assert (feed_forward.down_r1, feed_forward.down_r2) == (16, 0)
     assert feed_forward.control == SwiGLUChannelControl.asymmetric_rational_clip
+    assert feed_forward.control_scope == SwiGLUChannelControlScope.up
     assert feed_forward.gate_nonlinearity == MoSENonlinearity.rms_norm
     assert feed_forward.up_nonlinearity == MoSENonlinearity.rms_norm
     assert feed_forward.down_nonlinearity == MoSENonlinearity.silu

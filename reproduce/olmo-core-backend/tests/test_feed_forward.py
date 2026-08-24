@@ -7,6 +7,7 @@ from olmo_mose import (
     ChannelControlledFeedForward,
     ChannelControlledFeedForwardConfig,
     SwiGLUChannelControl,
+    SwiGLUChannelControlScope,
 )
 from olmo_mose.feed_forward import _rational_clip
 
@@ -15,36 +16,69 @@ def _reference_hidden(
     gate: torch.Tensor,
     up: torch.Tensor,
     control: SwiGLUChannelControl,
+    control_scope: SwiGLUChannelControlScope,
     beta_gate: float,
     beta_up: float,
 ) -> torch.Tensor:
-    if control == SwiGLUChannelControl.standard:
+    if (
+        control == SwiGLUChannelControl.standard
+        or control_scope == SwiGLUChannelControlScope.none
+    ):
         return F.silu(gate) * up
+    control_gate = control_scope in (
+        SwiGLUChannelControlScope.both,
+        SwiGLUChannelControlScope.gate,
+    )
+    control_up = control_scope in (
+        SwiGLUChannelControlScope.both,
+        SwiGLUChannelControlScope.up,
+    )
+    gate_factor = F.silu(gate)
     if control == SwiGLUChannelControl.situ:
-        gate_linear = beta_gate * torch.tanh(gate / beta_gate)
-        up = beta_up * torch.tanh(up / beta_up)
-        return gate_linear * torch.sigmoid(gate) * up
-    if control == SwiGLUChannelControl.asymmetric_rational_clip:
-        up = up * torch.rsqrt(1.0 + (up / beta_up).square())
-        gate_linear = gate * torch.rsqrt(1.0 + (F.relu(gate) / beta_gate).square())
-        return gate_linear * torch.sigmoid(gate) * up
-    raise NotImplementedError(control)
+        if control_gate:
+            gate_linear = beta_gate * torch.tanh(gate / beta_gate)
+            gate_factor = gate_linear * torch.sigmoid(gate)
+        if control_up:
+            up = beta_up * torch.tanh(up / beta_up)
+    elif control == SwiGLUChannelControl.asymmetric_rational_clip:
+        if control_gate:
+            gate_linear = gate * torch.rsqrt(
+                1.0 + (F.relu(gate) / beta_gate).square()
+            )
+            gate_factor = gate_linear * torch.sigmoid(gate)
+        if control_up:
+            up = up * torch.rsqrt(1.0 + (up / beta_up).square())
+    else:
+        raise NotImplementedError(control)
+    return gate_factor * up
 
 
 @pytest.mark.parametrize("control", list(SwiGLUChannelControl))
-def test_forward_matches_reference(control: SwiGLUChannelControl) -> None:
+@pytest.mark.parametrize("control_scope", list(SwiGLUChannelControlScope))
+def test_forward_matches_reference(
+    control: SwiGLUChannelControl,
+    control_scope: SwiGLUChannelControlScope,
+) -> None:
     torch.manual_seed(0)
     module = ChannelControlledFeedForwardConfig(
         hidden_size=7,
         bias=True,
         control=control,
+        control_scope=control_scope,
     ).build(d_model=5, dtype=torch.float64)
     x = torch.randn(2, 3, 5, dtype=torch.float64)
 
     gate = module.w1(x)
     up = module.w3(x)
     expected = module.w2(
-        _reference_hidden(gate, up, control, module.beta_gate, module.beta_up)
+        _reference_hidden(
+            gate,
+            up,
+            control,
+            control_scope,
+            module.beta_gate,
+            module.beta_up,
+        )
     )
 
     torch.testing.assert_close(module(x), expected)
@@ -59,6 +93,27 @@ def test_standard_mode_matches_native_swiglu() -> None:
         bias=False,
         dtype=torch.float64,
         control=SwiGLUChannelControl.standard,
+    )
+    controlled.load_state_dict(native.state_dict(), strict=True)
+    x = torch.randn(2, 4, dtype=torch.float64)
+
+    torch.testing.assert_close(controlled(x), native(x))
+
+
+@pytest.mark.parametrize(
+    "control",
+    [SwiGLUChannelControl.situ, SwiGLUChannelControl.asymmetric_rational_clip],
+)
+def test_none_scope_matches_native_swiglu(control: SwiGLUChannelControl) -> None:
+    torch.manual_seed(2)
+    native = FeedForward(d_model=4, hidden_size=6, bias=False, dtype=torch.float64)
+    controlled = ChannelControlledFeedForward(
+        d_model=4,
+        hidden_size=6,
+        bias=False,
+        dtype=torch.float64,
+        control=control,
+        control_scope=SwiGLUChannelControlScope.none,
     )
     controlled.load_state_dict(native.state_dict(), strict=True)
     x = torch.randn(2, 4, dtype=torch.float64)

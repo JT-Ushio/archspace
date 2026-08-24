@@ -13,6 +13,7 @@ from olmo_mose import (
     MoSESwiGLU,
     MoSESwiGLUConfig,
     SwiGLUChannelControl,
+    SwiGLUChannelControlScope,
 )
 from olmo_mose import hooks
 
@@ -41,18 +42,37 @@ def _controlled_hidden(
     gate: torch.Tensor,
     up: torch.Tensor,
     control: SwiGLUChannelControl,
+    control_scope: SwiGLUChannelControlScope,
 ) -> torch.Tensor:
-    if control == SwiGLUChannelControl.standard:
+    if (
+        control == SwiGLUChannelControl.standard
+        or control_scope == SwiGLUChannelControlScope.none
+    ):
         return F.silu(gate) * up
+    control_gate = control_scope in (
+        SwiGLUChannelControlScope.both,
+        SwiGLUChannelControlScope.gate,
+    )
+    control_up = control_scope in (
+        SwiGLUChannelControlScope.both,
+        SwiGLUChannelControlScope.up,
+    )
+    gate_factor = F.silu(gate)
     if control == SwiGLUChannelControl.situ:
-        gate_linear = 4.0 * torch.tanh(gate / 4.0)
-        up = 25.0 * torch.tanh(up / 25.0)
-        return gate_linear * torch.sigmoid(gate) * up
-    if control == SwiGLUChannelControl.asymmetric_rational_clip:
-        up = up * torch.rsqrt(1.0 + (up / 25.0).square())
-        gate_linear = gate * torch.rsqrt(1.0 + (F.relu(gate) / 4.0).square())
-        return gate_linear * torch.sigmoid(gate) * up
-    raise NotImplementedError(control)
+        if control_gate:
+            gate_linear = 4.0 * torch.tanh(gate / 4.0)
+            gate_factor = gate_linear * torch.sigmoid(gate)
+        if control_up:
+            up = 25.0 * torch.tanh(up / 25.0)
+    elif control == SwiGLUChannelControl.asymmetric_rational_clip:
+        if control_gate:
+            gate_linear = gate * torch.rsqrt(1.0 + (F.relu(gate) / 4.0).square())
+            gate_factor = gate_linear * torch.sigmoid(gate)
+        if control_up:
+            up = up * torch.rsqrt(1.0 + (up / 25.0).square())
+    else:
+        raise NotImplementedError(control)
+    return gate_factor * up
 
 
 def _reference_forward(module: MoSESwiGLU, x: torch.Tensor) -> torch.Tensor:
@@ -85,7 +105,7 @@ def _reference_forward(module: MoSESwiGLU, x: torch.Tensor) -> torch.Tensor:
     if module.gate_bias is not None:
         gate = gate + module.gate_bias
         up = up + module.up_bias
-    hidden = _controlled_hidden(gate, up, module.control)
+    hidden = _controlled_hidden(gate, up, module.control, module.control_scope)
 
     if not module.down_is_mose:
         return module.w_down(hidden)
@@ -133,6 +153,32 @@ def test_mose_forward_matches_reference(
         module.up_bias.fill_(-0.5)
         if module.down_bias is not None:
             module.down_bias.fill_(0.75)
+    x = torch.randn(2, 3, 4, dtype=torch.float64)
+
+    torch.testing.assert_close(module(x), _reference_forward(module, x))
+
+
+@pytest.mark.parametrize(
+    "control",
+    [SwiGLUChannelControl.situ, SwiGLUChannelControl.asymmetric_rational_clip],
+)
+@pytest.mark.parametrize("control_scope", list(SwiGLUChannelControlScope))
+def test_mose_channel_control_scope_matches_reference(
+    control: SwiGLUChannelControl,
+    control_scope: SwiGLUChannelControlScope,
+) -> None:
+    torch.manual_seed(11)
+    module = MoSESwiGLU(
+        d_model=4,
+        hidden_size=7,
+        r1=3,
+        r2=2,
+        down_r1=3,
+        down_r2=2,
+        dtype=torch.float64,
+        control=control,
+        control_scope=control_scope,
+    )
     x = torch.randn(2, 3, 4, dtype=torch.float64)
 
     torch.testing.assert_close(module(x), _reference_forward(module, x))
@@ -406,7 +452,7 @@ def test_mose_reuses_fp32_channel_control(
     output.sum().backward()
     gate = torch.tensor(gate_value, dtype=dtype).float()
     up = torch.tensor(up_value, dtype=dtype).float()
-    expected = _controlled_hidden(gate, up, control).to(dtype)
+    expected = _controlled_hidden(gate, up, control, module.control_scope).to(dtype)
 
     assert output.dtype == dtype
     torch.testing.assert_close(output.squeeze(), expected)

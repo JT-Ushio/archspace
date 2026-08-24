@@ -6,7 +6,7 @@ from typing import List
 from olmo_core.script_utils import ExperimentConfig, main
 
 from _models import build_mose_olmo3_1b
-from _pretrain_common import build_pretrain_config, get_mose_cli_parser
+from _pretrain_common import build_pretrain_config
 from olmo_mose import MoSENonlinearity, SwiGLUChannelControl
 
 
@@ -17,8 +17,6 @@ def build_config(opts: argparse.Namespace, overrides: List[str]) -> ExperimentCo
         lambda tokenizer: build_mose_olmo3_1b(
             tokenizer,
             SwiGLUChannelControl.standard,
-            mose_start_layer=getattr(opts, "mose_start_layer", 0),
-            mose_end_layer=getattr(opts, "mose_end_layer", None),
             gate_nonlinearity=MoSENonlinearity.rms_norm,
             up_nonlinearity=MoSENonlinearity.rms_norm,
             down_nonlinearity=MoSENonlinearity.silu,
@@ -28,4 +26,4 @@ def build_config(opts: argparse.Namespace, overrides: List[str]) -> ExperimentCo
 
 
 if __name__ == "__main__":
-    main(build_config, parser=get_mose_cli_parser())
+    main(build_config)
