@@ -77,11 +77,18 @@ The final `attention(q, k, solution)` remains dispatched through OLMo-core's
 `AttentionBackendName.flash_3` backend. A dense KRR implementation is retained only as a numerical
 reference and can be selected with `krr_implementation=dense`.
 
+An experimental `krr_kernel_backend=triton` path fuses each forward block's score product,
+causal/document/window masking, online softmax, and solved-prefix aggregation. It avoids even the
+temporary `block_size x prefix_length` tensor in the forward solve. The small block-triangular
+solve and the exact recomputation-based backward currently remain PyTorch CUDA operations, making
+the Triton path easy to compare against the `torch` reference without changing Cubit's formula.
+
 Measure the isolated KRR forward and backward on the target GPU with:
 
 ```bash
 PYTHONPATH=src python3 benchmarks/benchmark_krr.py \
-  --implementation=streaming --seq-len=4096 --block-size=64
+  --implementation=streaming --kernel-backend=triton \
+  --seq-len=4096 --block-size=128
 ```
 
 Use a shorter sequence such as 512 or 1024 when benchmarking `--implementation=dense`; its full
@@ -92,6 +99,7 @@ FP32 kernel matrix can exhaust device memory at the training sequence length.
 ```text
 src/olmo_cubit/attention.py   Cubit module and serializable OLMo config
 src/olmo_cubit/krr.py         streaming causal KRR solve and custom backward
+src/olmo_cubit/krr_triton.py  optional fused Triton forward block
 src/olmo_cubit/patch.py       non-mutating TransformerConfig patch
 src/olmo_cubit/optim.py       serializable Muon parameter-group integration
 cfgs/_models.py               OLMo3-1B baseline and Cubit builders
@@ -222,7 +230,8 @@ Override KRR/LRR settings:
 --model.block.sequence_mixer.regularization=1e-6 \
 --model.block.sequence_mixer.lrr_lower=0.5 \
 --model.block.sequence_mixer.lrr_upper=2.0 \
---model.block.sequence_mixer.krr_block_size=64
+--model.block.sequence_mixer.krr_block_size=64 \
+--model.block.sequence_mixer.krr_kernel_backend=triton
 ```
 
 Use `krr_block_size=32` to reduce peak temporary memory or `128` to trade more memory for fewer

@@ -42,6 +42,7 @@ class CubitAttentionConfig(AttentionConfig):
     reference_norm_eps: float = 1e-6
     krr_implementation: str = "streaming"
     krr_block_size: int = 64
+    krr_kernel_backend: str = "torch"
 
     def __post_init__(self, type: Optional[str] = None) -> None:
         del type
@@ -76,6 +77,10 @@ class CubitAttentionConfig(AttentionConfig):
         if self.krr_implementation not in ("streaming", "dense"):
             raise OLMoConfigurationError(
                 "krr_implementation must be either 'streaming' or 'dense'"
+            )
+        if self.krr_kernel_backend not in ("torch", "triton"):
+            raise OLMoConfigurationError(
+                "krr_kernel_backend must be either 'torch' or 'triton'"
             )
         if (
             isinstance(self.krr_block_size, bool)
@@ -176,6 +181,7 @@ class CubitAttention(Attention):
         reference_norm_eps: float = 1e-6,
         krr_implementation: str = "streaming",
         krr_block_size: int = 64,
+        krr_kernel_backend: str = "torch",
     ):
         resolved_kv_heads = n_heads if n_kv_heads is None else n_kv_heads
         if resolved_kv_heads != n_heads:
@@ -208,6 +214,7 @@ class CubitAttention(Attention):
         self.reference_norm_eps = reference_norm_eps
         self.krr_implementation = krr_implementation
         self.krr_block_size = krr_block_size
+        self.krr_kernel_backend = krr_kernel_backend
         self._initial_regularization = regularization
         self._initial_lrr_lower = lrr_lower
         self._initial_lrr_range = lrr_upper - lrr_lower
@@ -434,6 +441,7 @@ class CubitAttention(Attention):
                 doc_ids=doc_ids,
                 window_size=self.window_size,
                 block_size=self.krr_block_size,
+                kernel_backend=self.krr_kernel_backend,
             )
         else:
             mask = self._build_attention_mask(

@@ -86,6 +86,7 @@ def _forward_solve(
     doc_ids: Optional[torch.Tensor],
     window_size: Optional[int],
     block_size: int,
+    kernel_backend: str,
 ) -> tuple[torch.Tensor, torch.Tensor]:
     batch_size, n_heads, seq_len, _ = rhs.shape
     solution = torch.empty_like(rhs)
@@ -99,26 +100,44 @@ def _forward_solve(
 
     for q_start in range(0, seq_len, block_size):
         q_end = min(q_start + block_size, seq_len)
-        key_start = _first_key_for_block(q_start, window_size)
-        weights, block_logsumexp = _kernel_weights(
-            reference_queries[:, :, q_start:q_end],
-            reference_keys[:, :, key_start:q_end],
-            q_start=q_start,
-            k_start=key_start,
-            doc_ids=doc_ids,
-            window_size=window_size,
-        )
-        row_logsumexp[:, :, q_start:q_end] = block_logsumexp
+        if kernel_backend == "triton":
+            try:
+                from .krr_triton import triton_krr_forward_block
+            except ImportError as exc:
+                raise RuntimeError(
+                    "the Triton KRR backend requires the 'triton' package"
+                ) from exc
 
-        previous_end = q_start - key_start
-        residual = rhs[:, :, q_start:q_end]
-        if previous_end > 0:
-            residual = residual - _batch_matmul(
-                weights[:, :, :, :previous_end],
-                solution[:, :, key_start:q_start],
+            previous, block_logsumexp, diagonal_block = triton_krr_forward_block(
+                reference_queries,
+                reference_keys,
+                solution,
+                q_start=q_start,
+                q_end=q_end,
+                doc_ids=doc_ids,
+                window_size=window_size,
             )
+            residual = rhs[:, :, q_start:q_end] - previous
+        else:
+            key_start = _first_key_for_block(q_start, window_size)
+            weights, block_logsumexp = _kernel_weights(
+                reference_queries[:, :, q_start:q_end],
+                reference_keys[:, :, key_start:q_end],
+                q_start=q_start,
+                k_start=key_start,
+                doc_ids=doc_ids,
+                window_size=window_size,
+            )
+            previous_end = q_start - key_start
+            residual = rhs[:, :, q_start:q_end]
+            if previous_end > 0:
+                residual = residual - _batch_matmul(
+                    weights[:, :, :, :previous_end],
+                    solution[:, :, key_start:q_start],
+                )
+            diagonal_block = weights[:, :, :, previous_end:]
 
-        diagonal_block = weights[:, :, :, previous_end:]
+        row_logsumexp[:, :, q_start:q_end] = block_logsumexp
         block_len = q_end - q_start
         identity = torch.eye(
             block_len,
@@ -258,6 +277,7 @@ class _StreamingCausalKRRSolve(torch.autograd.Function):
         doc_ids: Optional[torch.Tensor],
         window_size: Optional[int],
         block_size: int,
+        kernel_backend: str,
     ) -> torch.Tensor:
         solution, row_logsumexp = _forward_solve(
             reference_queries,
@@ -267,6 +287,7 @@ class _StreamingCausalKRRSolve(torch.autograd.Function):
             doc_ids=doc_ids,
             window_size=window_size,
             block_size=block_size,
+            kernel_backend=kernel_backend,
         )
         saved_doc_ids = (
             doc_ids
@@ -327,6 +348,7 @@ class _StreamingCausalKRRSolve(torch.autograd.Function):
             None,
             None,
             None,
+            None,
         )
 
 
@@ -339,6 +361,7 @@ def streaming_causal_krr_solve(
     doc_ids: Optional[torch.Tensor] = None,
     window_size: Optional[int] = None,
     block_size: int = 64,
+    kernel_backend: str = "torch",
 ) -> torch.Tensor:
     """Solve Cubit's causal KRR system with ``O(T * D + T * block_size)`` memory.
 
@@ -363,6 +386,10 @@ def streaming_causal_krr_solve(
         raise RuntimeError("block_size must be a positive integer")
     if window_size is not None and window_size <= 0:
         raise RuntimeError("window_size must be positive")
+    if kernel_backend not in ("torch", "triton"):
+        raise RuntimeError("kernel_backend must be either 'torch' or 'triton'")
+    if kernel_backend == "triton" and not reference_queries.is_cuda:
+        raise RuntimeError("the Triton KRR backend requires CUDA tensors")
 
     return _StreamingCausalKRRSolve.apply(
         reference_queries.contiguous(),
@@ -372,4 +399,5 @@ def streaming_causal_krr_solve(
         doc_ids,
         window_size,
         block_size,
+        kernel_backend,
     )

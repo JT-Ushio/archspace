@@ -90,3 +90,65 @@ def test_streaming_krr_saved_state_is_linear_in_sequence_length() -> None:
 
     assert output.shape == (1, 1, seq_len, 4)
     assert all(shape[-2:] != torch.Size((seq_len, seq_len)) for shape in saved_shapes)
+
+
+def test_triton_backend_requires_cuda() -> None:
+    with pytest.raises(RuntimeError, match="requires CUDA tensors"):
+        streaming_causal_krr_solve(
+            torch.randn(1, 1, 2, 4),
+            torch.randn(1, 1, 2, 4),
+            torch.randn(1, 1, 2, 4),
+            torch.full((1,), 0.2),
+            kernel_backend="triton",
+        )
+
+
+@pytest.mark.skipif(not torch.cuda.is_available(), reason="requires CUDA and Triton")
+@pytest.mark.parametrize(
+    ("use_doc_ids", "window_size"),
+    [
+        (False, None),
+        (True, None),
+        (False, 9),
+    ],
+)
+def test_triton_krr_matches_torch_forward_and_backward(
+    use_doc_ids: bool,
+    window_size: int | None,
+) -> None:
+    torch.set_float32_matmul_precision("high")
+    torch.manual_seed(29)
+    shape = (1, 2, 34, 32)
+    inputs = [
+        torch.randn(shape, device="cuda", dtype=torch.float32, requires_grad=True),
+        torch.randn(shape, device="cuda", dtype=torch.float32, requires_grad=True),
+        torch.randn(shape, device="cuda", dtype=torch.float32, requires_grad=True),
+        torch.full((2,), 0.2, device="cuda", dtype=torch.float32, requires_grad=True),
+    ]
+    output_grad = torch.randn(shape, device="cuda", dtype=torch.float32)
+    doc_ids = (
+        torch.tensor([[0] * 17 + [1] * 17], device="cuda") if use_doc_ids else None
+    )
+
+    expected = streaming_causal_krr_solve(
+        *inputs,
+        doc_ids=doc_ids,
+        window_size=window_size,
+        block_size=16,
+        kernel_backend="torch",
+    )
+    expected_grads = torch.autograd.grad(expected, inputs, output_grad)
+
+    triton_inputs = [value.detach().clone().requires_grad_() for value in inputs]
+    actual = streaming_causal_krr_solve(
+        *triton_inputs,
+        doc_ids=doc_ids,
+        window_size=window_size,
+        block_size=16,
+        kernel_backend="triton",
+    )
+    actual_grads = torch.autograd.grad(actual, triton_inputs, output_grad)
+
+    torch.testing.assert_close(actual, expected, rtol=2e-2, atol=2e-3)
+    for actual_grad, expected_grad in zip(actual_grads, expected_grads):
+        torch.testing.assert_close(actual_grad, expected_grad, rtol=3e-2, atol=3e-3)

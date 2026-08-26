@@ -58,6 +58,7 @@ def test_experiment_config_round_trips(tmp_path: Path) -> None:
     assert attention.backend == AttentionBackendName.flash_3
     assert attention.krr_implementation == "streaming"
     assert attention.krr_block_size == 64
+    assert attention.krr_kernel_backend == "torch"
     assert restored.train_module.compile_model is False
     assert restored.trainer.callbacks["checkpointer"].save_interval == 2500
     assert restored.train_module.rank_microbatch_size == (

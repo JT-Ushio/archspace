@@ -18,6 +18,7 @@ def _convert_attention_config(
     reference_norm_eps: float,
     krr_implementation: str,
     krr_block_size: int,
+    krr_kernel_backend: str,
 ) -> CubitAttentionConfig:
     if type(attention) not in (AttentionConfig, CubitAttentionConfig):
         raise OLMoConfigurationError(
@@ -37,6 +38,7 @@ def _convert_attention_config(
         reference_norm_eps=reference_norm_eps,
         krr_implementation=krr_implementation,
         krr_block_size=krr_block_size,
+        krr_kernel_backend=krr_kernel_backend,
     )
 
 
@@ -52,6 +54,7 @@ def patch_cubit(
     reference_norm_eps: float = 1e-6,
     krr_implementation: str = "streaming",
     krr_block_size: int = 64,
+    krr_kernel_backend: str = "torch",
 ) -> TransformerConfig:
     """Return a copy using Cubit in the half-open layer range ``[start, end)``."""
 
@@ -84,6 +87,7 @@ def patch_cubit(
             reference_norm_eps=reference_norm_eps,
             krr_implementation=krr_implementation,
             krr_block_size=krr_block_size,
+            krr_kernel_backend=krr_kernel_backend,
         )
 
     if isinstance(patched.block, dict):

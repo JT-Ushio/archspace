@@ -29,6 +29,12 @@ def dense_causal_krr_solve(
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--implementation", choices=("streaming", "dense"), default="streaming")
+    parser.add_argument("--kernel-backend", choices=("torch", "triton"), default="torch")
+    parser.add_argument(
+        "--mode",
+        choices=("forward", "forward-backward"),
+        default="forward-backward",
+    )
     parser.add_argument("--batch-size", type=int, default=8)
     parser.add_argument("--heads", type=int, default=16)
     parser.add_argument("--seq-len", type=int, default=4096)
@@ -70,10 +76,12 @@ def main() -> None:
             output = streaming_causal_krr_solve(
                 *inputs,
                 block_size=args.block_size,
+                kernel_backend=args.kernel_backend,
             )
         else:
             output = dense_causal_krr_solve(*inputs)
-        output.square().mean().backward()
+        if args.mode == "forward-backward":
+            output.square().mean().backward()
 
     for _ in range(args.warmup):
         step()
@@ -88,9 +96,11 @@ def main() -> None:
     peak_gib = torch.cuda.max_memory_allocated() / math.pow(1024, 3)
 
     print(f"implementation: {args.implementation}")
+    print(f"kernel_backend: {args.kernel_backend}")
+    print(f"mode: {args.mode}")
     print(f"shape: {shape}")
     print(f"block_size: {args.block_size}")
-    print(f"forward+backward: {elapsed * 1000 / args.steps:.2f} ms")
+    print(f"time: {elapsed * 1000 / args.steps:.2f} ms")
     print(f"peak allocated: {peak_gib:.2f} GiB")
 
 
