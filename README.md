@@ -1,80 +1,33 @@
-## Notes
+# Architecture: AHN
 
-💡 To make your Proposal easier to validate and accept, provide implementation code that is **reproducible**, **runnable**, and **easy to use**, together with **clear and complete documentation**.
+AHN evaluates linear-attention replacements in the OLMo3-1B architecture. It supports Gated
+DeltaNet (GDN), Kimi Delta Attention (KDA), and Gated DeltaNet 2 (GDN2) with two layer layouts:
 
-💡 The model architecture code must be converted to a Hugging Face Transformers-compatible format and placed in the `archs/` directory. **Only changes within `archs/` will be merged**.
+- linear attention in all 16 transformer layers;
+- linear attention in the 12 layers that use sliding-window attention in OLMo3-1B, while layers
+  3, 7, 11, and 15 retain the original Full Attention implementation.
 
-💡 **All reproduction code must be placed in the `reproduce/` directory**, which you may also use as your working directory during development.
+## Basic Information
 
-# Architecture: `<Architecture Name>`
+| Item | Details |
+| --- | --- |
+| Architecture Name | AHN |
+| Parent ARCH-PROP ID | To be added |
+| Current ARCH-PROP ID | To be added |
 
----
+## Reproducing the Experiments
 
-## 1. Basic Information
+The complete OLMo-core extension, pinned dependencies, model patching, recipes, local checks,
+server installation, CUDA validation, and training commands are documented in
+[`reproduce/olmo-core-backend/README.md`](reproduce/olmo-core-backend/README.md).
 
-| Item                 |                          Details                          |
-| -------------------- | :-------------------------------------------------------: |
-| Architecture Name    |                   `<Architecture Name>`                   |
-| Parent ARCH-PROP ID  | [Issue \#N](https://github.com/InternLM/archspace/issues) |
-| Current ARCH-PROP ID | [Issue \#N](https://github.com/InternLM/archspace/issues) |
+The experiments use the OLMo3-1B stage-1 tokenizer, OLMo 150B-sample data mix, HSDP/Muon recipe,
+and evaluation callbacks from the baseline. The architecture variants change only the sequence
+mixers and the Muon handling required for their depthwise convolution weights.
 
-## 2. Reproducing the Experiments
+## Model Weights and Experiment Logs
 
-### 2.1 Environment Setup
-
-> Specify the required hardware and software environment, and provide complete installation instructions. Pin key dependency versions to ensure the environment can be reproduced reliably.
-
-### 2.2 Data Preparation
-
-> Architecture experiments should generally use the same data as the baseline. If the data or data-processing pipeline differs from the baseline, describe the data source and the complete preparation process here.
-
-### 2.3 Training Pipeline
-
-> Provide all training scripts, configuration files, and commands required to reproduce the training process. The commands should run without requiring modifications to the source code.
-
-### 2.4 Evaluation Pipeline
-
-> Provide all evaluation scripts, configuration files, and commands required to reproduce the reported results. Clearly specify the evaluation metrics and expected outputs.
-
-### 2.5 Model Weights and Experiment Logs
-
-> 1. Use [Weights & Biases](https://wandb.ai/site/) to record training logs.
-> 2. After completing the validation experiments, convert the model architecture code to a [Hugging Face Transformers-compatible format](https://huggingface.co/docs/transformers/v5.14.0/en/main_classes/model).## Notes
->    💡 To make your Proposal easier to validate and accept, provide implementation code that is **reproducible**, **runnable**, and **easy to use**, together with **clear and complete documentation**.
->    💡 The model architecture code must be converted to a Hugging Face Transformers-compatible format and placed in the `archs/` directory. **Only changes within `archs/` will be merged**.
->    💡 **All reproduction code must be placed in the `reproduce/` directory**, which you may also use as your working directory during development.
-
-# Architecture: `<Architecture Name>`
-
----
-
-## 1. Basic Information
-
-| Item                 |                          Details                          |
-| -------------------- | :-------------------------------------------------------: |
-| Architecture Name    |                   `<Architecture Name>`                   |
-| Parent ARCH-PROP ID  | [Issue \#N](https://github.com/InternLM/archspace/issues) |
-| Current ARCH-PROP ID | [Issue \#N](https://github.com/InternLM/archspace/issues) |
-
-## 2. Reproducing the Experiments
-
-### 2.1 Environment Setup
-
-> Specify the required hardware and software environment, and provide complete installation instructions. Pin key dependency versions to ensure the environment can be reproduced reliably.
-
-### 2.2 Data Preparation
-
-> Architecture experiments should generally use the same data as the baseline. If the data or data-processing pipeline differs from the baseline, describe the data source and the complete preparation process here.
-
-### 2.3 Training Pipeline
-
-> Provide all training scripts, configuration files, and commands required to reproduce the training process. The commands should run without requiring modifications to the source code.
-
-### 2.4 Evaluation Pipeline
-
-> Provide all evaluation scripts, configuration files, and commands required to reproduce the reported results. Clearly specify the evaluation metrics and expected outputs.
-
-### 2.5 Model Weights and Experiment Logs
-
-> 1. Use [Weights & Biases](https://wandb.ai/site/) to record training logs.
-> 2. After completing the validation experiments, convert the model architecture code to a [Hugging Face Transformers-compatible format](https://huggingface.co/docs/transformers/v5.14.0/en/main_classes/model).
+- Weights & Biases runs: To be added after server training.
+- Model weights: To be added after validation.
+- Hugging Face architecture and checkpoint converter: To be implemented after the OLMo-core
+  experiments are validated.

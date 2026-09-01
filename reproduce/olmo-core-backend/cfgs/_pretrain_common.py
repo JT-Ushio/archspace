@@ -30,7 +30,7 @@ from olmo_core.train.train_module import (
     TransformerDataParallelWrappingStrategy,
     TransformerTrainModuleConfig,
 )
-from olmo_mose import SerializableMuonConfig
+from olmo_ahn import SerializableMuonConfig
 
 DEFAULT_SEQUENCE_LENGTH = 4096
 GLOBAL_BATCH_SIZE = 4096 * 512  # ~2M tokens
@@ -129,7 +129,7 @@ def build_pretrain_config(
             WandBCallback(
                 name=opts.name,
                 entity="archspace",
-                project="MoSE",
+                project="AHN",
                 group=variant,
                 cancel_tags=[],
                 enabled=True,

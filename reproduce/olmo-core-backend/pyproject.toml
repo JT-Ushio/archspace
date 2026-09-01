@@ -3,13 +3,14 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "olmo-mose"
+name = "olmo-ahn"
 version = "0.1.0"
-description = "MoSE architecture extensions for OLMo-core"
+description = "GDN, KDA, and GDN2 hybrid-attention extensions for OLMo-core"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "ai2-olmo-core @ git+https://github.com/JT-Ushio/OLMo-core-muon-fix.git@f38e580063e48aa4b212837210df2e2038e80148",
+    "flash-linear-attention @ git+https://github.com/fla-org/flash-linear-attention.git@35dceaee5408e69a555fec34cb215c93c375dabe ; sys_platform == 'linux'",
 ]
 
 [project.optional-dependencies]
@@ -22,7 +23,7 @@ training = [
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["olmo_mose*"]
+include = ["olmo_ahn*"]
 
 [tool.ruff]
 line-length = 100

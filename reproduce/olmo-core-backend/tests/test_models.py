@@ -2,28 +2,25 @@ import sys
 from pathlib import Path
 
 import pytest
-import torch
 
 from olmo_core.exceptions import OLMoConfigurationError
-from olmo_core.nn.attention import AttentionBackendName
-from olmo_core.nn.feed_forward import FeedForwardConfig
+from olmo_core.nn.attention import AttentionBackendName, AttentionConfig
 from olmo_core.nn.transformer import TransformerConfig
-from olmo_mose import (
-    ChannelControlledFeedForwardConfig,
-    MoSENonlinearity,
-    MoSESwiGLU,
-    MoSESwiGLUConfig,
-    SerializableMuonConfig,
-    SwiGLUChannelControl,
-    SwiGLUChannelControlScope,
-    patch_mose_swiglu,
-    patch_swiglu_channel_control,
+from olmo_ahn import (
+    LinearAttentionConfig,
+    LinearAttentionType,
+    patch_all_linear_attention,
+    patch_swa_with_linear_attention,
 )
 
 CFGS_DIR = Path(__file__).parents[1] / "cfgs"
 sys.path.insert(0, str(CFGS_DIR))
 
-from _models import build_mose_olmo3_1b, build_olmo3_1b  # noqa: E402
+from _models import (  # noqa: E402
+    build_all_linear_olmo3_1b,
+    build_hybrid_linear_olmo3_1b,
+    build_olmo3_1b_baseline,
+)
 
 
 class _Tokenizer:
@@ -31,277 +28,104 @@ class _Tokenizer:
         return 100_352
 
 
-def test_standard_model_is_an_unchanged_olmo3_1b_config() -> None:
+def test_baseline_is_the_unmodified_olmo3_1b_config() -> None:
     expected = TransformerConfig.olmo3_1B(
         vocab_size=100_352,
         attn_backend=AttentionBackendName.flash_3,
     )
-    actual = build_olmo3_1b(_Tokenizer(), SwiGLUChannelControl.standard)
 
-    assert actual.as_config_dict() == expected.as_config_dict()
-    assert type(actual.block.feed_forward) is FeedForwardConfig
+    assert build_olmo3_1b_baseline(_Tokenizer()).as_config_dict() == expected.as_config_dict()
 
 
-def test_channel_control_patches_olmo3_1b_without_changing_parameter_count() -> None:
-    baseline = build_olmo3_1b(_Tokenizer(), SwiGLUChannelControl.standard)
-    controlled = build_olmo3_1b(
-        _Tokenizer(), SwiGLUChannelControl.asymmetric_rational_clip
+def test_all_linear_replaces_every_layer_without_mutating_input() -> None:
+    baseline = build_olmo3_1b_baseline(_Tokenizer())
+    before = baseline.as_config_dict()
+    patched = patch_all_linear_attention(baseline)
+
+    assert baseline.as_config_dict() == before
+    assert patched.block_overrides is None
+    assert all(
+        isinstance(block.sequence_mixer, LinearAttentionConfig)
+        for block in patched.resolved_block_configs
     )
-    feed_forward = controlled.block.feed_forward
-
-    assert isinstance(feed_forward, ChannelControlledFeedForwardConfig)
-    assert feed_forward.control == SwiGLUChannelControl.asymmetric_rational_clip
-    assert controlled.num_params == baseline.num_params
-    assert type(baseline.block.feed_forward) is FeedForwardConfig
-
-
-def test_custom_feed_forward_survives_control_override_round_trip() -> None:
-    config = build_olmo3_1b(_Tokenizer(), SwiGLUChannelControl.situ)
-
-    overridden = config.merge(
-        [
-            "block.feed_forward.control=asymmetric_rational_clip",
-            "block.feed_forward.control_scope=up",
-        ]
-    )
-    feed_forward = overridden.block.feed_forward
-
-    assert isinstance(feed_forward, ChannelControlledFeedForwardConfig)
-    assert feed_forward.control == SwiGLUChannelControl.asymmetric_rational_clip
-    assert feed_forward.control_scope == SwiGLUChannelControlScope.up
-
-
-def test_standard_patch_restores_native_feed_forward_config() -> None:
-    controlled = build_olmo3_1b(_Tokenizer(), SwiGLUChannelControl.situ)
-
-    restored = patch_swiglu_channel_control(
-        controlled,
-        control=SwiGLUChannelControl.standard,
+    assert all(
+        block.sequence_mixer.attention_type == LinearAttentionType.gdn
+        for block in patched.resolved_block_configs
     )
 
-    assert type(restored.block.feed_forward) is FeedForwardConfig
-    assert isinstance(controlled.block.feed_forward, ChannelControlledFeedForwardConfig)
+
+def test_hybrid_replaces_exactly_the_three_swa_layers_in_each_group() -> None:
+    baseline = build_olmo3_1b_baseline(_Tokenizer())
+    hybrid = build_hybrid_linear_olmo3_1b(_Tokenizer())
+    linear_indices = [
+        index
+        for index, block in enumerate(hybrid.resolved_block_configs)
+        if isinstance(block.sequence_mixer, LinearAttentionConfig)
+    ]
+    full_indices = [
+        index
+        for index, block in enumerate(hybrid.resolved_block_configs)
+        if isinstance(block.sequence_mixer, AttentionConfig)
+    ]
+
+    assert linear_indices == [0, 1, 2, 4, 5, 6, 8, 9, 10, 12, 13, 14]
+    assert full_indices == [3, 7, 11, 15]
+    for index in full_indices:
+        assert (
+            hybrid.resolved_block_configs[index].as_config_dict()
+            == baseline.resolved_block_configs[index].as_config_dict()
+        )
 
 
-def test_controlled_feed_forward_builds_inside_transformer() -> None:
-    config = TransformerConfig.olmo3_1M(
-        vocab_size=128,
-        attn_backend=AttentionBackendName.torch,
-    )
-    config.block.feed_forward = ChannelControlledFeedForwardConfig(
-        hidden_size=config.block.feed_forward.hidden_size,
-        bias=config.block.feed_forward.bias,
-        dtype=config.block.feed_forward.dtype,
-        control=SwiGLUChannelControl.situ,
-        control_scope=SwiGLUChannelControlScope.gate,
-    )
-
-    model = config.build(init_device="meta")
-
-    assert model.blocks["0"].feed_forward.control == SwiGLUChannelControl.situ
-    assert model.blocks["0"].feed_forward.control_scope == SwiGLUChannelControlScope.gate
-
-
-def test_mose_model_uses_configurable_default_ranks() -> None:
-    baseline = build_olmo3_1b(_Tokenizer(), SwiGLUChannelControl.standard)
-    config = build_mose_olmo3_1b(_Tokenizer(), SwiGLUChannelControl.situ)
-    feed_forward = config.block.feed_forward
-
-    assert isinstance(feed_forward, MoSESwiGLUConfig)
-    assert feed_forward.control_scope == SwiGLUChannelControlScope.both
-    assert (feed_forward.r1, feed_forward.r2) == (880, 880)
-    assert (feed_forward.down_r1, feed_forward.down_r2) == (880, 880)
-    assert config.num_params == 1_487_013_888
-    assert config.num_params - baseline.num_params == 2_097_152
-
-
-@pytest.mark.parametrize("control_scope", list(SwiGLUChannelControlScope))
-def test_mose_control_scope_applies_to_every_layer(
-    control_scope: SwiGLUChannelControlScope,
+@pytest.mark.parametrize("attention_type", list(LinearAttentionType))
+def test_all_linear_builder_supports_every_requested_type(
+    attention_type: LinearAttentionType,
 ) -> None:
-    config = build_mose_olmo3_1b(
-        _Tokenizer(),
-        SwiGLUChannelControl.asymmetric_rational_clip,
-        control_scope=control_scope,
-    )
-    assert len(config.resolved_block_configs) == config.n_layers
-    for block in config.resolved_block_configs:
-        assert isinstance(block.feed_forward, MoSESwiGLUConfig)
-        assert block.feed_forward.control_scope == control_scope
-
-
-def test_mose_rank_and_control_overrides_round_trip() -> None:
-    config = build_mose_olmo3_1b(_Tokenizer(), SwiGLUChannelControl.situ)
-
-    overridden = config.merge(
-        [
-            "block.feed_forward.r1=64",
-            "block.feed_forward.r2=32",
-            "block.feed_forward.down_r1=16",
-            "block.feed_forward.down_r2=0",
-            "block.feed_forward.control=asymmetric_rational_clip",
-            "block.feed_forward.control_scope=gate",
-            "block.feed_forward.gate_nonlinearity=rms_norm",
-            "block.feed_forward.up_nonlinearity=silu",
-            "block.feed_forward.down_nonlinearity=rms_norm",
-            "block.feed_forward.rms_norm_learnable_weight=true",
-        ]
-    )
-    feed_forward = overridden.block.feed_forward
-
-    assert isinstance(feed_forward, MoSESwiGLUConfig)
-    assert (feed_forward.r1, feed_forward.r2) == (64, 32)
-    assert (feed_forward.down_r1, feed_forward.down_r2) == (16, 0)
-    assert feed_forward.control == SwiGLUChannelControl.asymmetric_rational_clip
-    assert feed_forward.control_scope == SwiGLUChannelControlScope.gate
-    assert feed_forward.gate_nonlinearity == MoSENonlinearity.rms_norm
-    assert feed_forward.up_nonlinearity == MoSENonlinearity.silu
-    assert feed_forward.down_nonlinearity == MoSENonlinearity.rms_norm
-    assert feed_forward.rms_norm_learnable_weight is True
-
-
-def test_mose_rmsnorm_silu_baseline_reaches_model_config() -> None:
-    config = build_mose_olmo3_1b(
-        _Tokenizer(),
-        SwiGLUChannelControl.standard,
-        gate_nonlinearity=MoSENonlinearity.rms_norm,
-        up_nonlinearity=MoSENonlinearity.rms_norm,
-        down_nonlinearity=MoSENonlinearity.silu,
-    )
-    feed_forward = config.block.feed_forward
-
-    assert isinstance(feed_forward, MoSESwiGLUConfig)
-    assert feed_forward.control == SwiGLUChannelControl.standard
-    assert feed_forward.gate_nonlinearity == MoSENonlinearity.rms_norm
-    assert feed_forward.up_nonlinearity == MoSENonlinearity.rms_norm
-    assert feed_forward.down_nonlinearity == MoSENonlinearity.silu
-
-
-def test_native_control_patch_rejects_mose_topology() -> None:
-    config = build_mose_olmo3_1b(_Tokenizer(), SwiGLUChannelControl.situ)
-
-    with pytest.raises(OLMoConfigurationError, match="cannot change MoSE topology"):
-        patch_swiglu_channel_control(config, control=SwiGLUChannelControl.standard)
-
-
-def _tiny_mose_config() -> TransformerConfig:
-    return patch_mose_swiglu(
-        TransformerConfig.olmo3_1M(
-            vocab_size=128,
-            attn_backend=AttentionBackendName.torch,
-        ),
-        control=SwiGLUChannelControl.asymmetric_rational_clip,
-        r1=4,
-        r2=3,
-        down_r1=4,
-        down_r2=3,
-    )
-
-
-def test_mose_transformer_builds_mose_in_every_layer() -> None:
-    model = _tiny_mose_config().build(init_device="meta")
+    config = build_all_linear_olmo3_1b(_Tokenizer(), attention_type)
 
     assert all(
-        isinstance(block.feed_forward, MoSESwiGLU) for block in model.blocks.values()
+        block.sequence_mixer.attention_type == attention_type
+        for block in config.resolved_block_configs
     )
 
 
-def test_mose_transformer_initializes_all_projections_deterministically() -> None:
-    models = []
-    for _ in range(2):
-        model = _tiny_mose_config().build(init_device="meta")
-        model.init_weights(device=torch.device("cpu"))
-        models.append(model)
+@pytest.mark.parametrize("attention_type", list(LinearAttentionType))
+def test_hybrid_builder_supports_every_requested_type(
+    attention_type: LinearAttentionType,
+) -> None:
+    config = build_hybrid_linear_olmo3_1b(_Tokenizer(), attention_type)
 
-    first, second = models
-    for parameter in first.parameters():
-        assert not parameter.is_meta
-        assert torch.isfinite(parameter).all()
-    for key, value in first.state_dict().items():
-        torch.testing.assert_close(value, second.state_dict()[key], rtol=0, atol=0)
-
-    for block in first.blocks.values():
-        assert isinstance(block.feed_forward, MoSESwiGLU)
-        assert all(
-            projection.weight.count_nonzero() > 0
-            for projection in block.feed_forward.projection_modules()
-        )
+    for index, block in enumerate(config.resolved_block_configs):
+        if index in (3, 7, 11, 15):
+            assert isinstance(block.sequence_mixer, AttentionConfig)
+        else:
+            assert isinstance(block.sequence_mixer, LinearAttentionConfig)
+            assert block.sequence_mixer.attention_type == attention_type
 
 
-def test_mose_transformer_initializes_learnable_rms_norm_weights_to_one() -> None:
-    config = patch_mose_swiglu(
-        TransformerConfig.olmo3_1M(
-            vocab_size=128,
-            attn_backend=AttentionBackendName.torch,
-        ),
-        control=SwiGLUChannelControl.standard,
-        r1=4,
-        r2=3,
-        down_r1=4,
-        down_r2=3,
-        gate_nonlinearity=MoSENonlinearity.rms_norm,
-        up_nonlinearity=MoSENonlinearity.rms_norm,
-        down_nonlinearity=MoSENonlinearity.rms_norm,
-        rms_norm_learnable_weight=True,
-    )
-    model = config.build(init_device="meta")
-    model.init_weights(device=torch.device("cpu"))
+def test_cli_style_override_switches_the_all_linear_algorithm() -> None:
+    config = build_all_linear_olmo3_1b(_Tokenizer())
 
-    for block in model.blocks.values():
-        assert isinstance(block.feed_forward, MoSESwiGLU)
-        assert block.feed_forward.gate_up_nonlinear_norm is not None
-        assert block.feed_forward.gate_up_nonlinear_norm.weight is not None
-        assert block.feed_forward.down_nonlinear_norm is not None
-        assert block.feed_forward.down_nonlinear_norm.weight is not None
-        torch.testing.assert_close(
-            block.feed_forward.gate_up_nonlinear_norm.weight,
-            torch.ones(3),
-        )
-        torch.testing.assert_close(
-            block.feed_forward.down_nonlinear_norm.weight,
-            torch.ones(3),
-        )
+    overridden = config.merge(["block.sequence_mixer.attention_type=kda"])
+
+    assert overridden.block.sequence_mixer.attention_type == LinearAttentionType.kda
 
 
-def test_muon_categorizes_every_mose_projection_as_a_matrix() -> None:
-    model = _tiny_mose_config().build(init_device="meta")
+def test_parameter_count_tracks_the_replaced_layer_count() -> None:
+    baseline = build_olmo3_1b_baseline(_Tokenizer())
+    all_linear = build_all_linear_olmo3_1b(_Tokenizer())
+    hybrid = build_hybrid_linear_olmo3_1b(_Tokenizer())
+    baseline_attention = baseline.block.sequence_mixer.num_params(baseline.d_model)
+    linear_attention = all_linear.block.sequence_mixer.num_params(all_linear.d_model)
+    difference = linear_attention - baseline_attention
 
-    optim = SerializableMuonConfig()
-    categories = optim.categorize_parameters(model)
-    mose_weights = {
-        name
-        for name, parameter in model.named_parameters()
-        if ".feed_forward." in name and parameter.ndim == 2
-    }
-
-    assert mose_weights
-    assert mose_weights <= set(categories["matrix"])
-
-    optim.build_groups(model)
-    assert optim.group_overrides is None
-    restored = SerializableMuonConfig.from_dict(optim.as_config_dict())
-    assert restored.group_overrides is None
+    assert all_linear.num_params == baseline.num_params + 16 * difference
+    assert hybrid.num_params == baseline.num_params + 12 * difference
 
 
-def test_mose_patch_preserves_native_unspecified_bias_semantics() -> None:
-    config = TransformerConfig.olmo3_1M(
-        vocab_size=128,
-        attn_backend=AttentionBackendName.torch,
-    )
-    config.block.feed_forward = FeedForwardConfig(hidden_size=16, bias=None)
+def test_patch_rejects_existing_block_overrides() -> None:
+    config = build_olmo3_1b_baseline(_Tokenizer())
+    config.block_overrides = {0: config.block.copy()}
 
-    patched = patch_mose_swiglu(
-        config,
-        control=SwiGLUChannelControl.situ,
-        r1=4,
-        r2=3,
-        down_r1=0,
-        down_r2=0,
-    )
-    feed_forward = patched.block.feed_forward
-
-    assert isinstance(feed_forward, MoSESwiGLUConfig)
-    assert feed_forward.bias is True
-    assert feed_forward.num_params(patched.d_model) == sum(
-        parameter.numel() for parameter in feed_forward.build(patched.d_model).parameters()
-    )
+    with pytest.raises(OLMoConfigurationError, match="block_overrides"):
+        patch_swa_with_linear_attention(config)
