@@ -1,4 +1,4 @@
-"""OLMo3-1B rank-512 nonlinear Q/K/V, RMSNorm O, and Down SiLU."""
+"""OLMo3-1B low-rank ablation with shared Q/K/V bottleneck."""
 
 import argparse
 import sys
@@ -9,13 +9,14 @@ from olmo_core.optim import WSD
 from olmo_core.script_utils import ExperimentConfig, main
 from olmo_core.train import Duration
 
-CFGS_DIR = Path(__file__).resolve().parents[2] / "cfgs"
+CFGS_DIR = Path(__file__).resolve().parents[3] / "cfgs"
 if str(CFGS_DIR) not in sys.path:
     sys.path.insert(0, str(CFGS_DIR))
 
 from _models import build_mose_olmo3_1b  # noqa: E402
 from _pretrain_common import build_pretrain_config  # noqa: E402
 from olmo_mose import (  # noqa: E402
+    LowRankAttentionSharingScope,
     MoSENonlinearity,
     SwiGLUChannelControl,
     SwiGLUChannelControlScope,
@@ -45,18 +46,19 @@ def build_config(opts: argparse.Namespace, overrides: List[str]) -> ExperimentCo
             down_r2=LOW_RANK,
             gate_nonlinearity=MoSENonlinearity.silu,
             up_nonlinearity=MoSENonlinearity.silu,
-            down_nonlinearity=MoSENonlinearity.silu,
+            down_nonlinearity=MoSENonlinearity.rms_norm,
             rms_norm_learnable_weight=False,
-            share_gate_up_subspace=False,
+            share_gate_up_subspace=True,
             attention_low_rank_enabled=True,
             attention_rank=LOW_RANK,
+            attention_share_scope=LowRankAttentionSharingScope.qkv,
             attention_q_nonlinearity=MoSENonlinearity.silu,
             attention_k_nonlinearity=MoSENonlinearity.silu,
             attention_v_nonlinearity=MoSENonlinearity.silu,
-            attention_o_nonlinearity=MoSENonlinearity.rms_norm,
+            attention_o_nonlinearity=MoSENonlinearity.silu,
             attention_rms_norm_learnable_weight=False,
         ),
-        variant="qkvo512-o-rms-gateup512-down-silu",
+        variant="qkv-shared",
     )
 
     config.data_loader.global_batch_size = GLOBAL_BATCH_SIZE

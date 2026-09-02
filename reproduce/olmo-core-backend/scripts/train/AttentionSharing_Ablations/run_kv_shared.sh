@@ -2,7 +2,7 @@
 set -eo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-BACKEND_DIR="$(cd -- "${SCRIPT_DIR}/../.." && pwd)"
+BACKEND_DIR="$(cd -- "${SCRIPT_DIR}/../../.." && pwd)"
 source "${BACKEND_DIR}/scripts/prepare/prepare_olmo_gpfs2.sh"
 set -u
 
@@ -15,14 +15,13 @@ source "${HCEPH_START}"
 
 cd "${MOSE_JT}"
 
-RUN_NAME="${RUN_NAME:-olmo3-1b-qkvo512-gateup512-down-silu-bs256-seq8k-30b-wsd-fp8-5e-3}"
+RUN_NAME="${RUN_NAME:-olmo3-1b-kv-shared}"
 STAGE="${STAGE:-stage1}"
-
 PROC_PER_NODE="${PROC_PER_NODE:-8}"
 NODE_COUNT="${NODE_COUNT:-1}"
 NODE_RANK="${NODE_RANK:-0}"
 MASTER_ADDR="${MASTER_ADDR:-127.0.0.1}"
-MASTER_PORT="${MASTER_PORT:-29636}"
+MASTER_PORT="${MASTER_PORT:-29643}"
 
 export WANDB_API_KEY="${WANDB_SJY}"
 
@@ -32,7 +31,7 @@ exec "${OLMO_ENV}/bin/python" -m torch.distributed.run \
   --node_rank="${NODE_RANK}" \
   --master_addr="${MASTER_ADDR}" \
   --master_port="${MASTER_PORT}" \
-  cfps/BS256_Seq8K_30B_WSD_FP8/OLMo3-1B-QKVO512-GateUp512-DownSiLU.py \
+  cfps/BS256_Seq8K_30B_WSD_FP8/AttentionSharing_Ablations/kv_shared.py \
   --name "${RUN_NAME}" \
   --sequence-length=8192 \
   --data-root="${DATA_DIR}" \
@@ -49,6 +48,7 @@ exec "${OLMO_ENV}/bin/python" -m torch.distributed.run \
   --trainer.callbacks.checkpointer.save_interval=3576 \
   --trainer.callbacks.checkpointer.max_checkpoints=null \
   --model.block.sequence_mixer.rank=512 \
+  --model.block.sequence_mixer.share_scope=kv \
   --model.block.sequence_mixer.q_nonlinearity=silu \
   --model.block.sequence_mixer.k_nonlinearity=silu \
   --model.block.sequence_mixer.v_nonlinearity=silu \
@@ -58,11 +58,11 @@ exec "${OLMO_ENV}/bin/python" -m torch.distributed.run \
   --model.block.feed_forward.r2=512 \
   --model.block.feed_forward.down_r1=0 \
   --model.block.feed_forward.down_r2=512 \
-  --model.block.feed_forward.share_gate_up_subspace=false \
+  --model.block.feed_forward.share_gate_up_subspace=true \
   --model.block.feed_forward.control=standard \
   --model.block.feed_forward.control_scope=none \
   --model.block.feed_forward.gate_nonlinearity=silu \
   --model.block.feed_forward.up_nonlinearity=silu \
-  --model.block.feed_forward.down_nonlinearity=silu \
+  --model.block.feed_forward.down_nonlinearity=rms_norm \
   --model.block.feed_forward.rms_norm_learnable_weight=false \
   trainer.work_dir="${WORK_DIR}"

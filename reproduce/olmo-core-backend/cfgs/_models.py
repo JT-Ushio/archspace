@@ -3,6 +3,7 @@ from olmo_core.nn.attention import AttentionBackendName
 from olmo_core.nn.transformer import TransformerConfig
 
 from olmo_mose import (
+    LowRankAttentionSharingScope,
     MoSENonlinearity,
     SwiGLUChannelControl,
     SwiGLUChannelControlScope,
@@ -50,6 +51,7 @@ def build_mose_olmo3_1b(
     attention_v_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
     attention_o_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
     attention_rms_norm_learnable_weight: bool = False,
+    attention_share_scope: LowRankAttentionSharingScope = LowRankAttentionSharingScope.none,
 ) -> TransformerConfig:
     """Build OLMo3-1B with configurable MoSE-SwiGLU projections."""
     config = TransformerConfig.olmo3_1B(
@@ -65,6 +67,7 @@ def build_mose_olmo3_1b(
         v_nonlinearity=attention_v_nonlinearity,
         o_nonlinearity=attention_o_nonlinearity,
         rms_norm_learnable_weight=attention_rms_norm_learnable_weight,
+        share_scope=attention_share_scope,
     )
     return patch_mose_swiglu(
         config,

@@ -9,6 +9,7 @@ from olmo_core.nn.transformer.init import InitMethod
 from olmo_mose import (
     LowRankAttention,
     LowRankAttentionConfig,
+    LowRankAttentionSharingScope,
     NonlinearLowRankProjection,
     patch_low_rank_attention,
 )
@@ -80,6 +81,93 @@ def test_low_rank_attention_uses_four_independent_projections_and_runs_forward()
     assert output.shape == x.shape
     assert x.grad is not None and torch.isfinite(x.grad).all()
     assert all(parameter.grad is not None for parameter in module.parameters())
+
+
+@pytest.mark.parametrize(
+    ("share_scope", "shared_indices"),
+    [
+        (LowRankAttentionSharingScope.none, ()),
+        (LowRankAttentionSharingScope.qk, (0, 1)),
+        (LowRankAttentionSharingScope.kv, (1, 2)),
+        (LowRankAttentionSharingScope.qkv, (0, 1, 2)),
+    ],
+)
+def test_low_rank_attention_shares_only_selected_qkv_input_projections(
+    share_scope: LowRankAttentionSharingScope,
+    shared_indices: tuple[int, ...],
+) -> None:
+    config = LowRankAttentionConfig(
+        n_heads=4,
+        n_kv_heads=2,
+        head_dim=2,
+        rank=3,
+        share_scope=share_scope,
+        bias=False,
+        backend=AttentionBackendName.torch,
+    )
+    module = config.build(d_model=8, layer_idx=0, n_layers=1)
+    projections = (module.w_q, module.w_k, module.w_v, module.w_out)
+
+    for left, right in ((0, 1), (1, 2), (0, 2)):
+        if left in shared_indices and right in shared_indices:
+            assert projections[left].v is projections[right].v
+        else:
+            assert projections[left].v is not projections[right].v
+    assert projections[3].v is not projections[0].v
+    assert projections[3].v is not projections[1].v
+    assert projections[3].v is not projections[2].v
+    expected_projection_count = 8 if not shared_indices else 8 - (len(shared_indices) - 1)
+    assert len(module.projection_modules()) == expected_projection_count
+    assert config.num_params(8) == sum(parameter.numel() for parameter in module.parameters())
+
+    output = module(torch.randn(2, 5, 8))
+    assert output.shape == (2, 5, 8)
+
+
+def test_qkv_sharing_evaluates_shared_input_projection_once() -> None:
+    config = LowRankAttentionConfig(
+        n_heads=4,
+        n_kv_heads=2,
+        head_dim=2,
+        rank=3,
+        share_scope=LowRankAttentionSharingScope.qkv,
+        bias=False,
+        backend=AttentionBackendName.torch,
+    )
+    module = config.build(d_model=8, layer_idx=0, n_layers=1)
+    calls = 0
+
+    def count_calls(*args) -> None:
+        del args
+        nonlocal calls
+        calls += 1
+
+    handle = module.w_q.v.register_forward_hook(count_calls)
+    try:
+        output = module(torch.randn(2, 5, 8))
+    finally:
+        handle.remove()
+
+    assert output.shape == (2, 5, 8)
+    assert calls == 1
+
+
+def test_low_rank_attention_sharing_scope_round_trips_through_patch() -> None:
+    config = patch_low_rank_attention(
+        TransformerConfig.olmo3_1M(
+            vocab_size=128,
+            attn_backend=AttentionBackendName.torch,
+        ),
+        enabled=True,
+        rank=4,
+        share_scope="qkv",
+    )
+
+    assert all(
+        isinstance(block.sequence_mixer, LowRankAttentionConfig)
+        and block.sequence_mixer.share_scope == LowRankAttentionSharingScope.qkv
+        for block in config.resolved_block_configs
+    )
 
 
 def test_low_rank_attention_supports_independent_rms_norm_activations() -> None:

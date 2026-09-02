@@ -2,7 +2,7 @@
 set -eo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-BACKEND_DIR="$(cd -- "${SCRIPT_DIR}/../.." && pwd)"
+BACKEND_DIR="$(cd -- "${SCRIPT_DIR}/../../.." && pwd)"
 source "${BACKEND_DIR}/scripts/prepare/prepare_olmo_gpfs2.sh"
 set -u
 
@@ -15,14 +15,14 @@ source "${HCEPH_START}"
 
 cd "${MOSE_JT}"
 
-RUN_NAME="${RUN_NAME:-olmo3-1b-qkvo512-o-rms-gateup512-down-rmsnorm-bs256-seq8k-30b-wsd-fp8-5e-3}"
+RUN_NAME="${RUN_NAME:-olmo3-1b-qkvo512-gateup512-down-rmsnorm-bs256-seq8k-30b-wsd-fp8-5e-3}"
 STAGE="${STAGE:-stage1}"
 
 PROC_PER_NODE="${PROC_PER_NODE:-8}"
 NODE_COUNT="${NODE_COUNT:-1}"
 NODE_RANK="${NODE_RANK:-0}"
 MASTER_ADDR="${MASTER_ADDR:-127.0.0.1}"
-MASTER_PORT="${MASTER_PORT:-29638}"
+MASTER_PORT="${MASTER_PORT:-29635}"
 
 export WANDB_API_KEY="${WANDB_SJY}"
 
@@ -32,7 +32,7 @@ exec "${OLMO_ENV}/bin/python" -m torch.distributed.run \
   --node_rank="${NODE_RANK}" \
   --master_addr="${MASTER_ADDR}" \
   --master_port="${MASTER_PORT}" \
-  cfps/BS256_Seq8K_30B_WSD_FP8/OLMo3-1B-QKVO512-ORMS-GateUp512-DownRMSNorm.py \
+  cfps/BS256_Seq8K_30B_WSD_FP8/Activation_Ablations/OLMo3-1B-QKVO512-GateUp512-DownRMSNorm.py \
   --name "${RUN_NAME}" \
   --sequence-length=8192 \
   --data-root="${DATA_DIR}" \
@@ -52,7 +52,7 @@ exec "${OLMO_ENV}/bin/python" -m torch.distributed.run \
   --model.block.sequence_mixer.q_nonlinearity=silu \
   --model.block.sequence_mixer.k_nonlinearity=silu \
   --model.block.sequence_mixer.v_nonlinearity=silu \
-  --model.block.sequence_mixer.o_nonlinearity=rms_norm \
+  --model.block.sequence_mixer.o_nonlinearity=silu \
   --model.block.sequence_mixer.rms_norm_learnable_weight=false \
   --model.block.feed_forward.r1=0 \
   --model.block.feed_forward.r2=512 \

@@ -1,6 +1,7 @@
 from .attention import (
     LowRankAttention,
     LowRankAttentionConfig,
+    LowRankAttentionSharingScope,
     NonlinearLowRankProjection,
     patch_low_rank_attention,
 )
@@ -24,6 +25,7 @@ __all__ = [
     "ChannelControlledFeedForwardConfig",
     "LowRankAttention",
     "LowRankAttentionConfig",
+    "LowRankAttentionSharingScope",
     "MoSENonlinearity",
     "MoSESwiGLU",
     "MoSESwiGLUConfig",

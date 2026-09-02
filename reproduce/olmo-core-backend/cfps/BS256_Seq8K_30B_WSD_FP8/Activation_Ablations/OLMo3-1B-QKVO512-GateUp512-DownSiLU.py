@@ -1,4 +1,4 @@
-"""OLMo3-1B: rank-512 nonlinear QKVO/Gate/Up/Down, Down RMSNorm."""
+"""OLMo3-1B: rank-512 nonlinear QKVO/Gate/Up/Down, Down SiLU ablation."""
 
 import argparse
 import sys
@@ -9,7 +9,7 @@ from olmo_core.optim import WSD
 from olmo_core.script_utils import ExperimentConfig, main
 from olmo_core.train import Duration
 
-CFGS_DIR = Path(__file__).resolve().parents[2] / "cfgs"
+CFGS_DIR = Path(__file__).resolve().parents[3] / "cfgs"
 if str(CFGS_DIR) not in sys.path:
     sys.path.insert(0, str(CFGS_DIR))
 
@@ -45,7 +45,7 @@ def build_config(opts: argparse.Namespace, overrides: List[str]) -> ExperimentCo
             down_r2=LOW_RANK,
             gate_nonlinearity=MoSENonlinearity.silu,
             up_nonlinearity=MoSENonlinearity.silu,
-            down_nonlinearity=MoSENonlinearity.rms_norm,
+            down_nonlinearity=MoSENonlinearity.silu,
             rms_norm_learnable_weight=False,
             share_gate_up_subspace=False,
             attention_low_rank_enabled=True,
@@ -56,7 +56,7 @@ def build_config(opts: argparse.Namespace, overrides: List[str]) -> ExperimentCo
             attention_o_nonlinearity=MoSENonlinearity.silu,
             attention_rms_norm_learnable_weight=False,
         ),
-        variant="qkvo512-gateup512-down-rmsnorm",
+        variant="qkvo512-gateup512-down-silu",
     )
 
     config.data_loader.global_batch_size = GLOBAL_BATCH_SIZE

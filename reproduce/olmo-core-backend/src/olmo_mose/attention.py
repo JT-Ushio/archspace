@@ -1,17 +1,19 @@
 import math
 from dataclasses import dataclass
-from typing import Optional
+from typing import Optional, Tuple
 
 import torch
 import torch.nn as nn
 from torch.distributed import DeviceMesh
 from torch.distributed.tensor.placement_types import Placement
 
+from olmo_core.config import StrEnum
 from olmo_core.exceptions import OLMoConfigurationError
 from olmo_core.nn.attention import (
     Attention,
     AttentionConfig,
     AttentionType,
+    GateGranularity,
     SlidingWindowAttentionConfig,
 )
 from olmo_core.nn.attention.kv_cache import KVCacheManager
@@ -28,6 +30,15 @@ def _validate_rank(rank: int) -> int:
     if isinstance(rank, bool) or not isinstance(rank, int) or rank <= 0:
         raise OLMoConfigurationError("attention rank must be a positive integer")
     return rank
+
+
+class LowRankAttentionSharingScope(StrEnum):
+    """Low-dimensional input projections shared by low-rank Q/K/V."""
+
+    none = "none"
+    qk = "qk"
+    kv = "kv"
+    qkv = "qkv"
 
 
 class NonlinearLowRankProjection(nn.Module):
@@ -101,6 +112,7 @@ class LowRankAttentionConfig(AttentionConfig):
     v_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu
     o_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu
     rms_norm_learnable_weight: bool = False
+    share_scope: LowRankAttentionSharingScope = LowRankAttentionSharingScope.none
 
     def __post_init__(self, registered_name: Optional[str] = None) -> None:
         # ``SequenceMixerConfig`` inherits a registry ``InitVar`` which the
@@ -112,6 +124,7 @@ class LowRankAttentionConfig(AttentionConfig):
         self.k_nonlinearity = MoSENonlinearity(self.k_nonlinearity)
         self.v_nonlinearity = MoSENonlinearity(self.v_nonlinearity)
         self.o_nonlinearity = MoSENonlinearity(self.o_nonlinearity)
+        self.share_scope = LowRankAttentionSharingScope(self.share_scope)
         if not isinstance(self.rms_norm_learnable_weight, bool):
             raise OLMoConfigurationError("rms_norm_learnable_weight must be a boolean")
         if self.name != AttentionType.default:
@@ -131,10 +144,14 @@ class LowRankAttentionConfig(AttentionConfig):
             + 2 * d_model * kv_size
             + q_size * d_model
         )
-        low_rank_projection_params = (
-            self.rank * (d_model + q_size)
-            + 2 * self.rank * (d_model + kv_size)
-            + self.rank * (q_size + d_model)
+        input_projection_count = {
+            LowRankAttentionSharingScope.none: 4,
+            LowRankAttentionSharingScope.qk: 3,
+            LowRankAttentionSharingScope.kv: 3,
+            LowRankAttentionSharingScope.qkv: 2,
+        }[self.share_scope]
+        low_rank_projection_params = self.rank * (
+            input_projection_count * d_model + 2 * q_size + 2 * kv_size
         )
         if self.rms_norm_learnable_weight:
             nonlinearities = (
@@ -205,11 +222,14 @@ class LowRankAttention(Attention):
         v_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
         o_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
         rms_norm_learnable_weight: bool = False,
+        share_scope: LowRankAttentionSharingScope = LowRankAttentionSharingScope.none,
         **kwargs,
     ) -> None:
         rank = _validate_rank(rank)
         super().__init__(**kwargs)
         self.rank = rank
+        self.rms_norm_learnable_weight = rms_norm_learnable_weight
+        self.share_scope = LowRankAttentionSharingScope(share_scope)
 
         def factorize(
             projection: nn.Linear,
@@ -231,13 +251,166 @@ class LowRankAttention(Attention):
         self.w_v = factorize(self.w_v, v_nonlinearity)
         self.w_out = factorize(self.w_out, o_nonlinearity)
 
-    def projection_modules(self) -> tuple[nn.Linear, ...]:
-        projections = (self.w_q, self.w_k, self.w_v, self.w_out)
+        if self.share_scope == LowRankAttentionSharingScope.qk:
+            self.w_k.v = self.w_q.v
+        elif self.share_scope == LowRankAttentionSharingScope.kv:
+            self.w_v.v = self.w_k.v
+        elif self.share_scope == LowRankAttentionSharingScope.qkv:
+            self.w_k.v = self.w_q.v
+            self.w_v.v = self.w_q.v
+
+    def _can_share_activated_latent(
+        self,
+        projections: Tuple[NonlinearLowRankProjection, ...],
+    ) -> bool:
+        """Whether a shared input latent can also be shared after activation."""
+        nonlinearities = {projection.nonlinearity for projection in projections}
+        if len(nonlinearities) != 1:
+            return False
+
+        # With independent learnable RMSNorm weights, each branch has a different
+        # activation and therefore cannot reuse the post-normalization latent.
+        nonlinearity = projections[0].nonlinearity
+        if nonlinearity == MoSENonlinearity.rms_norm and self.rms_norm_learnable_weight:
+            first_norm = projections[0].nonlinear_norm
+            return all(projection.nonlinear_norm is first_norm for projection in projections)
+        return True
+
+    def _project_shared_group(
+        self,
+        x: torch.Tensor,
+        projections: Tuple[NonlinearLowRankProjection, ...],
+    ) -> Tuple[torch.Tensor, ...]:
+        """Project a Q/K/V sharing group, evaluating its shared latent once."""
+        first = projections[0]
+        raw_latent = first.v(x)
+        if self._can_share_activated_latent(projections):
+            activated_latent = _apply_mose_nonlinearity(
+                raw_latent,
+                first.nonlinearity,
+                rms_norm=first.nonlinear_norm,
+            )
+            return tuple(projection.u(activated_latent) for projection in projections)
+
+        # Sharing still saves the input projection when branch nonlinearities
+        # differ; each branch must then apply its own activation separately.
         return tuple(
-            module
+            projection.u(
+                _apply_mose_nonlinearity(
+                    raw_latent,
+                    projection.nonlinearity,
+                    rms_norm=projection.nonlinear_norm,
+                )
+            )
             for projection in projections
-            for module in (projection.v, projection.u)
         )
+
+    def _project_qkv(self, x: torch.Tensor) -> Tuple[torch.Tensor, ...]:
+        """Project Q/K/V while reusing shared nonlinear latents when possible."""
+        if self.share_scope == LowRankAttentionSharingScope.none:
+            return self.w_q(x), self.w_k(x), self.w_v(x)
+        if self.share_scope == LowRankAttentionSharingScope.qk:
+            q, k = self._project_shared_group(x, (self.w_q, self.w_k))
+            return q, k, self.w_v(x)
+        if self.share_scope == LowRankAttentionSharingScope.kv:
+            k, v = self._project_shared_group(x, (self.w_k, self.w_v))
+            return self.w_q(x), k, v
+        if self.share_scope == LowRankAttentionSharingScope.qkv:
+            return self._project_shared_group(x, (self.w_q, self.w_k, self.w_v))
+        raise OLMoConfigurationError(f"unsupported attention sharing scope: {self.share_scope}")
+
+    def forward(
+        self,
+        x: torch.Tensor,
+        cu_doc_lens: Optional[torch.Tensor] = None,
+        cu_doc_lens_q: Optional[torch.Tensor] = None,
+        cu_doc_lens_k: Optional[torch.Tensor] = None,
+        max_doc_len: Optional[int] = None,
+        max_doc_len_q: Optional[int] = None,
+        max_doc_len_k: Optional[int] = None,
+        local_k_slice: Optional[slice] = None,
+        pos_sin: Optional[torch.Tensor] = None,
+        pos_cos: Optional[torch.Tensor] = None,
+        freqs_cis: Optional[torch.Tensor] = None,
+        cache_leftpad: Optional[torch.Tensor] = None,
+    ) -> torch.Tensor:
+        """Apply attention with shared Q/K/V low-rank computation when enabled."""
+        B, T, _ = x.shape
+
+        # Unlike the base Attention.forward(), this computes a shared Q/K/V
+        # bottleneck and activation once for the selected sharing scope. There
+        # is intentionally no linear/r1 branch here: all factors are nonlinear
+        # low-rank projections.
+        q, k, v = self._project_qkv(x)
+
+        if self.clip_qkv is not None:
+            q.clamp_(min=-self.clip_qkv, max=self.clip_qkv)
+            k.clamp_(min=-self.clip_qkv, max=self.clip_qkv)
+            v.clamp_(min=-self.clip_qkv, max=self.clip_qkv)
+
+        if not self.use_head_qk_norm:
+            if self.q_norm is not None:
+                q = self.q_norm(q)
+            if self.k_norm is not None:
+                k = self.k_norm(k)
+
+        q = q.view(B, T, -1, self.head_dim)
+        k = k.view(B, T, -1, self.head_dim)
+        v = v.view(B, T, -1, self.head_dim)
+
+        if self.use_head_qk_norm:
+            if self.q_norm is not None:
+                q = self.q_norm(q)
+            if self.k_norm is not None:
+                k = self.k_norm(k)
+
+        if self.rope is not None:
+            if self.cp_enabled and pos_sin is None and pos_cos is None and freqs_cis is None:
+                raise RuntimeError(
+                    "RoPE buffers must be passed through to attention after being properly "
+                    "sharded by the context parallel load balancer"
+                )
+
+            start_pos = self.kv_cache_manager.current_position() if self.kv_cache_manager else None
+            q, k = self._apply_rope(q, k, start_pos, pos_sin, pos_cos, freqs_cis, cu_doc_lens)
+
+        att = self.sdpa(
+            q,
+            k,
+            v,
+            cu_doc_lens=cu_doc_lens,
+            cu_doc_lens_q=cu_doc_lens_q,
+            cu_doc_lens_k=cu_doc_lens_k,
+            max_doc_len=max_doc_len,
+            max_doc_len_q=max_doc_len_q,
+            max_doc_len_k=max_doc_len_k,
+            local_k_slice=local_k_slice,
+            cache_leftpad=cache_leftpad,
+        )
+
+        if self.gate is not None:
+            assert self.w_g is not None
+            g = self.w_g(x)
+            if self.gate.full_precision:
+                g = g.float()
+            gate_values = torch.sigmoid(g).to(att.dtype)
+            if self.gate.granularity == GateGranularity.headwise:
+                att = att * gate_values.unsqueeze(-1)
+            elif self.gate.granularity == GateGranularity.elementwise:
+                att = att.view(B, T, -1) * gate_values
+
+        att = att.view(B, T, -1)
+        return self.w_out(att)
+
+    def projection_modules(self) -> tuple[nn.Linear, ...]:
+        modules = []
+        seen = set()
+        for projection in (self.w_q, self.w_k, self.w_v, self.w_out):
+            for module in (projection.v, projection.u):
+                if id(module) not in seen:
+                    modules.append(module)
+                    seen.add(id(module))
+        return tuple(modules)
 
     def init_weights(
         self,
@@ -256,9 +429,14 @@ class LowRankAttention(Attention):
             std = d_model**-0.5
 
         v_std = 1.0 / math.sqrt(self.rank)
+        initialized = set()
         for projection in (self.w_q, self.w_k, self.w_v, self.w_out):
-            init_linear(projection.v, std=std, generator=generator)
-            init_linear(projection.u, std=v_std, generator=generator)
+            if id(projection.v) not in initialized:
+                init_linear(projection.v, std=std, generator=generator)
+                initialized.add(id(projection.v))
+            if id(projection.u) not in initialized:
+                init_linear(projection.u, std=v_std, generator=generator)
+                initialized.add(id(projection.u))
             if projection.nonlinear_norm is not None:
                 projection.nonlinear_norm.reset_parameters()
 
@@ -298,6 +476,7 @@ def patch_low_rank_attention(
     v_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
     o_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
     rms_norm_learnable_weight: bool = False,
+    share_scope: LowRankAttentionSharingScope = LowRankAttentionSharingScope.none,
 ) -> TransformerConfig:
     """Optionally replace every default attention Q/K/V/O with rank-``rank`` factors."""
     if not isinstance(enabled, bool):
@@ -335,6 +514,7 @@ def patch_low_rank_attention(
                 "v_nonlinearity",
                 "o_nonlinearity",
                 "rms_norm_learnable_weight",
+                "share_scope",
             ),
             recurse=False,
         )
@@ -342,6 +522,7 @@ def patch_low_rank_attention(
             **kwargs,
             rank=rank,
             rms_norm_learnable_weight=rms_norm_learnable_weight,
+            share_scope=LowRankAttentionSharingScope(share_scope),
             **nonlinearities,
         )
 
