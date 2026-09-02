@@ -10,6 +10,8 @@ from olmo_core.nn.feed_forward import FeedForwardConfig
 from olmo_core.nn.transformer import TransformerConfig
 from olmo_mose import (
     ChannelControlledFeedForwardConfig,
+    LowRankAttention,
+    LowRankAttentionConfig,
     MoSENonlinearity,
     MoSESwiGLU,
     MoSESwiGLUConfig,
@@ -55,19 +57,30 @@ def test_channel_control_patches_olmo3_1b_without_changing_parameter_count() -> 
     assert type(baseline.block.feed_forward) is FeedForwardConfig
 
 
-def test_custom_feed_forward_survives_control_override_round_trip() -> None:
+@pytest.mark.parametrize(
+    "control",
+    [
+        SwiGLUChannelControl.asymmetric_rational_clip,
+        SwiGLUChannelControl.situ_rms,
+        SwiGLUChannelControl.dpskv4_clip,
+        SwiGLUChannelControl.dpskv4_clip_situ,
+    ],
+)
+def test_custom_feed_forward_survives_control_override_round_trip(
+    control: SwiGLUChannelControl,
+) -> None:
     config = build_olmo3_1b(_Tokenizer(), SwiGLUChannelControl.situ)
 
     overridden = config.merge(
         [
-            "block.feed_forward.control=asymmetric_rational_clip",
+            f"block.feed_forward.control={control.value}",
             "block.feed_forward.control_scope=up",
         ]
     )
     feed_forward = overridden.block.feed_forward
 
     assert isinstance(feed_forward, ChannelControlledFeedForwardConfig)
-    assert feed_forward.control == SwiGLUChannelControl.asymmetric_rational_clip
+    assert feed_forward.control == control
     assert feed_forward.control_scope == SwiGLUChannelControlScope.up
 
 
@@ -113,6 +126,45 @@ def test_mose_model_uses_configurable_default_ranks() -> None:
     assert (feed_forward.down_r1, feed_forward.down_r2) == (880, 880)
     assert config.num_params == 1_487_013_888
     assert config.num_params - baseline.num_params == 2_097_152
+
+
+def test_full_low_rank_builder_is_opt_in_and_supports_independent_gate_up() -> None:
+    baseline = build_mose_olmo3_1b(
+        _Tokenizer(),
+        SwiGLUChannelControl.standard,
+        r1=0,
+        r2=512,
+        down_r1=0,
+        down_r2=512,
+    )
+    config = build_mose_olmo3_1b(
+        _Tokenizer(),
+        SwiGLUChannelControl.standard,
+        r1=0,
+        r2=512,
+        down_r1=0,
+        down_r2=512,
+        gate_nonlinearity=MoSENonlinearity.silu,
+        up_nonlinearity=MoSENonlinearity.silu,
+        down_nonlinearity=MoSENonlinearity.rms_norm,
+        share_gate_up_subspace=False,
+        attention_low_rank_enabled=True,
+        attention_rank=512,
+    )
+
+    assert type(baseline.block.sequence_mixer).__name__ == "AttentionConfig"
+    assert isinstance(config.block.sequence_mixer, LowRankAttentionConfig)
+    assert config.block.sequence_mixer.rank == 512
+    assert isinstance(config.block.feed_forward, MoSESwiGLUConfig)
+    assert config.block.feed_forward.share_gate_up_subspace is False
+
+    model = config.build(init_device="meta")
+    first_block = model.blocks["0"]
+    assert isinstance(first_block.attention, LowRankAttention)
+    assert isinstance(first_block.feed_forward, MoSESwiGLU)
+    assert first_block.feed_forward.nonlinear_u is None
+    assert first_block.feed_forward.gate_nonlinear_u is not None
+    assert first_block.feed_forward.up_nonlinear_u is not None
 
 
 @pytest.mark.parametrize("control_scope", list(SwiGLUChannelControlScope))

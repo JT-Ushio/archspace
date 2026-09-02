@@ -1,3 +1,4 @@
+import runpy
 import sys
 from argparse import Namespace
 from pathlib import Path
@@ -43,6 +44,69 @@ def test_experiment_config_round_trips(tmp_path: Path) -> None:
     assert checkpointer.save_interval == 2500
     assert checkpointer.ephemeral_save_interval is None
     assert isinstance(restored.model.block.feed_forward, ChannelControlledFeedForwardConfig)
+
+
+@pytest.mark.parametrize(
+    ("config_name", "expected_control", "expected_scope"),
+    [
+        (
+            "OLMo3-1B-stage1-dpskv4-clip-up.py",
+            SwiGLUChannelControl.dpskv4_clip,
+            SwiGLUChannelControlScope.up,
+        ),
+        (
+            "OLMo3-1B-stage1-dpskv4-clip-both.py",
+            SwiGLUChannelControl.dpskv4_clip,
+            SwiGLUChannelControlScope.both,
+        ),
+        (
+            "OLMo3-1B-stage1-dpskv4-clip-gate-situ-up.py",
+            SwiGLUChannelControl.dpskv4_clip_situ,
+            SwiGLUChannelControlScope.both,
+        ),
+    ],
+)
+def test_dpskv4_experiment_entry_points(
+    tmp_path: Path,
+    config_name: str,
+    expected_control: SwiGLUChannelControl,
+    expected_scope: SwiGLUChannelControlScope,
+) -> None:
+    opts = Namespace(
+        sequence_length=None,
+        data_root=str(tmp_path / "data"),
+        work_dir=str(tmp_path / "work"),
+        save_folder=str(tmp_path / "checkpoints"),
+        name="dpskv4-entry-point",
+    )
+    entry_point = runpy.run_path(str(CFGS_DIR / config_name))
+    config = entry_point["build_config"](opts, [])
+    feed_forward = config.model.block.feed_forward
+
+    assert isinstance(feed_forward, ChannelControlledFeedForwardConfig)
+    assert feed_forward.control == expected_control
+    assert feed_forward.control_scope == expected_scope
+
+
+def test_situ_rms_up_experiment_entry_point(tmp_path: Path) -> None:
+    opts = Namespace(
+        sequence_length=None,
+        data_root=str(tmp_path / "data"),
+        work_dir=str(tmp_path / "work"),
+        save_folder=str(tmp_path / "checkpoints"),
+        name="situ-rms-up-entry-point",
+    )
+    entry_point = runpy.run_path(str(CFGS_DIR / "OLMo3-1B-stage1-situ-rms-up.py"))
+    config = entry_point["build_config"](
+        opts,
+        ["model.block.feed_forward.rms_beta_scale=3.5"],
+    )
+    feed_forward = config.model.block.feed_forward
+
+    assert isinstance(feed_forward, ChannelControlledFeedForwardConfig)
+    assert feed_forward.control == SwiGLUChannelControl.situ_rms
+    assert feed_forward.control_scope == SwiGLUChannelControlScope.up
+    assert feed_forward.rms_beta_scale == 3.5
 
 
 def test_mose_experiment_config_round_trips_rank_overrides(tmp_path: Path) -> None:

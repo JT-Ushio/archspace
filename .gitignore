@@ -68,9 +68,6 @@ instance/
 # Scrapy stuff:
 .scrapy
 
-# Sphinx documentation
-docs/_build/
-
 # PyBuilder
 .pybuilder/
 target/
@@ -216,3 +213,12 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Project-local documentation
+/docs/
+
+# Local experiment artifacts and machine-specific helpers (any level)
+assets/
+**/scripts/prepare/
+tools/
+wandb/

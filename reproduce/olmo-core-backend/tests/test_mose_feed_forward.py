@@ -43,6 +43,7 @@ def _controlled_hidden(
     up: torch.Tensor,
     control: SwiGLUChannelControl,
     control_scope: SwiGLUChannelControlScope,
+    rms_beta_scale: float = 4.0,
 ) -> torch.Tensor:
     if (
         control == SwiGLUChannelControl.standard
@@ -58,18 +59,39 @@ def _controlled_hidden(
         SwiGLUChannelControlScope.up,
     )
     gate_factor = F.silu(gate)
-    if control == SwiGLUChannelControl.situ:
+    if control in (
+        SwiGLUChannelControl.situ,
+        SwiGLUChannelControl.situ_rms,
+    ):
         if control_gate:
             gate_linear = 4.0 * torch.tanh(gate / 4.0)
             gate_factor = gate_linear * torch.sigmoid(gate)
         if control_up:
-            up = 25.0 * torch.tanh(up / 25.0)
+            if control == SwiGLUChannelControl.situ:
+                up = 25.0 * torch.tanh(up / 25.0)
+            else:
+                rms = up.square().mean(dim=-1, keepdim=True)
+                rms = rms.clamp_min(torch.finfo(up.dtype).tiny).sqrt()
+                beta = rms_beta_scale * rms
+                up = beta * torch.tanh(up / beta)
     elif control == SwiGLUChannelControl.asymmetric_rational_clip:
         if control_gate:
             gate_linear = gate * torch.rsqrt(1.0 + (F.relu(gate) / 4.0).square())
             gate_factor = gate_linear * torch.sigmoid(gate)
         if control_up:
             up = up * torch.rsqrt(1.0 + (up / 25.0).square())
+    elif control in (
+        SwiGLUChannelControl.dpskv4_clip,
+        SwiGLUChannelControl.dpskv4_clip_situ,
+    ):
+        if control_gate:
+            gate = gate.clamp_max(10.0)
+        gate_factor = F.silu(gate)
+        if control_up:
+            if control == SwiGLUChannelControl.dpskv4_clip:
+                up = up.clamp(min=-10.0, max=10.0)
+            else:
+                up = 25.0 * torch.tanh(up / 25.0)
     else:
         raise NotImplementedError(control)
     return gate_factor * up
@@ -79,23 +101,46 @@ def _reference_forward(module: MoSESwiGLU, x: torch.Tensor) -> torch.Tensor:
     gate = None
     up = None
     if module.linear_u is not None:
-        latent = module.linear_u(x)
-        gate = module.gate_linear_v(latent)
-        up = module.up_linear_v(latent)
+        gate_latent = module.linear_u(x)
+        up_latent = gate_latent
+    elif module.gate_linear_u is not None:
+        gate_latent = module.gate_linear_u(x)
+        up_latent = module.up_linear_u(x)
+    else:
+        gate_latent = None
+        up_latent = None
+    if gate_latent is not None:
+        gate = module.gate_linear_v(gate_latent)
+        up = module.up_linear_v(up_latent)
+
     if module.nonlinear_u is not None:
-        latent = module.nonlinear_u(x)
+        gate_latent = module.nonlinear_u(x)
+        up_latent = gate_latent
+        gate_norm = module.gate_up_nonlinear_norm
+        up_norm = module.gate_up_nonlinear_norm
+    elif module.gate_nonlinear_u is not None:
+        gate_latent = module.gate_nonlinear_u(x)
+        up_latent = module.up_nonlinear_u(x)
+        gate_norm = module.gate_nonlinear_norm
+        up_norm = module.up_nonlinear_norm
+    else:
+        gate_latent = None
+        up_latent = None
+        gate_norm = None
+        up_norm = None
+    if gate_latent is not None:
         nonlinear_gate = module.gate_nonlinear_v(
             _apply_nonlinearity(
-                latent,
+                gate_latent,
                 module.gate_nonlinearity,
-                rms_norm=module.gate_up_nonlinear_norm,
+                rms_norm=gate_norm,
             )
         )
         nonlinear_up = module.up_nonlinear_v(
             _apply_nonlinearity(
-                latent,
+                up_latent,
                 module.up_nonlinearity,
-                rms_norm=module.gate_up_nonlinear_norm,
+                rms_norm=up_norm,
             )
         )
         gate = nonlinear_gate if gate is None else gate + nonlinear_gate
@@ -105,7 +150,13 @@ def _reference_forward(module: MoSESwiGLU, x: torch.Tensor) -> torch.Tensor:
     if module.gate_bias is not None:
         gate = gate + module.gate_bias
         up = up + module.up_bias
-    hidden = _controlled_hidden(gate, up, module.control, module.control_scope)
+    hidden = _controlled_hidden(
+        gate,
+        up,
+        module.control,
+        module.control_scope,
+        module.rms_beta_scale,
+    )
 
     if not module.down_is_mose:
         return module.w_down(hidden)
@@ -160,7 +211,13 @@ def test_mose_forward_matches_reference(
 
 @pytest.mark.parametrize(
     "control",
-    [SwiGLUChannelControl.situ, SwiGLUChannelControl.asymmetric_rational_clip],
+    [
+        SwiGLUChannelControl.situ,
+        SwiGLUChannelControl.situ_rms,
+        SwiGLUChannelControl.asymmetric_rational_clip,
+        SwiGLUChannelControl.dpskv4_clip,
+        SwiGLUChannelControl.dpskv4_clip_situ,
+    ],
 )
 @pytest.mark.parametrize("control_scope", list(SwiGLUChannelControlScope))
 def test_mose_channel_control_scope_matches_reference(
@@ -323,6 +380,71 @@ def test_mose_config_parameter_count_matches_module(
     assert config.num_params(4) == sum(parameter.numel() for parameter in module.parameters())
 
 
+@pytest.mark.parametrize("share_gate_up_subspace", [True, False])
+@pytest.mark.parametrize("ranks", [(3, 2), (3, 0), (0, 2)])
+def test_mose_shared_and_independent_gate_up_match_reference_and_parameter_count(
+    share_gate_up_subspace: bool,
+    ranks: tuple[int, int],
+) -> None:
+    config = MoSESwiGLUConfig(
+        hidden_size=7,
+        r1=ranks[0],
+        r2=ranks[1],
+        down_r1=0,
+        down_r2=2,
+        bias=True,
+        gate_nonlinearity=MoSENonlinearity.rms_norm,
+        up_nonlinearity=MoSENonlinearity.silu,
+        down_nonlinearity=MoSENonlinearity.rms_norm,
+        rms_norm_learnable_weight=True,
+        share_gate_up_subspace=share_gate_up_subspace,
+    )
+    module = config.build(d_model=4, dtype=torch.float64)
+    x = torch.randn(2, 3, 4, dtype=torch.float64)
+
+    torch.testing.assert_close(module(x), _reference_forward(module, x))
+    assert config.num_params(4) == sum(parameter.numel() for parameter in module.parameters())
+
+    if share_gate_up_subspace:
+        assert (module.linear_u is not None) == (ranks[0] > 0)
+        assert (module.nonlinear_u is not None) == (ranks[1] > 0)
+        assert module.gate_linear_u is None and module.up_linear_u is None
+        assert module.gate_nonlinear_u is None and module.up_nonlinear_u is None
+    else:
+        assert module.linear_u is None and module.nonlinear_u is None
+        assert (module.gate_linear_u is not None) == (ranks[0] > 0)
+        assert (module.up_linear_u is not None) == (ranks[0] > 0)
+        assert (module.gate_nonlinear_u is not None) == (ranks[1] > 0)
+        assert (module.up_nonlinear_u is not None) == (ranks[1] > 0)
+        if ranks[0] > 0:
+            assert module.gate_linear_u is not module.up_linear_u
+        if ranks[1] > 0:
+            assert module.gate_nonlinear_u is not module.up_nonlinear_u
+
+
+def test_mose_independent_gate_up_checkpoint_has_no_shared_or_dense_projection() -> None:
+    module = MoSESwiGLUConfig(
+        hidden_size=16,
+        r1=0,
+        r2=8,
+        down_r1=0,
+        down_r2=8,
+        share_gate_up_subspace=False,
+    ).build(d_model=8)
+
+    keys = set(module.state_dict())
+    assert "nonlinear_u.weight" not in keys
+    assert "w_down.weight" not in keys
+    assert {
+        "gate_nonlinear_u.weight",
+        "gate_nonlinear_v.weight",
+        "up_nonlinear_u.weight",
+        "up_nonlinear_v.weight",
+        "down_nonlinear_u.weight",
+        "down_nonlinear_v.weight",
+    } <= keys
+
+
 def test_mose_default_rank_and_checkpoint_keys() -> None:
     config = MoSESwiGLUConfig(hidden_size=16, bias=False)
     module = config.build(d_model=8)
@@ -349,6 +471,7 @@ def test_mose_defaults_preserve_silu_nonlinearities() -> None:
     assert config.up_nonlinearity == MoSENonlinearity.silu
     assert config.down_nonlinearity == MoSENonlinearity.silu
     assert config.rms_norm_learnable_weight is False
+    assert config.share_gate_up_subspace is True
 
 
 def test_mose_initializes_uv_factors_for_target_matrix_std(monkeypatch) -> None:
@@ -390,6 +513,47 @@ def test_mose_initializes_uv_factors_for_target_matrix_std(monkeypatch) -> None:
         assert calls[id(projection)] == pytest.approx(1.0 / math.sqrt(7))
 
 
+def test_mose_initializes_independent_gate_up_u_factors(monkeypatch) -> None:
+    module = MoSESwiGLU(
+        d_model=4,
+        hidden_size=7,
+        r1=3,
+        r2=2,
+        down_r1=0,
+        down_r2=3,
+        share_gate_up_subspace=False,
+    )
+    calls = {}
+
+    def record_init(projection, *, std, generator):
+        del generator
+        calls[id(projection)] = std
+
+    monkeypatch.setattr(hooks, "init_linear", record_init)
+    InitMethod.normal.init_feed_forward(
+        module,
+        d_model=4,
+        block_idx=0,
+        num_blocks=1,
+        std=0.02,
+    )
+
+    for projection in (
+        module.gate_linear_u,
+        module.up_linear_u,
+        module.gate_nonlinear_u,
+        module.up_nonlinear_u,
+    ):
+        assert calls[id(projection)] == 0.02
+    for projection in (
+        module.gate_linear_v,
+        module.up_linear_v,
+        module.gate_nonlinear_v,
+        module.up_nonlinear_v,
+    ):
+        assert calls[id(projection)] == pytest.approx(1.0 / math.sqrt(5))
+
+
 def test_mose_controls_share_checkpoint_topology() -> None:
     situ = MoSESwiGLU(
         d_model=4,
@@ -411,6 +575,21 @@ def test_mose_controls_share_checkpoint_topology() -> None:
     )
 
     rational_clip.load_state_dict(situ.state_dict(), strict=True)
+    for control in (
+        SwiGLUChannelControl.situ_rms,
+        SwiGLUChannelControl.dpskv4_clip,
+        SwiGLUChannelControl.dpskv4_clip_situ,
+    ):
+        controlled = MoSESwiGLU(
+            d_model=4,
+            hidden_size=6,
+            r1=3,
+            r2=2,
+            down_r1=3,
+            down_r2=2,
+            control=control,
+        )
+        controlled.load_state_dict(situ.state_dict(), strict=True)
 
 
 @pytest.mark.parametrize(
@@ -516,4 +695,12 @@ def test_mose_rejects_non_boolean_rms_norm_weight_option() -> None:
         MoSESwiGLUConfig(
             hidden_size=8,
             rms_norm_learnable_weight=1,  # type: ignore[arg-type]
+        )
+
+
+def test_mose_rejects_non_boolean_gate_up_sharing_option() -> None:
+    with pytest.raises(OLMoConfigurationError, match="share_gate_up_subspace"):
+        MoSESwiGLUConfig(
+            hidden_size=8,
+            share_gate_up_subspace=1,  # type: ignore[arg-type]
         )

@@ -48,6 +48,11 @@ def _convert_feed_forward_config(
         activation=feed_forward.activation,
         control=control,
         control_scope=control_scope,
+        rms_beta_scale=(
+            feed_forward.rms_beta_scale
+            if isinstance(feed_forward, ChannelControlledFeedForwardConfig)
+            else 4.0
+        ),
     )
 
 
@@ -113,6 +118,8 @@ def patch_mose_swiglu(
     up_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
     down_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
     rms_norm_learnable_weight: bool = False,
+    share_gate_up_subspace: bool = True,
+    rms_beta_scale: float = 4.0,
 ) -> TransformerConfig:
     """Return a copy using MoSE-SwiGLU in every transformer layer."""
     control = SwiGLUChannelControl(control)
@@ -146,10 +153,12 @@ def patch_mose_swiglu(
             down_r2=down_r2,
             control=control,
             control_scope=control_scope,
+            rms_beta_scale=rms_beta_scale,
             gate_nonlinearity=gate_nonlinearity,
             up_nonlinearity=up_nonlinearity,
             down_nonlinearity=down_nonlinearity,
             rms_norm_learnable_weight=rms_norm_learnable_weight,
+            share_gate_up_subspace=share_gate_up_subspace,
         )
 
     if isinstance(patched.block, dict):

@@ -1,3 +1,9 @@
+from .attention import (
+    LowRankAttention,
+    LowRankAttentionConfig,
+    NonlinearLowRankProjection,
+    patch_low_rank_attention,
+)
 from .feed_forward import (
     ChannelControlledFeedForward,
     ChannelControlledFeedForwardConfig,
@@ -16,12 +22,16 @@ install_runtime_hooks()
 __all__ = [
     "ChannelControlledFeedForward",
     "ChannelControlledFeedForwardConfig",
+    "LowRankAttention",
+    "LowRankAttentionConfig",
     "MoSENonlinearity",
     "MoSESwiGLU",
     "MoSESwiGLUConfig",
+    "NonlinearLowRankProjection",
     "SerializableMuonConfig",
     "SwiGLUChannelControl",
     "SwiGLUChannelControlScope",
+    "patch_low_rank_attention",
     "patch_mose_swiglu",
     "patch_swiglu_channel_control",
 ]

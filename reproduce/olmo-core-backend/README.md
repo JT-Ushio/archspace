@@ -1,7 +1,7 @@
 # OLMo3-1B MoSE-SwiGLU
 
 This directory is an external OLMo-core extension for the MoSE architecture experiments. The
-implementation combines fixed-scalar SwiGLU channel control with Mixture of Subspace Experts
+implementation combines fixed-function SwiGLU channel control with Mixture of Subspace Experts
 (MoSE) gate, up, and optional down projections.
 
 It is tested against commit `f38e580063e48aa4b212837210df2e2038e80148` from
@@ -10,8 +10,8 @@ It is tested against commit `f38e580063e48aa4b212837210df2e2038e80148` from
 
 ## Implemented Variants
 
-For the three native-topology controls, OLMo names the gate, down, and up projections `w1`, `w2`,
-and `w3`, respectively. Those modules and checkpoint keys remain unchanged.
+For the native-topology controls, OLMo names the gate, down, and up projections `w1`, `w2`, and
+`w3`, respectively. Those modules and checkpoint keys remain unchanged.
 
 ### Standard SwiGLU
 
@@ -52,7 +52,7 @@ hidden = gate_linear * torch.sigmoid(gate) * up
 return self.w2(hidden)
 ```
 
-Both controlled variants default to:
+SiTU and Asymmetric RationalClip use:
 
 ```text
 beta_gate = 4.0
@@ -64,12 +64,63 @@ parameters or checkpoint entries.
 Asymmetric RationalClip caps the up channel symmetrically and caps only the positive part of the
 gate's linear factor; the sigmoid still suppresses the uncapped negative tail.
 
-`control_scope` selects which projected channels receive SiTU or Asymmetric RationalClip:
+### RMS-adaptive SiTU Up
+
+The `situ_rms` control replaces SiTU's fixed Up beta with a per-token value derived from the Up
+activation itself. For token (t) in layer (l), with Up width (d_{ff}):
+
+```text
+r_l,t = sqrt(mean_j(u_l,t,j ** 2))
+beta_l,t = c * r_l,t
+up_l,t = beta_l,t * tanh(u_l,t / beta_l,t)
+hidden_l,t = silu(gate_l,t) * up_l,t
+```
+
+The RMS is evaluated over the final Up dimension, independently for every token. Its computation
+remains in the autograd graph, so gradients include the dependence of beta on the whole Up vector.
+The implementation clamps only the exactly-zero numerical denominator to the smallest positive
+value representable by the control dtype.
+
+`rms_beta_scale` is a positive non-learned configuration scalar and defaults to `4.0`. It adds no
+parameters or checkpoint entries. The supplied `situ-rms-up` entry point fixes `control_scope=up`,
+so Gate remains standard SiLU.
+
+### DPSKV4 Clip
+
+```python
+gate = self.w1(x)
+up = self.w3(x)
+
+gate = gate.clamp_max(10.0)
+up = up.clamp(min=-10.0, max=10.0)
+hidden = F.silu(gate) * up
+
+return self.w2(hidden)
+```
+
+The mixed `dpskv4_clip_situ` control applies DPSKV4 clipping to gate and SiTU to up:
+
+```python
+gate = self.w1(x)
+up = self.w3(x)
+
+gate = gate.clamp_max(10.0)
+up = 25.0 * torch.tanh(up / 25.0)
+hidden = F.silu(gate) * up
+
+return self.w2(hidden)
+```
+
+The DPSKV4 bound `10.0` is a fixed Python scalar. Like the SiTU and RationalClip constants, it adds
+no parameters or checkpoint entries.
+
+`control_scope` selects which projected channels receive the selected control:
 `both` (default), `gate`, `up`, or `none`. An uncontrolled gate uses standard `F.silu(gate)`, an
 uncontrolled up channel stays linear, and `none` is exactly standard SwiGLU. The `standard`
-control also remains standard SwiGLU regardless of this setting.
+control also remains standard SwiGLU regardless of this setting. For `dpskv4_clip_situ`, `gate`
+enables only DPSKV4 gate clipping, while `up` enables only SiTU up control.
 
-Both controlled nonlinearities and their product are evaluated in FP32 when the projections are
+All channel-control operations and their product are evaluated in FP32 when the projections are
 FP16 or BF16, then cast back before `w2`. RationalClip uses an algebraically equivalent reciprocal
 form above each cap to avoid overflow while retaining the stated function and positive derivative.
 
@@ -98,10 +149,9 @@ the `r2` representation, while down has a separate RMSNorm over `down_r2`.
 the existing parameter count and checkpoint keys. When enabled, gate/up share one learnable gamma
 of size `r2`, and down gets another gamma of size `down_r2` when its nonlinearity is RMSNorm.
 
-The selected SiTU or Asymmetric RationalClip function is applied after the two experts have been
-summed into the final gate and up channels. The fixed `4.0/25.0` constants and FP32 control math are
-identical to the native-topology experiments. `control_scope` applies identically to native and
-MoSE feed-forward variants.
+The selected channel control is applied after the two experts have been summed into the final gate
+and up channels. The fixed constants and FP32 control math are identical to the native-topology
+experiments. `control_scope` applies identically to native and MoSE feed-forward variants.
 
 The down projection uses the corresponding two-expert sum when either down rank is positive:
 
@@ -135,7 +185,11 @@ deviation `0.02`. A dense `w_down` fallback continues to use `TruncNormal(0, 0.0
 |---|---|---|---:|
 | `OLMo3-1B-stage1-baseline.py` | native | standard SwiGLU | 1,484,916,736 |
 | `OLMo3-1B-stage1-situ.py` | native | SiTU | 1,484,916,736 |
+| `OLMo3-1B-stage1-situ-rms-up.py` | native | RMS-adaptive SiTU Up | 1,484,916,736 |
 | `OLMo3-1B-stage1-asymmetric-rational-clip.py` | native | Asymmetric RationalClip | 1,484,916,736 |
+| `OLMo3-1B-stage1-dpskv4-clip-up.py` | native | DPSKV4 Up only | 1,484,916,736 |
+| `OLMo3-1B-stage1-dpskv4-clip-both.py` | native | DPSKV4 gate + DPSKV4 up | 1,484,916,736 |
+| `OLMo3-1B-stage1-dpskv4-clip-gate-situ-up.py` | native | DPSKV4 gate + SiTU up | 1,484,916,736 |
 | `OLMo3-1B-stage1-mose-rmsnorm-silu.py` | MoSE, RMSNorm gate/up + SiLU down | standard SwiGLU | 1,487,013,888 |
 | `OLMo3-1B-stage1-mose-situ.py` | MoSE | SiTU | 1,487,013,888 |
 | `OLMo3-1B-stage1-mose-asymmetric-rational-clip.py` | MoSE | Asymmetric RationalClip | 1,487,013,888 |
@@ -149,16 +203,16 @@ src/olmo_mose/optim.py         serializable Muon parameter-group integration
 src/olmo_mose/patch.py         non-mutating TransformerConfig patches
 cfgs/_models.py                official OLMo3-1B model builders
 cfgs/_pretrain_common.py       shared 150B-sample Muon recipe
-cfgs/OLMo3-1B-stage1-*.py      six ablation entry points
+cfgs/OLMo3-1B-stage1-*.py      ablation entry points
 tests/                         CPU formula, config, and integration tests
 ```
 
-Native SiTU and RationalClip checkpoints are strictly compatible with the native baseline. MoSE
-checkpoints use semantic U/V parameter names and are not compatible with native `w1/w2/w3`
-checkpoints. MoSE checkpoints are strictly compatible across controls only when all four ranks and
-the down topology match, and when their learnable RMSNorm-weight topology is identical.
+All native controlled checkpoints are strictly compatible with the native baseline. MoSE checkpoints
+use semantic U/V parameter names and are not compatible with native `w1/w2/w3` checkpoints. MoSE
+checkpoints are strictly compatible across controls only when all four ranks and the down topology
+match, and when their learnable RMSNorm-weight topology is identical.
 
-OLMo's built-in Hugging Face converter does not encode either custom channel-control function and
+OLMo's built-in Hugging Face converter does not encode custom channel-control functions and
 does not map MoSE U/V weights or the optional nonlinear RMSNorm weights. Do not use it for these
 checkpoints: native controlled checkpoints would be exported as ordinary SwiGLU, while MoSE
 conversion fails on unmapped keys. A dedicated HF architecture and converter are required later
@@ -204,7 +258,7 @@ PyTorch to be present and must be built with `--no-build-isolation`.
 
 ## Training
 
-Run these commands from `/path/to/archspace/reproduce/olmo-core-backend`. The six entry points
+Run these commands from `/path/to/archspace/reproduce/olmo-core-backend`. The entry points
 share the same tokenizer, data recipe, Muon settings, batch size, evaluator callbacks, and W&B
 project.
 
@@ -229,6 +283,20 @@ torchrun --nproc-per-node=8 \
   --work-dir=/path/to/work/rational-clip \
   --data-root=/path/to/tokenized-data \
   --name=olmo3-1b-asymmetric-rational-clip
+
+torchrun --nproc-per-node=8 \
+  cfgs/OLMo3-1B-stage1-dpskv4-clip-both.py \
+  --save-folder=/path/to/checkpoints/dpskv4-clip-both \
+  --work-dir=/path/to/work/dpskv4-clip-both \
+  --data-root=/path/to/tokenized-data \
+  --name=olmo3-1b-dpskv4-clip-both
+
+torchrun --nproc-per-node=8 \
+  cfgs/OLMo3-1B-stage1-dpskv4-clip-gate-situ-up.py \
+  --save-folder=/path/to/checkpoints/dpskv4-clip-gate-situ-up \
+  --work-dir=/path/to/work/dpskv4-clip-gate-situ-up \
+  --data-root=/path/to/tokenized-data \
+  --name=olmo3-1b-dpskv4-clip-gate-situ-up
 
 torchrun --nproc-per-node=8 \
   cfgs/OLMo3-1B-stage1-mose-rmsnorm-silu.py \
@@ -276,11 +344,29 @@ Enable learnable RMSNorm gamma weights with:
 --model.block.feed_forward.rms_norm_learnable_weight=true
 ```
 
-Select the SiTU or Asymmetric RationalClip target channels from any corresponding native or MoSE
-entry point. The default is `both`:
+Select the target channels from any corresponding native or MoSE entry point. The default is
+`both`:
 
 ```bash
 --model.block.feed_forward.control_scope=both  # both | gate | up | none
+```
+
+The two native DPSKV4 experiment entry points fix these controls and use `both` scope. They can
+also be selected through a config override:
+
+```bash
+# DPSKV4 on both gate and up.
+--model.block.feed_forward.control=dpskv4_clip
+
+# DPSKV4 on gate and SiTU on up.
+--model.block.feed_forward.control=dpskv4_clip_situ
+```
+
+Run RMS-adaptive SiTU Up with the default `c=4`, or override it through the environment:
+
+```bash
+./run_SiTU_RMS_Up.sh
+RMS_BETA_SCALE=3 ./run_SiTU_RMS_Up.sh
 ```
 
 Every transformer layer uses MoSE in all MoSE entry points.

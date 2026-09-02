@@ -49,9 +49,13 @@ def install_runtime_hooks() -> None:
         gate_up_v_std = 1.0 / math.sqrt(module.r1 + module.r2)
         projection_stds = (
             (module.linear_u, std),
+            (module.gate_linear_u, std),
+            (module.up_linear_u, std),
             (module.gate_linear_v, gate_up_v_std),
             (module.up_linear_v, gate_up_v_std),
             (module.nonlinear_u, std),
+            (module.gate_nonlinear_u, std),
+            (module.up_nonlinear_u, std),
             (module.gate_nonlinear_v, gate_up_v_std),
             (module.up_nonlinear_v, gate_up_v_std),
         )
