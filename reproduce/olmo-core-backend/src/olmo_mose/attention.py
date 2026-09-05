@@ -32,6 +32,41 @@ def _validate_rank(rank: int) -> int:
     return rank
 
 
+def _resolve_attention_ranks(
+    rank: int,
+    q_rank: Optional[int],
+    k_rank: Optional[int],
+    v_rank: Optional[int],
+    o_rank: Optional[int],
+) -> Tuple[int, int, int, int]:
+    """Resolve per-projection ranks, falling back to legacy ``rank``."""
+    fallback = _validate_rank(rank)
+    resolved_q = fallback if q_rank is None else _validate_rank(q_rank)
+    resolved_k = fallback if k_rank is None else _validate_rank(k_rank)
+    resolved_v = fallback if v_rank is None else _validate_rank(v_rank)
+    resolved_o = fallback if o_rank is None else _validate_rank(o_rank)
+    return resolved_q, resolved_k, resolved_v, resolved_o
+
+
+def _validate_sharing_ranks(
+    share_scope: "LowRankAttentionSharingScope",
+    q_rank: int,
+    k_rank: int,
+    v_rank: int,
+) -> None:
+    """Ensure projections that share an input bottleneck have equal rank."""
+    if share_scope == LowRankAttentionSharingScope.qk and q_rank != k_rank:
+        raise OLMoConfigurationError("qk attention sharing requires q_rank == k_rank")
+    if share_scope == LowRankAttentionSharingScope.kv and k_rank != v_rank:
+        raise OLMoConfigurationError("kv attention sharing requires k_rank == v_rank")
+    if share_scope == LowRankAttentionSharingScope.qkv and (
+        q_rank != k_rank or k_rank != v_rank
+    ):
+        raise OLMoConfigurationError(
+            "qkv attention sharing requires q_rank == k_rank == v_rank"
+        )
+
+
 class LowRankAttentionSharingScope(StrEnum):
     """Low-dimensional input projections shared by low-rank Q/K/V."""
 
@@ -106,7 +141,14 @@ class NonlinearLowRankProjection(nn.Module):
 class LowRankAttentionConfig(AttentionConfig):
     """Attention whose Q, K, V, and output matrices are independently factorized."""
 
+    # ``rank`` is kept as the backwards-compatible default. The per-projection
+    # ranks below may be supplied independently; an omitted rank falls back to
+    # ``rank``. Sharing scopes validate equality only where modules are shared.
     rank: int = 512
+    q_rank: Optional[int] = None
+    k_rank: Optional[int] = None
+    v_rank: Optional[int] = None
+    o_rank: Optional[int] = None
     q_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu
     k_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu
     v_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu
@@ -120,6 +162,14 @@ class LowRankAttentionConfig(AttentionConfig):
         del registered_name
         self.name = AttentionType(self.name)
         self.rank = _validate_rank(self.rank)
+        if self.q_rank is not None:
+            self.q_rank = _validate_rank(self.q_rank)
+        if self.k_rank is not None:
+            self.k_rank = _validate_rank(self.k_rank)
+        if self.v_rank is not None:
+            self.v_rank = _validate_rank(self.v_rank)
+        if self.o_rank is not None:
+            self.o_rank = _validate_rank(self.o_rank)
         self.q_nonlinearity = MoSENonlinearity(self.q_nonlinearity)
         self.k_nonlinearity = MoSENonlinearity(self.k_nonlinearity)
         self.v_nonlinearity = MoSENonlinearity(self.v_nonlinearity)
@@ -131,6 +181,19 @@ class LowRankAttentionConfig(AttentionConfig):
             raise OLMoConfigurationError(
                 "low-rank attention requires the default attention implementation"
             )
+        q_rank, k_rank, v_rank, _ = _resolve_attention_ranks(
+            self.rank,
+            self.q_rank,
+            self.k_rank,
+            self.v_rank,
+            self.o_rank,
+        )
+        _validate_sharing_ranks(
+            self.share_scope,
+            q_rank,
+            k_rank,
+            v_rank,
+        )
 
     def num_params(self, d_model: int) -> int:
         n_heads = self.n_heads
@@ -138,31 +201,44 @@ class LowRankAttentionConfig(AttentionConfig):
         head_dim = self.head_dim or d_model // n_heads
         q_size = n_heads * head_dim
         kv_size = n_kv_heads * head_dim
+        q_rank, k_rank, v_rank, o_rank = _resolve_attention_ranks(
+            self.rank,
+            self.q_rank,
+            self.k_rank,
+            self.v_rank,
+            self.o_rank,
+        )
 
         dense_projection_params = (
             d_model * q_size
             + 2 * d_model * kv_size
             + q_size * d_model
         )
-        input_projection_count = {
-            LowRankAttentionSharingScope.none: 4,
-            LowRankAttentionSharingScope.qk: 3,
-            LowRankAttentionSharingScope.kv: 3,
-            LowRankAttentionSharingScope.qkv: 2,
+        input_projection_params = {
+            LowRankAttentionSharingScope.none: d_model
+            * (q_rank + k_rank + v_rank + o_rank),
+            LowRankAttentionSharingScope.qk: d_model
+            * (q_rank + v_rank + o_rank),
+            LowRankAttentionSharingScope.kv: d_model
+            * (q_rank + k_rank + o_rank),
+            LowRankAttentionSharingScope.qkv: d_model * (q_rank + o_rank),
         }[self.share_scope]
-        low_rank_projection_params = self.rank * (
-            input_projection_count * d_model + 2 * q_size + 2 * kv_size
+        low_rank_projection_params = input_projection_params + (
+            q_rank * q_size
+            + k_rank * kv_size
+            + v_rank * kv_size
+            + o_rank * d_model
         )
         if self.rms_norm_learnable_weight:
-            nonlinearities = (
-                self.q_nonlinearity,
-                self.k_nonlinearity,
-                self.v_nonlinearity,
-                self.o_nonlinearity,
-            )
-            low_rank_projection_params += self.rank * sum(
-                nonlinearity == MoSENonlinearity.rms_norm
-                for nonlinearity in nonlinearities
+            low_rank_projection_params += sum(
+                projection_rank
+                for projection_rank, nonlinearity in (
+                    (q_rank, self.q_nonlinearity),
+                    (k_rank, self.k_nonlinearity),
+                    (v_rank, self.v_nonlinearity),
+                    (o_rank, self.o_nonlinearity),
+                )
+                if nonlinearity == MoSENonlinearity.rms_norm
             )
         return (
             super().num_params(d_model)
@@ -182,6 +258,10 @@ class LowRankAttentionConfig(AttentionConfig):
         kwargs = self.as_dict(exclude_none=True, recurse=False)
         kwargs.pop("name")
         rank = kwargs.pop("rank")
+        q_rank = kwargs.pop("q_rank", None)
+        k_rank = kwargs.pop("k_rank", None)
+        v_rank = kwargs.pop("v_rank", None)
+        o_rank = kwargs.pop("o_rank", None)
 
         sliding_window_config: Optional[SlidingWindowAttentionConfig] = kwargs.pop(
             "sliding_window", None
@@ -197,6 +277,10 @@ class LowRankAttentionConfig(AttentionConfig):
 
         kwargs.update(
             rank=rank,
+            q_rank=q_rank,
+            k_rank=k_rank,
+            v_rank=v_rank,
+            o_rank=o_rank,
             dtype=kwargs.pop("dtype").as_pt(),
             d_model=d_model,
             init_device=init_device,
@@ -217,6 +301,10 @@ class LowRankAttention(Attention):
         self,
         *,
         rank: int = 512,
+        q_rank: Optional[int] = None,
+        k_rank: Optional[int] = None,
+        v_rank: Optional[int] = None,
+        o_rank: Optional[int] = None,
         q_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
         k_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
         v_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
@@ -226,19 +314,32 @@ class LowRankAttention(Attention):
         **kwargs,
     ) -> None:
         rank = _validate_rank(rank)
+        q_rank, k_rank, v_rank, o_rank = _resolve_attention_ranks(
+            rank,
+            q_rank,
+            k_rank,
+            v_rank,
+            o_rank,
+        )
         super().__init__(**kwargs)
         self.rank = rank
+        self.q_rank = q_rank
+        self.k_rank = k_rank
+        self.v_rank = v_rank
+        self.o_rank = o_rank
         self.rms_norm_learnable_weight = rms_norm_learnable_weight
         self.share_scope = LowRankAttentionSharingScope(share_scope)
+        _validate_sharing_ranks(self.share_scope, q_rank, k_rank, v_rank)
 
         def factorize(
             projection: nn.Linear,
             nonlinearity: MoSENonlinearity,
+            projection_rank: int,
         ) -> NonlinearLowRankProjection:
             return NonlinearLowRankProjection(
                 projection.in_features,
                 projection.out_features,
-                rank,
+                projection_rank,
                 nonlinearity=nonlinearity,
                 rms_norm_learnable_weight=rms_norm_learnable_weight,
                 bias=projection.bias is not None,
@@ -246,10 +347,10 @@ class LowRankAttention(Attention):
                 init_device=str(projection.weight.device),
             )
 
-        self.w_q = factorize(self.w_q, q_nonlinearity)
-        self.w_k = factorize(self.w_k, k_nonlinearity)
-        self.w_v = factorize(self.w_v, v_nonlinearity)
-        self.w_out = factorize(self.w_out, o_nonlinearity)
+        self.w_q = factorize(self.w_q, q_nonlinearity, q_rank)
+        self.w_k = factorize(self.w_k, k_nonlinearity, k_rank)
+        self.w_v = factorize(self.w_v, v_nonlinearity, v_rank)
+        self.w_out = factorize(self.w_out, o_nonlinearity, o_rank)
 
         if self.share_scope == LowRankAttentionSharingScope.qk:
             self.w_k.v = self.w_q.v
@@ -428,14 +529,17 @@ class LowRankAttention(Attention):
         elif init_method == InitMethod.fan_in:
             std = d_model**-0.5
 
-        v_std = 1.0 / math.sqrt(self.rank)
         initialized = set()
         for projection in (self.w_q, self.w_k, self.w_v, self.w_out):
             if id(projection.v) not in initialized:
                 init_linear(projection.v, std=std, generator=generator)
                 initialized.add(id(projection.v))
             if id(projection.u) not in initialized:
-                init_linear(projection.u, std=v_std, generator=generator)
+                init_linear(
+                    projection.u,
+                    std=1.0 / math.sqrt(projection.rank),
+                    generator=generator,
+                )
                 initialized.add(id(projection.u))
             if projection.nonlinear_norm is not None:
                 projection.nonlinear_norm.reset_parameters()
@@ -471,6 +575,10 @@ def patch_low_rank_attention(
     *,
     enabled: bool = False,
     rank: int = 512,
+    q_rank: Optional[int] = None,
+    k_rank: Optional[int] = None,
+    v_rank: Optional[int] = None,
+    o_rank: Optional[int] = None,
     q_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
     k_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
     v_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
@@ -478,13 +586,27 @@ def patch_low_rank_attention(
     rms_norm_learnable_weight: bool = False,
     share_scope: LowRankAttentionSharingScope = LowRankAttentionSharingScope.none,
 ) -> TransformerConfig:
-    """Optionally replace every default attention Q/K/V/O with rank-``rank`` factors."""
+    """Optionally replace default attention projections with low-rank factors.
+
+    ``rank`` remains the fallback for backwards compatibility.  Supplying
+    ``q_rank``, ``k_rank``, ``v_rank``, or ``o_rank`` overrides the legacy
+    fallback for that projection independently. Sharing scopes validate only
+    the ranks of projections that actually share an input bottleneck.
+    """
     if not isinstance(enabled, bool):
         raise OLMoConfigurationError("enabled must be a boolean")
     patched = config.copy()
     if not enabled:
         return patched
     rank = _validate_rank(rank)
+    if q_rank is not None:
+        q_rank = _validate_rank(q_rank)
+    if k_rank is not None:
+        k_rank = _validate_rank(k_rank)
+    if v_rank is not None:
+        v_rank = _validate_rank(v_rank)
+    if o_rank is not None:
+        o_rank = _validate_rank(o_rank)
     nonlinearities = {
         "q_nonlinearity": MoSENonlinearity(q_nonlinearity),
         "k_nonlinearity": MoSENonlinearity(k_nonlinearity),
@@ -509,6 +631,10 @@ def patch_low_rank_attention(
             exclude_none=False,
             exclude=(
                 "rank",
+                "q_rank",
+                "k_rank",
+                "v_rank",
+                "o_rank",
                 "q_nonlinearity",
                 "k_nonlinearity",
                 "v_nonlinearity",
@@ -521,6 +647,10 @@ def patch_low_rank_attention(
         block.sequence_mixer = LowRankAttentionConfig(
             **kwargs,
             rank=rank,
+            q_rank=q_rank,
+            k_rank=k_rank,
+            v_rank=v_rank,
+            o_rank=o_rank,
             rms_norm_learnable_weight=rms_norm_learnable_weight,
             share_scope=LowRankAttentionSharingScope(share_scope),
             **nonlinearities,

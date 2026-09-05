@@ -50,6 +50,59 @@ def test_low_rank_attention_config_parameter_count_matches_module() -> None:
     assert config.num_params(8) == sum(parameter.numel() for parameter in module.parameters())
 
 
+def test_low_rank_attention_supports_independent_q_k_v_o_ranks() -> None:
+    config = LowRankAttentionConfig(
+        n_heads=4,
+        n_kv_heads=2,
+        head_dim=2,
+        rank=3,
+        q_rank=5,
+        k_rank=4,
+        v_rank=3,
+        o_rank=2,
+        bias=False,
+        backend=AttentionBackendName.torch,
+    )
+    module = config.build(d_model=8, layer_idx=0, n_layers=1)
+
+    assert module.w_q.rank == 5
+    assert module.w_k.rank == 4
+    assert module.w_v.rank == 3
+    assert module.w_out.rank == 2
+    assert config.num_params(8) == sum(parameter.numel() for parameter in module.parameters())
+
+
+def test_qk_sharing_requires_q_and_k_ranks_to_match() -> None:
+    with pytest.raises(OLMoConfigurationError, match="qk attention sharing requires q_rank"):
+        LowRankAttentionConfig(
+            n_heads=4,
+            n_kv_heads=2,
+            head_dim=2,
+            rank=3,
+            q_rank=5,
+            k_rank=4,
+            share_scope=LowRankAttentionSharingScope.qk,
+            bias=False,
+            backend=AttentionBackendName.torch,
+        )
+
+
+def test_qkv_sharing_requires_q_k_and_v_ranks_to_match() -> None:
+    with pytest.raises(OLMoConfigurationError, match="qkv attention sharing requires q_rank"):
+        LowRankAttentionConfig(
+            n_heads=4,
+            n_kv_heads=2,
+            head_dim=2,
+            rank=3,
+            q_rank=5,
+            k_rank=5,
+            v_rank=3,
+            share_scope=LowRankAttentionSharingScope.qkv,
+            bias=False,
+            backend=AttentionBackendName.torch,
+        )
+
+
 def test_low_rank_attention_uses_four_independent_projections_and_runs_forward() -> None:
     config = LowRankAttentionConfig(
         n_heads=4,
