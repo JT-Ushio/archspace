@@ -58,6 +58,7 @@ def test_qwen35_407m_training_profiles_round_trip(
     assert restored.train_module.rank_microbatch_size == RANK_MICROBATCH_SIZE
     assert restored.train_module.max_sequence_length == SEQUENCE_LENGTH
     assert isinstance(restored.train_module.optim, SerializableMuonConfig)
+    assert restored.train_module.optim.flatten is False
     assert restored.train_module.optim.lr == LR_MAX
     assert restored.train_module.optim.weight_decay == 0.1
     assert restored.train_module.optim.mu == 0.95

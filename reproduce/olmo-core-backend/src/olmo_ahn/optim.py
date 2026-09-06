@@ -11,8 +11,6 @@ from olmo_core.optim import MuonConfig
 class SerializableMuonConfig(MuonConfig):
     """Muon config that clears its temporary parameter groups after construction."""
 
-    flatten: bool = True
-
     def build_groups(
         self,
         model: torch.nn.Module,

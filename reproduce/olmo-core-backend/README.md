@@ -87,7 +87,7 @@ Both profiles use Muon with `lr_max=2e-3`, `weight_decay=0.1`, `mu=0.95`,
 ```text
 src/olmo_ahn/linear_attention.py  serializable GDN/KDA/GDN2 config and FLA adapter
 src/olmo_ahn/patch.py             non-mutating OLMo3 TransformerConfig patches
-src/olmo_ahn/optim.py             serializable Muon groups with conv flattening
+src/olmo_ahn/optim.py             serializable Muon config with native parameter grouping
 cfgs/_models.py                   baseline, all-linear, and hybrid model builders
 cfgs/_pretrain_common.py          shared 150B-sample stage-1 recipe
 cfgs/OLMo3-1B-stage1-*.py         three direct training entry points
@@ -123,6 +123,10 @@ uses HSDP, not tensor or context parallelism. Float8 is disabled. With the pinne
 three-dimensional convolution weights are routed to AdamW; vector parameters such as `A_log` and
 `dt_bias` use AdamW without weight decay.
 
+`SerializableMuonConfig` inherits the backend's `flatten=False` default, preserving per-head
+Muon for Full/SWA attention projections. Do not set `flatten=True`: Dion rejects it for
+`num_heads > 1`, and convolution weights already use AdamW.
+
 ## Local Mac Verification
 
 No training, CUDA compilation, or FLA kernel execution is required on the Mac. Point the tests to
@@ -141,6 +145,12 @@ git diff --check
 The CUDA tests are skipped locally. They build the three mixers, compare analytic and actual
 parameter counts, exercise packed-document state resets, and check finite forward, backward, and
 input/parameter gradients.
+The optimizer test also checks per-head grouping and convolution routing locally. On a CUDA
+server with Dion installed, it executes a first optimizer step with both parameter types:
+
+```bash
+python3 -m pytest -q tests/test_optim.py
+```
 
 ## Server Installation
 

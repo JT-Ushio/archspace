@@ -42,7 +42,7 @@ def test_all_linear_experiment_round_trips_kda_override(tmp_path: Path) -> None:
     assert isinstance(restored.model.block.sequence_mixer, LinearAttentionConfig)
     assert restored.model.block.sequence_mixer.attention_type == LinearAttentionType.kda
     assert isinstance(restored.train_module.optim, SerializableMuonConfig)
-    assert restored.train_module.optim.flatten is True
+    assert restored.train_module.optim.flatten is False
     assert restored.trainer.callbacks["checkpointer"].save_interval == 2500
 
 
