@@ -127,6 +127,12 @@ three-dimensional convolution weights are routed to AdamW; vector parameters suc
 Muon for Full/SWA attention projections. Do not set `flatten=True`: Dion rejects it for
 `num_heads > 1`, and convolution weights already use AdamW.
 
+The wrapper also keeps `flatten` in the optimizer's `fixed_fields`, so checkpoint loading
+preserves the current recipe's value. Older runs may have saved `flatten=True` in a pre-train
+step-0 checkpoint before the first optimizer step failed. The trainer automatically resumes
+from its save folder; changing the config default alone would otherwise restore that old flag.
+Momentum, step counters, and the checkpoint learning rate are still restored normally.
+
 ## Local Mac Verification
 
 No training, CUDA compilation, or FLA kernel execution is required on the Mac. Point the tests to
@@ -145,8 +151,9 @@ git diff --check
 The CUDA tests are skipped locally. They build the three mixers, compare analytic and actual
 parameter counts, exercise packed-document state resets, and check finite forward, backward, and
 input/parameter gradients.
-The optimizer test also checks per-head grouping and convolution routing locally. On a CUDA
-server with Dion installed, it executes a first optimizer step with both parameter types:
+The optimizer test also checks per-head grouping, convolution routing, and legacy checkpoint
+restoration locally. On a CUDA server with Dion installed, it executes a first optimizer step
+with both parameter types, both from scratch and after restoring the legacy flag:
 
 ```bash
 python3 -m pytest -q tests/test_optim.py
