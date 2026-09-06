@@ -7,8 +7,10 @@ pytestmark = pytest.mark.skipif(not torch.cuda.is_available(), reason="requires 
 
 
 @pytest.mark.parametrize("attention_type", list(LinearAttentionType))
+@pytest.mark.parametrize("init_method_name", ["normal", "scaled_truncated_normal"])
 def test_linear_attention_cuda_forward_backward_and_document_reset(
     attention_type: LinearAttentionType,
+    init_method_name: str,
 ) -> None:
     pytest.importorskip("fla")
     from olmo_core.nn.transformer.init import InitMethod
@@ -26,7 +28,7 @@ def test_linear_attention_cuda_forward_backward_and_document_reset(
         if hasattr(child, "reset_parameters"):
             child.reset_parameters()
     module.init_weights(
-        init_method=InitMethod.normal,
+        init_method=InitMethod(init_method_name),
         d_model=128,
         block_idx=0,
         num_blocks=2,

@@ -172,15 +172,25 @@ class FLALinearAttention(SequenceMixer):
     ) -> None:
         from olmo_core.nn.transformer.init import InitMethod, init_linear
 
-        del d_model, block_idx, num_blocks
-        if init_method != InitMethod.normal:
+        del d_model, block_idx
+        if init_method not in (
+            InitMethod.normal,
+            InitMethod.scaled_truncated_normal,
+        ):
             raise OLMoConfigurationError(
-                "The KDA/GDN2 adapters currently support only OLMo InitMethod.normal"
+                "The KDA/GDN2 adapters support OLMo InitMethod.normal and "
+                "InitMethod.scaled_truncated_normal"
             )
 
         for module in self.layer.modules():
             if isinstance(module, (nn.Linear, nn.Conv1d)):
-                init_linear(module, std=std, generator=generator)
+                module_std = std
+                if (
+                    init_method == InitMethod.scaled_truncated_normal
+                    and module is self.layer.o_proj
+                ):
+                    module_std /= num_blocks**0.5
+                init_linear(module, std=module_std, generator=generator)
 
         if self.attention_type == LinearAttentionType.kda and self.layer.safe_gate:
             self.layer.A_log.zero_()

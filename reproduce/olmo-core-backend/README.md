@@ -1,7 +1,9 @@
-# OLMo3-1B GDN/KDA/GDN2 Attention
+# OLMo-core AHN Architecture Experiments
 
-This directory is a non-invasive OLMo-core extension for two OLMo3-1B linear-attention
-experiments:
+This directory is a non-invasive OLMo-core extension for OLMo3-1B linear-attention experiments
+and a Qwen3.5-style 407M comparison grid using the Dolma2 tokenizer.
+
+The original OLMo3-1B experiments are:
 
 1. replace every sequence-mixing layer with linear attention;
 2. preserve OLMo3's `3 × SWA + 1 × Full` layout, replace each SWA layer with linear attention,
@@ -12,7 +14,7 @@ editing OLMo-core or the training script.
 
 The extension is pinned to:
 
-- OLMo-core commit [`f38e580063e48aa4b212837210df2e2038e80148`](https://github.com/JT-Ushio/OLMo-core-muon-fix/commit/f38e580063e48aa4b212837210df2e2038e80148)
+- OLMo-core commit [`b217eb511d5ea191167488a10bb05a38eff53555`](https://github.com/JT-Ushio/OLMo-core-muon-fix/commit/b217eb511d5ea191167488a10bb05a38eff53555)
 - flash-linear-attention commit [`35dceaee5408e69a555fec34cb215c93c375dabe`](https://github.com/fla-org/flash-linear-attention/commit/35dceaee5408e69a555fec34cb215c93c375dabe)
 
 ## Variants
@@ -33,6 +35,53 @@ OLMo3-1B has 16 layers. Its native sliding-window pattern marks layers
 The counts use the defaults below. They change when head or value-expansion settings are
 overridden.
 
+## Qwen3.5-style 407M grid
+
+The 407M recipes share the following backbone settings:
+
+| Setting | Value |
+| --- | ---: |
+| layers / model dimension / FFN | 16 / 1,024 / 3,584 |
+| sequence length | 8,192 |
+| tokenizer / padded vocabulary | Dolma2 / 100,352 |
+| Full Attention query / KV heads | 8 / 1 |
+| Full Attention head dimension | 256 |
+| Full Attention output gate / QK norm | element-wise / per-head Qwen RMSNorm |
+| RoPE theta / partial rotary factor | 10,000,000 / 0.25 (64 dimensions) |
+| GDN key / value heads | 8 / 16 |
+| GDN key / value head dimension | 128 / 128 |
+| GDN short convolution | width 4 |
+| normalization | Qwen RMSNorm, epsilon 1e-6 |
+| embedding / LM-head weights | not tied |
+
+The ten entry points are the Cartesian product of five layer layouts and two training profiles:
+
+| Layout | Layer pattern | Total params | Non-embedding params |
+| --- | --- | ---: | ---: |
+| `all-gdn` | 16 GDN | 516,722,176 | 413,961,728 |
+| `gdn3-full1` | repeat 3 GDN + 1 Full | 510,235,520 | 407,475,072 |
+| `all-full` | 16 Full | 490,775,552 | 388,015,104 |
+| `swa3-full1` | repeat 3 4K-SWA + 1 Full | 490,775,552 | 388,015,104 |
+| `all-swa` | 16 4K-SWA | 490,775,552 | 388,015,104 |
+
+The exact `510,235,520 / 407,475,072` target is obtained by the `gdn3-full1` main backbone with
+untied input embeddings and LM head. The supplied target does not include an MTP auxiliary
+module. The pinned OLMo-core has no MTP prediction head or shifted-token auxiliary-loss path, so
+these recipes intentionally do **not** claim to train MTP. Adding two inert config fields would be
+misleading; MTP needs a separate model and train-module implementation before it can be enabled.
+
+| Profile | Global token batch | Maximum steps | Maximum training tokens |
+| --- | ---: | ---: | ---: |
+| `256K` | 262,144 | 3,915 | 1,026,293,760 |
+| `512K` | 524,288 | 6,526 | 3,421,503,488 |
+
+Both profiles use Muon with `lr_max=2e-3`, `weight_decay=0.1`, `mu=0.95`,
+`adjust_lr=rms_norm`, and `use_polar_express=false`. Every model uses
+`InitMethod.scaled_truncated_normal`. The schedule is token-based WSD: linear warmup for
+33,554,432 tokens, a stable peak, then a 1-sqrt decay over the final 10% of training to
+`2e-4 = 0.1 * lr_max`. For decay progress `r` in `[0, 1]`, the tail is
+`lr = lr_max * (1 - sqrt(r)) + lr_final * sqrt(r)`.
+
 ## Implementation
 
 ```text
@@ -42,6 +91,9 @@ src/olmo_ahn/optim.py             serializable Muon groups with conv flattening
 cfgs/_models.py                   baseline, all-linear, and hybrid model builders
 cfgs/_pretrain_common.py          shared 150B-sample stage-1 recipe
 cfgs/OLMo3-1B-stage1-*.py         three direct training entry points
+cfgs/_qwen35_407m_models.py       five Qwen3.5-style 407M backbone builders
+cfgs/_qwen35_407m_pretrain.py     shared Muon/data/scheduler recipe
+cfgs/Qwen3.5-407M-*.py            ten explicit comparison entry points
 tests/                             config, serialization, pattern, and GPU checks
 ```
 
@@ -66,9 +118,10 @@ Defaults:
 | short convolution | enabled, width 4 | enabled, width 4 | enabled, width 4 |
 | negative eigenvalues | disabled | disabled | disabled |
 
-KDA/GDN2 support OLMo's `InitMethod.normal`, which is the native OLMo3-1B setting. The recipe uses
-HSDP, not tensor or context parallelism. Float8 is disabled. Muon flattens depthwise-convolution
-weights, while `A_log` and `dt_bias` use AdamW without weight decay.
+KDA/GDN2 support OLMo's `InitMethod.normal` and `InitMethod.scaled_truncated_normal`. The recipe
+uses HSDP, not tensor or context parallelism. Float8 is disabled. With the pinned OLMo-core,
+three-dimensional convolution weights are routed to AdamW; vector parameters such as `A_log` and
+`dt_bias` use AdamW without weight decay.
 
 ## Local Mac Verification
 
@@ -78,7 +131,7 @@ the pinned framework checkout:
 ```bash
 export OLMO_CORE=/path/to/OLMo-core-muon-fix
 test "$(git -C "$OLMO_CORE" rev-parse HEAD)" = \
-  "f38e580063e48aa4b212837210df2e2038e80148"
+  "b217eb511d5ea191167488a10bb05a38eff53555"
 
 PYTHONPATH="$PWD/src:$OLMO_CORE/src" python3 -m pytest -q
 PYTHONPATH="$PWD/src:$OLMO_CORE/src" python3 -m ruff check .
@@ -98,12 +151,12 @@ last with `--no-deps` so pip cannot replace either pinned checkout.
 git clone --branch ready_for_archspace_base \
   https://github.com/JT-Ushio/OLMo-core-muon-fix.git /path/to/OLMo-core
 cd /path/to/OLMo-core
-git checkout f38e580063e48aa4b212837210df2e2038e80148
+git checkout b217eb511d5ea191167488a10bb05a38eff53555
 python3 -m pip install -e '.[eval,wandb,dion]'
 python3 -m pip install flash-attn --no-build-isolation
 
 python3 -m pip uninstall -y fla-core flash-linear-attention
-python3 -m pip install \
+python3 -m pip install --no-build-isolation \
   'flash-linear-attention[cuda] @ git+https://github.com/fla-org/flash-linear-attention.git@35dceaee5408e69a555fec34cb215c93c375dabe'
 
 python3 -m pip install -e /path/to/AHN/reproduce/olmo-core-backend --no-deps
@@ -136,7 +189,15 @@ python3 cfgs/OLMo3-1B-stage1-hybrid-linear.py \
   --save-folder=/tmp/ahn-config \
   --name=olmo3-1b-hybrid-gdn \
   --model.block.sequence_mixer.attention_type=gdn2
+
+python3 cfgs/Qwen3.5-407M-gdn3-full1-256K.py \
+  --dry-run \
+  --save-folder=/tmp/ahn-qwen35-config \
+  --name=qwen35-407m-gdn3-full1-256k
 ```
+
+All ten `cfgs/Qwen3.5-407M-{layout}-{profile}.py` files have the same CLI. Their architecture and
+training-profile choices are fixed in the filename so comparison runs cannot silently drift.
 
 ## Training
 
@@ -220,6 +281,17 @@ torchrun --nproc-per-node=8 \
   --name=olmo3-1b-baseline
 ```
 
+For example, launch the 407M Qwen3.5-style hybrid with the 256K-token profile using:
+
+```bash
+torchrun --nproc-per-node=8 \
+  cfgs/Qwen3.5-407M-gdn3-full1-256K.py \
+  --save-folder=/path/to/checkpoints/qwen35-407m-gdn3-full1-256k \
+  --work-dir=/path/to/work/qwen35-407m-gdn3-full1-256k \
+  --data-root=/path/to/tokenized-data \
+  --name=qwen35-407m-gdn3-full1-256k
+```
+
 ## Compatibility Boundaries
 
 - The three linear algorithms have different parameters and checkpoint keys; their checkpoints
@@ -231,3 +303,4 @@ torchrun --nproc-per-node=8 \
   extension. The supplied HSDP recipe is the supported distributed path.
 - OLMo's built-in Hugging Face converter does not know these custom sequence-mixer configs. A
   dedicated HF architecture and checkpoint converter are required before publication.
+- MTP is not implemented by the pinned OLMo-core backend and is not active in the 407M recipes.
