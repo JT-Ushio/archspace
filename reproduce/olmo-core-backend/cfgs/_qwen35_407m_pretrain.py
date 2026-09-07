@@ -127,7 +127,7 @@ def build_qwen35_407m_pretrain_config(
             wrapping_strategy=TransformerDataParallelWrappingStrategy.blocks,
         ),
         float8_config=Float8Config(enabled=False),
-        z_loss_multiplier=1e-5,
+        z_loss_multiplier=None,
         max_grad_norm=1.0,
     )
     trainer_config = (

@@ -82,6 +82,9 @@ Both profiles use Muon with `lr_max=2e-3`, `weight_decay=0.1`, `mu=0.95`,
 `2e-4 = 0.1 * lr_max`. For decay progress `r` in `[0, 1]`, the tail is
 `lr = lr_max * (1 - sqrt(r)) + lr_final * sqrt(r)`.
 
+Z-loss is disabled in all 407M recipes with `z_loss_multiplier=None`. Use `None` (CLI: `null`),
+since the backend still computes z-loss when the multiplier is `0.0`.
+
 An additional `Qwen3.5-407M-all-full-256K-cos.py` control uses the same all-full model,
 Muon settings, data, and 256K-token batch for 3,915 steps. It uses OLMo-core's `CosWithWarmup`:
 warm up for 33,554,432 tokens (128 steps) to `2e-3`, then apply cosine decay across the entire
