@@ -1,3 +1,4 @@
+import runpy
 import sys
 from argparse import Namespace
 from pathlib import Path
@@ -6,7 +7,7 @@ import pytest
 
 from olmo_core.config import DType
 from olmo_core.exceptions import OLMoConfigurationError
-from olmo_core.optim import SchedulerUnits, WSDSqrtDecay
+from olmo_core.optim import CosWithWarmup, SchedulerUnits, WSDSqrtDecay
 from olmo_core.optim.muon import MuonAdjustLRStrategy
 from olmo_core.script_utils import ExperimentConfig
 from olmo_core.train import DurationUnit
@@ -97,3 +98,38 @@ def test_qwen35_407m_rejects_non_8k_sequence_length(tmp_path: Path) -> None:
             variant="gdn3-full1",
             profile_name="256K",
         )
+
+
+def test_all_full_256k_cosine_changes_only_scheduler_and_run_group(tmp_path: Path) -> None:
+    baseline_entry = runpy.run_path(str(CFGS_DIR / "Qwen3.5-407M-all-full-256K.py"))
+    cosine_entry = runpy.run_path(str(CFGS_DIR / "Qwen3.5-407M-all-full-256K-cos.py"))
+    baseline = baseline_entry["build_config"](_opts(tmp_path), [])
+    cosine = cosine_entry["build_config"](_opts(tmp_path), [])
+    restored = ExperimentConfig.from_dict(cosine.as_config_dict())
+
+    expected = baseline.as_config_dict()
+    actual = restored.as_config_dict()
+    expected["train_module"]["scheduler"] = actual["train_module"]["scheduler"]
+    expected["trainer"]["callbacks"]["wandb"]["group"] = "qwen35-407m-all-full-cos-256k"
+    assert actual == expected
+
+    scheduler = restored.train_module.scheduler
+    assert isinstance(scheduler, CosWithWarmup)
+    assert scheduler.units == SchedulerUnits.tokens
+    assert scheduler.warmup == WARMUP_TOKENS
+    assert scheduler.alpha_f == LR_FINAL_FACTOR
+    max_tokens = TRAINING_PROFILES["256K"].max_tokens
+    midpoint = WARMUP_TOKENS + (max_tokens - WARMUP_TOKENS) // 2
+    assert scheduler.get_lr(LR_MAX, 0, max_tokens) == 0.0
+    assert scheduler.get_lr(LR_MAX, WARMUP_TOKENS // 2, max_tokens) == LR_MAX / 2
+    assert scheduler.get_lr(LR_MAX, WARMUP_TOKENS, max_tokens) == LR_MAX
+    assert scheduler.get_lr(LR_MAX, midpoint, max_tokens) == pytest.approx(1.1e-3)
+    assert scheduler.get_lr(LR_MAX, max_tokens, max_tokens) == LR_MAX * LR_FINAL_FACTOR
+
+
+def test_cosine_entry_applies_cli_overrides_after_scheduler_selection(tmp_path: Path) -> None:
+    entry = runpy.run_path(str(CFGS_DIR / "Qwen3.5-407M-all-full-256K-cos.py"))
+    config = entry["build_config"](_opts(tmp_path), ["train_module.scheduler.alpha_f=0.2"])
+
+    assert isinstance(config.train_module.scheduler, CosWithWarmup)
+    assert config.train_module.scheduler.alpha_f == 0.2

@@ -54,7 +54,7 @@ The 407M recipes share the following backbone settings:
 | normalization | Qwen RMSNorm, epsilon 1e-6 |
 | embedding / LM-head weights | not tied |
 
-The ten entry points are the Cartesian product of five layer layouts and two training profiles:
+The ten WSD entry points are the Cartesian product of five layer layouts and two training profiles:
 
 | Layout | Layer pattern | Total params | Non-embedding params |
 | --- | --- | ---: | ---: |
@@ -82,6 +82,12 @@ Both profiles use Muon with `lr_max=2e-3`, `weight_decay=0.1`, `mu=0.95`,
 `2e-4 = 0.1 * lr_max`. For decay progress `r` in `[0, 1]`, the tail is
 `lr = lr_max * (1 - sqrt(r)) + lr_final * sqrt(r)`.
 
+An additional `Qwen3.5-407M-all-full-256K-cos.py` control uses the same all-full model,
+Muon settings, data, and 256K-token batch for 3,915 steps. It uses OLMo-core's `CosWithWarmup`:
+warm up for 33,554,432 tokens (128 steps) to `2e-3`, then apply cosine decay across the entire
+remaining budget, reaching the same `2e-4` endpoint at 1,026,293,760 tokens. Its W&B group is
+`qwen35-407m-all-full-cos-256k`; the original ten recipes retain their WSD schedules.
+
 ## Implementation
 
 ```text
@@ -93,7 +99,7 @@ cfgs/_pretrain_common.py          shared 150B-sample stage-1 recipe
 cfgs/OLMo3-1B-stage1-*.py         three direct training entry points
 cfgs/_qwen35_407m_models.py       five Qwen3.5-style 407M backbone builders
 cfgs/_qwen35_407m_pretrain.py     shared Muon/data/scheduler recipe
-cfgs/Qwen3.5-407M-*.py            ten explicit comparison entry points
+cfgs/Qwen3.5-407M-*.py            ten WSD entry points plus one all-full 256K cosine control
 tests/                             config, serialization, pattern, and GPU checks
 ```
 
@@ -215,6 +221,7 @@ python3 cfgs/Qwen3.5-407M-gdn3-full1-256K.py \
 
 All ten `cfgs/Qwen3.5-407M-{layout}-{profile}.py` files have the same CLI. Their architecture and
 training-profile choices are fixed in the filename so comparison runs cannot silently drift.
+The additional `Qwen3.5-407M-all-full-256K-cos.py` entry uses the same CLI.
 
 ## Training
 
@@ -307,6 +314,18 @@ torchrun --nproc-per-node=8 \
   --work-dir=/path/to/work/qwen35-407m-gdn3-full1-256k \
   --data-root=/path/to/tokenized-data \
   --name=qwen35-407m-gdn3-full1-256k
+```
+
+Launch the all-full 256K cosine control in a separate save folder so it starts independently
+of the WSD run's automatically resumed checkpoints:
+
+```bash
+torchrun --nproc-per-node=8 \
+  cfgs/Qwen3.5-407M-all-full-256K-cos.py \
+  --save-folder=/path/to/checkpoints/qwen35-407m-all-full-256k-cos \
+  --work-dir=/path/to/work/qwen35-407m-all-full-256k-cos \
+  --data-root=/path/to/tokenized-data \
+  --name=qwen35-407m-all-full-256k-cos
 ```
 
 ## Compatibility Boundaries

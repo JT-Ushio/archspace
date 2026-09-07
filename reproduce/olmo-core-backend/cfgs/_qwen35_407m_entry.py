@@ -1,4 +1,4 @@
-"""Small adapter used by the ten explicit Qwen3.5-407M launchers."""
+"""Small adapter used by the explicit Qwen3.5-407M launchers."""
 
 import argparse
 from typing import List
