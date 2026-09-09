@@ -44,6 +44,8 @@ class MoSENonlinearity(StrEnum):
 
     silu = "silu"
     rms_norm = "rms_norm"
+    identity = "identity"
+    silu_rms_norm = "silu_rms_norm"
 
 
 DPSKV4_CLIP_BOUND = 10.0
@@ -69,17 +71,28 @@ def _rms_situ_up(x: torch.Tensor, scale: float) -> torch.Tensor:
     return beta * torch.tanh(x / beta)
 
 
+def _uses_rms_norm(nonlinearity: MoSENonlinearity) -> bool:
+    return nonlinearity in (
+        MoSENonlinearity.rms_norm,
+        MoSENonlinearity.silu_rms_norm,
+    )
+
+
 def _apply_mose_nonlinearity(
     x: torch.Tensor,
     nonlinearity: MoSENonlinearity,
     *,
     rms_norm: Optional[RMSNorm] = None,
 ) -> torch.Tensor:
+    if nonlinearity == MoSENonlinearity.identity:
+        return x
     if nonlinearity == MoSENonlinearity.silu:
         return F.silu(x)
-    if nonlinearity == MoSENonlinearity.rms_norm:
+    if _uses_rms_norm(nonlinearity):
         if rms_norm is None:
             raise RuntimeError("RMSNorm nonlinearity requires an RMSNorm module")
+        if nonlinearity == MoSENonlinearity.silu_rms_norm:
+            x = F.silu(x)
         return rms_norm(x)
     raise NotImplementedError(nonlinearity)
 
@@ -337,17 +350,16 @@ class MoSESwiGLUConfig(FeedForwardConfig):
         if self.rms_norm_learnable_weight:
             if self.r2 > 0:
                 if self.share_gate_up_subspace:
-                    if MoSENonlinearity.rms_norm in (
-                        self.gate_nonlinearity,
-                        self.up_nonlinearity,
+                    if _uses_rms_norm(self.gate_nonlinearity) or _uses_rms_norm(
+                        self.up_nonlinearity
                     ):
                         params += self.r2
                 else:
-                    if self.gate_nonlinearity == MoSENonlinearity.rms_norm:
+                    if _uses_rms_norm(self.gate_nonlinearity):
                         params += self.r2
-                    if self.up_nonlinearity == MoSENonlinearity.rms_norm:
+                    if _uses_rms_norm(self.up_nonlinearity):
                         params += self.r2
-            if self.down_r2 > 0 and self.down_nonlinearity == MoSENonlinearity.rms_norm:
+            if self.down_r2 > 0 and _uses_rms_norm(self.down_nonlinearity):
                 params += self.down_r2
         return params
 
@@ -458,9 +470,8 @@ class MoSESwiGLU(nn.Module):
             self.gate_nonlinear_v = nn.Linear(r2, hidden_size, **linear_kwargs)
             self.up_nonlinear_v = nn.Linear(r2, hidden_size, **linear_kwargs)
             if share_gate_up_subspace:
-                if MoSENonlinearity.rms_norm in (
-                    self.gate_nonlinearity,
-                    self.up_nonlinearity,
+                if _uses_rms_norm(self.gate_nonlinearity) or _uses_rms_norm(
+                    self.up_nonlinearity
                 ):
                     self.gate_up_nonlinear_norm = RMSNorm(
                         size=r2,
@@ -471,7 +482,7 @@ class MoSESwiGLU(nn.Module):
                         init_device=init_device,
                     )
             else:
-                if self.gate_nonlinearity == MoSENonlinearity.rms_norm:
+                if _uses_rms_norm(self.gate_nonlinearity):
                     self.gate_nonlinear_norm = RMSNorm(
                         size=r2,
                         eps=1e-5,
@@ -480,7 +491,7 @@ class MoSESwiGLU(nn.Module):
                         dtype=dtype,
                         init_device=init_device,
                     )
-                if self.up_nonlinearity == MoSENonlinearity.rms_norm:
+                if _uses_rms_norm(self.up_nonlinearity):
                     self.up_nonlinear_norm = RMSNorm(
                         size=r2,
                         eps=1e-5,
@@ -531,7 +542,7 @@ class MoSESwiGLU(nn.Module):
             if down_r2 > 0:
                 self.down_nonlinear_u = nn.Linear(hidden_size, down_r2, **linear_kwargs)
                 self.down_nonlinear_v = nn.Linear(down_r2, d_model, **linear_kwargs)
-                if self.down_nonlinearity == MoSENonlinearity.rms_norm:
+                if _uses_rms_norm(self.down_nonlinearity):
                     self.down_nonlinear_norm = RMSNorm(
                         size=down_r2,
                         eps=1e-5,

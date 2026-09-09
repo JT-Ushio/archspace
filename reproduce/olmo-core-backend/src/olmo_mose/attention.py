@@ -23,7 +23,7 @@ from olmo_core.nn.rope import RoPEConfig
 from olmo_core.nn.transformer import TransformerBlockConfig, TransformerConfig
 from olmo_core.nn.transformer.init import InitMethod, init_linear
 
-from .feed_forward import MoSENonlinearity, _apply_mose_nonlinearity
+from .feed_forward import MoSENonlinearity, _apply_mose_nonlinearity, _uses_rms_norm
 
 
 def _validate_rank(rank: int) -> int:
@@ -116,7 +116,7 @@ class NonlinearLowRankProjection(nn.Module):
             dtype=dtype,
             device=init_device,
         )
-        if self.nonlinearity == MoSENonlinearity.rms_norm:
+        if _uses_rms_norm(self.nonlinearity):
             self.nonlinear_norm: Optional[RMSNorm] = RMSNorm(
                 size=rank,
                 eps=1e-5,
@@ -238,7 +238,7 @@ class LowRankAttentionConfig(AttentionConfig):
                     (v_rank, self.v_nonlinearity),
                     (o_rank, self.o_nonlinearity),
                 )
-                if nonlinearity == MoSENonlinearity.rms_norm
+                if _uses_rms_norm(nonlinearity)
             )
         return (
             super().num_params(d_model)
@@ -372,7 +372,7 @@ class LowRankAttention(Attention):
         # With independent learnable RMSNorm weights, each branch has a different
         # activation and therefore cannot reuse the post-normalization latent.
         nonlinearity = projections[0].nonlinearity
-        if nonlinearity == MoSENonlinearity.rms_norm and self.rms_norm_learnable_weight:
+        if _uses_rms_norm(nonlinearity) and self.rms_norm_learnable_weight:
             first_norm = projections[0].nonlinear_norm
             return all(projection.nonlinear_norm is first_norm for projection in projections)
         return True
