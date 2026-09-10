@@ -1,6 +1,6 @@
 ---
 name: mose-remote-gpu-submit
-description: Prepare or submit Shijiayang's MoSE GPU jobs through the designated SSH submission host using gpu_run on the arch partition. Apply when generating submission commands or launching training/analysis jobs; keep code edits and ordinary work local.
+description: Prepare or submit Shijiayang's MoSE GPU jobs through the designated SSH host using gpu_run on arch, and sync stopped attempts with wandb_sjy before authorized restarts. Apply to submission commands and job restart workflows; keep development local.
 ---
 
 # MoSE remote GPU submission
@@ -26,7 +26,7 @@ description: Prepare or submit Shijiayang's MoSE GPU jobs through the designated
 The SSH host is a shared submission gateway, not a development or analysis machine.
 
 - Edit code, write launchers, inspect files, run ordinary tests, and do Git work **locally**.
-- On the shared host, perform only the requested SSH/session handling, `conda activate MoSE`, and the authorized `gpu_run arch ...` submission. Use absolute script paths; no remote directory exploration is needed.
+- On the shared host, perform only the requested SSH/session handling, `conda activate MoSE`, authorized `gpu_run arch ...` submissions, and the `wandb_sjy` synchronization described below. Use absolute paths; no remote directory exploration is needed.
 - Do not remotely run Python, training, analysis, tests, package installation, cloning, pulling, editing, copying, file listings, environment dumps, resource probes, or scheduler queries. Do not execute/source the training launcher on the gateway. Its preparation and computation belong inside the scheduled job.
 - Do not treat the SSH account's `root` name as permission to access or alter other users' files or global settings.
 - If conda activation or gpu_run is unavailable, stop and ask the user for the required initialization steps; do not discover or modify the remote environment on your own.
@@ -52,5 +52,46 @@ ssh -CAXY cpu-develop.jitao+root.ailab-llmagent.ws@h.pjlab.org.cn
 ```bash
 conda activate MoSE && gpu_run arch NODES GPUS_PER_NODE JOB_NAME /mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/RELATIVE_LAUNCHER_PATH
 ```
+
+## Stopped attempt: sync first, then restart
+
+User preference: for a task being monitored with restart authorization, as soon
+as it is confirmed stopped/killed, submit that attempt's W&B logs before
+submitting its replacement. Do not defer synchronization until all experiments
+finish. This does not authorize restarting a task the user explicitly paused or
+cancelled, or bypassing a scheduler/access prohibition.
+
+1. Confirm the old attempt is terminal and has zero active replicas using
+   authorized status checks. Queueing, a log timeout, or an SSH disconnect is
+   not evidence that training stopped; do not duplicate a queued/live job.
+2. Resolve the exact offline-run directory for that attempt from its training
+   logs or an existing verified ledger. The argument is the W&B offline-run
+   directory, not a scheduler log file or the parent directory of every run.
+   If the attempt never started training and produced no W&B segment, record
+   that fact and skip synchronization. If the path is unknown, resolve it with
+   authorized log retrieval rather than guessing.
+3. On the designated SSH gateway, immediately invoke:
+
+   ```bash
+   conda activate MoSE && wandb_sjy '/absolute/path/to/offline-run-...'
+   ```
+
+   Record the old job ID, exact segment path, invocation result, and any
+   background PID/output location. A detached PID means synchronization was
+   launched, not that upload completed. Do not re-upload a segment merely
+   because completion has not yet been verified. If invocation fails or its
+   result is ambiguous, report it and resolve that state before retrying.
+4. After synchronization has been launched, submit the authorized replacement
+   with `gpu_run arch`, normally 2×8, preserving the experiment configuration,
+   RUN_NAME, stage, checkpoint directory, and resume behavior. Use a unique
+   scheduler job name and capture its actual ID. A background upload need not
+   block training restart; keep its completion explicitly pending.
+5. Verify upload completion through authorized output/log checks when available.
+   Serialize uploads of different segments sharing a W&B run ID until the
+   previous upload finishes; do not invent merge/append flags or claim histories
+   merged without evidence. This sync exception does not authorize remote
+   wrapper inspection, filesystem exploration, installations, or credential
+   reads; request any additional access needed for verification. Never print
+   or persist W&B credentials.
 
 Keep this skill focused on submission location and permissions. For experiment hyperparameters, use the available `mose-experiment-defaults` skill when applicable; do not duplicate those defaults here. A user's later explicit change to the submission policy takes precedence, but quota/access failures alone never authorize a different host, partition, or workflow.

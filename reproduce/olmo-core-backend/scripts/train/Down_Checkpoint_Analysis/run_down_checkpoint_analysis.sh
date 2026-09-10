@@ -38,4 +38,7 @@ exec "${OLMO_ENV}/bin/python" -u scripts/analysis/Down_Checkpoint_Analysis/analy
   --num-sequences="${NUM_SEQUENCES:-128}" \
   --tokens-per-sequence="${TOKENS_PER_SEQUENCE:-128}" \
   --seed="${ANALYSIS_SEED:-34521}" \
-  --cpu-threads="${ANALYSIS_CPU_THREADS:-8}"
+  --cpu-threads="${ANALYSIS_CPU_THREADS:-8}" \
+  --heatmap-sequences="${HEATMAP_SEQUENCES:-0}" \
+  --heatmap-tokens="${HEATMAP_TOKENS:-64}" \
+  --heatmap-channels="${HEATMAP_CHANNELS:-128}"

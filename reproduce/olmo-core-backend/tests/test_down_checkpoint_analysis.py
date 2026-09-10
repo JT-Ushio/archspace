@@ -111,6 +111,22 @@ class CheckpointAnalysisTests(unittest.TestCase):
         self.assertEqual(len(zero["one_minus_cosine"]), 0)
         self.assertTrue(zero["undefined_cosine"].eq(1).all())
 
+    def test_direction_stats_ignore_positive_token_rescaling(self):
+        torch.manual_seed(32)
+        x = torch.randn(128, 8)
+        def measure(value):
+            stats = analysis.ActivationStats(covariance=True)
+            stats.update(value)
+            result, _, _ = stats.finish()
+            return result
+        first = measure(x)
+        second = measure(x * torch.logspace(-2, 2, 128)[:, None])
+        self.assertAlmostEqual(first["direction_effective_rank"], second["direction_effective_rank"], places=5)
+        unit = torch.nn.functional.normalize(x, dim=-1)
+        cosine = unit @ unit.T
+        expected = cosine[~torch.eye(128, dtype=torch.bool)].mean().item()
+        self.assertAlmostEqual(first["direction_mean_pair_cosine"], expected, places=6)
+
     def test_hooks_do_not_modify_forward_and_generate_outputs(self):
         torch.manual_seed(123)
         with tempfile.TemporaryDirectory() as tmp:
@@ -133,6 +149,31 @@ class CheckpointAnalysisTests(unittest.TestCase):
             build_plots(directory)
             self.assertTrue((directory / "report.md").is_file())
             self.assertGreater(len(list((directory / "plots").glob("*.svg"))), 30)
+
+    def test_token_feature_hooks_preserve_forward(self):
+        import numpy as np
+        from token_heatmaps import FeatureRecorder
+        torch.manual_seed(123)
+        with tempfile.TemporaryDirectory() as tmp:
+            model = ToyModel("silu_rms_norm")
+            x = torch.randn(1, 16, 8)
+            expected = model(x)
+            recorder = FeatureRecorder(Path(tmp) / "features", sequences=1, tokens=2, channels=2)
+            positions = torch.tensor([0, 3, 7, 9])
+            recorder.begin(0, positions.numpy(), np.arange(16), {})
+            collector = analysis.Collector(model, recorder)
+            collector.positions = positions
+            try:
+                with torch.inference_mode():
+                    actual = model(x)
+                recorder.finish(2)
+                torch.testing.assert_close(actual, expected)
+                with np.load(Path(tmp) / "features/sequence_000.npz", allow_pickle=False) as data:
+                    np.testing.assert_array_equal(data["positions"], [0, 9])
+                    self.assertEqual(data["L02_a_values"].shape, (2, 8))
+                    self.assertEqual(data["L02_h_values"].shape, (2, 2))
+            finally:
+                collector.close()
 
     def test_saved_config_audit_and_dcp_model_only_reload(self):
         folder = BACKEND / "scripts/analysis/Down_Identity_Ablations/results_four_runs"

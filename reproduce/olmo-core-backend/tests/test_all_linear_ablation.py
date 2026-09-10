@@ -75,7 +75,8 @@ class AllLinearTests(unittest.TestCase):
                          save_folder="/tmp/checkpoints", name="test-all-linear")
         config = entry["build_config"](opts, [])
         folder = BACKEND / "scripts/train/All_Linear_Ablation"
-        self.assertEqual([p.name for p in folder.iterdir()], ["run_all_linear_fp8.sh"])
+        self.assertEqual({p.name for p in folder.glob("*.sh")},
+                         {"run_all_linear_fp8.sh", "run_ffn_linear_attention_silu_fp8.sh"})
         flags = []
         for token in shlex.split((folder / "run_all_linear_fp8.sh").read_text().replace("\\\n", " ")):
             flag = token.removeprefix("--")
@@ -97,6 +98,37 @@ class AllLinearTests(unittest.TestCase):
             self.assertEqual(str(getattr(config.model.block.feed_forward, f"{name}_nonlinearity")), "identity")
             setattr(config.model.block.feed_forward, f"{name}_nonlinearity", MoSENonlinearity.silu)
         self.assertEqual(config.as_config_dict(), baseline.as_config_dict())
+
+    def test_ffn_linear_attention_silu_config(self):
+        folder = BACKEND / "cfps/BS256_Seq8K_30B_WSD_FP8/All_Linear_Ablation"
+        entry = runpy.run_path(str(folder / "ffn_linear_attention_silu_fp8.py"))
+        opts = Namespace(sequence_length=None, data_root="/tmp/data", work_dir="/tmp/work",
+                         save_folder="/tmp/checkpoints", name="test-ffn-linear")
+        config = entry["build_config"](opts, [])
+        launcher = BACKEND / "scripts/train/All_Linear_Ablation/run_ffn_linear_attention_silu_fp8.sh"
+        flags = []
+        for token in shlex.split(launcher.read_text().replace("\\\n", " ")):
+            flag = token.removeprefix("--")
+            if flag.startswith(("model.", "train_module.", "trainer.", "data_loader.")) and "=" in flag:
+                if not flag.startswith("trainer.work_dir="):
+                    flags.append(flag)
+        self.assertEqual(config.as_config_dict(), entry["build_config"](opts, flags).as_config_dict())
+        baseline = runpy.run_path(str(folder / "all_linear_fp8.py"))["build_config"](opts, [])
+        from olmo_mose import MoSENonlinearity
+        for name in ("q", "k", "v", "o"):
+            self.assertEqual(str(getattr(config.model.block.sequence_mixer, f"{name}_nonlinearity")), "silu")
+            setattr(baseline.model.block.sequence_mixer, f"{name}_nonlinearity", MoSENonlinearity.silu)
+        baseline.trainer.callbacks["wandb"].group = config.trainer.callbacks["wandb"].group
+        self.assertEqual(config.as_config_dict(), baseline.as_config_dict())
+        for name in ("gate", "up", "down"):
+            self.assertEqual(str(getattr(config.model.block.feed_forward, f"{name}_nonlinearity")), "identity")
+        self.assertEqual(config.model.block.feed_forward.r2, 512)
+        self.assertEqual(config.model.block.feed_forward.down_r2, 512)
+        self.assertEqual(config.model.block.sequence_mixer.rank, 512)
+        self.assertEqual(config.data_loader.global_batch_size, 2097152)
+        self.assertEqual(config.train_module.rank_microbatch_size, 32768)
+        for world_size in (16, 32):
+            self.assertEqual(config.data_loader.global_batch_size % (world_size * 32768), 0)
 
 
 if __name__ == "__main__":

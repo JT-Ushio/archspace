@@ -76,3 +76,66 @@ python scripts/analysis/Down_Checkpoint_Analysis/plot_results.py /path/to/output
 
 已有四组模型权重不同，直接比较自然激活是描述性分析；局部重放固定输入/权重，但仍不能预测重新训练后的收益。
 不跨模型对齐某个通道的语义，不把秩更高或 Norm 后尺度接近 1 当作效果更好的证明。
+
+## Token 特征热力图（新增，可选）
+
+旧结果仅有聚合统计/直方图，不能反推出某个 token 的特征。新增启动入口：
+`scripts/train/Down_Checkpoint_Analysis/run_down_token_heatmaps.sh`。
+复用原分析的四组 checkpoint、128 条验证样本、随机种子和抽样位置；不训练、不改变训练设置。
+新任务目录使用 `down-token-heatmaps-时间戳`，不覆盖旧结果。
+
+默认为前 **2 条样本**各保存至多 **64 个已抽样有效 token**，覆盖全部 16 层及 h/a/z/y/o。
+这些 token 从原统计的 sampled_positions 中等距选取，位置递增，但**不是连续文本**；不拼接不同序列。
+a/z 保存全部 512 通道，h/y/o 默认保存 128 个等距通道；RMS/负值比例/负值能量始终使用全部通道计算。
+通过 `HEATMAP_SEQUENCES` / `HEATMAP_TOKENS` / `HEATMAP_CHANNELS` 调整大小。
+原分析入口默认 `HEATMAP_SEQUENCES=0`，不开启特征保存，兼容原工作流。
+快照为 float32 NPZ（无 pickle），每个样本独立保存，内存只暂存一个样本；默认四模型原始数组约 44 MiB，另有统计开销。
+保存 token ID、原序列位置、原始通道编号和样本哈希，不下载 tokenizer、不保存解码文本。
+
+提交须遵循仓库 `mose-remote-gpu-submit` skill。当前偏好申请完整 8 卡节点；该分析仍只使用 cuda:0，
+不会因申请 8 卡自动并行。与上文历史单卡示例不同，当前建议命令如下（仅供明确要求提交时执行）：
+
+```bash
+ssh -CAXY cpu-develop.jitao+root.ailab-llmagent.ws@h.pjlab.org.cn
+# 在 SSH 会话内：
+conda activate MoSE && gpu_run arch 1 8 mose-down-token-heatmaps /mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Down_Checkpoint_Analysis/run_down_token_heatmaps.sh
+```
+
+GPU 任务只负责保存统计和 `S|I|R|SR/token_features/sequence_*.npz`，不依赖 matplotlib。
+完成后在本地、安装了 NumPy/matplotlib 的 CPU 环境绘图（每个输出目录必须不存在）：
+
+```bash
+python scripts/analysis/Down_Checkpoint_Analysis/plot_token_heatmaps.py /path/to/new/result \
+  --output /path/to/new/figures/sequence0 --sequence 0 --layers 1 4 8 12 16
+```
+
+每条样本输出 11 张图（PNG/SVG/PDF）：
+
+- 3 张 token×层热力图：全通道 log10(RMS)、负值比例、负值能量占比；4 模型×5 采集点，按采集点共享色标。
+- 4 张 a→z token×通道图：逐 token 除以 RMS、固定 ±4 色标，并记录显示截断比例。
+- 4 张 a→z 原始幅值的 signed-log 图：`sign(x)*log10(1+abs(x))`，跨模型/所选层统一色标。
+
+图像不插值、不按激活排序通道、也不假定不同模型/不同层同编号通道语义一致。
+归一化视图有意去掉尺度，必须配合原始幅值视图与 RMS 图解释；仅两条文本属于案例展示，不代表总体分布。
+脚本核对四模型的 token 位置/ID/样本哈希和通道布局，拒绝未完成任务或不对齐的输入。
+零向量的负值能量占比按 0 记录，RMS 图以 1e-12 作绘图下限。
+这些是 BF16 自然激活图，不是 FP8 误差或训练梯度统计。
+
+CPU 单元测试：`python -m unittest discover -s scripts/analysis/Down_Checkpoint_Analysis -p 'test_token_heatmaps.py'`。
+
+### 同批前向增加的方向统计
+
+`activations.csv` 额外记录近零坐标比例 `|x| <= 0.01 * token RMS`；对于 a/z，
+增加逐 token L2 归一化后的中心化协方差有效秩 `direction_effective_rank` 和所有非零采样 token
+之间的平均余弦 `direction_mean_pair_cosine`。方向统计排除零向量，并记录有效 token 数。
+它们使用全部 128 条样本的原统计抽样位置，不限于用于热力图的两条文本。
+每模型 `direction_spectra.csv` 保存归一化后的协方差谱；原 `effective_rank` 与谱保持不变。
+两两余弦通过归一化向量之和计算，不构造 token×token 大矩阵；包含不同序列之间的 token 对。
+
+```bash
+python scripts/analysis/Down_Checkpoint_Analysis/plot_direction_stats.py /path/to/new/result \
+  --output /path/to/new/direction-figures
+```
+
+输出原始/去尺度有效秩、方向相似度与近零比例图，以及逐层等权平均的汇总 CSV。
+这些统计用于排查幅值对协方差谱的影响，不能将有效秩高直接解释为质量高。

@@ -198,6 +198,9 @@ class ActivationStats:
         self.values = []
         self.count = 0
         self.sum = self.cross = None
+        self.unit_sum = self.unit_cross = None
+        self.unit_count = 0
+        self.direction_spectrum = None
         self.covariance = covariance
 
     def update(self, x):
@@ -213,6 +216,7 @@ class ActivationStats:
             "negative_energy_fraction": (x.square() * (x < 0)).sum(-1) / denominator,
             "top1pct_energy_fraction": x.square().topk(max(1, math.ceil(x.shape[-1] * .01)), dim=-1).values.sum(-1) / denominator,
             "zero_rms": (rms == 0).float(),
+            "near_zero_fraction": (x.abs() <= .01 * rms[:, None]).float().mean(-1),
         }
         for key, value in metrics.items():
             self.metrics.setdefault(key, []).append(value.cpu())
@@ -222,6 +226,13 @@ class ActivationStats:
         self.values.append(flat[indices].cpu())
         self.count += len(x)
         if self.covariance:
+            unit = F.normalize(x[rms > 0], dim=-1)
+            self.unit_count += len(unit)
+            if self.unit_sum is None:
+                self.unit_sum, self.unit_cross = unit.sum(0), unit.T @ unit
+            else:
+                self.unit_sum += unit.sum(0)
+                self.unit_cross += unit.T @ unit
             # FP32 sufficient for diagnostic spectra; centered in float64 on CPU.
             if self.sum is None:
                 self.sum = x.sum(0)
@@ -247,6 +258,18 @@ class ActivationStats:
             total = spectrum.sum()
             result["effective_rank"] = (total.square() / spectrum.square().sum().clamp_min(1e-30)).item()
             spectrum = spectrum / total.clamp_min(1e-30)
+            result["direction_nonzero_tokens"] = self.unit_count
+            if self.unit_count > 1:
+                unit_sum = self.unit_sum.double().cpu()
+                mean = unit_sum / self.unit_count
+                cov = self.unit_cross.double().cpu() / self.unit_count - mean[:, None] * mean[None, :]
+                eigen = torch.linalg.eigvalsh((cov + cov.T) / 2).flip(0)
+                result["direction_cov_negative_eigenvalue_mass"] = (-eigen.clamp_max(0)).sum().item()
+                eigen = eigen.clamp_min(0)
+                result["direction_effective_rank"] = (eigen.sum().square() / eigen.square().sum().clamp_min(1e-30)).item()
+                result["direction_mean_pair_cosine"] = ((unit_sum.square().sum() - self.unit_count) /
+                                                        (self.unit_count * (self.unit_count - 1))).item()
+                self.direction_spectrum = eigen / eigen.sum().clamp_min(1e-30)
         return result, values, spectrum
 
 
@@ -279,7 +302,8 @@ def distances(reference, other):
 
 
 class Collector:
-    def __init__(self, model):
+    def __init__(self, model, heatmaps=None):
+        self.heatmaps = heatmaps
         self.stats, self.pairs, self.derivatives = {}, {}, {}
         self.handles = []
         self.positions = None
@@ -321,6 +345,8 @@ class Collector:
 
     def add(self, layer, point, tensor):
         x = tensor.detach().reshape(-1, tensor.shape[-1]).index_select(0, self.positions).float()
+        if self.heatmaps is not None:
+            self.heatmaps.add(layer, point, x)
         key = (layer, point)
         self.stats.setdefault(key, ActivationStats(covariance=point in ("a", "z"))).update(x)
         self.calls[key] = self.calls.get(key, 0) + 1
@@ -332,6 +358,7 @@ class Collector:
 
     def save(self, directory, label, expected_calls):
         rows, pair_rows, spectra, histogram, per_sequence = [], [], [], {}, []
+        direction_spectra = []
         for (layer, point), stats in sorted(self.stats.items()):
             if self.calls[layer, point] != expected_calls:
                 raise ValueError(f"Unexpected hook call count: {layer}, {point}")
@@ -347,6 +374,9 @@ class Collector:
             if spectrum is not None:
                 spectra.extend(dict(run=label, layer=layer, point=point, component=i+1, fraction=v)
                                for i, v in enumerate(spectrum.tolist()))
+            if stats.direction_spectrum is not None:
+                direction_spectra.extend(dict(run=label, layer=layer, point=point, component=i+1, fraction=v)
+                                         for i, v in enumerate(stats.direction_spectrum.tolist()))
         for (layer, left, right, point), metrics in sorted(self.pairs.items()):
             row = dict(run=label, layer=layer, left=left, right=right, point=point)
             for name, values in metrics.items():
@@ -355,6 +385,7 @@ class Collector:
         write_csv(directory / "activations.csv", rows)
         write_csv(directory / "replay.csv", pair_rows)
         write_csv(directory / "spectra.csv", spectra)
+        write_csv(directory / "direction_spectra.csv", direction_spectra)
         write_csv(directory / "per_sequence.csv", per_sequence)
         write_csv(directory / "silu_sensitivity.csv", [dict(run=label, layer=layer, **summarize(values))
                   for layer, values in sorted(self.derivatives.items())])
@@ -372,12 +403,19 @@ def main():
     parser.add_argument("--seed", type=int, default=34521)
     parser.add_argument("--expected-step", type=int, default=14306)
     parser.add_argument("--cpu-threads", type=int, default=8)
+    parser.add_argument("--heatmap-sequences", type=int, default=0,
+                        help="Save token features for first N sampled sequences; 0 disables")
+    parser.add_argument("--heatmap-tokens", type=int, default=64)
+    parser.add_argument("--heatmap-channels", type=int, default=128,
+                        help="Channels saved for h/y/o; a/z always retain all channels")
     args = parser.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
     if any(int(os.environ.get(k, "1")) != 1 for k in ("WORLD_SIZE", "NODE_COUNT")):
         raise ValueError("Submit exactly one node / one process / one GPU")
     if min(args.num_sequences, args.tokens_per_sequence, args.cpu_threads) <= 0:
         parser.error("Sample counts and CPU threads must be positive")
+    if not 0 <= args.heatmap_sequences <= args.num_sequences or min(args.heatmap_tokens, args.heatmap_channels) <= 0:
+        parser.error("Require 0 <= heatmap-sequences <= num-sequences and positive heatmap sizes")
     if not torch.cuda.is_available():
         raise RuntimeError("CUDA GPU required; do not run this on a CPU login node")
     torch.set_num_threads(args.cpu_threads)
@@ -415,7 +453,8 @@ def main():
         torch_version=torch.__version__, cuda_version=torch.version.cuda,
         gpu=torch.cuda.get_device_name(), git_commit=git.stdout.strip(),
         source_hashes={str(p.relative_to(BACKEND)): sha256(p) for p in
-                      [Path(__file__), BACKEND / "src/olmo_mose/feed_forward.py", BACKEND / "src/olmo_mose/attention.py"]},
+                      [Path(__file__), Path(__file__).with_name("token_heatmaps.py"),
+                       BACKEND / "src/olmo_mose/feed_forward.py", BACKEND / "src/olmo_mose/attention.py"]},
         natural_precision="BF16 weights/forward; original full-precision norm internals",
         replay_precision="FP32 from the SAME sampled BF16 encoder output a; TF32 disabled",
         valid_tokens=sum(s["valid_tokens"] for s in sample_records),
@@ -429,15 +468,22 @@ def main():
         write_json(directory / "training_config.json", configs[label])
         LOG.info("%s loading %s (model only)", label, checkpoints[label])
         model = load_model(configs[label], checkpoints[label], device)
-        collector = Collector(model)
+        from token_heatmaps import FeatureRecorder
+        heatmaps = FeatureRecorder(directory / "token_features", args.heatmap_sequences,
+                                   args.heatmap_tokens, args.heatmap_channels) if args.heatmap_sequences else None
+        collector = Collector(model, heatmaps)
         try:
             with torch.inference_mode():
                 for i, (ids, positions) in enumerate(samples):
                     collector.positions = positions.to(device)
+                    if heatmaps is not None:
+                        heatmaps.begin(i, positions.numpy(), ids[0].numpy(), sample_records[i])
                     # Compute all transformer positions but only one vocabulary
                     # projection, avoiding the [8192,100352] logits allocation.
                     output = model(ids.to(device), logits_to_keep=1)
                     del output
+                    if heatmaps is not None:
+                        heatmaps.finish(len(model.blocks))
                     if (i + 1) % 8 == 0 or i == 0:
                         LOG.info("%s sequence %d/%d", label, i + 1, len(samples))
             collector.save(directory, label, len(samples))
