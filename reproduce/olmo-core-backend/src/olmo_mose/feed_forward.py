@@ -18,6 +18,8 @@ from olmo_core.nn.feed_forward import (
 )
 from olmo_core.nn.layer_norm import RMSNorm
 
+from .output_subspace import DownOutputRotation, GroupedOutputRotation, validate_output_rotation
+
 
 class SwiGLUChannelControl(StrEnum):
     """Channel-control function applied inside SwiGLU."""
@@ -307,6 +309,9 @@ class MoSESwiGLUConfig(FeedForwardConfig):
     down_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu
     rms_norm_learnable_weight: bool = False
     share_gate_up_subspace: bool = True
+    down_output_rotation: DownOutputRotation = DownOutputRotation.none
+    down_rotation_groups: int = 32
+    down_rotation_a_max: float = 0.5
 
     def __post_init__(self) -> None:
         self.name = FeedForwardType(self.name)
@@ -331,8 +336,16 @@ class MoSESwiGLUConfig(FeedForwardConfig):
         if self.bias is None:
             self.bias = False
         _validate_mose_ranks(self.r1, self.r2, self.down_r1, self.down_r2)
+        self.down_output_rotation = validate_output_rotation(
+            self.down_output_rotation, self.down_rotation_groups, self.down_rotation_a_max,
+            down_r1=self.down_r1, down_r2=self.down_r2,
+            down_nonlinearity=self.down_nonlinearity, bias=self.bias)
 
     def num_params(self, d_model: int) -> int:
+        mode = validate_output_rotation(
+            self.down_output_rotation, self.down_rotation_groups, self.down_rotation_a_max,
+            down_r1=self.down_r1, down_r2=self.down_r2,
+            down_nonlinearity=self.down_nonlinearity, bias=self.bias, d_model=d_model)
         hidden_size = self.hidden_size
         gate_up_u_count = 1 if self.share_gate_up_subspace else 2
         params = (self.r1 + self.r2) * (
@@ -361,6 +374,10 @@ class MoSESwiGLUConfig(FeedForwardConfig):
                         params += self.r2
             if self.down_r2 > 0 and _uses_rms_norm(self.down_nonlinearity):
                 params += self.down_r2
+        if mode != DownOutputRotation.none:
+            params += self.down_rotation_groups * self.down_r2
+        if mode == DownOutputRotation.dynamic_residual:
+            params += self.down_rotation_groups
         return params
 
     def build(
@@ -410,6 +427,9 @@ class MoSESwiGLU(nn.Module):
         down_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
         rms_norm_learnable_weight: bool = False,
         share_gate_up_subspace: bool = True,
+        down_output_rotation: DownOutputRotation = DownOutputRotation.none,
+        down_rotation_groups: int = 32,
+        down_rotation_a_max: float = 0.5,
     ):
         super().__init__()
         activation = ActivationFunction(activation)
@@ -435,6 +455,10 @@ class MoSESwiGLU(nn.Module):
             raise OLMoConfigurationError("share_gate_up_subspace must be a boolean")
         self.rms_norm_learnable_weight = rms_norm_learnable_weight
         self.share_gate_up_subspace = share_gate_up_subspace
+        self.down_output_rotation = validate_output_rotation(
+            down_output_rotation, down_rotation_groups, down_rotation_a_max,
+            down_r1=down_r1, down_r2=down_r2,
+            down_nonlinearity=self.down_nonlinearity, bias=bias, d_model=d_model)
         self.beta_gate = 4.0
         self.beta_up = 25.0
 
@@ -565,6 +589,12 @@ class MoSESwiGLU(nn.Module):
             else:
                 self.register_parameter("down_bias", None)
 
+        self.output_subspace = None
+        if self.down_output_rotation != DownOutputRotation.none:
+            self.output_subspace = GroupedOutputRotation(
+                down_r2, d_model, down_rotation_groups, down_rotation_a_max,
+                self.down_output_rotation, dtype=dtype, device=init_device)
+
     def projection_modules(self) -> tuple[nn.Module, ...]:
         """Return projections in their deterministic OLMo initialization order."""
         modules = [
@@ -677,6 +707,8 @@ class MoSESwiGLU(nn.Module):
                 rms_norm=self.down_nonlinear_norm,
             )
             nonlinear_out = self.down_nonlinear_v(down_nonlinear_latent)
+            if self.output_subspace is not None:
+                nonlinear_out = self.output_subspace(nonlinear_out, down_nonlinear_latent)
             out = nonlinear_out if out is None else out + nonlinear_out
 
         assert out is not None

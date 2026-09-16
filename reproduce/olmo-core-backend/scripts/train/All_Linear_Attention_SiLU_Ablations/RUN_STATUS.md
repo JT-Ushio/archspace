@@ -1,9 +1,9 @@
-# Live run ledger
+# Completed run ledger
 
 Goal: implement and finish Q-only/K-only/V-only/O-only internal SiLU ablations
 on the all-linear baseline. User allows simultaneous jobs and queueing, arch2x8
-per experiment, and restart of killed attempts. Goal remains active until actual
-training completion is verified, not merely successful submission.
+per experiment, and restart of killed attempts. All four completed full training
+and final W&B synchronization on 2026-09-10; verification is recorded below.
 
 All times Asia/Hong_Kong. First submissions on 2026-09-09:
 
@@ -18,10 +18,284 @@ All times Asia/Hong_Kong. First submissions on 2026-09-09:
 
 | Variant | Job ID | Created | Last confirmed status |
 | --- | --- | --- | --- |
-| Q | mose-all-linear-q-silu-r3-2x8-0910-80409470 | 15:34:40 | 15:42:22 Inqueue; intended resume from saved7152 not yet verified |
-| K | mose-all-linear-k-silu-r4-2x8-0910-86807381 | 15:34:46 | 15:42:22 Inqueue; intended resume from saved10728 not yet verified |
-| V | mose-all-linear-v-silu-r4-2x8-0910-36359680 | 15:40:36 | 15:42:22 Inqueue; intended resume from saved10728 not yet verified |
-| O | mose-all-linear-o-silu-r4-2x8-0910-81400775 | 15:33:01 | 15:42:22 Inqueue; both replicas STARTING, intended resume from saved8940 not yet verified |
+| Q | mose-all-linear-q-silu-r4-2x8-0910-80094190 | 18:19:40 | 20:17:39 Succeeded (2 succeeded, 0 active); completed14306; final checkpoint and W&B sync verified |
+| K | mose-all-linear-k-silu-r4-2x8-0910-86807381 | 15:34:46 | 20:17:39 Succeeded (2 succeeded, 0 active); completed14306; final checkpoint and W&B sync verified |
+| V | mose-all-linear-v-silu-r4-2x8-0910-36359680 | 15:40:36 | 20:17:39 Succeeded (2 succeeded, 0 active); completed14306; final checkpoint and W&B sync verified |
+| O | mose-all-linear-o-silu-r5-2x8-0910-11115028 | 18:18:31 | 20:17:39 Succeeded (2 succeeded, 0 active); completed14306; final checkpoint and W&B sync verified |
+
+## Final verification (Sep10, approximately 20:19)
+
+| Variant | Final step14306 checkpoint saved | Training complete | Runner exit0 | Final W&B segment |
+| --- | --- | --- | --- | --- |
+| Q | 20:16:42.881 | 20:16:45.361 | 20:16:53.363 | 184414: Finished syncing; PID4103356 |
+| K | 18:19:41.928 | 18:19:44.485 | 18:19:53.013 | 164714: Finished syncing; PID4070268 |
+| V | 18:41:13.582 | 18:41:16.157 | 18:41:24.592 | 170803: Finished syncing; PID4076681 |
+| O | 19:08:21.663 | 19:08:24.081 | 19:08:31.978 | 182247: Finished syncing; PID4083937 |
+
+Final checkpoints are under
+`/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-all-linear-{q,k,v,o}-only-silu-fp8-30b/stage1/step14306`.
+Save completion is verified from trainer logs, not an independent checkpoint
+readback/integrity test. All four scheduler states were rechecked together.
+All known training-produced W&B segments are synchronized; see
+`WANDB_SYNC_20260910.md` for exact directories and truncated-tail caveats.
+Use explicit training step/tokens and handle replayed steps when analyzing
+resumed histories; upload completion does not establish deduplicated history.
+
+Final local verification: six tests in `test_all_linear_ablation` and
+`test_single_attention_silu_ablation` passed (1.411s, exit0); all four shell
+launchers passed `bash -n`. Settings remain rank512, FP8, global batch256,
+sequence8192, full30B/14306 steps, Muon LR0.005, WSD warmup2000/final20%
+decay, and periodic saves every1788 steps (approximately12.5%) plus final
+14306. Only the selected internal attention projection uses SiLU; all other
+low-rank activations stay Identity and the primary SwiGLU gate is preserved.
+
+## Historical monitoring notes
+
+20:04–20:10: seven live scheduler/master-log polls confirmed Q Running.
+Q resumed after14000-step evaluation and advanced to14038. No terminal
+events, new saves, uploads, restarts, or configuration changes. Final save
+and training completion still need verification.
+
+19:57–20:04: seven live polls confirmed Q Running and advancing to13801.
+One delayed query returned Running without intervention. No terminal events,
+new saves, uploads, restarts, or configuration changes. Final finish pending.
+
+19:51–19:57: seven live polls confirmed Q Running; resumed after13500-step
+evaluation and reached13520. Read-only audit of four config entrypoints,
+Q launcher and invariant tests reconfirmed single-projection activation
+changes and unchanged30B settings. No code/config/restart/upload changes.
+
+19:45–19:51: seven live scheduler/master-log polls confirmed Q Running
+and advancing to13283. No stops, new saves, uploads, restarts, or config
+changes. K/V/O remain Succeeded and synced; Q final completion pending.
+
+19:39–19:45: seven live scheduler/master-log polls confirmed Q Running.
+Q resumed after13000-step evaluation and reached13041; no terminal events,
+new saves, uploads, restarts, or configuration changes. Final finish pending.
+
+19:33–19:39: seven live scheduler/master-log polling rounds confirmed Q
+Running and advancing to12825. No terminal events, new saves, uploads,
+restarts, or configuration changes. K/V/O remain complete and synced.
+
+19:23–19:33: repeated live scheduler/master-log polls confirmed Q Running.
+Q completed12500-step LM/downstream evaluation, then saved12516:
+async save began19:31:20.703 at unchanged stage1/step12516 and explicitly
+succeeded19:31:25.777. Training advanced to12569. Verified saved steps
+now Q12516/K14306/V14306/O14306. No restart/upload/config change.
+
+19:17–19:23: seven live scheduler/master-log polls confirmed Q Running;
+training resumed after12000-step evaluation and advanced to12233.
+No terminal events, new saves, uploads, restarts, or configuration changes.
+
+19:12–19:17: seven live scheduler/master-log polling rounds confirmed Q
+Running and advancing to12000-step evaluation. Last evaluation sample185/289.
+No stop, upload, restart, config change, or new checkpoint completion evidence.
+K/V/O remain Succeeded and synced; final Q14306 completion still outstanding.
+
+19:08–19:11: O-r5 completed14306 at19:08:16.915. Step14304 async save
+succeeded19:08:15.871; final14306 save began19:08:18.175 and completed
+19:08:21.663. Training complete19:08:24.081; runner exit0 at19:08:31.978.
+Scheduler Succeeded with2 succeeded/0 active at19:08:59. Invoked wandb_sjy
+for exact182247 final segment (PID4083937); Finished syncing verified19:11.
+K/V/O now fully trained and synced (3/4). Q remains Running, resumed after
+11500-step evaluation and reached11758. No configuration changes/restarts.
+
+18:56–19:00: six live polling rounds confirmed Q/O Running and advancing;
+O reached13998, immediately before14000-step evaluation. Q reached11332.
+No terminal events, new save evidence, uploads, restarts, or config changes.
+K/V remain Succeeded and synced; full goal remains incomplete.
+
+18:51–18:55: six live scheduler/master-log polling rounds confirmed Q/O
+Running and advancing. Q progressed past11000-step evaluation to11134;
+O reached13798. No terminal events or new save evidence; no restart,
+upload, or configuration changes. K/V remain Succeeded and synced.
+
+18:45–18:50: Q-r4 and O-r5 remained Running and advanced on repeated
+live scheduler/master-log polls. O completed13500-step evaluation and
+resumed training; Q reached10962. K/V remain Succeeded and synced.
+No new terminal events, saves, uploads, restarts, or configuration changes.
+
+18:41–18:44: V-r4 reached14306 at18:41:06.526. Step14304 async save
+succeeded18:41:05.163; final14306 save began18:41:10.231 and completed
+18:41:13.582. Training complete18:41:16.157; runner exit0 at18:41:24.
+Scheduler Succeeded with2 succeeded/0 active at18:41:40. Invoked wandb_sjy
+for exact170803 segment (PID4076681); Finished syncing verified18:44.
+K and V are now fully trained and synced (2/4); Q/O remain incomplete.
+
+Q-r4 was Starting18:41:40, Running18:43:10. Master cfcd2=H200-2265,
+10.102.241.24, NODE_RANK0; peer c4ca4=H200-2245,10.102.241.55,
+NODE_RANK1. Loaded10728 successfully18:44:13.590, epoch started18:44:23.
+New active segment184414 identified in startup logs18:44:15; not uploaded.
+No config changes or additional submissions in this polling window.
+
+18:28–18:33: repeated live scheduler and master-log checks confirm Q-r4
+Inqueue, V-r4/O-r5 Running and advancing, K-r4 Succeeded. V advanced
+past14000 to14003; O reached12946. No terminal stops or new checkpoint
+completion evidence in this polling window; no upload/restart/config changes.
+This is a verified wait for the remaining three full14306-step runs.
+
+18:22–18:23: O-r5 began loading step12516 at18:22:39.668 and explicitly
+reported Checkpoint successfully loaded at18:22:46.543. Training advanced
+to12526. New active W&B segment is offline-run-20260910_182247-olmo3-1b-all-linear-o-only-silu-fp8-30b,
+identified from master cfcd2 at18:22:48; not uploaded yet. Q-r4 remains
+Inqueue; V resumed after13500-step evaluation and reached13610.
+
+18:16–18:21: O-r4 received SIGTERM18:16:31; scheduler reports pod deletion
+and Running→Stopped18:17:10. Verified0 active/2 stopped at18:17:41.
+Immediately launched wandb_sjy for its exact163432 segment (PID4069336),
+then submitted O-r5 arch2x8 at18:18:31, unchanged script/config/output.
+Beta uploader explicitly reported Finished syncing before18:18:49.
+O-r5 is now Running; master cfcd2=H200-3081/10.102.243.40, NODE_RANK0;
+peer c4ca4=H200-0295/10.102.97.187, NODE_RANK1. Checkpoint load pending.
+
+Q-r3 received SIGTERM18:17:13; scheduler reports pod deletion and
+Running→Stopped18:17:50. Verified0 active/2 stopped at18:18:49. Launched
+wandb_sjy for its exact164238 segment (PID4069624), then Q-r4 arch2x8 at
+18:19:40, unchanged config/output and expected resume10728. Beta uploader
+explicitly reported Finished syncing before18:19:57. Q-r4 Inqueue; events
+report insufficient resources, not failure. No duplicate or4x8 submission.
+
+K-r4 completed14306 at18:19:34.795. Step14304 async save succeeded
+18:19:33.085; final step14306 synchronous save began18:19:38.818 and
+completed18:19:41.928. Training complete18:19:44.485, runner exit0 at
+18:19:53, Succeeded with2 succeeded/0 active at18:19:57. Launched
+wandb_sjy for exact164714 final segment (PID4070268); Finished syncing
+verified in wrapper output by18:21. K training and all its uploads done.
+V remains Running. Goal is1/4 training-complete, not fully achieved.
+
+18:08–18:13: Q-r3 saved step10728 successfully at18:13:39.951 (save
+began18:13:36.145, unchanged stage1 path). All four remained Running.
+Q resumed after10500-step evaluation, V after13000, and K after14000.
+Verified saved steps now Q10728/K12516/V12516/O12516. No stops, uploads,
+restarts, or configuration changes. K still needs its14306-step finish.
+
+18:03–18:07: O-r4 saved step12516 successfully at18:06:23.590 after
+its12500-step evaluation (save began18:06:20.173, unchanged stage1 path),
+then advanced to12558. All four remained Running and advancing. Verified
+saved steps now Q8940/K12516/V12516/O12516. No stops, syncs, restarts,
+or configuration changes. Full14306-step completion remains unverified.
+
+17:57–18:02: all four remained Running throughout six live polling
+rounds. K resumed after13500-step evaluation; all variants advanced.
+No terminal events or new checkpoint evidence, and no new sync/restart/
+configuration actions. Next near-term checkpoint verification is O12516.
+
+17:52–17:56: V-r4 saved step12516 successfully at17:55:31.129 after
+its12500-step evaluation (save began17:55:26.852, unchanged stage1 path),
+then advanced to12551. Q resumed after10000-step evaluation and O after
+12000-step evaluation. All four remained Running. Verified saved steps
+now Q8940/K12516/V12516/O10728. No stops, syncs, restarts, or config changes.
+
+17:47–17:51: six live polling rounds confirmed all four Running with
+advancing steps. K resumed after13000-step evaluation. No terminal events
+or new save evidence; no sync/restart/configuration actions needed.
+Next near-term checks: O12000/Q10000 evaluations and V12516 checkpoint.
+
+17:41–17:46: all four remained Running with advancing steps throughout
+six live polling rounds. V resumed after12000-step evaluation; Q resumed
+after9500-step evaluation. No terminal events or new save evidence, and no
+sync/restart/configuration actions needed. Goal remains incomplete14306.
+
+17:35–17:40: all four remained Running and advanced on repeated live
+scheduler/log polls. O completed its11500-step evaluation and resumed to
+11519. No terminal events, new save evidence, syncs, restarts, or config
+changes. Saved-step evidence remains Q8940/K12516/V10728/O10728.
+
+17:29–17:34: K-r4 saved step12516 successfully at17:34:21.086 after
+its12500-step evaluation; training advanced to12529. Save began17:34:16.319
+at the unchanged stage1/step12516 path. Q resumed after9000-step evaluation,
+V resumed after11500-step evaluation, and all four remained Running.
+No terminal transitions, new uploads, restarts, or configuration changes.
+Verified saved steps now Q8940/K12516/V10728/O10728. None has completed14306.
+
+17:23–17:28: Q-r3 saved step8940 successfully at17:28:15.106, then
+advanced to8949. Its save began17:28:10.508 at the unchanged stage1/step8940
+path. All four remained Running, with two active replicas each verified
+at17:23:55. O resumed training after11000-step evaluation; V reached11500
+and entered its periodic evaluation. No terminal transitions or new sync/
+restart actions. Verified saves now Q8940/K10728/V10728/O10728.
+
+17:19–17:23: O-r4 explicitly saved step10728 successfully at17:20:28.369
+(save began17:20:24.315) to its unchanged stage1/step10728 path. Training
+continued past10846. All four remained Running, each with two active
+replicas in the17:19:20 scheduler check, and advanced throughout polling.
+Verified saves now Q7152/K10728/V10728/O10728. No new terminal events,
+syncs, restarts, or configuration changes; full14306-step goal remains open.
+
+17:11–17:18: all four remained Running and advanced to Q8524/K11923/
+V11095/O10643. V completed its11000-step evaluation and resumed training;
+Q likewise resumed after8500. No terminal event or new checkpoint save
+observed. No new sync, restart, or configuration change needed. Verified
+saved steps remain Q7152/K10728/V10728/O8940, distinct from live progress.
+
+17:06–17:10: V-r4 confirmed Running, two active replicas. Master cfcd2 is
+H200-2265 (10.102.241.24, NODE_RANK=0); peer c4ca4 is H200-2245
+(10.102.241.55, NODE_RANK=1). V began loading10728 at17:07:55.697;
+at17:08:02.262 trainer explicitly reported resume10728 and successful load.
+It advanced10733→10780→10811; step10810 CE2.671 and grad-norm0.0223
+were finite. New offline segment:
+offline-run-20260910_170803-olmo3-1b-all-linear-v-only-silu-fp8-30b.
+All four now have verified checkpoint loads and advancing training steps.
+Q/K/O reached8216/11594/10329. No new saves or terminal events observed;
+last verified saves remain Q7152/K10728/V10728/O8940. No new submissions
+or configuration changes. Sync all active segments on stop/completion.
+
+17:01–17:05: Q/K/O continued to8011/11416/10125; V remained Inqueue.
+O's10000-step LM evaluation explicitly finished at17:02:23 (34.8s), then
+training resumed. No new terminal event or checkpoint save observed. Next
+scheduled saves: Q8940/K12516/O10728. No submissions or config changes.
+
+16:55–17:00: live scheduler/log checks confirmed continued progress to
+Q7819/K11200/O9929, no terminal transition. V's event history rechecked:
+external scheduler queue acceptance only, not failure. Last verified saves
+remain Q7152/K10728/V10728/O8940. No duplicate submissions or sync actions.
+
+16:49–16:54: repeated live checks confirmed Q/K/O Running with two active
+replicas each, V Inqueue. Q advanced7378→7585, including periodic evaluation
+at7500 and subsequent return to training; K advanced10758→10992 and O
+9482→9694. Sampled finite metrics: Q step7450 CE2.655/grad-norm0.0216;
+K step10840 CE2.637/grad-norm0.0183. These are health checks at different
+steps, not a cross-experiment quality comparison. No new save/terminal
+event was observed, and no restart/configuration/sync action was needed.
+
+16:37–16:48: Q-r3 and K-r4 started and successfully resumed. Q master
+c4ca4 is H200-2303 (10.102.243.64); peer cfcd2 is H200-2166
+(10.102.240.29). Q began loading7152 at16:42:30.402, explicitly reported
+resume7152 at16:42:37.090, and advanced7153→7378. Its new W&B segment is
+offline-run-20260910_164238-olmo3-1b-all-linear-q-only-silu-fp8-30b.
+K master c4ca4 is H200-3081 (10.102.243.40); peer cfcd2 is H200-0295
+(10.102.97.187). K began loading10728 at16:47:06.489, explicitly reported
+resume10728 at16:47:13.124, and advanced past10728 to10758. Its new W&B
+segment is offline-run-20260910_164714-olmo3-1b-all-linear-k-only-silu-fp8-30b.
+O continued8996→9482; a sampled CE loss at16:37:46 was2.606. V remains
+Inqueue. These active segments are not synced yet; sync on stop/completion.
+No new checkpoint-save event was observed: last confirmed saved steps remain
+Q7152/K10728/V10728/O8940. Full14306-step completion remains unverified.
+No new submissions, configuration changes, or job cancellations in this turn.
+
+16:32:44: O-r4 confirmed Running with two active replicas. Master cfcd2 is
+H200-0216 (10.102.244.39, NODE_RANK=0); peer c4ca4 is H200-0187
+(10.102.242.22, NODE_RANK=1). Sixteen ranks established communication;
+startup confirmed FP8, FSDP mesh (2,8), and existing Muon configuration.
+Checkpoint step8940 loading began16:34:21.749; trainer explicitly reported
+resume from8940 at16:34:30.748 (load_duration_s=9.057). Training advanced
+8941→8959→8996 across successive observations. No newer checkpoint yet.
+New offline segment: offline-run-20260910_163432-olmo3-1b-all-linear-o-only-silu-fp8-30b
+(under the existing W&B root; not synced while training). Q/K/V remained
+Inqueue at16:36:28. Current turn made verified training progress; full30B
+goal remains unfinished. No replacement submission/configuration changes.
+
+16:11:14–16:28:32: eighteen live scheduler checks confirmed all four current
+attempts Inqueue with zero active/succeeded/failed/stopped replicas. No new
+training segment or terminal transition was observed, so no replacement or
+duplicate W&B sync was initiated. This is a verified wait; full30B completion
+and current-attempt checkpoint loading remain unverified.
+
+16:20–16:21 event checks: Q/K/O remain gang-Pending (minAvailable=2),
+with insufficient GPU/CPU/memory and node-selector constraints in scheduler
+events. Some individual pods have candidate nodes, but that does not satisfy
+the two-node allocation or establish Running. V remains queued. No new
+terminal event was observed; no priority/resource/configuration changes.
 
 15:25:12–15:42:22: Q-r2/K-r3/V-r3/O-r3 were independently confirmed
 Stopped with zero active replicas. Q-r2 had loaded step7152 but reached no new
@@ -33,6 +307,18 @@ truncated killed segments were completed with W&B legacy sync after beta EOF.
 Replacement Q-r3/K-r4/V-r4/O-r4 jobs were submitted unchanged as arch2x8 and
 accepted by the scheduler. Latest confirmed saves are Q7152, K10728, V10728,
 O8940. See WANDB_SYNC_20260910.md for per-segment evidence.
+
+15:45:39–15:48:26: Q/K/O briefly showed STARTING replicas during scheduling,
+then returned to Inqueue; V remained Inqueue. All four have zero active,
+failed, and stopped replicas. This is a verified queue wait, not a terminal
+failure, so no duplicate replacement was submitted. Resume loading remains
+unverified until a job actually reaches Running.
+
+15:50:57–15:55:27: five further live checks confirmed all four jobs Inqueue
+with zero active/failed/stopped replicas. Q/K/O briefly showed scheduler
+STARTING placeholders at15:50:57 and then returned to plain Inqueue. No
+terminal transition, W&B segment, duplicate submission, or configuration
+change occurred. Latest confirmed saves remain Q7152/K10728/V10728/O8940.
 
 ## Previous replacement attempts (Sep10)
 

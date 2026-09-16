@@ -221,5 +221,12 @@ __marimo__/
 assets/
 **/scripts/prepare/
 **/scripts/analysis/
+!reproduce/olmo-core-backend/scripts/analysis/
+reproduce/olmo-core-backend/scripts/analysis/*
+!reproduce/olmo-core-backend/scripts/analysis/QK_Combination_Analysis/
+!reproduce/olmo-core-backend/scripts/analysis/Initialization_Analysis/
+reproduce/olmo-core-backend/scripts/analysis/Initialization_Analysis/results/
+reproduce/olmo-core-backend/scripts/analysis/Initialization_Analysis/snapshots/
+reproduce/olmo-core-backend/scripts/analysis/QK_Combination_Analysis/results/
 tools/
 wandb/

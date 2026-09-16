@@ -80,6 +80,8 @@ def install_runtime_hooks() -> None:
         for bias in (module.gate_bias, module.up_bias, module.down_bias):
             if bias is not None:
                 nn.init.zeros_(bias)
+        if module.output_subspace is not None:
+            module.output_subspace.reset_parameters(generator=generator)
 
     init_feed_forward._olmo_mose_hook = True  # type: ignore[attr-defined]
     InitMethod.init_feed_forward = init_feed_forward  # type: ignore[method-assign]

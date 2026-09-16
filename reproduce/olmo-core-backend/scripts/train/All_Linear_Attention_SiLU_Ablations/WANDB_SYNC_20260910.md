@@ -15,15 +15,21 @@ stored.
 | Q | original | offline-run-20260909_225150-olmo3-1b-all-linear-q-only-silu-fp8-30b | Finished syncing (beta) |
 | Q | r1 | offline-run-20260910_025421-olmo3-1b-all-linear-q-only-silu-fp8-30b | Finished syncing (beta) |
 | Q | r2 | offline-run-20260910_135149-olmo3-1b-all-linear-q-only-silu-fp8-30b | Finished syncing (beta) |
+| Q | r3 | offline-run-20260910_164238-olmo3-1b-all-linear-q-only-silu-fp8-30b | Stopped18:17:50; sync PID4069624; Finished syncing (beta) verified18:19:57 |
+| Q | r4 | offline-run-20260910_184414-olmo3-1b-all-linear-q-only-silu-fp8-30b | Completed14306/Succeeded; sync PID4103356; Finished syncing (beta) verified approximately20:19 |
 | K | original | offline-run-20260909_234605-olmo3-1b-all-linear-k-only-silu-fp8-30b | Finished syncing (beta) |
 | K | r2 | offline-run-20260910_034208-olmo3-1b-all-linear-k-only-silu-fp8-30b | Finished syncing (beta) |
 | K | r3 | offline-run-20260910_135352-olmo3-1b-all-linear-k-only-silu-fp8-30b | Beta reached the truncated tail and reported unexpected EOF; legacy retry returned done |
+| K | r4 | offline-run-20260910_164714-olmo3-1b-all-linear-k-only-silu-fp8-30b | Completed14306/Succeeded; sync PID4070268; Finished syncing (beta) verified18:21 |
 | V | original | offline-run-20260910_000558-olmo3-1b-all-linear-v-only-silu-fp8-30b | Beta reported unexpected EOF; legacy retry returned done |
 | V | r2 | offline-run-20260910_034546-olmo3-1b-all-linear-v-only-silu-fp8-30b | Beta reached the truncated tail and reported unexpected EOF; legacy retry returned done |
 | V | r3 | offline-run-20260910_135411-olmo3-1b-all-linear-v-only-silu-fp8-30b | Legacy sync returned done |
+| V | r4 | offline-run-20260910_170803-olmo3-1b-all-linear-v-only-silu-fp8-30b | Completed14306/Succeeded; sync PID4076681; Finished syncing (beta) verified18:44 |
 | O | original | offline-run-20260910_001011-olmo3-1b-all-linear-o-only-silu-fp8-30b | Finished syncing (beta) |
 | O | r2 | offline-run-20260910_034544-olmo3-1b-all-linear-o-only-silu-fp8-30b | Finished syncing (beta) |
 | O | r3 | — | No segment: job stopped from Inqueue and never started training |
+| O | r4 | offline-run-20260910_163432-olmo3-1b-all-linear-o-only-silu-fp8-30b | Stopped18:17:10; sync PID4069336; Finished syncing (beta) verified18:18:49 |
+| O | r5 | offline-run-20260910_182247-olmo3-1b-all-linear-o-only-silu-fp8-30b | Completed14306/Succeeded; sync PID4083937; Finished syncing (beta) verified19:11 |
 
 ## Verification notes
 
@@ -33,7 +39,9 @@ without a clean tail. The beta uploader recovered history before returning
 `unexpected EOF`; the W&B-advertised `--legacy` mode then completed those exact
 segments. Segments sharing one run ID were serialized.
 
-All known training-produced segments through the stopped Q-r2/K-r3/V-r3/O-r3
-attempts have now been submitted and verified as above. New Q-r3/K-r4/V-r4/O-r4
-jobs were submitted afterward. Their future segments are not part of this
-completed batch and will be synchronized on stop or completion.
+All known training-produced segments through Q-r4/K-r4/V-r4/O-r5 have been
+submitted and verified as above. All four completed full training (14306 steps)
+with final checkpoint saves and successful exits. Final synchronization output
+was rechecked approximately20:19; no known segment remains pending.
+For comparisons, use explicit training step/tokens and handle replayed steps
+after checkpoint resumes rather than assuming W&B history is deduplicated.

@@ -16,6 +16,7 @@ from .feed_forward import (
 )
 from .hooks import install_runtime_hooks
 from .optim import SerializableMuonConfig
+from .output_subspace import DownOutputRotation, GroupedOutputRotation
 from .patch import patch_mose_swiglu, patch_swiglu_channel_control
 
 install_runtime_hooks()
@@ -23,6 +24,8 @@ install_runtime_hooks()
 __all__ = [
     "ChannelControlledFeedForward",
     "ChannelControlledFeedForwardConfig",
+    "DownOutputRotation",
+    "GroupedOutputRotation",
     "LowRankAttention",
     "LowRankAttentionConfig",
     "LowRankAttentionSharingScope",
