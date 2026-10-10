@@ -1,0 +1,62 @@
+[
+  {
+    "variant": "p1",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-recover-p1-r2-p1-1x8-pool-1006-1204-efa2",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p1.sh",
+    "job_id": "mose-recover-p1-r2-p1-1x8-pool-1006-1204-efa-886b9",
+    "status": "Running",
+    "counts": "{'active': 1, 'succeeded': 0, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+    "latest": null,
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_120705-olmo3-1b-ug-partial-p1-s560-p0-linear-down-rms-fp8-30b"
+    ],
+    "events": [
+      "[2026-10-06T12:04:53+08:00] mose-recover-p1-r2-p1-1x8-pool-1006-1204-efa-886b9-cfcd2 >> 2026-10-06 12:04:53.606\tgpu-lg-cmc-h-h200-0623.host.h.pjlab.org.cn:0\tolmo_core.distributed.parallel:246\tINFO\tBuilt 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+      "[2026-10-06T12:04:54+08:00] mose-recover-p1-r2-p1-1x8-pool-1006-1204-efa-886b9-cfcd2 >> 2026-10-06 12:04:54.665\tgpu-lg-cmc-h-h200-0623.host.h.pjlab.org.cn:0\tolmo_core.train.train_module.transformer.common:169\tINFO\tApplied FSDP to the model with 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+      "[2026-10-06T12:06:58+08:00] mose-recover-p1-r2-p1-1x8-pool-1006-1204-efa-886b9-cfcd2 >> 2026-10-06 12:06:58.327\tgpu-lg-cmc-h-h200-0623.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:901\tINFO\tLoading checkpoint from '/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ug-partial-p1-s560-p0-linear-down-rms-fp8-30b/stage1/step0'..."
+    ],
+    "observation_exit_code": 0
+  },
+  {
+    "variant": "p4",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-recover-p4-r2-p1-1x8-pool-1006-1207-0d3e",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p4.sh",
+    "job_id": "mose-recover-p4-r2-p1-1x8-pool-1006-1207-0d3-44098",
+    "status": "Running",
+    "counts": "{'active': 1, 'succeeded': 0, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+    "latest": null,
+    "segments": [],
+    "events": [
+      "[2026-10-06T12:07:26+08:00] mose-recover-p4-r2-p1-1x8-pool-1006-1207-0d3-44098-cfcd2 >> 2026-10-06 12:07:26.521\tgpu-lg-cmc-h-h200-2284.host.h.pjlab.org.cn:0\tolmo_core.distributed.parallel:246\tINFO\tBuilt 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+      "[2026-10-06T12:07:27+08:00] mose-recover-p4-r2-p1-1x8-pool-1006-1207-0d3-44098-cfcd2 >> 2026-10-06 12:07:27.330\tgpu-lg-cmc-h-h200-2284.host.h.pjlab.org.cn:0\tolmo_core.train.train_module.transformer.common:169\tINFO\tApplied FSDP to the model with 2D device mesh with shape (dp_replicate=1, dp_shard=8)"
+    ],
+    "observation_exit_code": 0
+  },
+  {
+    "variant": "f1",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-recover-f1-r2-p1-1x8-pool-1006-1207-08d8",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/run_f1.sh",
+    "job_id": "mose-recover-f1-r2-p1-1x8-pool-1006-1207-08d-af98d",
+    "status": "Running",
+    "counts": "{'active': 1, 'succeeded': 0, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+    "latest": null,
+    "segments": [],
+    "events": [
+      "[2026-10-06T12:08:02+08:00] mose-recover-f1-r2-p1-1x8-pool-1006-1207-08d-af98d-cfcd2 >> 2026-10-06 12:08:02.708\tgpu-l-lg-cmc-h-h200-0039.host.h.pjlab.org.cn:0\tolmo_core.distributed.parallel:246\tINFO\tBuilt 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+      "[2026-10-06T12:08:03+08:00] mose-recover-f1-r2-p1-1x8-pool-1006-1207-08d-af98d-cfcd2 >> 2026-10-06 12:08:03.529\tgpu-l-lg-cmc-h-h200-0039.host.h.pjlab.org.cn:0\tolmo_core.train.train_module.transformer.common:169\tINFO\tApplied FSDP to the model with 2D device mesh with shape (dp_replicate=1, dp_shard=8)"
+    ],
+    "observation_exit_code": 0
+  }
+]

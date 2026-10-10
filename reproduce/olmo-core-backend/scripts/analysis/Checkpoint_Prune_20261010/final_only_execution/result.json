@@ -1,0 +1,413 @@
+{
+  "finished_at": "2026-10-10T14:44:34.616225+00:00",
+  "root": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE",
+  "deleted_count": 700,
+  "deleted_logical_bytes": 6249094099853,
+  "before": {
+    "logical_bytes": 7944356195298,
+    "allocated_bytes": 7955902564352,
+    "files": 214281,
+    "symlinks": 0,
+    "multiply_linked_files": 0,
+    "errors": []
+  },
+  "after": {
+    "logical_bytes": 1695262095445,
+    "allocated_bytes": 1697759727616,
+    "files": 53313,
+    "symlinks": 0,
+    "multiply_linked_files": 0,
+    "errors": []
+  },
+  "retained_count": 85,
+  "skipped": [
+    {
+      "run": "olmo3-1b-MoSE-nolinear-rmsdown-weight-fp8",
+      "stage": "stage1",
+      "reason": "missing_or_unreadable_final_checkpoint",
+      "steps": [
+        "step75080"
+      ]
+    },
+    {
+      "run": "olmo3-1b-SiTU-gate-5e-3",
+      "stage": "stage1",
+      "reason": "missing_or_unreadable_final_checkpoint",
+      "steps": []
+    },
+    {
+      "run": "olmo3-1b-SiTU-rms-up-c4-5e-3",
+      "stage": "stage1",
+      "reason": "missing_or_unreadable_final_checkpoint",
+      "steps": [
+        "step25000",
+        "step27500"
+      ]
+    },
+    {
+      "run": "olmo3-1b-SiTU-up-5e-3",
+      "stage": "stage1",
+      "reason": "missing_or_unreadable_final_checkpoint",
+      "steps": [
+        "step25000",
+        "step75080"
+      ]
+    },
+    {
+      "run": "olmo3-1b-baseline-5e-3",
+      "stage": "stage1",
+      "reason": "missing_or_unreadable_final_checkpoint",
+      "steps": [
+        "step75080"
+      ]
+    },
+    {
+      "run": "olmo3-1b-baseline-fp8-5e-3",
+      "stage": "stage1",
+      "reason": "missing_or_unreadable_final_checkpoint",
+      "steps": [
+        "step75080"
+      ]
+    },
+    {
+      "run": "olmo3-1b-cross-layer-incremental-memory-g2-r512-s16-fp8-30b",
+      "stage": "stage1",
+      "reason": "missing_or_unreadable_final_checkpoint",
+      "steps": [
+        "step0",
+        "step1788",
+        "step3576",
+        "step5364",
+        "step7152",
+        "step8940",
+        "step9400",
+        "step9500"
+      ]
+    },
+    {
+      "run": "olmo3-1b-cross-layer-incremental-memory-g2-r512-s32-fp8-30b",
+      "stage": "stage1",
+      "reason": "missing_or_unreadable_final_checkpoint",
+      "steps": [
+        "step0",
+        "step1788",
+        "step3576",
+        "step5364",
+        "step7152",
+        "step8940",
+        "step9000"
+      ]
+    },
+    {
+      "run": "olmo3-1b-cross-layer-kv-g2-r512-s32-down-rms-fp8-30b",
+      "stage": "stage1",
+      "reason": "missing_or_unreadable_final_checkpoint",
+      "steps": [
+        "step0"
+      ]
+    },
+    {
+      "run": "olmo3-1b-cross-layer-shared-base-memory-g2-r512-s0-fp8-30b",
+      "stage": "stage1",
+      "reason": "missing_or_unreadable_final_checkpoint",
+      "steps": [
+        "step0",
+        "step1788",
+        "step3576",
+        "step5364",
+        "step7152",
+        "step8940",
+        "step9600"
+      ]
+    },
+    {
+      "run": "olmo3-1b-down-activation-rms-adamw-fp8-30b",
+      "stage": "stage1",
+      "reason": "missing_or_unreadable_final_checkpoint",
+      "steps": [
+        "step0",
+        "step10728",
+        "step12516",
+        "step1788",
+        "step3576",
+        "step5364",
+        "step7152",
+        "step8940"
+      ]
+    },
+    {
+      "run": "olmo3-1b-down-activation-silu-adamw-fp8-30b",
+      "stage": "stage1",
+      "reason": "missing_or_unreadable_final_checkpoint",
+      "steps": [
+        "step0",
+        "step10728",
+        "step12516",
+        "step1788",
+        "step3576",
+        "step5364",
+        "step7152",
+        "step8940"
+      ]
+    },
+    {
+      "run": "olmo3-1b-ffn-linear-attention-silu-fp8-30b",
+      "stage": "stage1",
+      "reason": "missing_or_unreadable_final_checkpoint",
+      "steps": [
+        "step0",
+        "step1788",
+        "step3576",
+        "step5364",
+        "step7152"
+      ]
+    },
+    {
+      "run": "olmo3-1b-kv-shared",
+      "stage": "stage1",
+      "reason": "missing_or_unreadable_final_checkpoint",
+      "steps": [
+        "step10728",
+        "step3576",
+        "step7152"
+      ]
+    },
+    {
+      "run": "olmo3-1b-mla-morphnorm-ckv-layer-residual-r256-fp8-30b",
+      "stage": "stage1",
+      "reason": "missing_or_unreadable_final_checkpoint",
+      "steps": [
+        "step0",
+        "step1788",
+        "step3576",
+        "step5364",
+        "step7152",
+        "step8940",
+        "step9600"
+      ]
+    },
+    {
+      "run": "olmo3-1b-mose-cola-r1-512-r2-512-down-r1-256-down-r2-256-standard-swiglu-5e-3",
+      "stage": "stage1",
+      "reason": "missing_or_unreadable_final_checkpoint",
+      "steps": [
+        "step27500",
+        "step7500"
+      ]
+    },
+    {
+      "run": "olmo3-1b-mose-cola-r1-512-r2-512-down-r1-256-down-r2-256-swiglu-5e-3",
+      "stage": "stage1",
+      "reason": "missing_or_unreadable_final_checkpoint",
+      "steps": [
+        "step75080"
+      ]
+    },
+    {
+      "run": "olmo3-1b-per-layer-kv-latent-control-r512-fp8-30b",
+      "stage": "stage1",
+      "reason": "missing_or_unreadable_final_checkpoint",
+      "steps": [
+        "step0",
+        "step200"
+      ]
+    },
+    {
+      "run": "olmo3-1b-precision-down-rms-bf16",
+      "stage": "stage1",
+      "reason": "missing_or_unreadable_final_checkpoint",
+      "steps": [
+        "step0",
+        "step1788",
+        "step2682",
+        "step3576",
+        "step3577"
+      ]
+    },
+    {
+      "run": "olmo3-1b-precision-down-rms-fp8",
+      "stage": "stage1",
+      "reason": "missing_or_unreadable_final_checkpoint",
+      "steps": [
+        "step1788",
+        "step2682",
+        "step3576",
+        "step3577"
+      ]
+    },
+    {
+      "run": "olmo3-1b-precision-down-silu-bf16",
+      "stage": "stage1",
+      "reason": "missing_or_unreadable_final_checkpoint",
+      "steps": [
+        "step0",
+        "step1788",
+        "step2682",
+        "step3576",
+        "step3577"
+      ]
+    },
+    {
+      "run": "olmo3-1b-precision-down-silu-fp8",
+      "stage": "stage1",
+      "reason": "missing_or_unreadable_final_checkpoint",
+      "steps": [
+        "step1788",
+        "step2682",
+        "step3576",
+        "step3577"
+      ]
+    },
+    {
+      "run": "olmo3-1b-qk-shared",
+      "stage": "stage1",
+      "reason": "missing_or_unreadable_final_checkpoint",
+      "steps": [
+        "step10728",
+        "step3576",
+        "step7152"
+      ]
+    },
+    {
+      "run": "olmo3-1b-qkv-shared",
+      "stage": "stage1",
+      "reason": "missing_or_unreadable_final_checkpoint",
+      "steps": [
+        "step10728",
+        "step3576",
+        "step7152"
+      ]
+    },
+    {
+      "run": "olmo3-1b-ug-partial-p1-s560-p0-linear-down-rms-fp8-30b",
+      "stage": "stage1",
+      "reason": "missing_or_unreadable_final_checkpoint",
+      "steps": [
+        "step0"
+      ]
+    },
+    {
+      "run": "olmo3-1b-ug-partial-p2-s480-p80-linear-down-rms-fp8-30b",
+      "stage": "stage1",
+      "reason": "missing_or_unreadable_final_checkpoint",
+      "steps": [
+        "step0",
+        "step1788",
+        "step3576",
+        "step5364",
+        "step7152"
+      ]
+    },
+    {
+      "run": "olmo3-1b-up-gate-shared",
+      "stage": "stage1",
+      "reason": "missing_or_unreadable_final_checkpoint",
+      "steps": [
+        "step10728",
+        "step3576",
+        "step7152"
+      ]
+    }
+  ],
+  "remaining_nonfinal_numeric_steps": [
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-qk-shared/stage1/step3576",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-qk-shared/stage1/step10728",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-qk-shared/stage1/step7152",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-kv-shared/stage1/step3576",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-kv-shared/stage1/step10728",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-kv-shared/stage1/step7152",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ug-partial-p2-s480-p80-linear-down-rms-fp8-30b/stage1/step3576",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ug-partial-p2-s480-p80-linear-down-rms-fp8-30b/stage1/step0",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ug-partial-p2-s480-p80-linear-down-rms-fp8-30b/stage1/step1788",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ug-partial-p2-s480-p80-linear-down-rms-fp8-30b/stage1/step5364",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ug-partial-p2-s480-p80-linear-down-rms-fp8-30b/stage1/step7152",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-down-activation-silu-adamw-fp8-30b/stage1/step3576",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-down-activation-silu-adamw-fp8-30b/stage1/step0",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-down-activation-silu-adamw-fp8-30b/stage1/step12516",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-down-activation-silu-adamw-fp8-30b/stage1/step10728",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-down-activation-silu-adamw-fp8-30b/stage1/step1788",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-down-activation-silu-adamw-fp8-30b/stage1/step8940",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-down-activation-silu-adamw-fp8-30b/stage1/step5364",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-down-activation-silu-adamw-fp8-30b/stage1/step7152",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-cross-layer-incremental-memory-g2-r512-s16-fp8-30b/stage1/step3576",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-cross-layer-incremental-memory-g2-r512-s16-fp8-30b/stage1/step0",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-cross-layer-incremental-memory-g2-r512-s16-fp8-30b/stage1/step9500",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-cross-layer-incremental-memory-g2-r512-s16-fp8-30b/stage1/step1788",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-cross-layer-incremental-memory-g2-r512-s16-fp8-30b/stage1/step9400",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-cross-layer-incremental-memory-g2-r512-s16-fp8-30b/stage1/step8940",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-cross-layer-incremental-memory-g2-r512-s16-fp8-30b/stage1/step5364",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-cross-layer-incremental-memory-g2-r512-s16-fp8-30b/stage1/step7152",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-mla-morphnorm-ckv-layer-residual-r256-fp8-30b/stage1/step3576",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-mla-morphnorm-ckv-layer-residual-r256-fp8-30b/stage1/step0",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-mla-morphnorm-ckv-layer-residual-r256-fp8-30b/stage1/step9600",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-mla-morphnorm-ckv-layer-residual-r256-fp8-30b/stage1/step1788",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-mla-morphnorm-ckv-layer-residual-r256-fp8-30b/stage1/step8940",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-mla-morphnorm-ckv-layer-residual-r256-fp8-30b/stage1/step5364",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-mla-morphnorm-ckv-layer-residual-r256-fp8-30b/stage1/step7152",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-cross-layer-shared-base-memory-g2-r512-s0-fp8-30b/stage1/step3576",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-cross-layer-shared-base-memory-g2-r512-s0-fp8-30b/stage1/step0",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-cross-layer-shared-base-memory-g2-r512-s0-fp8-30b/stage1/step9600",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-cross-layer-shared-base-memory-g2-r512-s0-fp8-30b/stage1/step1788",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-cross-layer-shared-base-memory-g2-r512-s0-fp8-30b/stage1/step8940",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-cross-layer-shared-base-memory-g2-r512-s0-fp8-30b/stage1/step5364",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-cross-layer-shared-base-memory-g2-r512-s0-fp8-30b/stage1/step7152",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-cross-layer-kv-g2-r512-s32-down-rms-fp8-30b/stage1/step0",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-SiTU-rms-up-c4-5e-3/stage1/step27500",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-SiTU-rms-up-c4-5e-3/stage1/step25000",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-mose-cola-r1-512-r2-512-down-r1-256-down-r2-256-swiglu-5e-3/stage1/step75080",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-baseline-5e-3/stage1/step75080",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-precision-down-rms-bf16/stage1/step3577",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-precision-down-rms-bf16/stage1/step3576",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-precision-down-rms-bf16/stage1/step0",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-precision-down-rms-bf16/stage1/step2682",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-precision-down-rms-bf16/stage1/step1788",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-down-activation-rms-adamw-fp8-30b/stage1/step3576",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-down-activation-rms-adamw-fp8-30b/stage1/step0",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-down-activation-rms-adamw-fp8-30b/stage1/step12516",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-down-activation-rms-adamw-fp8-30b/stage1/step10728",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-down-activation-rms-adamw-fp8-30b/stage1/step1788",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-down-activation-rms-adamw-fp8-30b/stage1/step8940",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-down-activation-rms-adamw-fp8-30b/stage1/step5364",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-down-activation-rms-adamw-fp8-30b/stage1/step7152",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-per-layer-kv-latent-control-r512-fp8-30b/stage1/step0",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-per-layer-kv-latent-control-r512-fp8-30b/stage1/step200",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-precision-down-silu-bf16/stage1/step3577",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-precision-down-silu-bf16/stage1/step3576",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-precision-down-silu-bf16/stage1/step0",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-precision-down-silu-bf16/stage1/step2682",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-precision-down-silu-bf16/stage1/step1788",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ffn-linear-attention-silu-fp8-30b/stage1/step3576",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ffn-linear-attention-silu-fp8-30b/stage1/step0",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ffn-linear-attention-silu-fp8-30b/stage1/step1788",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ffn-linear-attention-silu-fp8-30b/stage1/step5364",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ffn-linear-attention-silu-fp8-30b/stage1/step7152",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ug-partial-p1-s560-p0-linear-down-rms-fp8-30b/stage1/step0",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-precision-down-silu-fp8/stage1/step3577",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-precision-down-silu-fp8/stage1/step3576",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-precision-down-silu-fp8/stage1/step2682",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-precision-down-silu-fp8/stage1/step1788",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-up-gate-shared/stage1/step3576",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-up-gate-shared/stage1/step10728",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-up-gate-shared/stage1/step7152",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-precision-down-rms-fp8/stage1/step3577",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-precision-down-rms-fp8/stage1/step3576",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-precision-down-rms-fp8/stage1/step2682",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-precision-down-rms-fp8/stage1/step1788",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-MoSE-nolinear-rmsdown-weight-fp8/stage1/step75080",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-qkv-shared/stage1/step3576",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-qkv-shared/stage1/step10728",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-qkv-shared/stage1/step7152",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-mose-cola-r1-512-r2-512-down-r1-256-down-r2-256-standard-swiglu-5e-3/stage1/step27500",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-mose-cola-r1-512-r2-512-down-r1-256-down-r2-256-standard-swiglu-5e-3/stage1/step7500",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-baseline-fp8-5e-3/stage1/step75080",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-SiTU-up-5e-3/stage1/step25000",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-SiTU-up-5e-3/stage1/step75080",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-cross-layer-incremental-memory-g2-r512-s32-fp8-30b/stage1/step3576",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-cross-layer-incremental-memory-g2-r512-s32-fp8-30b/stage1/step0",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-cross-layer-incremental-memory-g2-r512-s32-fp8-30b/stage1/step9000",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-cross-layer-incremental-memory-g2-r512-s32-fp8-30b/stage1/step1788",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-cross-layer-incremental-memory-g2-r512-s32-fp8-30b/stage1/step8940",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-cross-layer-incremental-memory-g2-r512-s32-fp8-30b/stage1/step5364",
+    "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-cross-layer-incremental-memory-g2-r512-s32-fp8-30b/stage1/step7152"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "actual_module_budget_verified": true,
+  "num_params": 797050880,
+  "attention_ranks": 832,
+  "ffn_params_per_block": 10485760,
+  "attention_params_with_qk_norm_per_block": 13635584,
+  "batch_world_sizes": [
+    8,
+    16,
+    32
+  ],
+  "recipe_matches_current_ffn_runs": true,
+  "pytest": "1 passed in166.67s",
+  "launcher_syntax": "passed"
+}

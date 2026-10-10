@@ -1,0 +1,423 @@
+{
+  "checkpoint_step": 14306,
+  "world_size": 8,
+  "num_params": 797050880,
+  "primary_validation_metric": "equal_source_corrected_macro_ce",
+  "ranking": [
+    "c2",
+    "c6",
+    "p0qk",
+    "f3qk",
+    "c0"
+  ],
+  "runs": {
+    "c2": {
+      "corrected_macro_ce": 2.73268140446056,
+      "legacy_macro_ce_same_forward": 2.72582284970717,
+      "rows": {
+        "c4_en-validation": {
+          "corrected_ce": 3.0614893436431885,
+          "legacy_ce_same_forward": 3.0546653270721436,
+          "corrected_scored_tokens": 938695,
+          "legacy_selected_tokens": 940792
+        },
+        "dolma_books-validation": {
+          "corrected_ce": 2.9638912677764893,
+          "legacy_ce_same_forward": 2.963529348373413,
+          "corrected_scored_tokens": 32764,
+          "legacy_selected_tokens": 32768
+        },
+        "dolma_common-crawl-validation": {
+          "corrected_ce": 3.1944327354431152,
+          "legacy_ce_same_forward": 3.1888749599456787,
+          "corrected_scored_tokens": 456725,
+          "legacy_selected_tokens": 457521
+        },
+        "dolma_pes2o-validation": {
+          "corrected_ce": 2.2173657417297363,
+          "legacy_ce_same_forward": 2.2163193225860596,
+          "corrected_scored_tokens": 449056,
+          "legacy_selected_tokens": 449268
+        },
+        "dolma_reddit-validation": {
+          "corrected_ce": 3.3807694911956787,
+          "legacy_ce_same_forward": 3.364542007446289,
+          "corrected_scored_tokens": 479565,
+          "legacy_selected_tokens": 481878
+        },
+        "dolma_stack-validation": {
+          "corrected_ce": 1.3646163940429688,
+          "legacy_ce_same_forward": 1.3631175756454468,
+          "corrected_scored_tokens": 366487,
+          "legacy_selected_tokens": 366890
+        },
+        "dolma_wiki-validation": {
+          "corrected_ce": 2.7074382305145264,
+          "legacy_ce_same_forward": 2.702639579772949,
+          "corrected_scored_tokens": 487185,
+          "legacy_selected_tokens": 488050
+        },
+        "ice-validation": {
+          "corrected_ce": 3.031651496887207,
+          "legacy_ce_same_forward": 3.030646324157715,
+          "corrected_scored_tokens": 877279,
+          "legacy_selected_tokens": 877570
+        },
+        "m2d2_s2orc-validation": {
+          "corrected_ce": 3.194349527359009,
+          "legacy_ce_same_forward": 3.1591200828552246,
+          "corrected_scored_tokens": 977164,
+          "legacy_selected_tokens": 988061
+        },
+        "pile-validation": {
+          "corrected_ce": 2.305878162384033,
+          "legacy_ce_same_forward": 2.3036742210388184,
+          "corrected_scored_tokens": 584307,
+          "legacy_selected_tokens": 584866
+        },
+        "wikitext_103-validation": {
+          "corrected_ce": 2.63761305809021,
+          "legacy_ce_same_forward": 2.636922597885132,
+          "corrected_scored_tokens": 225316,
+          "legacy_selected_tokens": 225375
+        }
+      },
+      "source": {
+        "source_job_id": "mose-r512-c2-r1-p1-2x8-0930-1746-72843868",
+        "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c2-k-silu-down-rms-gateup-fp8-30b/stage1/step14306",
+        "proof_kind": "resolved_reference_metadata",
+        "reference_key": "c2-original",
+        "completion_proof": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/REFERENCE_CHECKPOINTS.json",
+        "resolver_completion_ledger": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/jobs.json",
+        "config_path": "cfps/BS256_Seq8K_30B_WSD_FP8/Rank512Matched_Combinations/c2_k_silu_down_rms_gateup.py",
+        "num_params": 797050880
+      }
+    },
+    "c6": {
+      "corrected_macro_ce": 2.734855153343894,
+      "legacy_macro_ce_same_forward": 2.7279978557066484,
+      "rows": {
+        "c4_en-validation": {
+          "corrected_ce": 3.0611555576324463,
+          "legacy_ce_same_forward": 3.0543324947357178,
+          "corrected_scored_tokens": 938695,
+          "legacy_selected_tokens": 940792
+        },
+        "dolma_books-validation": {
+          "corrected_ce": 2.9687561988830566,
+          "legacy_ce_same_forward": 2.9683938026428223,
+          "corrected_scored_tokens": 32764,
+          "legacy_selected_tokens": 32768
+        },
+        "dolma_common-crawl-validation": {
+          "corrected_ce": 3.193988084793091,
+          "legacy_ce_same_forward": 3.1884312629699707,
+          "corrected_scored_tokens": 456725,
+          "legacy_selected_tokens": 457521
+        },
+        "dolma_pes2o-validation": {
+          "corrected_ce": 2.2179501056671143,
+          "legacy_ce_same_forward": 2.2169034481048584,
+          "corrected_scored_tokens": 449056,
+          "legacy_selected_tokens": 449268
+        },
+        "dolma_reddit-validation": {
+          "corrected_ce": 3.378955125808716,
+          "legacy_ce_same_forward": 3.362736225128174,
+          "corrected_scored_tokens": 479565,
+          "legacy_selected_tokens": 481878
+        },
+        "dolma_stack-validation": {
+          "corrected_ce": 1.366248369216919,
+          "legacy_ce_same_forward": 1.3647476434707642,
+          "corrected_scored_tokens": 366487,
+          "legacy_selected_tokens": 366890
+        },
+        "dolma_wiki-validation": {
+          "corrected_ce": 2.7078394889831543,
+          "legacy_ce_same_forward": 2.70304012298584,
+          "corrected_scored_tokens": 487185,
+          "legacy_selected_tokens": 488050
+        },
+        "ice-validation": {
+          "corrected_ce": 3.048125982284546,
+          "legacy_ce_same_forward": 3.0471153259277344,
+          "corrected_scored_tokens": 877279,
+          "legacy_selected_tokens": 877570
+        },
+        "m2d2_s2orc-validation": {
+          "corrected_ce": 3.1930112838745117,
+          "legacy_ce_same_forward": 3.157796621322632,
+          "corrected_scored_tokens": 977164,
+          "legacy_selected_tokens": 988061
+        },
+        "pile-validation": {
+          "corrected_ce": 2.3080015182495117,
+          "legacy_ce_same_forward": 2.305795431137085,
+          "corrected_scored_tokens": 584307,
+          "legacy_selected_tokens": 584866
+        },
+        "wikitext_103-validation": {
+          "corrected_ce": 2.6393749713897705,
+          "legacy_ce_same_forward": 2.638684034347534,
+          "corrected_scored_tokens": 225316,
+          "legacy_selected_tokens": 225375
+        }
+      },
+      "source": {
+        "source_job_id": "mose-r512-c6-r1-p1-2x8-np-1001-1337-21978910",
+        "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c6-qk-silu-down-rms-gateup-fp8-30b/stage1/step14306",
+        "proof_kind": "resolved_reference_metadata",
+        "reference_key": "c6-original",
+        "completion_proof": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/REFERENCE_CHECKPOINTS.json",
+        "resolver_completion_ledger": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/jobs.json",
+        "config_path": "cfps/BS256_Seq8K_30B_WSD_FP8/Rank512Matched_Combinations/c6_qk_silu_down_rms_gateup.py",
+        "num_params": 797050880
+      }
+    },
+    "p0qk": {
+      "corrected_macro_ce": 2.736911957914179,
+      "legacy_macro_ce_same_forward": 2.7300468899986963,
+      "rows": {
+        "c4_en-validation": {
+          "corrected_ce": 3.064283847808838,
+          "legacy_ce_same_forward": 3.0574536323547363,
+          "corrected_scored_tokens": 938695,
+          "legacy_selected_tokens": 940792
+        },
+        "dolma_books-validation": {
+          "corrected_ce": 2.9751789569854736,
+          "legacy_ce_same_forward": 2.974816083908081,
+          "corrected_scored_tokens": 32764,
+          "legacy_selected_tokens": 32768
+        },
+        "dolma_common-crawl-validation": {
+          "corrected_ce": 3.196986436843872,
+          "legacy_ce_same_forward": 3.1914243698120117,
+          "corrected_scored_tokens": 456725,
+          "legacy_selected_tokens": 457521
+        },
+        "dolma_pes2o-validation": {
+          "corrected_ce": 2.2203636169433594,
+          "legacy_ce_same_forward": 2.219316005706787,
+          "corrected_scored_tokens": 449056,
+          "legacy_selected_tokens": 449268
+        },
+        "dolma_reddit-validation": {
+          "corrected_ce": 3.382915735244751,
+          "legacy_ce_same_forward": 3.366678237915039,
+          "corrected_scored_tokens": 479565,
+          "legacy_selected_tokens": 481878
+        },
+        "dolma_stack-validation": {
+          "corrected_ce": 1.3687824010849,
+          "legacy_ce_same_forward": 1.3672789335250854,
+          "corrected_scored_tokens": 366487,
+          "legacy_selected_tokens": 366890
+        },
+        "dolma_wiki-validation": {
+          "corrected_ce": 2.7128772735595703,
+          "legacy_ce_same_forward": 2.708069086074829,
+          "corrected_scored_tokens": 487185,
+          "legacy_selected_tokens": 488050
+        },
+        "ice-validation": {
+          "corrected_ce": 3.0421857833862305,
+          "legacy_ce_same_forward": 3.0411770343780518,
+          "corrected_scored_tokens": 877279,
+          "legacy_selected_tokens": 877570
+        },
+        "m2d2_s2orc-validation": {
+          "corrected_ce": 3.196962594985962,
+          "legacy_ce_same_forward": 3.1617043018341064,
+          "corrected_scored_tokens": 977164,
+          "legacy_selected_tokens": 988061
+        },
+        "pile-validation": {
+          "corrected_ce": 2.30859637260437,
+          "legacy_ce_same_forward": 2.306389808654785,
+          "corrected_scored_tokens": 584307,
+          "legacy_selected_tokens": 584866
+        },
+        "wikitext_103-validation": {
+          "corrected_ce": 2.6368985176086426,
+          "legacy_ce_same_forward": 2.6362082958221436,
+          "corrected_scored_tokens": 225316,
+          "legacy_selected_tokens": 225375
+        }
+      },
+      "source": {
+        "source_job_id": "mose-ug-p0qk-r1-p1-1x8-pool-1006-1347-459e-3-74da9",
+        "checkpoint": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ug-partial-p0qk-s0-p512-linear-qk-silu-down-rms-fp8-30b/stage1/step14306",
+        "completion_proof": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/completion_p0qk.log",
+        "config_path": "cfps/BS256_Seq8K_30B_WSD_FP8/UG_Partial_Sharing/p0qk.py",
+        "num_params": 797050880
+      }
+    },
+    "f3qk": {
+      "corrected_macro_ce": 2.7371753562580454,
+      "legacy_macro_ce_same_forward": 2.7303109602494673,
+      "rows": {
+        "c4_en-validation": {
+          "corrected_ce": 3.0653584003448486,
+          "legacy_ce_same_forward": 3.058525800704956,
+          "corrected_scored_tokens": 938695,
+          "legacy_selected_tokens": 940792
+        },
+        "dolma_books-validation": {
+          "corrected_ce": 2.9677064418792725,
+          "legacy_ce_same_forward": 2.967344284057617,
+          "corrected_scored_tokens": 32764,
+          "legacy_selected_tokens": 32768
+        },
+        "dolma_common-crawl-validation": {
+          "corrected_ce": 3.1964666843414307,
+          "legacy_ce_same_forward": 3.1909053325653076,
+          "corrected_scored_tokens": 456725,
+          "legacy_selected_tokens": 457521
+        },
+        "dolma_pes2o-validation": {
+          "corrected_ce": 2.2201335430145264,
+          "legacy_ce_same_forward": 2.219085931777954,
+          "corrected_scored_tokens": 449056,
+          "legacy_selected_tokens": 449268
+        },
+        "dolma_reddit-validation": {
+          "corrected_ce": 3.3827285766601562,
+          "legacy_ce_same_forward": 3.3664915561676025,
+          "corrected_scored_tokens": 479565,
+          "legacy_selected_tokens": 481878
+        },
+        "dolma_stack-validation": {
+          "corrected_ce": 1.367020606994629,
+          "legacy_ce_same_forward": 1.3655190467834473,
+          "corrected_scored_tokens": 366487,
+          "legacy_selected_tokens": 366890
+        },
+        "dolma_wiki-validation": {
+          "corrected_ce": 2.7083492279052734,
+          "legacy_ce_same_forward": 2.7035491466522217,
+          "corrected_scored_tokens": 487185,
+          "legacy_selected_tokens": 488050
+        },
+        "ice-validation": {
+          "corrected_ce": 3.0588600635528564,
+          "legacy_ce_same_forward": 3.0578458309173584,
+          "corrected_scored_tokens": 877279,
+          "legacy_selected_tokens": 877570
+        },
+        "m2d2_s2orc-validation": {
+          "corrected_ce": 3.1965808868408203,
+          "legacy_ce_same_forward": 3.1613268852233887,
+          "corrected_scored_tokens": 977164,
+          "legacy_selected_tokens": 988061
+        },
+        "pile-validation": {
+          "corrected_ce": 2.309648275375366,
+          "legacy_ce_same_forward": 2.307440757751465,
+          "corrected_scored_tokens": 584307,
+          "legacy_selected_tokens": 584866
+        },
+        "wikitext_103-validation": {
+          "corrected_ce": 2.6360762119293213,
+          "legacy_ce_same_forward": 2.6353859901428223,
+          "corrected_scored_tokens": 225316,
+          "legacy_selected_tokens": 225375
+        }
+      },
+      "source": {
+        "source_job_id": "mose-ffn-f3qk-r1-p1-4x8-arch-1006-1923-76a7-5350e",
+        "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ffn-budget-f3qk-ug480-down672-shared-qk-silu-ug-linear-down-rms-fp8-30b/stage1/step14306",
+        "completion_proof": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/completion_f3qk.log",
+        "config_path": "cfps/BS256_Seq8K_30B_WSD_FP8/FFN_Rank_Reallocation/f3qk.py",
+        "num_params": 797050880
+      }
+    },
+    "c0": {
+      "corrected_macro_ce": 2.7388659715652466,
+      "legacy_macro_ce_same_forward": 2.731997988440774,
+      "rows": {
+        "c4_en-validation": {
+          "corrected_ce": 3.0669682025909424,
+          "legacy_ce_same_forward": 3.0601320266723633,
+          "corrected_scored_tokens": 938695,
+          "legacy_selected_tokens": 940792
+        },
+        "dolma_books-validation": {
+          "corrected_ce": 2.97798752784729,
+          "legacy_ce_same_forward": 2.97762393951416,
+          "corrected_scored_tokens": 32764,
+          "legacy_selected_tokens": 32768
+        },
+        "dolma_common-crawl-validation": {
+          "corrected_ce": 3.2004151344299316,
+          "legacy_ce_same_forward": 3.1948471069335938,
+          "corrected_scored_tokens": 456725,
+          "legacy_selected_tokens": 457521
+        },
+        "dolma_pes2o-validation": {
+          "corrected_ce": 2.2187323570251465,
+          "legacy_ce_same_forward": 2.2176854610443115,
+          "corrected_scored_tokens": 449056,
+          "legacy_selected_tokens": 449268
+        },
+        "dolma_reddit-validation": {
+          "corrected_ce": 3.38545823097229,
+          "legacy_ce_same_forward": 3.3692080974578857,
+          "corrected_scored_tokens": 479565,
+          "legacy_selected_tokens": 481878
+        },
+        "dolma_stack-validation": {
+          "corrected_ce": 1.3677221536636353,
+          "legacy_ce_same_forward": 1.3662197589874268,
+          "corrected_scored_tokens": 366487,
+          "legacy_selected_tokens": 366890
+        },
+        "dolma_wiki-validation": {
+          "corrected_ce": 2.7150797843933105,
+          "legacy_ce_same_forward": 2.710268020629883,
+          "corrected_scored_tokens": 487185,
+          "legacy_selected_tokens": 488050
+        },
+        "ice-validation": {
+          "corrected_ce": 3.04714035987854,
+          "legacy_ce_same_forward": 3.0461299419403076,
+          "corrected_scored_tokens": 877279,
+          "legacy_selected_tokens": 877570
+        },
+        "m2d2_s2orc-validation": {
+          "corrected_ce": 3.1970720291137695,
+          "legacy_ce_same_forward": 3.1618125438690186,
+          "corrected_scored_tokens": 977164,
+          "legacy_selected_tokens": 988061
+        },
+        "pile-validation": {
+          "corrected_ce": 2.3093135356903076,
+          "legacy_ce_same_forward": 2.3071062564849854,
+          "corrected_scored_tokens": 584307,
+          "legacy_selected_tokens": 584866
+        },
+        "wikitext_103-validation": {
+          "corrected_ce": 2.641636371612549,
+          "legacy_ce_same_forward": 2.640944719314575,
+          "corrected_scored_tokens": 225316,
+          "legacy_selected_tokens": 225375
+        }
+      },
+      "source": {
+        "source_job_id": "mose-r512-c0-r1-p1-2x8-0930-1639-81763768",
+        "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c0-k-silu-down-rms-fp8-30b/stage1/step14306",
+        "proof_kind": "resolved_reference_metadata",
+        "reference_key": "c0-original",
+        "completion_proof": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/REFERENCE_CHECKPOINTS.json",
+        "resolver_completion_ledger": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/jobs.json",
+        "config_path": "cfps/BS256_Seq8K_30B_WSD_FP8/Rank512Matched_Combinations/c0_k_silu_down_rms.py",
+        "num_params": 797050880
+      }
+    }
+  },
+  "scope": "Five complete11-source final-checkpoint reevaluations; same data and8-rank evaluation, two distinct H200 nodes; original training hardware differences retained; no seed significance claim",
+  "train_ce_winner": "c6",
+  "validation_ce_winner": "c2",
+  "dense_corrected_evaluation_complete": false
+}

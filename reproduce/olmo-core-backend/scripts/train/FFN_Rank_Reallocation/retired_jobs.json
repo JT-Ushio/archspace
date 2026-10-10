@@ -1,0 +1,101 @@
+[
+  {
+    "variant": "f1",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ffn-f1-r1-p1-1x8-pool-1006-1135-4cae",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/run_f1.sh",
+    "job_id": "mose-ffn-f1-r1-p1-1x8-pool-1006-1135-4cae-99748743",
+    "state": "Failed",
+    "counters": {
+      "active": 0,
+      "succeeded": 0,
+      "failed": 1,
+      "created_failed": 0,
+      "pending": 0,
+      "stopped": 0
+    },
+    "segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_114104-olmo3-1b-ffn-budget-f1-ug384-down768-unshared-linear-rms-fp8-30b"
+  },
+  {
+    "variant": "f2",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ffn-f2-r1-p1-1x8-pool-1006-1135-6c39",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/run_f2.sh",
+    "job_id": "mose-ffn-f2-r1-p1-1x8-pool-1006-1135-6c39-5628140",
+    "state": "Failed",
+    "counters": {
+      "active": 0,
+      "succeeded": 0,
+      "failed": 1,
+      "created_failed": 0,
+      "pending": 0,
+      "stopped": 0
+    },
+    "segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_114106-olmo3-1b-ffn-budget-f2-ug256-down1024-unshared-linear-rms-fp8-30b"
+  },
+  {
+    "variant": "f3",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ffn-f3-r1-p1-1x8-pool-1006-1135-0526",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/run_f3.sh",
+    "job_id": "mose-ffn-f3-r1-p1-1x8-pool-1006-1135-0526-12030032",
+    "state": "Failed",
+    "counters": {
+      "active": 0,
+      "succeeded": 0,
+      "failed": 1,
+      "created_failed": 0,
+      "pending": 0,
+      "stopped": 0
+    },
+    "segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_114123-olmo3-1b-ffn-budget-f3-ug480-down672-shared-linear-rms-fp8-30b"
+  },
+  {
+    "variant": "f1qk",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ffn-f1qk-r1-p1-1x8-pool-1006-1925-79f8",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/run_f1qk.sh",
+    "job_id": "mose-ffn-f1qk-r1-p1-1x8-pool-1006-1925-79f8-ca40a",
+    "startup_verified": {
+      "status": "Inqueue",
+      "counters": {
+        "active": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "mesh": [],
+      "checkpoint0_saved": false,
+      "last_step": null,
+      "ce": [],
+      "errors": []
+    },
+    "state": "Stopped",
+    "counters": {
+      "active": 0,
+      "succeeded": 0,
+      "failed": 0,
+      "created_failed": 0,
+      "pending": 0,
+      "stopped": 1
+    },
+    "produced_wandb_segment": false,
+    "reason": "Pool queued without any allocated replica; immediately available arch8 fallback",
+    "terminal_proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/stop_f1qk_pool_confirmation.log",
+    "log_proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/stop_f1qk_pool_logs.log"
+  }
+]

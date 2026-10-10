@@ -1,0 +1,258 @@
+[
+  {
+    "variant": "p2pair-ce",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-report-p2pair-ce-r1-p1-1x8-pool-1006-2135-f534",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_export_completed_pair.sh",
+    "workload": "Read-only completed P2/P2qk full-precision W&B history comparison, single CPU process",
+    "manifest": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/completed_pair_segments.json",
+    "capacity_prediction": {
+      "partition": "pool",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-06T21:35:10.922286+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：1",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261006_213510.log"
+    },
+    "submission_state": "confirmed",
+    "time": "2026-10-06T21:35:10.935476+08:00",
+    "job_id": "mose-report-p2pair-ce-r1-p1-1x8-pool-1006-21-2abb2"
+  },
+  {
+    "variant": "f3qk-reference-ce",
+    "partition": "arch",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-report-f3qk-ref-r1-p1-1x8-arch-1006-2300-b3c1",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_export_with_references.sh",
+    "workload": "Read-only full30B comparison of completed P2/P2qk/F3qk with archived C0/C2/C6; single CPU process",
+    "manifest": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/completed_reference_candidates.json",
+    "capacity_prediction": {
+      "partition": "arch",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-06T22:59:45.277967+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：1",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_arch_1_20261006_225945.log"
+    },
+    "submission_state": "confirmed",
+    "time": "2026-10-06T22:59:45.427374+08:00",
+    "job_id": "mose-report-f3qk-ref-r1-p1-1x8-arch-1006-230-078b7"
+  },
+  {
+    "variant": "p0-reference-ce",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-report-p0-ref-r1-p1-1x8-pool-1007-0003-6f3a",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_export_round2.sh",
+    "workload": "Read-only complete P0/P2/P2qk/F3qk histories and archived C0/C2/C6; single CPU process",
+    "manifest": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/completed_reference_candidates_round2.json",
+    "capacity_prediction": {
+      "partition": "pool",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-07T00:02:30.728173+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：1",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261007_000230.log"
+    },
+    "submission_state": "confirmed",
+    "time": "2026-10-07T00:02:30.833633+08:00",
+    "job_id": "mose-report-p0-ref-r1-p1-1x8-pool-1007-0003-bf4f3"
+  },
+  {
+    "variant": "ffn-primary-reference-ce",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-report-ffn-primary-r1-p1-1x8-pool-1007-0034-94f8",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_export_round3.sh",
+    "workload": "Read-only complete F1/F2/F3 and prior completed candidates with archived C0/C2/C6; single CPU process",
+    "manifest": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/completed_reference_candidates_round3.json",
+    "capacity_prediction": {
+      "partition": "pool",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-07T00:33:43.620510+08:00",
+      "schedulable": false,
+      "summary": [
+        "📌 任务调度核心状态：❌ 任务不可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：0",
+        "  - 不可调度数量：1"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261007_003343.log"
+    },
+    "submission_policy": "Pool8 queue permitted under existing pool authorization; no queued arch job and no duplicate report",
+    "submission_state": "confirmed",
+    "time": "2026-10-07T00:33:43.944826+08:00",
+    "job_id": "mose-report-ffn-primary-r1-p1-1x8-pool-1007-2368c"
+  },
+  {
+    "variant": "original-batch-reference-ce",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-report-original-batch-r1-p1-1x8-pool-1007-0228-cc68",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_export_original_batch_and_references.sh",
+    "workload": "Read-only complete originalten batch and11current candidates plus C0/C2/C6, one CPU process",
+    "manifest": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/completed_reference_candidates_round4.json",
+    "capacity_prediction": {
+      "partition": "pool",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-07T02:28:24.832361+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：1",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261007_022824.log"
+    },
+    "submission_state": "confirmed",
+    "time": "2026-10-07T02:28:24.853094+08:00",
+    "job_id": "mose-report-original-batch-r1-p1-1x8-pool-10-524a5"
+  },
+  {
+    "variant": "f4-f5-qk-round5",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-report-ffn-qk-r5-p1-1x8-pool-1007-0527-9543",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_export_completed_round5.sh",
+    "workload": "Read-only full30B histories for13 completed current candidates and archived C0/C2/C6; CPU export inside scheduled allocation",
+    "manifest": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/completed_reference_candidates_round5.json",
+    "capacity_prediction": {
+      "partition": "pool",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-07T05:27:12.065001+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：1",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261007_052712.log"
+    },
+    "submission_state": "confirmed",
+    "time": "2026-10-07T05:27:43.307490+08:00",
+    "job_id": "mose-report-ffn-qk-r5-p1-1x8-pool-1007-0527-d55ee"
+  },
+  {
+    "variant": "f1-f2-qk-round6",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-report-ffn-qk-r6-p1-1x8-pool-1007-0828-542f",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_export_completed_round6.sh",
+    "workload": "Read-only complete30B histories of15 current candidates including F1qk/F2qk, then archived C0/C2/C6; CPU export inside scheduled allocation",
+    "manifest": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/completed_reference_candidates_round6.json",
+    "capacity_prediction": {
+      "partition": "pool",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-07T08:27:24.809968+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：1",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261007_082724.log"
+    },
+    "local_validation": "Wrapper bash-n passed;15 exact current completed source attempts and segments verified; export logic unchanged",
+    "submission_state": "confirmed",
+    "time": "2026-10-07T08:28:02.956851+08:00",
+    "job_id": "mose-report-ffn-qk-r6-p1-1x8-pool-1007-0828-5e4db"
+  },
+  {
+    "variant": "c0-c6-seed-confirmation",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-report-seed-c0c6-r1-p1-1x8-pool-1007-0957-bf23",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_export_c0_c6_seed_confirmation.sh",
+    "workload": "Read-only four completeC0/C6 histories, matched init12537/12538,data34521 andpool8; descriptive paired-seed TrainCE confirmation, excludes archived12536; CPU export inside allocation",
+    "manifest": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/completed_c0_c6_seed_segments.json",
+    "capacity_prediction": {
+      "partition": "pool",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-07T09:56:57.312484+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：1",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261007_095657.log"
+    },
+    "local_validation": "Wrapper bash-n; all4 exact completed source attempts/final14306 saves/segments verified; exporter pairing/model-budget guards unchanged",
+    "submission_state": "confirmed",
+    "time": "2026-10-07T09:57:35.887500+08:00",
+    "job_id": "mose-report-seed-c0c6-r1-p1-1x8-pool-1007-09-bcc80"
+  },
+  {
+    "variant": "p3-p4-qk-completed-round7",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-report-ug-qk-r7-p1-1x8-pool-1007-1029-e8c8",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_export_completed_round7.sh",
+    "workload": "Read-only17 complete current nonseed histories includingP3qk/P4qk, plusarchivedC0/C2/C6; common complete30B TrainCE ranking andQK activation interactions; CPU export insideallocation",
+    "manifest": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/completed_reference_candidates_round7.json",
+    "capacity_prediction": {
+      "partition": "pool",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-07T10:28:09.560839+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：1",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261007_102809.log"
+    },
+    "local_validation": "17 exactattempts completefinal14306 andcheckpointproofs; frozenr6preserved; newwrapper bash-n passed; exporter unchanged",
+    "submission_state": "confirmed",
+    "time": "2026-10-07T10:29:02.828517+08:00",
+    "job_id": "mose-report-ug-qk-r7-p1-1x8-pool-1007-1029-e-47f42"
+  }
+]

@@ -1,0 +1,101 @@
+{
+  "observed_at": "2026-10-09T01:43:09.783169+00:00",
+  "jobs": [
+    {
+      "variant": "du",
+      "job_id": "xtuner-dense-ud-r1632-rms-1x8-p1-1008-2016-482868",
+      "namespace": "ailab-llmarchitecture",
+      "status": "Running",
+      "counts_dict": {
+        "active": 1,
+        "succeeded": 0,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "latest_step": 11854,
+      "latest_metrics": {
+        "step": 11850,
+        "eta": "2h45m",
+        "at": "2026-10-09T09:42:20+08:00",
+        "ce": 2.521
+      },
+      "training_complete": false,
+      "completed_at": null,
+      "final_checkpoint_saved": false,
+      "checkpoint_saved_at": null,
+      "final_checkpoint": null,
+      "proof": [],
+      "errors": [],
+      "observed_at": "2026-10-09T01:43:09.783169+00:00",
+      "progress_percent": 82.86,
+      "completion_verified": false,
+      "log_file": "monitor_snapshots/monitor_20261009_0941/du.log"
+    },
+    {
+      "variant": "dg",
+      "job_id": "xtuner-dense-gd-r1632-rms-1x8-p1-1008-2017-3-25bd7",
+      "namespace": "ailab-llmarchitecture",
+      "status": "Running",
+      "counts_dict": {
+        "active": 1,
+        "succeeded": 0,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "latest_step": 11793,
+      "latest_metrics": {
+        "step": 11790,
+        "eta": "2h50m",
+        "at": "2026-10-09T09:42:35+08:00",
+        "ce": 2.482
+      },
+      "training_complete": false,
+      "completed_at": null,
+      "final_checkpoint_saved": false,
+      "checkpoint_saved_at": null,
+      "final_checkpoint": null,
+      "proof": [],
+      "errors": [],
+      "observed_at": "2026-10-09T01:43:09.783169+00:00",
+      "progress_percent": 82.43,
+      "completion_verified": false,
+      "log_file": "monitor_snapshots/monitor_20261009_0941/dg.log"
+    },
+    {
+      "variant": "dug",
+      "job_id": "xtuner-dense-ugd-r1632-rms-1x8-p1-1008-2020-9e8f7",
+      "namespace": "ailab-llmarchitecture",
+      "status": "Running",
+      "counts_dict": {
+        "active": 1,
+        "succeeded": 0,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "latest_step": 11747,
+      "latest_metrics": {
+        "step": 11740,
+        "eta": "2h54m",
+        "at": "2026-10-09T09:42:32+08:00",
+        "ce": 2.522
+      },
+      "training_complete": false,
+      "completed_at": null,
+      "final_checkpoint_saved": false,
+      "checkpoint_saved_at": null,
+      "final_checkpoint": null,
+      "proof": [],
+      "errors": [],
+      "observed_at": "2026-10-09T01:43:09.783169+00:00",
+      "progress_percent": 82.11,
+      "completion_verified": false,
+      "log_file": "monitor_snapshots/monitor_20261009_0941/dug.log"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "variant": "completed-reference-trio",
+  "partition": "pool",
+  "nodes": 1,
+  "gpus_per_node": 8,
+  "priority": 1,
+  "job_name": "mose-eval-ref-trio-r1-p1-1x8-pool-1007-0359-b668",
+  "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/run_reference_trio.sh",
+  "workload": "Read-only C0/C2/C6 final14306 LM reevaluation, 8 distributed ranks; actual saved paths/metadata resolver proved; corrected vs legacy on same forward",
+  "manifest": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/reference_cases.json",
+  "capacity_prediction": {
+    "partition": "pool",
+    "nodes": 1,
+    "exit_code": 0,
+    "observed_at": "2026-10-07T03:59:32.005519+08:00",
+    "schedulable": true,
+    "summary": [
+      "📌 任务调度核心状态：✅ 任务可调度",
+      "  - 总副本数量：1",
+      "  - 可调度数量：1",
+      "  - 不可调度数量：0"
+    ],
+    "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261007_035932.log"
+  },
+  "local_validation": "5 alignment tests previously passed; reference checksum/terminal proof/source binding and raw compatibility guards passed; Python compile/bash-n passed",
+  "job_id": "mose-eval-ref-trio-r1-p1-1x8-pool-1007-0359-618bb",
+  "status": "Succeeded",
+  "counts": "{'active': 0, 'succeeded': 1, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+  "latest": null,
+  "segments": [],
+  "events": [
+    "[2026-10-07T04:00:04+08:00] mose-eval-ref-trio-r1-p1-1x8-pool-1007-0359-618bb-cfcd2 >> 2026-10-07 04:00:04.643\tgpu-lg-cmc-h-h200-2314.host.h.pjlab.org.cn:0\tolmo_core.train.train_module.transformer.common:169\tINFO\tApplied FSDP to the model with 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+    "[2026-10-07T04:00:28+08:00] mose-eval-ref-trio-r1-p1-1x8-pool-1007-0359-618bb-cfcd2 >> 2026-10-07 04:00:28.909\tgpu-lg-cmc-h-h200-2314.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:901\tINFO\tLoading checkpoint from '/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c0-k-silu-down-rms-fp8-30b/stage1/step14306'...",
+    "[2026-10-07T04:01:58+08:00] mose-eval-ref-trio-r1-p1-1x8-pool-1007-0359-618bb-cfcd2 >> 2026-10-07 04:01:58.410\tgpu-lg-cmc-h-h200-2314.host.h.pjlab.org.cn:0\tolmo_core.distributed.parallel:246\tINFO\tBuilt 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+    "[2026-10-07T04:01:59+08:00] mose-eval-ref-trio-r1-p1-1x8-pool-1007-0359-618bb-cfcd2 >> 2026-10-07 04:01:59.212\tgpu-lg-cmc-h-h200-2314.host.h.pjlab.org.cn:0\tolmo_core.train.train_module.transformer.common:169\tINFO\tApplied FSDP to the model with 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+    "[2026-10-07T04:02:08+08:00] mose-eval-ref-trio-r1-p1-1x8-pool-1007-0359-618bb-cfcd2 >> 2026-10-07 04:02:08.460\tgpu-lg-cmc-h-h200-2314.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:901\tINFO\tLoading checkpoint from '/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c2-k-silu-down-rms-gateup-fp8-30b/stage1/step14306'...",
+    "[2026-10-07T04:03:34+08:00] mose-eval-ref-trio-r1-p1-1x8-pool-1007-0359-618bb-cfcd2 >> 2026-10-07 04:03:34.769\tgpu-lg-cmc-h-h200-2314.host.h.pjlab.org.cn:0\tolmo_core.distributed.parallel:246\tINFO\tBuilt 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+    "[2026-10-07T04:03:35+08:00] mose-eval-ref-trio-r1-p1-1x8-pool-1007-0359-618bb-cfcd2 >> 2026-10-07 04:03:35.586\tgpu-lg-cmc-h-h200-2314.host.h.pjlab.org.cn:0\tolmo_core.train.train_module.transformer.common:169\tINFO\tApplied FSDP to the model with 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+    "[2026-10-07T04:03:44+08:00] mose-eval-ref-trio-r1-p1-1x8-pool-1007-0359-618bb-cfcd2 >> 2026-10-07 04:03:44.989\tgpu-lg-cmc-h-h200-2314.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:901\tINFO\tLoading checkpoint from '/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c6-qk-silu-down-rms-gateup-fp8-30b/stage1/step14306'..."
+  ],
+  "observation_exit_code": 0,
+  "observed_at": "2026-10-07T04:07:38.051866+08:00",
+  "observation_basis": "Current scheduler status and job logs",
+  "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/reference_trio_completion.log"
+}

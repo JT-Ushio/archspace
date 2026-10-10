@@ -1,0 +1,48 @@
+[
+  {
+    "variant": "c0s1",
+    "job_id": "mose-r512-c0-r1-p1-2x8-0930-1639-81763768",
+    "partition": "arch",
+    "nodes": 2,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "init_seed": 12536,
+    "data_seed": 34521,
+    "num_params": 797050880,
+    "reference": true,
+    "wandb_segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20260930_172412-olmo3-1b-r512matched-c0-k-silu-down-rms-fp8-30b",
+    "completion_verified": {
+      "state": "UNKNOWN",
+      "counters": {},
+      "final_step": null,
+      "final_checkpoint_saved": false,
+      "training_complete": false,
+      "exact_segment_logged": false,
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/reference_c0s1_completion.log",
+      "observation_exit_code": 0
+    }
+  },
+  {
+    "variant": "c6s1",
+    "job_id": "mose-r512-c6-r1-p1-2x8-np-1001-1337-21978910",
+    "partition": "arch",
+    "nodes": 2,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "init_seed": 12536,
+    "data_seed": 34521,
+    "num_params": 797050880,
+    "reference": true,
+    "wandb_segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261001_133931-olmo3-1b-r512matched-c6-qk-silu-down-rms-gateup-fp8-30b",
+    "completion_verified": {
+      "state": "UNKNOWN",
+      "counters": {},
+      "final_step": null,
+      "final_checkpoint_saved": false,
+      "training_complete": false,
+      "exact_segment_logged": false,
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/reference_c6s1_completion.log",
+      "observation_exit_code": 0
+    }
+  }
+]

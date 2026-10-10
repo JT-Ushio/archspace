@@ -1,0 +1,10 @@
+{
+  "syntax": "passed",
+  "native_behavior_tests": {
+    "passed": 8,
+    "failed": 0
+  },
+  "meta_parameter_and_hf_structure": "passed",
+  "hf_numerical_validation": "not_run",
+  "full_model_parameters": 797050880
+}

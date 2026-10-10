@@ -1,0 +1,76 @@
+{
+  "mose-ffn-f1-r1-p1-1x8-pool-1006-1135-4cae-99748743": {
+    "segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_114104-olmo3-1b-ffn-budget-f1-ug384-down768-unshared-linear-rms-fp8-30b",
+    "state": "finished",
+    "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/sync_f1_completion.log"
+  },
+  "mose-ffn-f2-r1-p1-1x8-pool-1006-1135-6c39-5628140": {
+    "segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_114106-olmo3-1b-ffn-budget-f2-ug256-down1024-unshared-linear-rms-fp8-30b",
+    "state": "failed",
+    "error": "transactionlog: unexpected EOF; original segment preserved",
+    "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/sync_f2_completion.log"
+  },
+  "mose-ffn-f3-r1-p1-1x8-pool-1006-1135-0526-12030032": {
+    "segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_114123-olmo3-1b-ffn-budget-f3-ug480-down672-shared-linear-rms-fp8-30b",
+    "state": "failed",
+    "invocation_exit_code": 0,
+    "error": "transactionlog: error getting next record: EOF; original preserved",
+    "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/sync_mose-ffn-f3-r1-p1-1x8-pool-1006-1135-0526-12030032_completion.log"
+  },
+  "mose-ffn-f3qk-r1-p1-4x8-arch-1006-1923-76a7-5350e": {
+    "segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_192653-olmo3-1b-ffn-budget-f3qk-ug480-down672-shared-qk-silu-ug-linear-down-rms-fp8-30b",
+    "state": "finished",
+    "invoked_at": "2026-10-06T22:58:36.826458+08:00",
+    "invocation_exit_code": 0,
+    "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/sync_mose-ffn-f3qk-r1-p1-4x8-arch-1006-1923-76a7-5350e_completion.log"
+  },
+  "mose-recover-f1-r2-p1-1x8-pool-1006-1207-08d-af98d": {
+    "segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_121016-olmo3-1b-ffn-budget-f1-ug384-down768-unshared-linear-rms-fp8-30b",
+    "state": "finished",
+    "invoked_at": "2026-10-07T00:29:01.282004+08:00",
+    "invocation_exit_code": 0,
+    "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/sync_mose-recover-f1-r2-p1-1x8-pool-1006-1207-08d-af98d_completion.log"
+  },
+  "mose-recover-f2-r2-p1-1x8-pool-1006-1213-0e1-bdefa": {
+    "segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_121541-olmo3-1b-ffn-budget-f2-ug256-down1024-unshared-linear-rms-fp8-30b",
+    "state": "finished",
+    "invoked_at": "2026-10-07T00:30:23.502935+08:00",
+    "invocation_exit_code": 0,
+    "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/sync_mose-recover-f2-r2-p1-1x8-pool-1006-1213-0e1-bdefa_completion.log"
+  },
+  "mose-recover-f3-r2-p1-1x8-pool-1006-1213-ccc-5d862": {
+    "segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_121614-olmo3-1b-ffn-budget-f3-ug480-down672-shared-linear-rms-fp8-30b",
+    "state": "finished",
+    "invoked_at": "2026-10-07T00:31:42.017263+08:00",
+    "invocation_exit_code": 0,
+    "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/sync_mose-recover-f3-r2-p1-1x8-pool-1006-1213-ccc-5d862_completion.log"
+  },
+  "mose-ffn-f4qk-r1-p1-2x8-arch-1006-2300-6d41-46be5": {
+    "segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_230506-olmo3-1b-ffn-budget-f4qk-ug400-down816-shared-qk-silu-ug-linear-down-rms-fp8-30b",
+    "state": "finished",
+    "invoked_at": "2026-10-07T05:27:24.100755+08:00",
+    "invocation_exit_code": 0,
+    "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/sync_mose-ffn-f4qk-r1-p1-2x8-arch-1006-2300-6d41-46be5_completion.log"
+  },
+  "mose-ffn-f5qk-r1-p1-2x8-arch-1006-2300-f278-d8613": {
+    "segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_230543-olmo3-1b-ffn-budget-f5qk-ug560-down528-shared-qk-silu-ug-linear-down-rms-fp8-30b",
+    "state": "finished",
+    "invoked_at": "2026-10-07T05:28:39.790988+08:00",
+    "invocation_exit_code": 0,
+    "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/sync_mose-ffn-f5qk-r1-p1-2x8-arch-1006-2300-f278-d8613_completion.log"
+  },
+  "mose-ffn-f1qk-r2-p1-1x8-arch-1006-1937-bfde-3c52a": {
+    "segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_193938-olmo3-1b-ffn-budget-f1qk-ug384-down768-unshared-qk-silu-ug-linear-down-rms-fp8-30b",
+    "state": "finished",
+    "invoked_at": "2026-10-07T08:27:45.921328+08:00",
+    "invocation_exit_code": 0,
+    "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/sync_mose-ffn-f1qk-r2-p1-1x8-arch-1006-1937-bfde-3c52a_completion.log"
+  },
+  "mose-ffn-f2qk-r1-p1-1x8-pool-1006-1922-88d3-ed4c5": {
+    "segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_200818-olmo3-1b-ffn-budget-f2qk-ug256-down1024-unshared-qk-silu-ug-linear-down-rms-fp8-30b",
+    "state": "finished",
+    "invoked_at": "2026-10-07T08:29:51.054920+08:00",
+    "invocation_exit_code": 0,
+    "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/sync_mose-ffn-f2qk-r1-p1-1x8-pool-1006-1922-88d3-ed4c5_completion.log"
+  }
+}

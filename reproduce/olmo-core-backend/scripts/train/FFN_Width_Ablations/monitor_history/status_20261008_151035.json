@@ -1,0 +1,473 @@
+{
+  "observed_at": "2026-10-08T15:10:35.362240+08:00",
+  "interval_seconds": 1800,
+  "jobs": [
+    {
+      "variant": "w1",
+      "run_name": "olmo3-1b-ffn-width-w1-m6144-ug736-down640-c2-k-silu-down-rms-fp8-30b",
+      "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/run_w1.sh",
+      "remote_script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/run_w1.sh",
+      "preferred_partition": "arch",
+      "preferred_nodes": 2,
+      "gpus_per_node": 8,
+      "priority": 1,
+      "parameters": 797050880,
+      "status": "Running",
+      "order": 1,
+      "submission_allowed": true,
+      "role": "matched_budget_main",
+      "authorization": "User active objective: 持续盯着五个任务完成，优先arch然后pool，每过30min看一次，可以一起提交",
+      "authorization_observed_at": "2026-10-08T02:25:47.689427+08:00",
+      "partition": "pool",
+      "nodes": 1,
+      "job_name": "mose-width-w1-p1-1x8-1008-0226-37ef",
+      "local_script": "reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/run_w1.sh",
+      "job_id": "mose-width-w1-p1-1x8-1008-0226-37ef-94920163",
+      "startup_verified": {
+        "dry_run_complete": true,
+        "step0_save_seen": true,
+        "step0_checkpoint_saved": true,
+        "errors_in_current_tail": [],
+        "mesh_lines": [
+          "[2026-10-08T08:40:21+08:00] mose-width-w1-p1-1x8-1008-0226-37ef-94920163-cfcd2 >> 2026-10-08 08:40:21.683\tgpu-lg-cmc-h-h200-1636.host.h.pjlab.org.cn:0\tolmo_core.distributed.parallel:246\tINFO\tBuilt 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+          "[2026-10-08T08:40:23+08:00] mose-width-w1-p1-1x8-1008-0226-37ef-94920163-cfcd2 >> 2026-10-08 08:40:23.454\tgpu-lg-cmc-h-h200-1636.host.h.pjlab.org.cn:0\tolmo_core.train.train_module.transformer.common:169\tINFO\tApplied FSDP to the model with 2D device mesh with shape (dp_replicate=1, dp_shard=8)"
+        ]
+      },
+      "last_observation": {
+        "status": "Running",
+        "counts_dict": {
+          "active": 1,
+          "succeeded": 0,
+          "failed": 0,
+          "created_failed": 0,
+          "pending": 0,
+          "stopped": 0
+        },
+        "latest": {
+          "step": 7310,
+          "eta": "5h41m",
+          "grad": 0.0228,
+          "ce": 2.62
+        },
+        "observed_at": "2026-10-08T14:40:29.183446+08:00",
+        "observation_exit_code": 0,
+        "error": null
+      },
+      "submission_state": "confirmed",
+      "startup_capture_saved": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/startup_w1.log",
+      "initialization_fingerprint": {
+        "parameter_elements": 797050880,
+        "parameter_sha256": "96abe17d492e6c7596279f41e90092ebb13eab9eee6e37e7973be9295bdd6952",
+        "parameter_tensors": 275,
+        "scope": "all parameter bytes before dry-run and optimizer updates",
+        "step": 0
+      },
+      "wandb_segments": [
+        "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261008_084241-olmo3-1b-ffn-width-w1-m6144-ug736-down640-c2-k-silu-down-rms-fp8-30b"
+      ],
+      "counts": "{'active': 1, 'succeeded': 0, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+      "latest": {
+        "step": 7940,
+        "eta": "5h10m",
+        "grad": 0.0227,
+        "ce": 2.619
+      },
+      "segments": [],
+      "events": [],
+      "observation_exit_code": 0,
+      "observed_at": "2026-10-08T15:10:28.604186+08:00",
+      "observation_basis": "Current scheduler status and job logs",
+      "counts_dict": {
+        "active": 1,
+        "succeeded": 0,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "training_complete": false,
+      "completion_proven": false
+    },
+    {
+      "variant": "w1qk",
+      "run_name": "olmo3-1b-ffn-width-w1qk-m6144-ug736-down640-c6-qk-silu-down-rms-fp8-30b",
+      "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/run_w1qk.sh",
+      "remote_script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/run_w1qk.sh",
+      "preferred_partition": "arch",
+      "preferred_nodes": 2,
+      "gpus_per_node": 8,
+      "priority": 1,
+      "parameters": 797050880,
+      "status": "Running",
+      "order": 2,
+      "submission_allowed": true,
+      "role": "q_activation_cross_control",
+      "authorization": "User active objective: 持续盯着五个任务完成，优先arch然后pool，每过30min看一次，可以一起提交",
+      "authorization_observed_at": "2026-10-08T02:25:47.689427+08:00",
+      "partition": "pool",
+      "nodes": 1,
+      "job_name": "mose-width-w1qk-p1-1x8-1008-0227-b83b",
+      "local_script": "reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/run_w1qk.sh",
+      "job_id": "mose-width-w1qk-p1-1x8-1008-0227-b83b-25485220",
+      "startup_verified": {
+        "dry_run_complete": true,
+        "step0_save_seen": true,
+        "step0_checkpoint_saved": true,
+        "errors_in_current_tail": [],
+        "mesh_lines": [
+          "[2026-10-08T08:40:14+08:00] mose-width-w1qk-p1-1x8-1008-0227-b83b-25485220-cfcd2 >> 2026-10-08 08:40:14.808\tgpu-lg-cmc-h-h200-1853.host.h.pjlab.org.cn:0\tolmo_core.distributed.parallel:246\tINFO\tBuilt 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+          "[2026-10-08T08:40:18+08:00] mose-width-w1qk-p1-1x8-1008-0227-b83b-25485220-cfcd2 >> 2026-10-08 08:40:18.136\tgpu-lg-cmc-h-h200-1853.host.h.pjlab.org.cn:0\tolmo_core.train.train_module.transformer.common:169\tINFO\tApplied FSDP to the model with 2D device mesh with shape (dp_replicate=1, dp_shard=8)"
+        ]
+      },
+      "last_observation": {
+        "status": "Running",
+        "counts_dict": {
+          "active": 1,
+          "succeeded": 0,
+          "failed": 0,
+          "created_failed": 0,
+          "pending": 0,
+          "stopped": 0
+        },
+        "latest": {
+          "step": 7300,
+          "eta": "5h42m",
+          "grad": 0.014,
+          "ce": 2.651
+        },
+        "observed_at": "2026-10-08T14:40:29.833691+08:00",
+        "observation_exit_code": 0,
+        "error": null
+      },
+      "submission_state": "confirmed",
+      "startup_capture_saved": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/startup_w1qk.log",
+      "initialization_fingerprint": {
+        "parameter_elements": 797050880,
+        "parameter_sha256": "96abe17d492e6c7596279f41e90092ebb13eab9eee6e37e7973be9295bdd6952",
+        "parameter_tensors": 275,
+        "scope": "all parameter bytes before dry-run and optimizer updates",
+        "step": 0
+      },
+      "wandb_segments": [
+        "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261008_084239-olmo3-1b-ffn-width-w1qk-m6144-ug736-down640-c6-qk-silu-down-rms-fp8-30b"
+      ],
+      "counts": "{'active': 1, 'succeeded': 0, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+      "latest": {
+        "step": 7930,
+        "eta": "5h11m",
+        "grad": 0.0169,
+        "ce": 2.627
+      },
+      "segments": [],
+      "events": [],
+      "observation_exit_code": 0,
+      "observed_at": "2026-10-08T15:10:28.401990+08:00",
+      "observation_basis": "Current scheduler status and job logs",
+      "counts_dict": {
+        "active": 1,
+        "succeeded": 0,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "training_complete": false,
+      "completion_proven": false
+    },
+    {
+      "variant": "w1m",
+      "run_name": "olmo3-1b-ffn-width-w1m-m6144-ug568-down520-c2-k-silu-down-rms-fp8-30b",
+      "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/run_w1m.sh",
+      "remote_script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/run_w1m.sh",
+      "preferred_partition": "arch",
+      "preferred_nodes": 2,
+      "gpus_per_node": 8,
+      "priority": 1,
+      "parameters": 742787072,
+      "status": "Running",
+      "order": 3,
+      "submission_allowed": true,
+      "role": "width_only_smaller_control",
+      "authorization": "User active objective: 持续盯着五个任务完成，优先arch然后pool，每过30min看一次，可以一起提交",
+      "authorization_observed_at": "2026-10-08T02:25:47.689427+08:00",
+      "partition": "pool",
+      "nodes": 1,
+      "job_name": "mose-width-w1m-p1-1x8-1008-0227-cf64",
+      "local_script": "reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/run_w1m.sh",
+      "job_id": "mose-width-w1m-p1-1x8-1008-0227-cf64-30995519",
+      "startup_verified": {
+        "dry_run_complete": true,
+        "step0_save_seen": true,
+        "step0_checkpoint_saved": true,
+        "errors_in_current_tail": [],
+        "mesh_lines": [
+          "[2026-10-08T08:40:03+08:00] mose-width-w1m-p1-1x8-1008-0227-cf64-30995519-cfcd2 >> 2026-10-08 08:40:03.568\tgpu-lg-cmc-h-h200-1141.host.h.pjlab.org.cn:0\tolmo_core.distributed.parallel:246\tINFO\tBuilt 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+          "[2026-10-08T08:40:04+08:00] mose-width-w1m-p1-1x8-1008-0227-cf64-30995519-cfcd2 >> 2026-10-08 08:40:04.823\tgpu-lg-cmc-h-h200-1141.host.h.pjlab.org.cn:0\tolmo_core.train.train_module.transformer.common:169\tINFO\tApplied FSDP to the model with 2D device mesh with shape (dp_replicate=1, dp_shard=8)"
+        ]
+      },
+      "last_observation": {
+        "status": "Running",
+        "counts_dict": {
+          "active": 1,
+          "succeeded": 0,
+          "failed": 0,
+          "created_failed": 0,
+          "pending": 0,
+          "stopped": 0
+        },
+        "latest": {
+          "step": 7300,
+          "eta": "5h43m",
+          "grad": 0.1245,
+          "ce": 2.668
+        },
+        "observed_at": "2026-10-08T14:40:29.173859+08:00",
+        "observation_exit_code": 0,
+        "error": null
+      },
+      "submission_state": "confirmed",
+      "startup_capture_saved": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/startup_w1m.log",
+      "wandb_segments": [
+        "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261008_084216-olmo3-1b-ffn-width-w1m-m6144-ug568-down520-c2-k-silu-down-rms-fp8-30b"
+      ],
+      "counts": "{'active': 1, 'succeeded': 0, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+      "latest": {
+        "step": 7930,
+        "eta": "5h11m",
+        "grad": 0.0843,
+        "ce": 2.644
+      },
+      "segments": [],
+      "events": [],
+      "observation_exit_code": 0,
+      "observed_at": "2026-10-08T15:10:28.745382+08:00",
+      "observation_basis": "Current scheduler status and job logs",
+      "counts_dict": {
+        "active": 1,
+        "succeeded": 0,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "initialization_fingerprint": null,
+      "training_complete": false,
+      "completion_proven": false
+    },
+    {
+      "variant": "w2",
+      "run_name": "olmo3-1b-ffn-width-w2-m4096-ug976-down944-c2-k-silu-down-rms-fp8-30b",
+      "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/run_w2.sh",
+      "remote_script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/run_w2.sh",
+      "preferred_partition": "arch",
+      "preferred_nodes": 2,
+      "gpus_per_node": 8,
+      "priority": 1,
+      "parameters": 797050880,
+      "status": "Running",
+      "order": 4,
+      "submission_allowed": true,
+      "role": "matched_budget_main",
+      "authorization": "User active objective: 持续盯着五个任务完成，优先arch然后pool，每过30min看一次，可以一起提交",
+      "authorization_observed_at": "2026-10-08T02:25:47.689427+08:00",
+      "partition": "pool",
+      "nodes": 1,
+      "job_name": "mose-width-w2-p1-1x8-1008-0227-3754",
+      "local_script": "reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/run_w2.sh",
+      "job_id": "mose-width-w2-p1-1x8-1008-0227-3754-36807631",
+      "startup_verified": {
+        "dry_run_complete": true,
+        "step0_save_seen": true,
+        "step0_checkpoint_saved": true,
+        "errors_in_current_tail": [],
+        "mesh_lines": [
+          "[2026-10-08T08:40:06+08:00] mose-width-w2-p1-1x8-1008-0227-3754-36807631-cfcd2 >> 2026-10-08 08:40:06.955\tgpu-lg-cmc-h-h200-0633.host.h.pjlab.org.cn:0\tolmo_core.distributed.parallel:246\tINFO\tBuilt 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+          "[2026-10-08T08:40:08+08:00] mose-width-w2-p1-1x8-1008-0227-3754-36807631-cfcd2 >> 2026-10-08 08:40:08.586\tgpu-lg-cmc-h-h200-0633.host.h.pjlab.org.cn:0\tolmo_core.train.train_module.transformer.common:169\tINFO\tApplied FSDP to the model with 2D device mesh with shape (dp_replicate=1, dp_shard=8)"
+        ]
+      },
+      "last_observation": {
+        "status": "Running",
+        "counts_dict": {
+          "active": 1,
+          "succeeded": 0,
+          "failed": 0,
+          "created_failed": 0,
+          "pending": 0,
+          "stopped": 0
+        },
+        "latest": {
+          "step": 7380,
+          "eta": "5h35m",
+          "grad": 0.1216,
+          "ce": 2.584
+        },
+        "observed_at": "2026-10-08T14:40:35.103113+08:00",
+        "observation_exit_code": 0,
+        "error": null
+      },
+      "submission_state": "confirmed",
+      "startup_capture_saved": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/startup_w2.log",
+      "wandb_segments": [
+        "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261008_084219-olmo3-1b-ffn-width-w2-m4096-ug976-down944-c2-k-silu-down-rms-fp8-30b"
+      ],
+      "counts": "{'active': 1, 'succeeded': 0, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+      "latest": {
+        "step": 7990,
+        "eta": "5h5m",
+        "grad": 0.0555,
+        "ce": 2.615
+      },
+      "segments": [],
+      "events": [],
+      "observation_exit_code": 0,
+      "observed_at": "2026-10-08T15:10:34.111451+08:00",
+      "observation_basis": "Current scheduler status and job logs",
+      "counts_dict": {
+        "active": 1,
+        "succeeded": 0,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "initialization_fingerprint": null,
+      "training_complete": false,
+      "completion_proven": false
+    },
+    {
+      "variant": "g1",
+      "run_name": "olmo3-1b-qk-adaptive-g1-c2-q0-k1-m8192-ug568-down520-down-rms-fp8-30b",
+      "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/run_g1.sh",
+      "remote_script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/run_g1.sh",
+      "preferred_partition": "arch",
+      "preferred_nodes": 2,
+      "gpus_per_node": 8,
+      "priority": 1,
+      "parameters": 797050912,
+      "status": "Running",
+      "order": 5,
+      "submission_allowed": true,
+      "role": "backup",
+      "authorization": "User active objective: 持续盯着五个任务完成，优先arch然后pool，每过30min看一次，可以一起提交",
+      "authorization_observed_at": "2026-10-08T02:25:47.689427+08:00",
+      "partition": "pool",
+      "nodes": 1,
+      "job_name": "mose-width-g1-p1-1x8-1008-0227-1760",
+      "local_script": "reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/run_g1.sh",
+      "job_id": "mose-width-g1-p1-1x8-1008-0227-1760-42442674",
+      "startup_verified": {
+        "dry_run_complete": true,
+        "step0_save_seen": true,
+        "step0_checkpoint_saved": true,
+        "errors_in_current_tail": [],
+        "mesh_lines": [
+          "[2026-10-08T08:40:03+08:00] mose-width-g1-p1-1x8-1008-0227-1760-42442674-cfcd2 >> 2026-10-08 08:40:03.610\tgpu-lg-cmc-h-h200-2314.host.h.pjlab.org.cn:0\tolmo_core.distributed.parallel:246\tINFO\tBuilt 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+          "[2026-10-08T08:40:04+08:00] mose-width-g1-p1-1x8-1008-0227-1760-42442674-cfcd2 >> 2026-10-08 08:40:04.801\tgpu-lg-cmc-h-h200-2314.host.h.pjlab.org.cn:0\tolmo_core.train.train_module.transformer.common:169\tINFO\tApplied FSDP to the model with 2D device mesh with shape (dp_replicate=1, dp_shard=8)"
+        ]
+      },
+      "last_observation": {
+        "status": "Running",
+        "counts_dict": {
+          "active": 1,
+          "succeeded": 0,
+          "failed": 0,
+          "created_failed": 0,
+          "pending": 0,
+          "stopped": 0
+        },
+        "latest": {
+          "step": 6860,
+          "eta": "6h28m",
+          "grad": 0.024,
+          "ce": 2.609
+        },
+        "observed_at": "2026-10-08T14:40:37.392507+08:00",
+        "observation_exit_code": 0,
+        "error": null
+      },
+      "submission_state": "confirmed",
+      "startup_capture_saved": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/startup_g1.log",
+      "wandb_segments": [
+        "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261008_084214-olmo3-1b-qk-adaptive-g1-c2-q0-k1-m8192-ug568-down520-down-rms-fp8-30b"
+      ],
+      "counts": "{'active': 1, 'succeeded': 0, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+      "latest": {
+        "step": 7440,
+        "eta": "5h57m",
+        "grad": 0.0216,
+        "ce": 2.609
+      },
+      "segments": [],
+      "events": [],
+      "observation_exit_code": 0,
+      "observed_at": "2026-10-08T15:10:35.360597+08:00",
+      "observation_basis": "Current scheduler status and job logs",
+      "counts_dict": {
+        "active": 1,
+        "succeeded": 0,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "initialization_fingerprint": null,
+      "training_complete": false,
+      "completion_proven": false
+    }
+  ],
+  "capacity": [
+    {
+      "partition": "arch",
+      "nodes": 2,
+      "exit_code": 0,
+      "observed_at": "2026-10-08T15:10:26.318397+08:00",
+      "valid_prediction": true,
+      "reported_replicas": 2,
+      "schedulable": false,
+      "error": null,
+      "summary": [
+        "📌 任务调度核心状态：❌ 任务不可调度",
+        "  - 总副本数量：2",
+        "  - 可调度数量：0",
+        "  - 不可调度数量：2"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/capacity_arch_20261008_151026.log"
+    },
+    {
+      "partition": "pool",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-08T15:10:27.207953+08:00",
+      "valid_prediction": true,
+      "reported_replicas": 1,
+      "schedulable": false,
+      "error": null,
+      "summary": [
+        "📌 任务调度核心状态：❌ 任务不可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：0",
+        "  - 不可调度数量：1"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/capacity_pool_20261008_151027.log"
+    }
+  ],
+  "gpu_initialization_pair": {
+    "all_parameter_bytes_match": true,
+    "fingerprints": [
+      {
+        "parameter_elements": 797050880,
+        "parameter_sha256": "96abe17d492e6c7596279f41e90092ebb13eab9eee6e37e7973be9295bdd6952",
+        "parameter_tensors": 275,
+        "scope": "all parameter bytes before dry-run and optimizer updates",
+        "step": 0
+      },
+      {
+        "parameter_elements": 797050880,
+        "parameter_sha256": "96abe17d492e6c7596279f41e90092ebb13eab9eee6e37e7973be9295bdd6952",
+        "parameter_tensors": 275,
+        "scope": "all parameter bytes before dry-run and optimizer updates",
+        "step": 0
+      }
+    ]
+  }
+}

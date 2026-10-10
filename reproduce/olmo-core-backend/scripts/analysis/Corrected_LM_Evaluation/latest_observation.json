@@ -1,0 +1,43 @@
+{
+  "variant": "completed-pair-mask-check",
+  "partition": "pool",
+  "nodes": 1,
+  "gpus_per_node": 8,
+  "priority": 1,
+  "job_name": "mose-eval-mask-pair-r1-p1-1x8-pool-1007-0342-d825",
+  "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/run_completed_pair.sh",
+  "workload": "Read-only full LM reevaluation of completed P0qk/F3qk checkpoints; legacy and target masks on identical forwards; no trainer.fit or optimizer steps",
+  "manifest": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/cases.json",
+  "capacity_prediction": {
+    "partition": "pool",
+    "nodes": 1,
+    "exit_code": 0,
+    "observed_at": "2026-10-07T03:42:46.297357+08:00",
+    "schedulable": true,
+    "summary": [
+      "📌 任务调度核心状态：✅ 任务可调度",
+      "  - 总副本数量：1",
+      "  - 可调度数量：1",
+      "  - 不可调度数量：0"
+    ],
+    "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261007_034246.log"
+  },
+  "local_validation": "5 aligned-mask tests passed59.99s including padding/prefix/missing final labels and nonmutating in-place distributed collection; Python compile/bash-n passed",
+  "job_id": "mose-eval-mask-pair-r1-p1-1x8-pool-1007-0342-54a01",
+  "status": "Succeeded",
+  "counts": "{'active': 0, 'succeeded': 1, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+  "latest": null,
+  "segments": [],
+  "events": [
+    "[2026-10-07T03:43:14+08:00] mose-eval-mask-pair-r1-p1-1x8-pool-1007-0342-54a01-cfcd2 >> 2026-10-07 03:43:14.712\tgpu-lg-cmc-h-h200-1141.host.h.pjlab.org.cn:0\tolmo_core.distributed.parallel:246\tINFO\tBuilt 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+    "[2026-10-07T03:43:16+08:00] mose-eval-mask-pair-r1-p1-1x8-pool-1007-0342-54a01-cfcd2 >> 2026-10-07 03:43:16.436\tgpu-lg-cmc-h-h200-1141.host.h.pjlab.org.cn:0\tolmo_core.train.train_module.transformer.common:169\tINFO\tApplied FSDP to the model with 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+    "[2026-10-07T03:43:39+08:00] mose-eval-mask-pair-r1-p1-1x8-pool-1007-0342-54a01-cfcd2 >> 2026-10-07 03:43:39.634\tgpu-lg-cmc-h-h200-1141.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:901\tINFO\tLoading checkpoint from '/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ug-partial-p0qk-s0-p512-linear-qk-silu-down-rms-fp8-30b/stage1/step14306'...",
+    "[2026-10-07T03:45:09+08:00] mose-eval-mask-pair-r1-p1-1x8-pool-1007-0342-54a01-cfcd2 >> 2026-10-07 03:45:09.641\tgpu-lg-cmc-h-h200-1141.host.h.pjlab.org.cn:0\tolmo_core.distributed.parallel:246\tINFO\tBuilt 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+    "[2026-10-07T03:45:10+08:00] mose-eval-mask-pair-r1-p1-1x8-pool-1007-0342-54a01-cfcd2 >> 2026-10-07 03:45:10.413\tgpu-lg-cmc-h-h200-1141.host.h.pjlab.org.cn:0\tolmo_core.train.train_module.transformer.common:169\tINFO\tApplied FSDP to the model with 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+    "[2026-10-07T03:45:19+08:00] mose-eval-mask-pair-r1-p1-1x8-pool-1007-0342-54a01-cfcd2 >> 2026-10-07 03:45:19.709\tgpu-lg-cmc-h-h200-1141.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:901\tINFO\tLoading checkpoint from '/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ffn-budget-f3qk-ug480-down672-shared-qk-silu-ug-linear-down-rms-fp8-30b/stage1/step14306'..."
+  ],
+  "observation_exit_code": 0,
+  "observed_at": "2026-10-07T03:49:19.770824+08:00",
+  "observation_basis": "Current scheduler status and job logs",
+  "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/completed_pair_observation.log"
+}

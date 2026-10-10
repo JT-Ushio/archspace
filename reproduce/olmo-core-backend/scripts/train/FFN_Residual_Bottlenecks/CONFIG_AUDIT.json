@@ -1,0 +1,899 @@
+{
+  "observed_at": "2026-10-09T07:58:46.133765+00:00",
+  "meta_only": true,
+  "numerical_hf_validation": "not_run",
+  "r0_r3_state_keys_and_shapes_identical": true,
+  "gpu_initialization_fingerprints": "pending_actual_training",
+  "configs": [
+    {
+      "variant": "l1",
+      "width": 8192,
+      "rank": 512,
+      "wide_residual": false,
+      "latent_residual": true,
+      "run_name": "olmo3-1b-ffn-residual-l1-m8192-r512-unshared-linear-down-rms-fp8-30b",
+      "parameters": 797050880,
+      "model": {
+        "d_model": 2048,
+        "vocab_size": 100352,
+        "n_layers": 16,
+        "block": {
+          "sequence_mixer": {
+            "name": "default",
+            "n_heads": 16,
+            "bias": false,
+            "rope": {
+              "name": "default",
+              "theta": 500000,
+              "full_precision": true,
+              "no_global_rope": false,
+              "partial_rotary_factor": 1.0,
+              "_CLASS_": "olmo_core.nn.rope.RoPEConfig"
+            },
+            "qk_norm": {
+              "name": "rms",
+              "eps": 1e-06,
+              "bias": false,
+              "dtype": "float32",
+              "_CLASS_": "olmo_core.nn.layer_norm.LayerNormConfig"
+            },
+            "backend": "flash_3",
+            "dtype": "float32",
+            "sliding_window": {
+              "pattern": [
+                4096,
+                4096,
+                4096,
+                -1
+              ],
+              "force_full_attention_on_first_layer": false,
+              "force_full_attention_on_last_layer": true,
+              "_CLASS_": "olmo_core.nn.attention.SlidingWindowAttentionConfig"
+            },
+            "use_head_qk_norm": false,
+            "rank": 512,
+            "q_rank": 512,
+            "k_rank": 512,
+            "v_rank": 512,
+            "o_rank": 512,
+            "q_nonlinearity": "identity",
+            "k_nonlinearity": "identity",
+            "v_nonlinearity": "identity",
+            "o_nonlinearity": "identity",
+            "rms_norm_learnable_weight": false,
+            "share_scope": "none",
+            "_CLASS_": "olmo_mose.attention.LowRankAttentionConfig",
+            "type": "attention"
+          },
+          "layer_norm": {
+            "name": "rms",
+            "eps": 1e-06,
+            "bias": false,
+            "dtype": "float32",
+            "_CLASS_": "olmo_core.nn.layer_norm.LayerNormConfig"
+          },
+          "feed_forward": {
+            "hidden_size": 8192,
+            "name": "default",
+            "bias": false,
+            "dtype": "float32",
+            "activation": "silu",
+            "r1": 0,
+            "r2": 512,
+            "down_r1": 0,
+            "down_r2": 512,
+            "control": "standard",
+            "control_scope": "none",
+            "rms_beta_scale": 4.0,
+            "gate_nonlinearity": "identity",
+            "up_nonlinearity": "identity",
+            "down_nonlinearity": "rms_norm",
+            "rms_norm_learnable_weight": false,
+            "share_gate_up_subspace": false,
+            "down_output_rotation": "none",
+            "down_rotation_groups": 32,
+            "down_rotation_a_max": 0.5,
+            "wide_residual": false,
+            "latent_residual": true,
+            "_CLASS_": "olmo_mose.residual_feed_forward.ResidualMoSESwiGLUConfig"
+          },
+          "name": "reordered_norm",
+          "_CLASS_": "olmo_core.nn.transformer.config.TransformerBlockConfig"
+        },
+        "lm_head": {
+          "name": "default",
+          "layer_norm": {
+            "name": "rms",
+            "eps": 1e-06,
+            "bias": false,
+            "dtype": "float32",
+            "_CLASS_": "olmo_core.nn.layer_norm.LayerNormConfig"
+          },
+          "bias": false,
+          "dtype": "float32",
+          "loss_implementation": "default",
+          "_CLASS_": "olmo_core.nn.lm_head.LMHeadConfig"
+        },
+        "name": "default",
+        "dtype": "float32",
+        "init_method": "normal",
+        "init_seed": 0,
+        "init_std": 0.02,
+        "tie_word_embeddings": false,
+        "_CLASS_": "olmo_core.nn.transformer.config.TransformerConfig"
+      },
+      "hf_structural_audit": {
+        "state_keys": 291,
+        "unique_parameters": 797050880,
+        "sharing_groups": 0,
+        "native_forward": "(input_ids: torch.Tensor, *, input_embeddings: Optional[torch.Tensor] = None, labels: Optional[torch.Tensor] = None, ignore_index: int = -100, loss_reduction: Literal['mean', 'sum', 'none'] = 'mean', z_loss_multiplier: Optional[float] = None, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, return_logits: Optional[bool] = None, logits_to_keep: Union[int, torch.Tensor] = 0, **kwargs) -> Union[torch.Tensor, olmo_core.nn.lm_head.LMOutputWithLoss]",
+        "hf_forward": "(input_ids=None, attention_mask=None, position_ids=None, past_key_values=None, inputs_embeds=None, labels=None, use_cache=None, output_attentions=None, output_hidden_states=None, return_dict=None, cache_position=None, logits_to_keep=0, **kwargs)",
+        "module_classes": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+          "olmo_mose.attention.LowRankAttention": 16,
+          "olmo_mose.attention.NonlinearLowRankProjection": 64,
+          "torch.nn.modules.linear.Linear": 224,
+          "olmo_core.nn.layer_norm.RMSNorm": 80,
+          "olmo_mose.residual_feed_forward.ResidualMoSESwiGLU": 16
+        },
+        "module_forward_signatures": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": "(self, x: torch.Tensor, *, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, **kwargs) -> torch.Tensor",
+          "olmo_mose.attention.LowRankAttention": "(self, x: torch.Tensor, cu_doc_lens: Optional[torch.Tensor] = None, cu_doc_lens_q: Optional[torch.Tensor] = None, cu_doc_lens_k: Optional[torch.Tensor] = None, max_doc_len: Optional[int] = None, max_doc_len_q: Optional[int] = None, max_doc_len_k: Optional[int] = None, local_k_slice: Optional[slice] = None, pos_sin: Optional[torch.Tensor] = None, pos_cos: Optional[torch.Tensor] = None, freqs_cis: Optional[torch.Tensor] = None, cache_leftpad: Optional[torch.Tensor] = None) -> torch.Tensor",
+          "olmo_mose.attention.NonlinearLowRankProjection": "(self, x: torch.Tensor) -> torch.Tensor",
+          "torch.nn.modules.linear.Linear": "(self, input: torch.Tensor) -> torch.Tensor",
+          "olmo_core.nn.layer_norm.RMSNorm": "(self, x: torch.Tensor) -> torch.Tensor",
+          "olmo_mose.residual_feed_forward.ResidualMoSESwiGLU": "(self, x: torch.Tensor) -> torch.Tensor"
+        },
+        "input_mapping": {
+          "input_ids": "input_ids",
+          "input_embeddings": "inputs_embeds",
+          "logits_to_keep": "logits_to_keep"
+        },
+        "label_contract": "Native labels are shifted; HF labels are unshifted (-100 ignored)",
+        "unsupported_native_inputs": [
+          "doc_lens",
+          "cu_doc_lens",
+          "max_doc_len",
+          "local_k_slice",
+          "pos_sin",
+          "pos_cos",
+          "freqs_cis",
+          "cache_leftpad",
+          "context_parallelism",
+          "z_loss_multiplier",
+          "loss_div_factor"
+        ],
+        "structural_check": "passed",
+        "numerical_check": "not_run"
+      },
+      "numerical_hf_validation": "not_run",
+      "seeds": {
+        "model": 0,
+        "runtime": 12536,
+        "data": 34521
+      },
+      "recipe": {
+        "global_batch_tokens": 2097152,
+        "sequence_length": 8192,
+        "microbatch_tokens": 32768,
+        "accumulation_at_8gpu": 8,
+        "tokens": 30000000000,
+        "muon_lr": 0.005,
+        "warmup_steps": 2000,
+        "decay_fraction": 0.2
+      }
+    },
+    {
+      "variant": "r0",
+      "width": 2048,
+      "rank": 1280,
+      "wide_residual": false,
+      "latent_residual": false,
+      "run_name": "olmo3-1b-ffn-residual-r0-m2048-r1280-unshared-linear-down-rms-fp8-30b",
+      "parameters": 797050880,
+      "model": {
+        "d_model": 2048,
+        "vocab_size": 100352,
+        "n_layers": 16,
+        "block": {
+          "sequence_mixer": {
+            "name": "default",
+            "n_heads": 16,
+            "bias": false,
+            "rope": {
+              "name": "default",
+              "theta": 500000,
+              "full_precision": true,
+              "no_global_rope": false,
+              "partial_rotary_factor": 1.0,
+              "_CLASS_": "olmo_core.nn.rope.RoPEConfig"
+            },
+            "qk_norm": {
+              "name": "rms",
+              "eps": 1e-06,
+              "bias": false,
+              "dtype": "float32",
+              "_CLASS_": "olmo_core.nn.layer_norm.LayerNormConfig"
+            },
+            "backend": "flash_3",
+            "dtype": "float32",
+            "sliding_window": {
+              "pattern": [
+                4096,
+                4096,
+                4096,
+                -1
+              ],
+              "force_full_attention_on_first_layer": false,
+              "force_full_attention_on_last_layer": true,
+              "_CLASS_": "olmo_core.nn.attention.SlidingWindowAttentionConfig"
+            },
+            "use_head_qk_norm": false,
+            "rank": 512,
+            "q_rank": 512,
+            "k_rank": 512,
+            "v_rank": 512,
+            "o_rank": 512,
+            "q_nonlinearity": "identity",
+            "k_nonlinearity": "identity",
+            "v_nonlinearity": "identity",
+            "o_nonlinearity": "identity",
+            "rms_norm_learnable_weight": false,
+            "share_scope": "none",
+            "_CLASS_": "olmo_mose.attention.LowRankAttentionConfig",
+            "type": "attention"
+          },
+          "layer_norm": {
+            "name": "rms",
+            "eps": 1e-06,
+            "bias": false,
+            "dtype": "float32",
+            "_CLASS_": "olmo_core.nn.layer_norm.LayerNormConfig"
+          },
+          "feed_forward": {
+            "hidden_size": 2048,
+            "name": "default",
+            "bias": false,
+            "dtype": "float32",
+            "activation": "silu",
+            "r1": 0,
+            "r2": 1280,
+            "down_r1": 0,
+            "down_r2": 1280,
+            "control": "standard",
+            "control_scope": "none",
+            "rms_beta_scale": 4.0,
+            "gate_nonlinearity": "identity",
+            "up_nonlinearity": "identity",
+            "down_nonlinearity": "rms_norm",
+            "rms_norm_learnable_weight": false,
+            "share_gate_up_subspace": false,
+            "down_output_rotation": "none",
+            "down_rotation_groups": 32,
+            "down_rotation_a_max": 0.5,
+            "wide_residual": false,
+            "latent_residual": false,
+            "_CLASS_": "olmo_mose.residual_feed_forward.ResidualMoSESwiGLUConfig"
+          },
+          "name": "reordered_norm",
+          "_CLASS_": "olmo_core.nn.transformer.config.TransformerBlockConfig"
+        },
+        "lm_head": {
+          "name": "default",
+          "layer_norm": {
+            "name": "rms",
+            "eps": 1e-06,
+            "bias": false,
+            "dtype": "float32",
+            "_CLASS_": "olmo_core.nn.layer_norm.LayerNormConfig"
+          },
+          "bias": false,
+          "dtype": "float32",
+          "loss_implementation": "default",
+          "_CLASS_": "olmo_core.nn.lm_head.LMHeadConfig"
+        },
+        "name": "default",
+        "dtype": "float32",
+        "init_method": "normal",
+        "init_seed": 0,
+        "init_std": 0.02,
+        "tie_word_embeddings": false,
+        "_CLASS_": "olmo_core.nn.transformer.config.TransformerConfig"
+      },
+      "hf_structural_audit": {
+        "state_keys": 291,
+        "unique_parameters": 797050880,
+        "sharing_groups": 0,
+        "native_forward": "(input_ids: torch.Tensor, *, input_embeddings: Optional[torch.Tensor] = None, labels: Optional[torch.Tensor] = None, ignore_index: int = -100, loss_reduction: Literal['mean', 'sum', 'none'] = 'mean', z_loss_multiplier: Optional[float] = None, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, return_logits: Optional[bool] = None, logits_to_keep: Union[int, torch.Tensor] = 0, **kwargs) -> Union[torch.Tensor, olmo_core.nn.lm_head.LMOutputWithLoss]",
+        "hf_forward": "(input_ids=None, attention_mask=None, position_ids=None, past_key_values=None, inputs_embeds=None, labels=None, use_cache=None, output_attentions=None, output_hidden_states=None, return_dict=None, cache_position=None, logits_to_keep=0, **kwargs)",
+        "module_classes": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+          "olmo_mose.attention.LowRankAttention": 16,
+          "olmo_mose.attention.NonlinearLowRankProjection": 64,
+          "torch.nn.modules.linear.Linear": 224,
+          "olmo_core.nn.layer_norm.RMSNorm": 80,
+          "olmo_mose.residual_feed_forward.ResidualMoSESwiGLU": 16
+        },
+        "module_forward_signatures": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": "(self, x: torch.Tensor, *, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, **kwargs) -> torch.Tensor",
+          "olmo_mose.attention.LowRankAttention": "(self, x: torch.Tensor, cu_doc_lens: Optional[torch.Tensor] = None, cu_doc_lens_q: Optional[torch.Tensor] = None, cu_doc_lens_k: Optional[torch.Tensor] = None, max_doc_len: Optional[int] = None, max_doc_len_q: Optional[int] = None, max_doc_len_k: Optional[int] = None, local_k_slice: Optional[slice] = None, pos_sin: Optional[torch.Tensor] = None, pos_cos: Optional[torch.Tensor] = None, freqs_cis: Optional[torch.Tensor] = None, cache_leftpad: Optional[torch.Tensor] = None) -> torch.Tensor",
+          "olmo_mose.attention.NonlinearLowRankProjection": "(self, x: torch.Tensor) -> torch.Tensor",
+          "torch.nn.modules.linear.Linear": "(self, input: torch.Tensor) -> torch.Tensor",
+          "olmo_core.nn.layer_norm.RMSNorm": "(self, x: torch.Tensor) -> torch.Tensor",
+          "olmo_mose.residual_feed_forward.ResidualMoSESwiGLU": "(self, x: torch.Tensor) -> torch.Tensor"
+        },
+        "input_mapping": {
+          "input_ids": "input_ids",
+          "input_embeddings": "inputs_embeds",
+          "logits_to_keep": "logits_to_keep"
+        },
+        "label_contract": "Native labels are shifted; HF labels are unshifted (-100 ignored)",
+        "unsupported_native_inputs": [
+          "doc_lens",
+          "cu_doc_lens",
+          "max_doc_len",
+          "local_k_slice",
+          "pos_sin",
+          "pos_cos",
+          "freqs_cis",
+          "cache_leftpad",
+          "context_parallelism",
+          "z_loss_multiplier",
+          "loss_div_factor"
+        ],
+        "structural_check": "passed",
+        "numerical_check": "not_run"
+      },
+      "numerical_hf_validation": "not_run",
+      "seeds": {
+        "model": 0,
+        "runtime": 12536,
+        "data": 34521
+      },
+      "recipe": {
+        "global_batch_tokens": 2097152,
+        "sequence_length": 8192,
+        "microbatch_tokens": 32768,
+        "accumulation_at_8gpu": 8,
+        "tokens": 30000000000,
+        "muon_lr": 0.005,
+        "warmup_steps": 2000,
+        "decay_fraction": 0.2
+      }
+    },
+    {
+      "variant": "r1",
+      "width": 2048,
+      "rank": 1280,
+      "wide_residual": true,
+      "latent_residual": false,
+      "run_name": "olmo3-1b-ffn-residual-r1-m2048-r1280-unshared-linear-down-rms-fp8-30b",
+      "parameters": 797050880,
+      "model": {
+        "d_model": 2048,
+        "vocab_size": 100352,
+        "n_layers": 16,
+        "block": {
+          "sequence_mixer": {
+            "name": "default",
+            "n_heads": 16,
+            "bias": false,
+            "rope": {
+              "name": "default",
+              "theta": 500000,
+              "full_precision": true,
+              "no_global_rope": false,
+              "partial_rotary_factor": 1.0,
+              "_CLASS_": "olmo_core.nn.rope.RoPEConfig"
+            },
+            "qk_norm": {
+              "name": "rms",
+              "eps": 1e-06,
+              "bias": false,
+              "dtype": "float32",
+              "_CLASS_": "olmo_core.nn.layer_norm.LayerNormConfig"
+            },
+            "backend": "flash_3",
+            "dtype": "float32",
+            "sliding_window": {
+              "pattern": [
+                4096,
+                4096,
+                4096,
+                -1
+              ],
+              "force_full_attention_on_first_layer": false,
+              "force_full_attention_on_last_layer": true,
+              "_CLASS_": "olmo_core.nn.attention.SlidingWindowAttentionConfig"
+            },
+            "use_head_qk_norm": false,
+            "rank": 512,
+            "q_rank": 512,
+            "k_rank": 512,
+            "v_rank": 512,
+            "o_rank": 512,
+            "q_nonlinearity": "identity",
+            "k_nonlinearity": "identity",
+            "v_nonlinearity": "identity",
+            "o_nonlinearity": "identity",
+            "rms_norm_learnable_weight": false,
+            "share_scope": "none",
+            "_CLASS_": "olmo_mose.attention.LowRankAttentionConfig",
+            "type": "attention"
+          },
+          "layer_norm": {
+            "name": "rms",
+            "eps": 1e-06,
+            "bias": false,
+            "dtype": "float32",
+            "_CLASS_": "olmo_core.nn.layer_norm.LayerNormConfig"
+          },
+          "feed_forward": {
+            "hidden_size": 2048,
+            "name": "default",
+            "bias": false,
+            "dtype": "float32",
+            "activation": "silu",
+            "r1": 0,
+            "r2": 1280,
+            "down_r1": 0,
+            "down_r2": 1280,
+            "control": "standard",
+            "control_scope": "none",
+            "rms_beta_scale": 4.0,
+            "gate_nonlinearity": "identity",
+            "up_nonlinearity": "identity",
+            "down_nonlinearity": "rms_norm",
+            "rms_norm_learnable_weight": false,
+            "share_gate_up_subspace": false,
+            "down_output_rotation": "none",
+            "down_rotation_groups": 32,
+            "down_rotation_a_max": 0.5,
+            "wide_residual": true,
+            "latent_residual": false,
+            "_CLASS_": "olmo_mose.residual_feed_forward.ResidualMoSESwiGLUConfig"
+          },
+          "name": "reordered_norm",
+          "_CLASS_": "olmo_core.nn.transformer.config.TransformerBlockConfig"
+        },
+        "lm_head": {
+          "name": "default",
+          "layer_norm": {
+            "name": "rms",
+            "eps": 1e-06,
+            "bias": false,
+            "dtype": "float32",
+            "_CLASS_": "olmo_core.nn.layer_norm.LayerNormConfig"
+          },
+          "bias": false,
+          "dtype": "float32",
+          "loss_implementation": "default",
+          "_CLASS_": "olmo_core.nn.lm_head.LMHeadConfig"
+        },
+        "name": "default",
+        "dtype": "float32",
+        "init_method": "normal",
+        "init_seed": 0,
+        "init_std": 0.02,
+        "tie_word_embeddings": false,
+        "_CLASS_": "olmo_core.nn.transformer.config.TransformerConfig"
+      },
+      "hf_structural_audit": {
+        "state_keys": 291,
+        "unique_parameters": 797050880,
+        "sharing_groups": 0,
+        "native_forward": "(input_ids: torch.Tensor, *, input_embeddings: Optional[torch.Tensor] = None, labels: Optional[torch.Tensor] = None, ignore_index: int = -100, loss_reduction: Literal['mean', 'sum', 'none'] = 'mean', z_loss_multiplier: Optional[float] = None, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, return_logits: Optional[bool] = None, logits_to_keep: Union[int, torch.Tensor] = 0, **kwargs) -> Union[torch.Tensor, olmo_core.nn.lm_head.LMOutputWithLoss]",
+        "hf_forward": "(input_ids=None, attention_mask=None, position_ids=None, past_key_values=None, inputs_embeds=None, labels=None, use_cache=None, output_attentions=None, output_hidden_states=None, return_dict=None, cache_position=None, logits_to_keep=0, **kwargs)",
+        "module_classes": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+          "olmo_mose.attention.LowRankAttention": 16,
+          "olmo_mose.attention.NonlinearLowRankProjection": 64,
+          "torch.nn.modules.linear.Linear": 224,
+          "olmo_core.nn.layer_norm.RMSNorm": 80,
+          "olmo_mose.residual_feed_forward.ResidualMoSESwiGLU": 16
+        },
+        "module_forward_signatures": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": "(self, x: torch.Tensor, *, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, **kwargs) -> torch.Tensor",
+          "olmo_mose.attention.LowRankAttention": "(self, x: torch.Tensor, cu_doc_lens: Optional[torch.Tensor] = None, cu_doc_lens_q: Optional[torch.Tensor] = None, cu_doc_lens_k: Optional[torch.Tensor] = None, max_doc_len: Optional[int] = None, max_doc_len_q: Optional[int] = None, max_doc_len_k: Optional[int] = None, local_k_slice: Optional[slice] = None, pos_sin: Optional[torch.Tensor] = None, pos_cos: Optional[torch.Tensor] = None, freqs_cis: Optional[torch.Tensor] = None, cache_leftpad: Optional[torch.Tensor] = None) -> torch.Tensor",
+          "olmo_mose.attention.NonlinearLowRankProjection": "(self, x: torch.Tensor) -> torch.Tensor",
+          "torch.nn.modules.linear.Linear": "(self, input: torch.Tensor) -> torch.Tensor",
+          "olmo_core.nn.layer_norm.RMSNorm": "(self, x: torch.Tensor) -> torch.Tensor",
+          "olmo_mose.residual_feed_forward.ResidualMoSESwiGLU": "(self, x: torch.Tensor) -> torch.Tensor"
+        },
+        "input_mapping": {
+          "input_ids": "input_ids",
+          "input_embeddings": "inputs_embeds",
+          "logits_to_keep": "logits_to_keep"
+        },
+        "label_contract": "Native labels are shifted; HF labels are unshifted (-100 ignored)",
+        "unsupported_native_inputs": [
+          "doc_lens",
+          "cu_doc_lens",
+          "max_doc_len",
+          "local_k_slice",
+          "pos_sin",
+          "pos_cos",
+          "freqs_cis",
+          "cache_leftpad",
+          "context_parallelism",
+          "z_loss_multiplier",
+          "loss_div_factor"
+        ],
+        "structural_check": "passed",
+        "numerical_check": "not_run"
+      },
+      "numerical_hf_validation": "not_run",
+      "seeds": {
+        "model": 0,
+        "runtime": 12536,
+        "data": 34521
+      },
+      "recipe": {
+        "global_batch_tokens": 2097152,
+        "sequence_length": 8192,
+        "microbatch_tokens": 32768,
+        "accumulation_at_8gpu": 8,
+        "tokens": 30000000000,
+        "muon_lr": 0.005,
+        "warmup_steps": 2000,
+        "decay_fraction": 0.2
+      }
+    },
+    {
+      "variant": "r2",
+      "width": 2048,
+      "rank": 1280,
+      "wide_residual": false,
+      "latent_residual": true,
+      "run_name": "olmo3-1b-ffn-residual-r2-m2048-r1280-unshared-linear-down-rms-fp8-30b",
+      "parameters": 797050880,
+      "model": {
+        "d_model": 2048,
+        "vocab_size": 100352,
+        "n_layers": 16,
+        "block": {
+          "sequence_mixer": {
+            "name": "default",
+            "n_heads": 16,
+            "bias": false,
+            "rope": {
+              "name": "default",
+              "theta": 500000,
+              "full_precision": true,
+              "no_global_rope": false,
+              "partial_rotary_factor": 1.0,
+              "_CLASS_": "olmo_core.nn.rope.RoPEConfig"
+            },
+            "qk_norm": {
+              "name": "rms",
+              "eps": 1e-06,
+              "bias": false,
+              "dtype": "float32",
+              "_CLASS_": "olmo_core.nn.layer_norm.LayerNormConfig"
+            },
+            "backend": "flash_3",
+            "dtype": "float32",
+            "sliding_window": {
+              "pattern": [
+                4096,
+                4096,
+                4096,
+                -1
+              ],
+              "force_full_attention_on_first_layer": false,
+              "force_full_attention_on_last_layer": true,
+              "_CLASS_": "olmo_core.nn.attention.SlidingWindowAttentionConfig"
+            },
+            "use_head_qk_norm": false,
+            "rank": 512,
+            "q_rank": 512,
+            "k_rank": 512,
+            "v_rank": 512,
+            "o_rank": 512,
+            "q_nonlinearity": "identity",
+            "k_nonlinearity": "identity",
+            "v_nonlinearity": "identity",
+            "o_nonlinearity": "identity",
+            "rms_norm_learnable_weight": false,
+            "share_scope": "none",
+            "_CLASS_": "olmo_mose.attention.LowRankAttentionConfig",
+            "type": "attention"
+          },
+          "layer_norm": {
+            "name": "rms",
+            "eps": 1e-06,
+            "bias": false,
+            "dtype": "float32",
+            "_CLASS_": "olmo_core.nn.layer_norm.LayerNormConfig"
+          },
+          "feed_forward": {
+            "hidden_size": 2048,
+            "name": "default",
+            "bias": false,
+            "dtype": "float32",
+            "activation": "silu",
+            "r1": 0,
+            "r2": 1280,
+            "down_r1": 0,
+            "down_r2": 1280,
+            "control": "standard",
+            "control_scope": "none",
+            "rms_beta_scale": 4.0,
+            "gate_nonlinearity": "identity",
+            "up_nonlinearity": "identity",
+            "down_nonlinearity": "rms_norm",
+            "rms_norm_learnable_weight": false,
+            "share_gate_up_subspace": false,
+            "down_output_rotation": "none",
+            "down_rotation_groups": 32,
+            "down_rotation_a_max": 0.5,
+            "wide_residual": false,
+            "latent_residual": true,
+            "_CLASS_": "olmo_mose.residual_feed_forward.ResidualMoSESwiGLUConfig"
+          },
+          "name": "reordered_norm",
+          "_CLASS_": "olmo_core.nn.transformer.config.TransformerBlockConfig"
+        },
+        "lm_head": {
+          "name": "default",
+          "layer_norm": {
+            "name": "rms",
+            "eps": 1e-06,
+            "bias": false,
+            "dtype": "float32",
+            "_CLASS_": "olmo_core.nn.layer_norm.LayerNormConfig"
+          },
+          "bias": false,
+          "dtype": "float32",
+          "loss_implementation": "default",
+          "_CLASS_": "olmo_core.nn.lm_head.LMHeadConfig"
+        },
+        "name": "default",
+        "dtype": "float32",
+        "init_method": "normal",
+        "init_seed": 0,
+        "init_std": 0.02,
+        "tie_word_embeddings": false,
+        "_CLASS_": "olmo_core.nn.transformer.config.TransformerConfig"
+      },
+      "hf_structural_audit": {
+        "state_keys": 291,
+        "unique_parameters": 797050880,
+        "sharing_groups": 0,
+        "native_forward": "(input_ids: torch.Tensor, *, input_embeddings: Optional[torch.Tensor] = None, labels: Optional[torch.Tensor] = None, ignore_index: int = -100, loss_reduction: Literal['mean', 'sum', 'none'] = 'mean', z_loss_multiplier: Optional[float] = None, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, return_logits: Optional[bool] = None, logits_to_keep: Union[int, torch.Tensor] = 0, **kwargs) -> Union[torch.Tensor, olmo_core.nn.lm_head.LMOutputWithLoss]",
+        "hf_forward": "(input_ids=None, attention_mask=None, position_ids=None, past_key_values=None, inputs_embeds=None, labels=None, use_cache=None, output_attentions=None, output_hidden_states=None, return_dict=None, cache_position=None, logits_to_keep=0, **kwargs)",
+        "module_classes": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+          "olmo_mose.attention.LowRankAttention": 16,
+          "olmo_mose.attention.NonlinearLowRankProjection": 64,
+          "torch.nn.modules.linear.Linear": 224,
+          "olmo_core.nn.layer_norm.RMSNorm": 80,
+          "olmo_mose.residual_feed_forward.ResidualMoSESwiGLU": 16
+        },
+        "module_forward_signatures": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": "(self, x: torch.Tensor, *, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, **kwargs) -> torch.Tensor",
+          "olmo_mose.attention.LowRankAttention": "(self, x: torch.Tensor, cu_doc_lens: Optional[torch.Tensor] = None, cu_doc_lens_q: Optional[torch.Tensor] = None, cu_doc_lens_k: Optional[torch.Tensor] = None, max_doc_len: Optional[int] = None, max_doc_len_q: Optional[int] = None, max_doc_len_k: Optional[int] = None, local_k_slice: Optional[slice] = None, pos_sin: Optional[torch.Tensor] = None, pos_cos: Optional[torch.Tensor] = None, freqs_cis: Optional[torch.Tensor] = None, cache_leftpad: Optional[torch.Tensor] = None) -> torch.Tensor",
+          "olmo_mose.attention.NonlinearLowRankProjection": "(self, x: torch.Tensor) -> torch.Tensor",
+          "torch.nn.modules.linear.Linear": "(self, input: torch.Tensor) -> torch.Tensor",
+          "olmo_core.nn.layer_norm.RMSNorm": "(self, x: torch.Tensor) -> torch.Tensor",
+          "olmo_mose.residual_feed_forward.ResidualMoSESwiGLU": "(self, x: torch.Tensor) -> torch.Tensor"
+        },
+        "input_mapping": {
+          "input_ids": "input_ids",
+          "input_embeddings": "inputs_embeds",
+          "logits_to_keep": "logits_to_keep"
+        },
+        "label_contract": "Native labels are shifted; HF labels are unshifted (-100 ignored)",
+        "unsupported_native_inputs": [
+          "doc_lens",
+          "cu_doc_lens",
+          "max_doc_len",
+          "local_k_slice",
+          "pos_sin",
+          "pos_cos",
+          "freqs_cis",
+          "cache_leftpad",
+          "context_parallelism",
+          "z_loss_multiplier",
+          "loss_div_factor"
+        ],
+        "structural_check": "passed",
+        "numerical_check": "not_run"
+      },
+      "numerical_hf_validation": "not_run",
+      "seeds": {
+        "model": 0,
+        "runtime": 12536,
+        "data": 34521
+      },
+      "recipe": {
+        "global_batch_tokens": 2097152,
+        "sequence_length": 8192,
+        "microbatch_tokens": 32768,
+        "accumulation_at_8gpu": 8,
+        "tokens": 30000000000,
+        "muon_lr": 0.005,
+        "warmup_steps": 2000,
+        "decay_fraction": 0.2
+      }
+    },
+    {
+      "variant": "r3",
+      "width": 2048,
+      "rank": 1280,
+      "wide_residual": true,
+      "latent_residual": true,
+      "run_name": "olmo3-1b-ffn-residual-r3-m2048-r1280-unshared-linear-down-rms-fp8-30b",
+      "parameters": 797050880,
+      "model": {
+        "d_model": 2048,
+        "vocab_size": 100352,
+        "n_layers": 16,
+        "block": {
+          "sequence_mixer": {
+            "name": "default",
+            "n_heads": 16,
+            "bias": false,
+            "rope": {
+              "name": "default",
+              "theta": 500000,
+              "full_precision": true,
+              "no_global_rope": false,
+              "partial_rotary_factor": 1.0,
+              "_CLASS_": "olmo_core.nn.rope.RoPEConfig"
+            },
+            "qk_norm": {
+              "name": "rms",
+              "eps": 1e-06,
+              "bias": false,
+              "dtype": "float32",
+              "_CLASS_": "olmo_core.nn.layer_norm.LayerNormConfig"
+            },
+            "backend": "flash_3",
+            "dtype": "float32",
+            "sliding_window": {
+              "pattern": [
+                4096,
+                4096,
+                4096,
+                -1
+              ],
+              "force_full_attention_on_first_layer": false,
+              "force_full_attention_on_last_layer": true,
+              "_CLASS_": "olmo_core.nn.attention.SlidingWindowAttentionConfig"
+            },
+            "use_head_qk_norm": false,
+            "rank": 512,
+            "q_rank": 512,
+            "k_rank": 512,
+            "v_rank": 512,
+            "o_rank": 512,
+            "q_nonlinearity": "identity",
+            "k_nonlinearity": "identity",
+            "v_nonlinearity": "identity",
+            "o_nonlinearity": "identity",
+            "rms_norm_learnable_weight": false,
+            "share_scope": "none",
+            "_CLASS_": "olmo_mose.attention.LowRankAttentionConfig",
+            "type": "attention"
+          },
+          "layer_norm": {
+            "name": "rms",
+            "eps": 1e-06,
+            "bias": false,
+            "dtype": "float32",
+            "_CLASS_": "olmo_core.nn.layer_norm.LayerNormConfig"
+          },
+          "feed_forward": {
+            "hidden_size": 2048,
+            "name": "default",
+            "bias": false,
+            "dtype": "float32",
+            "activation": "silu",
+            "r1": 0,
+            "r2": 1280,
+            "down_r1": 0,
+            "down_r2": 1280,
+            "control": "standard",
+            "control_scope": "none",
+            "rms_beta_scale": 4.0,
+            "gate_nonlinearity": "identity",
+            "up_nonlinearity": "identity",
+            "down_nonlinearity": "rms_norm",
+            "rms_norm_learnable_weight": false,
+            "share_gate_up_subspace": false,
+            "down_output_rotation": "none",
+            "down_rotation_groups": 32,
+            "down_rotation_a_max": 0.5,
+            "wide_residual": true,
+            "latent_residual": true,
+            "_CLASS_": "olmo_mose.residual_feed_forward.ResidualMoSESwiGLUConfig"
+          },
+          "name": "reordered_norm",
+          "_CLASS_": "olmo_core.nn.transformer.config.TransformerBlockConfig"
+        },
+        "lm_head": {
+          "name": "default",
+          "layer_norm": {
+            "name": "rms",
+            "eps": 1e-06,
+            "bias": false,
+            "dtype": "float32",
+            "_CLASS_": "olmo_core.nn.layer_norm.LayerNormConfig"
+          },
+          "bias": false,
+          "dtype": "float32",
+          "loss_implementation": "default",
+          "_CLASS_": "olmo_core.nn.lm_head.LMHeadConfig"
+        },
+        "name": "default",
+        "dtype": "float32",
+        "init_method": "normal",
+        "init_seed": 0,
+        "init_std": 0.02,
+        "tie_word_embeddings": false,
+        "_CLASS_": "olmo_core.nn.transformer.config.TransformerConfig"
+      },
+      "hf_structural_audit": {
+        "state_keys": 291,
+        "unique_parameters": 797050880,
+        "sharing_groups": 0,
+        "native_forward": "(input_ids: torch.Tensor, *, input_embeddings: Optional[torch.Tensor] = None, labels: Optional[torch.Tensor] = None, ignore_index: int = -100, loss_reduction: Literal['mean', 'sum', 'none'] = 'mean', z_loss_multiplier: Optional[float] = None, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, return_logits: Optional[bool] = None, logits_to_keep: Union[int, torch.Tensor] = 0, **kwargs) -> Union[torch.Tensor, olmo_core.nn.lm_head.LMOutputWithLoss]",
+        "hf_forward": "(input_ids=None, attention_mask=None, position_ids=None, past_key_values=None, inputs_embeds=None, labels=None, use_cache=None, output_attentions=None, output_hidden_states=None, return_dict=None, cache_position=None, logits_to_keep=0, **kwargs)",
+        "module_classes": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+          "olmo_mose.attention.LowRankAttention": 16,
+          "olmo_mose.attention.NonlinearLowRankProjection": 64,
+          "torch.nn.modules.linear.Linear": 224,
+          "olmo_core.nn.layer_norm.RMSNorm": 80,
+          "olmo_mose.residual_feed_forward.ResidualMoSESwiGLU": 16
+        },
+        "module_forward_signatures": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": "(self, x: torch.Tensor, *, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, **kwargs) -> torch.Tensor",
+          "olmo_mose.attention.LowRankAttention": "(self, x: torch.Tensor, cu_doc_lens: Optional[torch.Tensor] = None, cu_doc_lens_q: Optional[torch.Tensor] = None, cu_doc_lens_k: Optional[torch.Tensor] = None, max_doc_len: Optional[int] = None, max_doc_len_q: Optional[int] = None, max_doc_len_k: Optional[int] = None, local_k_slice: Optional[slice] = None, pos_sin: Optional[torch.Tensor] = None, pos_cos: Optional[torch.Tensor] = None, freqs_cis: Optional[torch.Tensor] = None, cache_leftpad: Optional[torch.Tensor] = None) -> torch.Tensor",
+          "olmo_mose.attention.NonlinearLowRankProjection": "(self, x: torch.Tensor) -> torch.Tensor",
+          "torch.nn.modules.linear.Linear": "(self, input: torch.Tensor) -> torch.Tensor",
+          "olmo_core.nn.layer_norm.RMSNorm": "(self, x: torch.Tensor) -> torch.Tensor",
+          "olmo_mose.residual_feed_forward.ResidualMoSESwiGLU": "(self, x: torch.Tensor) -> torch.Tensor"
+        },
+        "input_mapping": {
+          "input_ids": "input_ids",
+          "input_embeddings": "inputs_embeds",
+          "logits_to_keep": "logits_to_keep"
+        },
+        "label_contract": "Native labels are shifted; HF labels are unshifted (-100 ignored)",
+        "unsupported_native_inputs": [
+          "doc_lens",
+          "cu_doc_lens",
+          "max_doc_len",
+          "local_k_slice",
+          "pos_sin",
+          "pos_cos",
+          "freqs_cis",
+          "cache_leftpad",
+          "context_parallelism",
+          "z_loss_multiplier",
+          "loss_div_factor"
+        ],
+        "structural_check": "passed",
+        "numerical_check": "not_run"
+      },
+      "numerical_hf_validation": "not_run",
+      "seeds": {
+        "model": 0,
+        "runtime": 12536,
+        "data": 34521
+      },
+      "recipe": {
+        "global_batch_tokens": 2097152,
+        "sequence_length": 8192,
+        "microbatch_tokens": 32768,
+        "accumulation_at_8gpu": 8,
+        "tokens": 30000000000,
+        "muon_lr": 0.005,
+        "warmup_steps": 2000,
+        "decay_fraction": 0.2
+      }
+    }
+  ]
+}

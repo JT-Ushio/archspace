@@ -1,0 +1,50 @@
+[
+  {
+    "variant": "du",
+    "job_id": "xtuner-dense-ud-r1632-rms-1x8-p1-1008-2016-482868",
+    "namespace": "ailab-llmarchitecture",
+    "status": "Running",
+    "counts_dict": {
+      "active": 1,
+      "succeeded": 0,
+      "failed": 0,
+      "created_failed": 0,
+      "pending": 0,
+      "stopped": 0
+    },
+    "scheduler_output": "rrjob get --namespace=ailab-llmarchitecture xtuner-dense-ud-r1632-rms \r-\r-1x8-p1-1008-2016-482868rjob\r\r\n10-09 11:43:06 [INFO] rjob xtuner-dense-ud-r1632-rms-1x8-p1-1008-2016-482868 (showname=xtuner-dense-ud-r1632-rms-1x8-p1-1008-2016): Running\r\n10-09 11:43:06 [INFO]   |- task t0: 1 replicas {'active': 1, 'succeeded': 0, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}\r\n10-09 11:43:06 [INFO]        |- replica xtuner-dense-ud-r1632-rms-1x8-p1-1008-2016-482868-cfcd2: RUNNING, gpu-lg-cmc-h-h200-1141.host.h.pjlab.org.cn, 10.102.238.21\r\n#                                                                               \r \r\r(MoSE) ➜  ~ ",
+    "logs": "rrjob logs job --namespace=ailab-llmarchitecture xtuner-dense-ud-r163 \r2\r2-rms-1x8-p1-1008-2016-482868 --tail-lines200rjob\r\r\nusage: rjob logs\r\nrjob: error: unrecognized arguments: --tail-lines200\r\n#                                                                               \r \r\r(MoSE) ➜  ~ "
+  },
+  {
+    "variant": "dg",
+    "job_id": "xtuner-dense-gd-r1632-rms-1x8-p1-1008-2017-3-25bd7",
+    "namespace": "ailab-llmarchitecture",
+    "status": "Running",
+    "counts_dict": {
+      "active": 1,
+      "succeeded": 0,
+      "failed": 0,
+      "created_failed": 0,
+      "pending": 0,
+      "stopped": 0
+    },
+    "scheduler_output": "rrjob get --namespace=ailab-llmarchitecture xtuner-dense-gd-r1632-rms \r-\r-1x8-p1-1008-2017-3-25bd7rjob\r\r\n10-09 11:43:19 [INFO] rjob xtuner-dense-gd-r1632-rms-1x8-p1-1008-2017-3-25bd7 (showname=xtuner-dense-gd-r1632-rms-1x8-p1-1008-2017): Running\r\n10-09 11:43:19 [INFO]   |- task t0: 1 replicas {'active': 1, 'succeeded': 0, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}\r\n10-09 11:43:19 [INFO]        |- replica xtuner-dense-gd-r1632-rms-1x8-p1-1008-2017-3-25bd7-cfcd2: RUNNING, gpu-lg-cmc-h-h200-0030.host.h.pjlab.org.cn, 10.102.214.22\r\n#                                                                               \r \r\r(MoSE) ➜  ~ ",
+    "logs": "rrjob logs job --namespace=ailab-llmarchitecture xtuner-dense-gd-r163 \r2\r2-rms-1x8-p1-1008-2017-3-25bd7 --tail-lines200rjob\r\r\nusage: rjob logs\r\nrjob: error: unrecognized arguments: --tail-lines200\r\n#                                                                               \r \r\r(MoSE) ➜  ~ "
+  },
+  {
+    "variant": "dug",
+    "job_id": "xtuner-dense-ugd-r1632-rms-1x8-p1-1008-2020-9e8f7",
+    "namespace": "ailab-llmarchitecture",
+    "status": "Running",
+    "counts_dict": {
+      "active": 1,
+      "succeeded": 0,
+      "failed": 0,
+      "created_failed": 0,
+      "pending": 0,
+      "stopped": 0
+    },
+    "scheduler_output": "rrjob get --namespace=ailab-llmarchitecture xtuner-dense-ugd-r1632-rm \rs\rs-1x8-p1-1008-2020-9e8f7rjob\r\r\n10-09 11:43:31 [INFO] rjob xtuner-dense-ugd-r1632-rms-1x8-p1-1008-2020-9e8f7 (showname=xtuner-dense-ugd-r1632-rms-1x8-p1-1008-2020): Running\r\n10-09 11:43:31 [INFO]   |- task t0: 1 replicas {'active': 1, 'succeeded': 0, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}\r\n10-09 11:43:31 [INFO]        |- replica xtuner-dense-ugd-r1632-rms-1x8-p1-1008-2020-9e8f7-cfcd2: RUNNING, gpu-lg-cmc-h-h200-0079.host.h.pjlab.org.cn, 10.102.214.47\r\n#                                                                               \r \r\r(MoSE) ➜  ~ ",
+    "logs": "rrjob logs job --namespace=ailab-llmarchitecture xtuner-dense-ugd-r16 \r3\r32-rms-1x8-p1-1008-2020-9e8f7 --tail-lines200rjob\r\r\nusage: rjob logs\r\nrjob: error: unrecognized arguments: --tail-lines200\r\n#                                                                               \r \r\r(MoSE) ➜  ~ "
+  }
+]

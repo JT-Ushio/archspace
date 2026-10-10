@@ -1,0 +1,694 @@
+{
+  "num_params": 797050880,
+  "checkpoint_step": 14306,
+  "train_tail_start": 13307,
+  "common_excluded_train_steps": [],
+  "n_initialization_seeds": 2,
+  "data_seed": 34521,
+  "original_seed12536_included": false,
+  "primary_metric": "mean_tail1000_train_ce",
+  "summary_by_config": {
+    "c0": {
+      "mean_tail1000_train_ce": 2.4794316829442975,
+      "mean_corrected_final_macro_ce": 2.7406392530961474
+    },
+    "c2": {
+      "mean_tail1000_train_ce": 2.4757672078609465,
+      "mean_corrected_final_macro_ce": 2.73327957500111
+    },
+    "c6": {
+      "mean_tail1000_train_ce": 2.475344465136528,
+      "mean_corrected_final_macro_ce": 2.7345840605822476
+    }
+  },
+  "train_best_by_two_seed_mean": "c6",
+  "validation_best_by_two_seed_mean": "c2",
+  "paired_contrasts": {
+    "c2_minus_c0": {
+      "n_pairs": 2,
+      "pairs": [
+        {
+          "init_seed": 12537,
+          "data_seed": 34521,
+          "train": {
+            "c0": 2.4794959671497345,
+            "c2": 2.475723317861557,
+            "difference": -0.003772649288177554
+          },
+          "validation": {
+            "c0": 2.74260582707145,
+            "c2": 2.7330860658125444,
+            "difference": -0.009519761258905746
+          }
+        },
+        {
+          "init_seed": 12538,
+          "data_seed": 34521,
+          "train": {
+            "c0": 2.479367398738861,
+            "c2": 2.4758110978603365,
+            "difference": -0.003556300878524432
+          },
+          "validation": {
+            "c0": 2.7386726791208442,
+            "c2": 2.7334730841896753,
+            "difference": -0.005199594931168949
+          }
+        }
+      ],
+      "mean_train_difference": -0.003664475083350993,
+      "mean_validation_difference": -0.0073596780950373475
+    },
+    "c6_minus_c2": {
+      "n_pairs": 2,
+      "pairs": [
+        {
+          "init_seed": 12537,
+          "data_seed": 34521,
+          "train": {
+            "c2": 2.475723317861557,
+            "c6": 2.4755913393497466,
+            "difference": -0.00013197851181034892
+          },
+          "validation": {
+            "c2": 2.7330860658125444,
+            "c6": 2.7345668619329278,
+            "difference": 0.0014807961203833209
+          }
+        },
+        {
+          "init_seed": 12538,
+          "data_seed": 34521,
+          "train": {
+            "c2": 2.4758110978603365,
+            "c6": 2.4750975909233093,
+            "difference": -0.0007135069370272085
+          },
+          "validation": {
+            "c2": 2.7334730841896753,
+            "c6": 2.7346012592315674,
+            "difference": 0.00112817504189211
+          }
+        }
+      ],
+      "mean_train_difference": -0.0004227427244187787,
+      "mean_validation_difference": 0.0013044855811377154
+    },
+    "c6_minus_c0": {
+      "n_pairs": 2,
+      "pairs": [
+        {
+          "init_seed": 12537,
+          "data_seed": 34521,
+          "train": {
+            "c0": 2.4794959671497345,
+            "c6": 2.4755913393497466,
+            "difference": -0.003904627799987903
+          },
+          "validation": {
+            "c0": 2.74260582707145,
+            "c6": 2.7345668619329278,
+            "difference": -0.008038965138522425
+          }
+        },
+        {
+          "init_seed": 12538,
+          "data_seed": 34521,
+          "train": {
+            "c0": 2.479367398738861,
+            "c6": 2.4750975909233093,
+            "difference": -0.004269807815551641
+          },
+          "validation": {
+            "c0": 2.7386726791208442,
+            "c6": 2.7346012592315674,
+            "difference": -0.004071419889276839
+          }
+        }
+      ],
+      "mean_train_difference": -0.004087217807769772,
+      "mean_validation_difference": -0.006055192513899632
+    }
+  },
+  "validation_runs": {
+    "c2s2": {
+      "case": "c2s2",
+      "source": {
+        "source_job_id": "mose-r512-c2s2-r1-p1-1x8-pool-1006-2338-833a-1f47a",
+        "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c2-seed12537-data34521-fp8-30b/stage1/step14306",
+        "completion_proof": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/completion_c2s2.log",
+        "config_path": "cfps/BS256_Seq8K_30B_WSD_FP8/Rank512_Seed_Replication/c2s2.py",
+        "num_params": 797050880,
+        "init_seed": 12537,
+        "data_seed": 34521,
+        "training_allocation": {
+          "partition": "pool",
+          "nodes": 1,
+          "gpus_per_node": 8,
+          "priority": 1
+        }
+      },
+      "world_size": 8,
+      "checkpoint_step": 14306,
+      "rows": {
+        "c4_en-validation": {
+          "corrected_ce": 3.062243938446045,
+          "legacy_ce_same_forward": 3.0554182529449463,
+          "corrected_scored_tokens": 938695,
+          "legacy_selected_tokens": 940792
+        },
+        "dolma_books-validation": {
+          "corrected_ce": 2.968010663986206,
+          "legacy_ce_same_forward": 2.9676482677459717,
+          "corrected_scored_tokens": 32764,
+          "legacy_selected_tokens": 32768
+        },
+        "dolma_common-crawl-validation": {
+          "corrected_ce": 3.1944220066070557,
+          "legacy_ce_same_forward": 3.188864231109619,
+          "corrected_scored_tokens": 456725,
+          "legacy_selected_tokens": 457521
+        },
+        "dolma_pes2o-validation": {
+          "corrected_ce": 2.219275951385498,
+          "legacy_ce_same_forward": 2.218228816986084,
+          "corrected_scored_tokens": 449056,
+          "legacy_selected_tokens": 449268
+        },
+        "dolma_reddit-validation": {
+          "corrected_ce": 3.380451202392578,
+          "legacy_ce_same_forward": 3.364225149154663,
+          "corrected_scored_tokens": 479565,
+          "legacy_selected_tokens": 481878
+        },
+        "dolma_stack-validation": {
+          "corrected_ce": 1.3660407066345215,
+          "legacy_ce_same_forward": 1.3645402193069458,
+          "corrected_scored_tokens": 366487,
+          "legacy_selected_tokens": 366890
+        },
+        "dolma_wiki-validation": {
+          "corrected_ce": 2.7083747386932373,
+          "legacy_ce_same_forward": 2.7035744190216064,
+          "corrected_scored_tokens": 487185,
+          "legacy_selected_tokens": 488050
+        },
+        "ice-validation": {
+          "corrected_ce": 3.0332226753234863,
+          "legacy_ce_same_forward": 3.0322165489196777,
+          "corrected_scored_tokens": 877279,
+          "legacy_selected_tokens": 877570
+        },
+        "m2d2_s2orc-validation": {
+          "corrected_ce": 3.192641496658325,
+          "legacy_ce_same_forward": 3.15743088722229,
+          "corrected_scored_tokens": 977164,
+          "legacy_selected_tokens": 988061
+        },
+        "pile-validation": {
+          "corrected_ce": 2.3070099353790283,
+          "legacy_ce_same_forward": 2.304804801940918,
+          "corrected_scored_tokens": 584307,
+          "legacy_selected_tokens": 584866
+        },
+        "wikitext_103-validation": {
+          "corrected_ce": 2.632253408432007,
+          "legacy_ce_same_forward": 2.6315643787384033,
+          "corrected_scored_tokens": 225316,
+          "legacy_selected_tokens": 225375
+        }
+      },
+      "corrected_macro_ce": 2.7330860658125444,
+      "legacy_macro_ce_same_forward": 2.726228724826466,
+      "scope": "Final checkpoint, same forward/data for legacy and corrected masks; no training",
+      "comparison_to_old_step14000_metrics": "Different checkpoint step; do not attribute that delta only to masks"
+    },
+    "c2s3": {
+      "case": "c2s3",
+      "source": {
+        "source_job_id": "mose-r512-c2s3-r1-p1-1x8-pool-1006-2338-d226-b5503",
+        "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c2-seed12538-data34521-fp8-30b/stage1/step14306",
+        "completion_proof": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/completion_c2s3.log",
+        "config_path": "cfps/BS256_Seq8K_30B_WSD_FP8/Rank512_Seed_Replication/c2s3.py",
+        "num_params": 797050880,
+        "init_seed": 12538,
+        "data_seed": 34521,
+        "training_allocation": {
+          "partition": "pool",
+          "nodes": 1,
+          "gpus_per_node": 8,
+          "priority": 1
+        }
+      },
+      "world_size": 8,
+      "checkpoint_step": 14306,
+      "rows": {
+        "c4_en-validation": {
+          "corrected_ce": 3.0631697177886963,
+          "legacy_ce_same_forward": 3.0563418865203857,
+          "corrected_scored_tokens": 938695,
+          "legacy_selected_tokens": 940792
+        },
+        "dolma_books-validation": {
+          "corrected_ce": 2.967603921890259,
+          "legacy_ce_same_forward": 2.9672417640686035,
+          "corrected_scored_tokens": 32764,
+          "legacy_selected_tokens": 32768
+        },
+        "dolma_common-crawl-validation": {
+          "corrected_ce": 3.1964666843414307,
+          "legacy_ce_same_forward": 3.1909053325653076,
+          "corrected_scored_tokens": 456725,
+          "legacy_selected_tokens": 457521
+        },
+        "dolma_pes2o-validation": {
+          "corrected_ce": 2.218987226486206,
+          "legacy_ce_same_forward": 2.217940092086792,
+          "corrected_scored_tokens": 449056,
+          "legacy_selected_tokens": 449268
+        },
+        "dolma_reddit-validation": {
+          "corrected_ce": 3.3800172805786133,
+          "legacy_ce_same_forward": 3.36379337310791,
+          "corrected_scored_tokens": 479565,
+          "legacy_selected_tokens": 481878
+        },
+        "dolma_stack-validation": {
+          "corrected_ce": 1.3656535148620605,
+          "legacy_ce_same_forward": 1.3641533851623535,
+          "corrected_scored_tokens": 366487,
+          "legacy_selected_tokens": 366890
+        },
+        "dolma_wiki-validation": {
+          "corrected_ce": 2.708272695541382,
+          "legacy_ce_same_forward": 2.703472852706909,
+          "corrected_scored_tokens": 487185,
+          "legacy_selected_tokens": 488050
+        },
+        "ice-validation": {
+          "corrected_ce": 3.0303869247436523,
+          "legacy_ce_same_forward": 3.0293819904327393,
+          "corrected_scored_tokens": 877279,
+          "legacy_selected_tokens": 877570
+        },
+        "m2d2_s2orc-validation": {
+          "corrected_ce": 3.1943960189819336,
+          "legacy_ce_same_forward": 3.159166097640991,
+          "corrected_scored_tokens": 977164,
+          "legacy_selected_tokens": 988061
+        },
+        "pile-validation": {
+          "corrected_ce": 2.3066344261169434,
+          "legacy_ce_same_forward": 2.304429769515991,
+          "corrected_scored_tokens": 584307,
+          "legacy_selected_tokens": 584866
+        },
+        "wikitext_103-validation": {
+          "corrected_ce": 2.636615514755249,
+          "legacy_ce_same_forward": 2.63592529296875,
+          "corrected_scored_tokens": 225316,
+          "legacy_selected_tokens": 225375
+        }
+      },
+      "corrected_macro_ce": 2.7334730841896753,
+      "legacy_macro_ce_same_forward": 2.7266138033433394,
+      "scope": "Final checkpoint, same forward/data for legacy and corrected masks; no training",
+      "comparison_to_old_step14000_metrics": "Different checkpoint step; do not attribute that delta only to masks"
+    },
+    "c0s2": {
+      "case": "c0s2",
+      "source": {
+        "source_job_id": "mose-r512-c0s2-r1-p1-1x8-pool-1006-2106-ea9c-f2516",
+        "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c0-seed12537-data34521-fp8-30b/stage1/step14306",
+        "completion_proof": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/completion_c0s2.log",
+        "config_path": "cfps/BS256_Seq8K_30B_WSD_FP8/Rank512_Seed_Replication/c0s2.py",
+        "num_params": 797050880,
+        "init_seed": 12537,
+        "data_seed": 34521,
+        "training_allocation": {
+          "partition": "pool",
+          "nodes": 1,
+          "gpus_per_node": 8,
+          "priority": 1
+        }
+      },
+      "world_size": 8,
+      "checkpoint_step": 14306,
+      "rows": {
+        "c4_en-validation": {
+          "corrected_ce": 3.066790819168091,
+          "legacy_ce_same_forward": 3.05995512008667,
+          "corrected_scored_tokens": 938695,
+          "legacy_selected_tokens": 940792
+        },
+        "dolma_books-validation": {
+          "corrected_ce": 2.9729862213134766,
+          "legacy_ce_same_forward": 2.972623586654663,
+          "corrected_scored_tokens": 32764,
+          "legacy_selected_tokens": 32768
+        },
+        "dolma_common-crawl-validation": {
+          "corrected_ce": 3.198993682861328,
+          "legacy_ce_same_forward": 3.1934280395507812,
+          "corrected_scored_tokens": 456725,
+          "legacy_selected_tokens": 457521
+        },
+        "dolma_pes2o-validation": {
+          "corrected_ce": 2.219346284866333,
+          "legacy_ce_same_forward": 2.21829891204834,
+          "corrected_scored_tokens": 449056,
+          "legacy_selected_tokens": 449268
+        },
+        "dolma_reddit-validation": {
+          "corrected_ce": 3.3854448795318604,
+          "legacy_ce_same_forward": 3.369194746017456,
+          "corrected_scored_tokens": 479565,
+          "legacy_selected_tokens": 481878
+        },
+        "dolma_stack-validation": {
+          "corrected_ce": 1.3701833486557007,
+          "legacy_ce_same_forward": 1.368678331375122,
+          "corrected_scored_tokens": 366487,
+          "legacy_selected_tokens": 366890
+        },
+        "dolma_wiki-validation": {
+          "corrected_ce": 2.716944932937622,
+          "legacy_ce_same_forward": 2.712129592895508,
+          "corrected_scored_tokens": 487185,
+          "legacy_selected_tokens": 488050
+        },
+        "ice-validation": {
+          "corrected_ce": 3.083200454711914,
+          "legacy_ce_same_forward": 3.0821781158447266,
+          "corrected_scored_tokens": 877279,
+          "legacy_selected_tokens": 877570
+        },
+        "m2d2_s2orc-validation": {
+          "corrected_ce": 3.2016820907592773,
+          "legacy_ce_same_forward": 3.1663718223571777,
+          "corrected_scored_tokens": 977164,
+          "legacy_selected_tokens": 988061
+        },
+        "pile-validation": {
+          "corrected_ce": 2.3101418018341064,
+          "legacy_ce_same_forward": 2.307933807373047,
+          "corrected_scored_tokens": 584307,
+          "legacy_selected_tokens": 584866
+        },
+        "wikitext_103-validation": {
+          "corrected_ce": 2.6429495811462402,
+          "legacy_ce_same_forward": 2.6422576904296875,
+          "corrected_scored_tokens": 225316,
+          "legacy_selected_tokens": 225375
+        }
+      },
+      "corrected_macro_ce": 2.74260582707145,
+      "legacy_macro_ce_same_forward": 2.7357317967848345,
+      "scope": "Final checkpoint, same forward/data for legacy and corrected masks; no training",
+      "comparison_to_old_step14000_metrics": "Different checkpoint step; do not attribute that delta only to masks"
+    },
+    "c6s2": {
+      "case": "c6s2",
+      "source": {
+        "source_job_id": "mose-r512-c6s2-r1-p1-1x8-pool-1006-2107-3d78-52e71",
+        "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c6-seed12537-data34521-fp8-30b/stage1/step14306",
+        "completion_proof": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/completion_c6s2.log",
+        "config_path": "cfps/BS256_Seq8K_30B_WSD_FP8/Rank512_Seed_Replication/c6s2.py",
+        "num_params": 797050880,
+        "init_seed": 12537,
+        "data_seed": 34521,
+        "training_allocation": {
+          "partition": "pool",
+          "nodes": 1,
+          "gpus_per_node": 8,
+          "priority": 1
+        }
+      },
+      "world_size": 8,
+      "checkpoint_step": 14306,
+      "rows": {
+        "c4_en-validation": {
+          "corrected_ce": 3.06233549118042,
+          "legacy_ce_same_forward": 3.055509567260742,
+          "corrected_scored_tokens": 938695,
+          "legacy_selected_tokens": 940792
+        },
+        "dolma_books-validation": {
+          "corrected_ce": 2.9684014320373535,
+          "legacy_ce_same_forward": 2.968039035797119,
+          "corrected_scored_tokens": 32764,
+          "legacy_selected_tokens": 32768
+        },
+        "dolma_common-crawl-validation": {
+          "corrected_ce": 3.19484281539917,
+          "legacy_ce_same_forward": 3.189284563064575,
+          "corrected_scored_tokens": 456725,
+          "legacy_selected_tokens": 457521
+        },
+        "dolma_pes2o-validation": {
+          "corrected_ce": 2.218430995941162,
+          "legacy_ce_same_forward": 2.217384099960327,
+          "corrected_scored_tokens": 449056,
+          "legacy_selected_tokens": 449268
+        },
+        "dolma_reddit-validation": {
+          "corrected_ce": 3.3795289993286133,
+          "legacy_ce_same_forward": 3.363307476043701,
+          "corrected_scored_tokens": 479565,
+          "legacy_selected_tokens": 481878
+        },
+        "dolma_stack-validation": {
+          "corrected_ce": 1.3671722412109375,
+          "legacy_ce_same_forward": 1.3656704425811768,
+          "corrected_scored_tokens": 366487,
+          "legacy_selected_tokens": 366890
+        },
+        "dolma_wiki-validation": {
+          "corrected_ce": 2.710261106491089,
+          "legacy_ce_same_forward": 2.7054574489593506,
+          "corrected_scored_tokens": 487185,
+          "legacy_selected_tokens": 488050
+        },
+        "ice-validation": {
+          "corrected_ce": 3.03875732421875,
+          "legacy_ce_same_forward": 3.037749767303467,
+          "corrected_scored_tokens": 877279,
+          "legacy_selected_tokens": 877570
+        },
+        "m2d2_s2orc-validation": {
+          "corrected_ce": 3.191298484802246,
+          "legacy_ce_same_forward": 3.1561026573181152,
+          "corrected_scored_tokens": 977164,
+          "legacy_selected_tokens": 988061
+        },
+        "pile-validation": {
+          "corrected_ce": 2.308161735534668,
+          "legacy_ce_same_forward": 2.305955648422241,
+          "corrected_scored_tokens": 584307,
+          "legacy_selected_tokens": 584866
+        },
+        "wikitext_103-validation": {
+          "corrected_ce": 2.641044855117798,
+          "legacy_ce_same_forward": 2.6403536796569824,
+          "corrected_scored_tokens": 225316,
+          "legacy_selected_tokens": 225375
+        }
+      },
+      "corrected_macro_ce": 2.7345668619329278,
+      "legacy_macro_ce_same_forward": 2.727710398760709,
+      "scope": "Final checkpoint, same forward/data for legacy and corrected masks; no training",
+      "comparison_to_old_step14000_metrics": "Different checkpoint step; do not attribute that delta only to masks"
+    },
+    "c0s3": {
+      "case": "c0s3",
+      "source": {
+        "source_job_id": "mose-r512-c0s3-r1-p1-1x8-pool-1006-2107-2f04-80461",
+        "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c0-seed12538-data34521-fp8-30b/stage1/step14306",
+        "completion_proof": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/completion_c0s3.log",
+        "config_path": "cfps/BS256_Seq8K_30B_WSD_FP8/Rank512_Seed_Replication/c0s3.py",
+        "num_params": 797050880,
+        "init_seed": 12538,
+        "data_seed": 34521,
+        "training_allocation": {
+          "partition": "pool",
+          "nodes": 1,
+          "gpus_per_node": 8,
+          "priority": 1
+        }
+      },
+      "world_size": 8,
+      "checkpoint_step": 14306,
+      "rows": {
+        "c4_en-validation": {
+          "corrected_ce": 3.0662426948547363,
+          "legacy_ce_same_forward": 3.059408187866211,
+          "corrected_scored_tokens": 938695,
+          "legacy_selected_tokens": 940792
+        },
+        "dolma_books-validation": {
+          "corrected_ce": 2.9709384441375732,
+          "legacy_ce_same_forward": 2.9705758094787598,
+          "corrected_scored_tokens": 32764,
+          "legacy_selected_tokens": 32768
+        },
+        "dolma_common-crawl-validation": {
+          "corrected_ce": 3.1995365619659424,
+          "legacy_ce_same_forward": 3.193969964981079,
+          "corrected_scored_tokens": 456725,
+          "legacy_selected_tokens": 457521
+        },
+        "dolma_pes2o-validation": {
+          "corrected_ce": 2.218888282775879,
+          "legacy_ce_same_forward": 2.217841386795044,
+          "corrected_scored_tokens": 449056,
+          "legacy_selected_tokens": 449268
+        },
+        "dolma_reddit-validation": {
+          "corrected_ce": 3.3864102363586426,
+          "legacy_ce_same_forward": 3.3701555728912354,
+          "corrected_scored_tokens": 479565,
+          "legacy_selected_tokens": 481878
+        },
+        "dolma_stack-validation": {
+          "corrected_ce": 1.369827151298523,
+          "legacy_ce_same_forward": 1.368322491645813,
+          "corrected_scored_tokens": 366487,
+          "legacy_selected_tokens": 366890
+        },
+        "dolma_wiki-validation": {
+          "corrected_ce": 2.716196060180664,
+          "legacy_ce_same_forward": 2.7113819122314453,
+          "corrected_scored_tokens": 487185,
+          "legacy_selected_tokens": 488050
+        },
+        "ice-validation": {
+          "corrected_ce": 3.045759677886963,
+          "legacy_ce_same_forward": 3.0447497367858887,
+          "corrected_scored_tokens": 877279,
+          "legacy_selected_tokens": 877570
+        },
+        "m2d2_s2orc-validation": {
+          "corrected_ce": 3.2021327018737793,
+          "legacy_ce_same_forward": 3.1668174266815186,
+          "corrected_scored_tokens": 977164,
+          "legacy_selected_tokens": 988061
+        },
+        "pile-validation": {
+          "corrected_ce": 2.310225486755371,
+          "legacy_ce_same_forward": 2.3080172538757324,
+          "corrected_scored_tokens": 584307,
+          "legacy_selected_tokens": 584866
+        },
+        "wikitext_103-validation": {
+          "corrected_ce": 2.639242172241211,
+          "legacy_ce_same_forward": 2.6385512351989746,
+          "corrected_scored_tokens": 225316,
+          "legacy_selected_tokens": 225375
+        }
+      },
+      "corrected_macro_ce": 2.7386726791208442,
+      "legacy_macro_ce_same_forward": 2.7317991798574273,
+      "scope": "Final checkpoint, same forward/data for legacy and corrected masks; no training",
+      "comparison_to_old_step14000_metrics": "Different checkpoint step; do not attribute that delta only to masks"
+    },
+    "c6s3": {
+      "case": "c6s3",
+      "source": {
+        "source_job_id": "mose-r512-c6s3-r1-p1-1x8-pool-1006-2108-31a7-fc86e",
+        "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c6-seed12538-data34521-fp8-30b/stage1/step14306",
+        "completion_proof": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/completion_c6s3.log",
+        "config_path": "cfps/BS256_Seq8K_30B_WSD_FP8/Rank512_Seed_Replication/c6s3.py",
+        "num_params": 797050880,
+        "init_seed": 12538,
+        "data_seed": 34521,
+        "training_allocation": {
+          "partition": "pool",
+          "nodes": 1,
+          "gpus_per_node": 8,
+          "priority": 1
+        }
+      },
+      "world_size": 8,
+      "checkpoint_step": 14306,
+      "rows": {
+        "c4_en-validation": {
+          "corrected_ce": 3.0616002082824707,
+          "legacy_ce_same_forward": 3.0547759532928467,
+          "corrected_scored_tokens": 938695,
+          "legacy_selected_tokens": 940792
+        },
+        "dolma_books-validation": {
+          "corrected_ce": 2.966379404067993,
+          "legacy_ce_same_forward": 2.966017246246338,
+          "corrected_scored_tokens": 32764,
+          "legacy_selected_tokens": 32768
+        },
+        "dolma_common-crawl-validation": {
+          "corrected_ce": 3.195608377456665,
+          "legacy_ce_same_forward": 3.1900486946105957,
+          "corrected_scored_tokens": 456725,
+          "legacy_selected_tokens": 457521
+        },
+        "dolma_pes2o-validation": {
+          "corrected_ce": 2.2205708026885986,
+          "legacy_ce_same_forward": 2.2195231914520264,
+          "corrected_scored_tokens": 449056,
+          "legacy_selected_tokens": 449268
+        },
+        "dolma_reddit-validation": {
+          "corrected_ce": 3.379890203475952,
+          "legacy_ce_same_forward": 3.3636667728424072,
+          "corrected_scored_tokens": 479565,
+          "legacy_selected_tokens": 481878
+        },
+        "dolma_stack-validation": {
+          "corrected_ce": 1.3667583465576172,
+          "legacy_ce_same_forward": 1.3652570247650146,
+          "corrected_scored_tokens": 366487,
+          "legacy_selected_tokens": 366890
+        },
+        "dolma_wiki-validation": {
+          "corrected_ce": 2.708068609237671,
+          "legacy_ce_same_forward": 2.7032687664031982,
+          "corrected_scored_tokens": 487185,
+          "legacy_selected_tokens": 488050
+        },
+        "ice-validation": {
+          "corrected_ce": 3.035172939300537,
+          "legacy_ce_same_forward": 3.0341665744781494,
+          "corrected_scored_tokens": 877279,
+          "legacy_selected_tokens": 877570
+        },
+        "m2d2_s2orc-validation": {
+          "corrected_ce": 3.1961746215820312,
+          "legacy_ce_same_forward": 3.1609251499176025,
+          "corrected_scored_tokens": 977164,
+          "legacy_selected_tokens": 988061
+        },
+        "pile-validation": {
+          "corrected_ce": 2.3084263801574707,
+          "legacy_ce_same_forward": 2.306220054626465,
+          "corrected_scored_tokens": 584307,
+          "legacy_selected_tokens": 584866
+        },
+        "wikitext_103-validation": {
+          "corrected_ce": 2.6419639587402344,
+          "legacy_ce_same_forward": 2.6412723064422607,
+          "corrected_scored_tokens": 225316,
+          "legacy_selected_tokens": 225375
+        }
+      },
+      "corrected_macro_ce": 2.7346012592315674,
+      "legacy_macro_ce_same_forward": 2.727740157734264,
+      "scope": "Final checkpoint, same forward/data for legacy and corrected masks; no training",
+      "comparison_to_old_step14000_metrics": "Different checkpoint step; do not attribute that delta only to masks"
+    }
+  },
+  "train_json": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/ALL_SEED_FULL_TRAIN_CE.json",
+  "train_sha256": "b1a5bffc082ef1404d5b63418c15f04f14dda858514eaea12b95d7f5c1c72327",
+  "evaluation_job_ids": [
+    "mose-eval-seed-c0c6-r1-p1-1x8-pool-1007-0958-9a0c4",
+    "mose-seed-confirm-r1-p1-1x8-pool-1007-1228-6-a9b14"
+  ],
+  "scope": "Two additional initialization seeds, fixed data order and matched pool1x8 training; validation in two8GPU allocations with identical per-source counts; no significance claim"
+}

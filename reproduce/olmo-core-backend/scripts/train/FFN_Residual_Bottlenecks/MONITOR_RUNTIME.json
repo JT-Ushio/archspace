@@ -1,0 +1,19 @@
+{
+  "monitor_session_id": 7852,
+  "interval_seconds": 1800,
+  "initial_delay_seconds": 1800,
+  "started_observation_utc": "2026-10-09 08:06:18 UTC",
+  "monitoring": [
+    "l1",
+    "r0",
+    "r1",
+    "r2",
+    "r3",
+    "c9"
+  ],
+  "status": "loop_started",
+  "first_snapshot": "latest_status.json",
+  "automatic_restart": false,
+  "refreshed_at": "2026-10-09T16:15:19.659772+08:00",
+  "next_scheduled_check_at": "2026-10-09T16:45:19.659772+08:00"
+}

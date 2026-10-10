@@ -1,0 +1,308 @@
+{
+  "end_step": 14306,
+  "tail_start": 13307,
+  "complete": true,
+  "primary_metric": "common_clean_last1000_mean",
+  "common_excluded_steps": [
+    12516
+  ],
+  "clean_full_n": 14305,
+  "clean_tail_n": 1000,
+  "runs": {
+    "W1": {
+      "parameters": 797050880,
+      "rows": 14306,
+      "raw_full_mean": 2.7938984407672645,
+      "raw_last1000_mean": 2.481116794586182,
+      "common_clean_full_mean": 2.7939151427579985,
+      "common_clean_last1000_mean": 2.481116794586182,
+      "final_raw": 2.5101592540740967,
+      "nonpositive_or_nonfinite_steps": [],
+      "delta_vs_c2": 0.005448811292648514,
+      "delta_vs_c6": 0.006353827953338609
+    },
+    "W1QK": {
+      "parameters": 797050880,
+      "rows": 14306,
+      "raw_full_mean": 2.794711733471009,
+      "raw_last1000_mean": 2.4812232587337495,
+      "common_clean_full_mean": 2.7947285273824276,
+      "common_clean_last1000_mean": 2.4812232587337495,
+      "final_raw": 2.5106475353240967,
+      "nonpositive_or_nonfinite_steps": [],
+      "delta_vs_c2": 0.0055552754402161675,
+      "delta_vs_c6": 0.006460292100906262
+    },
+    "W1M": {
+      "parameters": 742787072,
+      "rows": 14306,
+      "raw_full_mean": 2.809438394080271,
+      "raw_last1000_mean": 2.4972288806438447,
+      "common_clean_full_mean": 2.8094550541921413,
+      "common_clean_last1000_mean": 2.4972288806438447,
+      "final_raw": 2.527728796005249,
+      "nonpositive_or_nonfinite_steps": [],
+      "delta_vs_c2": 0.021560897350311414,
+      "delta_vs_c6": 0.02246591401100151
+    },
+    "W2": {
+      "parameters": 797050880,
+      "rows": 14306,
+      "raw_full_mean": 2.8030830029755993,
+      "raw_last1000_mean": 2.4908268642425537,
+      "common_clean_full_mean": 2.803099612379691,
+      "common_clean_last1000_mean": 2.4908268642425537,
+      "final_raw": 2.520379066467285,
+      "nonpositive_or_nonfinite_steps": [],
+      "delta_vs_c2": 0.015158880949020404,
+      "delta_vs_c6": 0.016063897609710498
+    },
+    "G1": {
+      "parameters": 797050912,
+      "rows": 14306,
+      "raw_full_mean": 2.789590064519005,
+      "raw_last1000_mean": 2.4737319800853728,
+      "common_clean_full_mean": 2.7896069266003605,
+      "common_clean_last1000_mean": 2.4737319800853728,
+      "final_raw": 2.5035810470581055,
+      "nonpositive_or_nonfinite_steps": [],
+      "delta_vs_c2": -0.0019360032081605638,
+      "delta_vs_c6": -0.0010309865474704694
+    },
+    "C2": {
+      "parameters": 797050880,
+      "rows": 14306,
+      "raw_full_mean": 2.7912818476084844,
+      "raw_last1000_mean": 2.4756679832935333,
+      "common_clean_full_mean": 2.7912987135374143,
+      "common_clean_last1000_mean": 2.4756679832935333,
+      "final_raw": 2.5054001808166504,
+      "nonpositive_or_nonfinite_steps": [],
+      "delta_vs_c2": 0.0,
+      "delta_vs_c6": 0.0009050166606900945
+    },
+    "C6": {
+      "parameters": 797050880,
+      "rows": 14306,
+      "raw_full_mean": 2.78921211077486,
+      "raw_last1000_mean": 2.4747629666328432,
+      "common_clean_full_mean": 2.7894070923974237,
+      "common_clean_last1000_mean": 2.4747629666328432,
+      "final_raw": 2.504258632659912,
+      "nonpositive_or_nonfinite_steps": [
+        12516
+      ],
+      "delta_vs_c2": -0.0009050166606900945,
+      "delta_vs_c6": 0.0
+    }
+  },
+  "provenance": {
+    "W1": {
+      "run_name": "olmo3-1b-ffn-width-w1-m6144-ug736-down640-c2-k-silu-down-rms-fp8-30b",
+      "job_id": "mose-width-w1-p1-1x8-1008-0226-37ef-94920163",
+      "parameters": 797050880,
+      "partition": "pool",
+      "nodes": 1,
+      "gpus_per_node": 8,
+      "completion_verified": {
+        "state": "Succeeded",
+        "job_id": "mose-width-w1-p1-1x8-1008-0226-37ef-94920163",
+        "counters": {
+          "active": 0,
+          "succeeded": 1,
+          "failed": 0,
+          "created_failed": 0,
+          "pending": 0,
+          "stopped": 0
+        },
+        "final_step": 14306,
+        "final_checkpoint_saved": true,
+        "observed_at": "2026-10-08T23:50:59+08:00",
+        "training_completed_at": "2026-10-08T20:22:25+08:00",
+        "final_checkpoint_saved_at": "2026-10-08T20:22:22+08:00",
+        "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/completion_w1.log",
+        "proof_type": "scheduler status plus final checkpoint and training completion log excerpt"
+      },
+      "initialization_fingerprint": {
+        "parameter_elements": 797050880,
+        "parameter_sha256": "96abe17d492e6c7596279f41e90092ebb13eab9eee6e37e7973be9295bdd6952",
+        "parameter_tensors": 275,
+        "scope": "all parameter bytes before dry-run and optimizer updates",
+        "step": 0
+      },
+      "history_files": [
+        {
+          "path": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261008_084241-olmo3-1b-ffn-width-w1-m6144-ug736-down640-c2-k-silu-down-rms-fp8-30b/run-olmo3-1b-ffn-width-w1-m6144-ug736-down640-c2-k-silu-down-rms-fp8-30b.wandb",
+          "sha256": "807372a6bcd91001794bc0d66a48907588c547ef4afa7cd275616cded74080b1"
+        }
+      ]
+    },
+    "W1QK": {
+      "run_name": "olmo3-1b-ffn-width-w1qk-m6144-ug736-down640-c6-qk-silu-down-rms-fp8-30b",
+      "job_id": "mose-width-w1qk-p1-1x8-1008-0227-b83b-25485220",
+      "parameters": 797050880,
+      "partition": "pool",
+      "nodes": 1,
+      "gpus_per_node": 8,
+      "completion_verified": {
+        "state": "Succeeded",
+        "job_id": "mose-width-w1qk-p1-1x8-1008-0227-b83b-25485220",
+        "counters": {
+          "active": 0,
+          "succeeded": 1,
+          "failed": 0,
+          "created_failed": 0,
+          "pending": 0,
+          "stopped": 0
+        },
+        "final_step": 14306,
+        "final_checkpoint_saved": true,
+        "observed_at": "2026-10-08T23:51:00+08:00",
+        "training_completed_at": "2026-10-08T20:22:57+08:00",
+        "final_checkpoint_saved_at": "2026-10-08T20:22:54+08:00",
+        "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/completion_w1qk.log",
+        "proof_type": "scheduler status plus final checkpoint and training completion log excerpt"
+      },
+      "initialization_fingerprint": {
+        "parameter_elements": 797050880,
+        "parameter_sha256": "96abe17d492e6c7596279f41e90092ebb13eab9eee6e37e7973be9295bdd6952",
+        "parameter_tensors": 275,
+        "scope": "all parameter bytes before dry-run and optimizer updates",
+        "step": 0
+      },
+      "history_files": [
+        {
+          "path": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261008_084239-olmo3-1b-ffn-width-w1qk-m6144-ug736-down640-c6-qk-silu-down-rms-fp8-30b/run-olmo3-1b-ffn-width-w1qk-m6144-ug736-down640-c6-qk-silu-down-rms-fp8-30b.wandb",
+          "sha256": "35fde8026af881111b7aae7f69c7f5b8111d403cd81074cbec1c0f9e029dbcc5"
+        }
+      ]
+    },
+    "W1M": {
+      "run_name": "olmo3-1b-ffn-width-w1m-m6144-ug568-down520-c2-k-silu-down-rms-fp8-30b",
+      "job_id": "mose-width-w1m-p1-1x8-1008-0227-cf64-30995519",
+      "parameters": 742787072,
+      "partition": "pool",
+      "nodes": 1,
+      "gpus_per_node": 8,
+      "completion_verified": {
+        "state": "Succeeded",
+        "job_id": "mose-width-w1m-p1-1x8-1008-0227-cf64-30995519",
+        "counters": {
+          "active": 0,
+          "succeeded": 1,
+          "failed": 0,
+          "created_failed": 0,
+          "pending": 0,
+          "stopped": 0
+        },
+        "final_step": 14306,
+        "final_checkpoint_saved": true,
+        "observed_at": "2026-10-08T23:51:01+08:00",
+        "training_completed_at": "2026-10-08T20:22:57+08:00",
+        "final_checkpoint_saved_at": "2026-10-08T20:22:54+08:00",
+        "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/completion_w1m.log",
+        "proof_type": "scheduler status plus final checkpoint and training completion log excerpt"
+      },
+      "initialization_fingerprint": null,
+      "history_files": [
+        {
+          "path": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261008_084216-olmo3-1b-ffn-width-w1m-m6144-ug568-down520-c2-k-silu-down-rms-fp8-30b/run-olmo3-1b-ffn-width-w1m-m6144-ug568-down520-c2-k-silu-down-rms-fp8-30b.wandb",
+          "sha256": "6794f851fb96a1cc920338f45e9bb40080d5b25ca209d33c648f86595883837f"
+        }
+      ]
+    },
+    "W2": {
+      "run_name": "olmo3-1b-ffn-width-w2-m4096-ug976-down944-c2-k-silu-down-rms-fp8-30b",
+      "job_id": "mose-width-w2-p1-1x8-1008-0227-3754-36807631",
+      "parameters": 797050880,
+      "partition": "pool",
+      "nodes": 1,
+      "gpus_per_node": 8,
+      "completion_verified": {
+        "state": "Succeeded",
+        "job_id": "mose-width-w2-p1-1x8-1008-0227-3754-36807631",
+        "counters": {
+          "active": 0,
+          "succeeded": 1,
+          "failed": 0,
+          "created_failed": 0,
+          "pending": 0,
+          "stopped": 0
+        },
+        "final_step": 14306,
+        "final_checkpoint_saved": true,
+        "observed_at": "2026-10-08T23:51:02+08:00",
+        "training_completed_at": "2026-10-08T20:17:15+08:00",
+        "final_checkpoint_saved_at": "2026-10-08T20:17:12+08:00",
+        "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/completion_w2.log",
+        "proof_type": "scheduler status plus final checkpoint and training completion log excerpt"
+      },
+      "initialization_fingerprint": null,
+      "history_files": [
+        {
+          "path": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261008_084219-olmo3-1b-ffn-width-w2-m4096-ug976-down944-c2-k-silu-down-rms-fp8-30b/run-olmo3-1b-ffn-width-w2-m4096-ug976-down944-c2-k-silu-down-rms-fp8-30b.wandb",
+          "sha256": "87af35357378a8f46da33fc359de74e1b36937d76dd93f72d4c63e0ff9553f66"
+        }
+      ]
+    },
+    "G1": {
+      "run_name": "olmo3-1b-qk-adaptive-g1-c2-q0-k1-m8192-ug568-down520-down-rms-fp8-30b",
+      "job_id": "mose-width-g1-p1-1x8-1008-0227-1760-42442674",
+      "parameters": 797050912,
+      "partition": "pool",
+      "nodes": 1,
+      "gpus_per_node": 8,
+      "completion_verified": {
+        "state": "Succeeded",
+        "job_id": "mose-width-g1-p1-1x8-1008-0227-1760-42442674",
+        "counters": {
+          "active": 0,
+          "succeeded": 1,
+          "failed": 0,
+          "created_failed": 0,
+          "pending": 0,
+          "stopped": 0
+        },
+        "final_step": 14306,
+        "final_checkpoint_saved": true,
+        "observed_at": "2026-10-08T23:51:03+08:00",
+        "training_completed_at": "2026-10-08T21:07:50+08:00",
+        "final_checkpoint_saved_at": "2026-10-08T21:07:47+08:00",
+        "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/completion_g1.log",
+        "proof_type": "scheduler status plus final checkpoint and training completion log excerpt"
+      },
+      "initialization_fingerprint": null,
+      "history_files": [
+        {
+          "path": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261008_084214-olmo3-1b-qk-adaptive-g1-c2-q0-k1-m8192-ug568-down520-down-rms-fp8-30b/run-olmo3-1b-qk-adaptive-g1-c2-q0-k1-m8192-ug568-down520-down-rms-fp8-30b.wandb",
+          "sha256": "f79e24d384c160dbd5945124d2b73b91224c01edbedb1938cbd0c45e24edf76d"
+        }
+      ]
+    },
+    "C2": {
+      "run_name": "olmo3-1b-r512matched-c2-k-silu-down-rms-gateup-fp8-30b",
+      "parameters": 797050880,
+      "history_file": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/analysis/c2_full_history.json",
+      "history_sha256": "fa495c2c2cfa9ba0f621e0b48b6b4b9528837b0aa637859d733e84d4da56801d",
+      "source": "Frozen complete W&B API history; archived completion"
+    },
+    "C6": {
+      "run_name": "olmo3-1b-r512matched-c6-qk-silu-down-rms-gateup-fp8-30b",
+      "parameters": 797050880,
+      "history_file": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/analysis/c6_full_history.json",
+      "history_sha256": "69a922e557125559c7a22c9ed92d4e93460b68c1c6ae49ee1fec7540afa77a94",
+      "source": "Frozen complete W&B API history; archived completion"
+    }
+  },
+  "validation_scope": "Inline validation exported separately; final corrected validation requires independent checkpoint evaluation",
+  "q_activation_effect_reference": -0.0009050166606900945,
+  "q_activation_effect_w1": 0.0001064641475676531,
+  "q_activation_interaction": 0.0010114808082577476,
+  "strict_budget_ranking": [
+    "C6",
+    "C2",
+    "W1",
+    "W1QK",
+    "W2"
+  ]
+}

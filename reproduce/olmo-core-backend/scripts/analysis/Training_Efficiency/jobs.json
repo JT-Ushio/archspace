@@ -1,0 +1,64 @@
+[
+  {
+    "variant": "dense-c0-c6-training-step",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-eff-step-r1-p1-1x8-pool-1007-0406-44a9",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Training_Efficiency/run_benchmark.sh",
+    "workload": "Isolated Dense/C0/C6 synthetic full training-step efficiency; same8GPU node, FP8/Muon/globalbatch retained, matched micro32768;5warmup+10measured steps each; no checkpoint read/write or quality claim",
+    "capacity_prediction": {
+      "partition": "pool",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-07T04:06:54.116575+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：1",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261007_040654.log"
+    },
+    "local_validation": "Python compile/bash-n passed; actual budgets/batch/finite CE+gradients enforced during GPU execution",
+    "job_id": "mose-eff-step-r1-p1-1x8-pool-1007-0406-44a9-70355",
+    "completion_verified": {
+      "state": "Succeeded",
+      "counters": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "observed_at": "2026-10-07T04:22:18.262088+08:00",
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Training_Efficiency/completion_observation.log",
+      "outputs": {
+        "dense": {
+          "sha256": "01e10ce9b69e5ad81a2de2866022e0a37845abf0c44403a4e382f6c2b7394789",
+          "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Training_Efficiency/DENSE_STEP_EFFICIENCY.json",
+          "mean_step_seconds": 3.6901754584163426,
+          "global_tokens_per_second": 568306.8525148133,
+          "peak_allocated_gib": 51.269081115722656
+        },
+        "c0": {
+          "sha256": "78f3db03f8c1316d71a39b29a90ba6c0632d6510e771fd4ca8fbb49eff016f6b",
+          "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Training_Efficiency/C0_STEP_EFFICIENCY.json",
+          "mean_step_seconds": 2.9016617611050606,
+          "global_tokens_per_second": 722741.7158371094,
+          "peak_allocated_gib": 56.48790740966797
+        },
+        "c6": {
+          "sha256": "679e08ba778533b0aaa6e01e95a1c2a484a0c7d0c25711d9f9a0cda79ce711bc",
+          "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Training_Efficiency/C6_STEP_EFFICIENCY.json",
+          "mean_step_seconds": 2.987916800938547,
+          "global_tokens_per_second": 701877.6424233951,
+          "peak_allocated_gib": 66.3050765991211
+        }
+      }
+    }
+  }
+]

@@ -1,0 +1,71 @@
+{
+  "observed_at": "2026-10-10T14:06:57.768140+00:00",
+  "root": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/Olmo3-CoLA",
+  "mode": "read_only_no_deletion",
+  "checkpoint_count": 3,
+  "candidate_count": 0,
+  "candidate_logical_bytes": 0,
+  "candidate_allocated_bytes": 0,
+  "note": "Saved terminal evidence and filesystem layout are checked; recheck live jobs before approving deletion. File size is not guaranteed reclaimed space when hard links or snapshots exist.",
+  "checkpoints": [
+    {
+      "run_name": "olmo3-1b-cola-r512",
+      "stage": "stage1",
+      "step": 9000,
+      "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/Olmo3-CoLA/olmo3-1b-cola-r512/stage1/step9000",
+      "action": "keep",
+      "reasons": [
+        "no_verified_terminal_run_or_readable_final_checkpoint",
+        "incomplete_or_unsupported_checkpoint_layout"
+      ],
+      "minimally_complete": false,
+      "logical_bytes": 8037952436,
+      "allocated_bytes": 8052539904,
+      "files": 548,
+      "symlinks": 0,
+      "multiply_linked_files": 0,
+      "errors": [],
+      "terminal_evidence_observed_at": null
+    },
+    {
+      "run_name": "olmo3-1b-cola-r512",
+      "stage": "stage1",
+      "step": 10000,
+      "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/Olmo3-CoLA/olmo3-1b-cola-r512/stage1/step10000",
+      "action": "keep",
+      "reasons": [
+        "keep_step0_final_latest_or_key_midpoint",
+        "no_verified_terminal_run_or_readable_final_checkpoint",
+        "incomplete_or_unsupported_checkpoint_layout"
+      ],
+      "minimally_complete": false,
+      "logical_bytes": 8037952438,
+      "allocated_bytes": 8052539904,
+      "files": 548,
+      "symlinks": 0,
+      "multiply_linked_files": 0,
+      "errors": [],
+      "terminal_evidence_observed_at": null
+    },
+    {
+      "run_name": "olmo3-1b-cola-r512-fp8-5e-3",
+      "stage": "stage1",
+      "step": 75073,
+      "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/Olmo3-CoLA/olmo3-1b-cola-r512-fp8-5e-3/stage1/step75073",
+      "action": "keep",
+      "reasons": [
+        "keep_step0_final_latest_or_key_midpoint",
+        "no_verified_terminal_run_or_readable_final_checkpoint",
+        "incomplete_or_unsupported_checkpoint_layout"
+      ],
+      "minimally_complete": false,
+      "logical_bytes": 8037954525,
+      "allocated_bytes": 8052539904,
+      "files": 548,
+      "symlinks": 0,
+      "multiply_linked_files": 0,
+      "errors": [],
+      "terminal_evidence_observed_at": null
+    }
+  ]
+}

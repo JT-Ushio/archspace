@@ -1,0 +1,62 @@
+{
+  "c0s2": {
+    "source_job_id": "mose-r512-c0s2-r1-p1-1x8-pool-1006-2106-ea9c-f2516",
+    "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c0-seed12537-data34521-fp8-30b/stage1/step14306",
+    "completion_proof": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/completion_c0s2.log",
+    "config_path": "cfps/BS256_Seq8K_30B_WSD_FP8/Rank512_Seed_Replication/c0s2.py",
+    "num_params": 797050880,
+    "init_seed": 12537,
+    "data_seed": 34521,
+    "training_allocation": {
+      "partition": "pool",
+      "nodes": 1,
+      "gpus_per_node": 8,
+      "priority": 1
+    }
+  },
+  "c6s2": {
+    "source_job_id": "mose-r512-c6s2-r1-p1-1x8-pool-1006-2107-3d78-52e71",
+    "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c6-seed12537-data34521-fp8-30b/stage1/step14306",
+    "completion_proof": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/completion_c6s2.log",
+    "config_path": "cfps/BS256_Seq8K_30B_WSD_FP8/Rank512_Seed_Replication/c6s2.py",
+    "num_params": 797050880,
+    "init_seed": 12537,
+    "data_seed": 34521,
+    "training_allocation": {
+      "partition": "pool",
+      "nodes": 1,
+      "gpus_per_node": 8,
+      "priority": 1
+    }
+  },
+  "c0s3": {
+    "source_job_id": "mose-r512-c0s3-r1-p1-1x8-pool-1006-2107-2f04-80461",
+    "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c0-seed12538-data34521-fp8-30b/stage1/step14306",
+    "completion_proof": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/completion_c0s3.log",
+    "config_path": "cfps/BS256_Seq8K_30B_WSD_FP8/Rank512_Seed_Replication/c0s3.py",
+    "num_params": 797050880,
+    "init_seed": 12538,
+    "data_seed": 34521,
+    "training_allocation": {
+      "partition": "pool",
+      "nodes": 1,
+      "gpus_per_node": 8,
+      "priority": 1
+    }
+  },
+  "c6s3": {
+    "source_job_id": "mose-r512-c6s3-r1-p1-1x8-pool-1006-2108-31a7-fc86e",
+    "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c6-seed12538-data34521-fp8-30b/stage1/step14306",
+    "completion_proof": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/completion_c6s3.log",
+    "config_path": "cfps/BS256_Seq8K_30B_WSD_FP8/Rank512_Seed_Replication/c6s3.py",
+    "num_params": 797050880,
+    "init_seed": 12538,
+    "data_seed": 34521,
+    "training_allocation": {
+      "partition": "pool",
+      "nodes": 1,
+      "gpus_per_node": 8,
+      "priority": 1
+    }
+  }
+}

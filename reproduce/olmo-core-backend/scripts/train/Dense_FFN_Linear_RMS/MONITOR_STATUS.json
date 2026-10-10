@@ -1,0 +1,245 @@
+{
+  "checked_at": "2026-10-08T23:55:00+08:00",
+  "jobs": [
+    {
+      "variant": "w1",
+      "job_id": "mose-width-w1-p1-1x8-1008-0226-37ef-94920163",
+      "log_lines": 160,
+      "latest_step": 14306,
+      "latest_metrics": {
+        "step": 14300,
+        "eta": "1m",
+        "at": "2026-10-08T20:21:58+08:00",
+        "ce": 2.504
+      },
+      "training_complete": true,
+      "completed_at": "2026-10-08T20:22:25+08:00",
+      "final_checkpoint_saved": true,
+      "checkpoint_saved_at": "2026-10-08T20:22:22+08:00",
+      "errors": [],
+      "proof": [
+        "[2026-10-08T20:22:18+08:00] mose-width-w1-p1-1x8-1008-0226-37ef-94920163-cfcd2 >> 2026-10-08 20:22:18.912\tgpu-lg-cmc-h-h200-1636.host.h.pjlab.org.cn:0\tolmo_core.train.callbacks.console_logger:61\tINFO\t[step=14306/14306,epoch=1]",
+        "[2026-10-08T20:22:20+08:00] mose-width-w1-p1-1x8-1008-0226-37ef-94920163-cfcd2 >> 2026-10-08 20:22:20.075\tgpu-lg-cmc-h-h200-1636.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:969\tINFO\tSaving checkpoint for step 14306 to '/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ffn-width-w1-m6144-ug736-down640-c2-k-silu-down-rms-fp8-30b/stage1/step14306'...",
+        "[2026-10-08T20:22:22+08:00] mose-width-w1-p1-1x8-1008-0226-37ef-94920163-cfcd2 >> 2026-10-08 20:22:22.665\tgpu-lg-cmc-h-h200-1636.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:989\tINFO\tCheckpoint saved",
+        "[2026-10-08T20:22:25+08:00] mose-width-w1-p1-1x8-1008-0226-37ef-94920163-cfcd2 >> 2026-10-08 20:22:25.282\tgpu-lg-cmc-h-h200-1636.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:763\tINFO\tTraining complete"
+      ],
+      "status": "Succeeded",
+      "observed_at": "2026-10-08T23:50:59+08:00",
+      "counts_dict": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "progress_percent": 100
+    },
+    {
+      "variant": "w1qk",
+      "job_id": "mose-width-w1qk-p1-1x8-1008-0227-b83b-25485220",
+      "log_lines": 216,
+      "latest_step": 14306,
+      "latest_metrics": null,
+      "training_complete": true,
+      "completed_at": "2026-10-08T20:22:57+08:00",
+      "final_checkpoint_saved": true,
+      "checkpoint_saved_at": "2026-10-08T20:22:54+08:00",
+      "errors": [],
+      "proof": [
+        "[2026-10-08T20:22:48+08:00] mose-width-w1qk-p1-1x8-1008-0227-b83b-25485220-cfcd2 >> 2026-10-08 20:22:48.445\tgpu-lg-cmc-h-h200-1853.host.h.pjlab.org.cn:0\tolmo_core.train.callbacks.console_logger:61\tINFO\t[step=14306/14306,epoch=1]",
+        "[2026-10-08T20:22:52+08:00] mose-width-w1qk-p1-1x8-1008-0227-b83b-25485220-cfcd2 >> 2026-10-08 20:22:52.335\tgpu-lg-cmc-h-h200-1853.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:969\tINFO\tSaving checkpoint for step 14306 to '/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ffn-width-w1qk-m6144-ug736-down640-c6-qk-silu-down-rms-fp8-30b/stage1/step14306'...",
+        "[2026-10-08T20:22:54+08:00] mose-width-w1qk-p1-1x8-1008-0227-b83b-25485220-cfcd2 >> 2026-10-08 20:22:54.569\tgpu-lg-cmc-h-h200-1853.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:989\tINFO\tCheckpoint saved",
+        "[2026-10-08T20:22:57+08:00] mose-width-w1qk-p1-1x8-1008-0227-b83b-25485220-cfcd2 >> 2026-10-08 20:22:57.233\tgpu-lg-cmc-h-h200-1853.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:763\tINFO\tTraining complete"
+      ],
+      "status": "Succeeded",
+      "observed_at": "2026-10-08T23:51:00+08:00",
+      "counts_dict": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "progress_percent": 100
+    },
+    {
+      "variant": "w1m",
+      "job_id": "mose-width-w1m-p1-1x8-1008-0227-cf64-30995519",
+      "log_lines": 60,
+      "latest_step": 14306,
+      "latest_metrics": null,
+      "training_complete": true,
+      "completed_at": "2026-10-08T20:22:57+08:00",
+      "final_checkpoint_saved": true,
+      "checkpoint_saved_at": "2026-10-08T20:22:54+08:00",
+      "errors": [],
+      "proof": [
+        "[2026-10-08T20:22:51+08:00] mose-width-w1m-p1-1x8-1008-0227-cf64-30995519-cfcd2 >> 2026-10-08 20:22:51.593\tgpu-lg-cmc-h-h200-1141.host.h.pjlab.org.cn:0\tolmo_core.train.callbacks.console_logger:61\tINFO\t[step=14306/14306,epoch=1]",
+        "[2026-10-08T20:22:52+08:00] mose-width-w1m-p1-1x8-1008-0227-cf64-30995519-cfcd2 >> 2026-10-08 20:22:52.702\tgpu-lg-cmc-h-h200-1141.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:969\tINFO\tSaving checkpoint for step 14306 to '/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ffn-width-w1m-m6144-ug568-down520-c2-k-silu-down-rms-fp8-30b/stage1/step14306'...",
+        "[2026-10-08T20:22:54+08:00] mose-width-w1m-p1-1x8-1008-0227-cf64-30995519-cfcd2 >> 2026-10-08 20:22:54.456\tgpu-lg-cmc-h-h200-1141.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:989\tINFO\tCheckpoint saved",
+        "[2026-10-08T20:22:57+08:00] mose-width-w1m-p1-1x8-1008-0227-cf64-30995519-cfcd2 >> 2026-10-08 20:22:57.184\tgpu-lg-cmc-h-h200-1141.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:763\tINFO\tTraining complete"
+      ],
+      "status": "Succeeded",
+      "observed_at": "2026-10-08T23:51:01+08:00",
+      "counts_dict": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "progress_percent": 100
+    },
+    {
+      "variant": "w2",
+      "job_id": "mose-width-w2-p1-1x8-1008-0227-3754-36807631",
+      "log_lines": 60,
+      "latest_step": 14306,
+      "latest_metrics": null,
+      "training_complete": true,
+      "completed_at": "2026-10-08T20:17:15+08:00",
+      "final_checkpoint_saved": true,
+      "checkpoint_saved_at": "2026-10-08T20:17:12+08:00",
+      "errors": [],
+      "proof": [
+        "[2026-10-08T20:17:07+08:00] mose-width-w2-p1-1x8-1008-0227-3754-36807631-cfcd2 >> 2026-10-08 20:17:07.207\tgpu-lg-cmc-h-h200-0633.host.h.pjlab.org.cn:0\tolmo_core.train.callbacks.console_logger:61\tINFO\t[step=14306/14306,epoch=1]",
+        "[2026-10-08T20:17:10+08:00] mose-width-w2-p1-1x8-1008-0227-3754-36807631-cfcd2 >> 2026-10-08 20:17:10.842\tgpu-lg-cmc-h-h200-0633.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:969\tINFO\tSaving checkpoint for step 14306 to '/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ffn-width-w2-m4096-ug976-down944-c2-k-silu-down-rms-fp8-30b/stage1/step14306'...",
+        "[2026-10-08T20:17:12+08:00] mose-width-w2-p1-1x8-1008-0227-3754-36807631-cfcd2 >> 2026-10-08 20:17:12.729\tgpu-lg-cmc-h-h200-0633.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:989\tINFO\tCheckpoint saved",
+        "[2026-10-08T20:17:15+08:00] mose-width-w2-p1-1x8-1008-0227-3754-36807631-cfcd2 >> 2026-10-08 20:17:15.284\tgpu-lg-cmc-h-h200-0633.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:763\tINFO\tTraining complete"
+      ],
+      "status": "Succeeded",
+      "observed_at": "2026-10-08T23:51:02+08:00",
+      "counts_dict": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "progress_percent": 100
+    },
+    {
+      "variant": "g1",
+      "job_id": "mose-width-g1-p1-1x8-1008-0227-1760-42442674",
+      "log_lines": 60,
+      "latest_step": 14306,
+      "latest_metrics": null,
+      "training_complete": true,
+      "completed_at": "2026-10-08T21:07:50+08:00",
+      "final_checkpoint_saved": true,
+      "checkpoint_saved_at": "2026-10-08T21:07:47+08:00",
+      "errors": [],
+      "proof": [
+        "[2026-10-08T21:07:44+08:00] mose-width-g1-p1-1x8-1008-0227-1760-42442674-cfcd2 >> 2026-10-08 21:07:44.599\tgpu-lg-cmc-h-h200-2314.host.h.pjlab.org.cn:0\tolmo_core.train.callbacks.console_logger:61\tINFO\t[step=14306/14306,epoch=1]",
+        "[2026-10-08T21:07:45+08:00] mose-width-g1-p1-1x8-1008-0227-1760-42442674-cfcd2 >> 2026-10-08 21:07:45.696\tgpu-lg-cmc-h-h200-2314.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:969\tINFO\tSaving checkpoint for step 14306 to '/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-qk-adaptive-g1-c2-q0-k1-m8192-ug568-down520-down-rms-fp8-30b/stage1/step14306'...",
+        "[2026-10-08T21:07:47+08:00] mose-width-g1-p1-1x8-1008-0227-1760-42442674-cfcd2 >> 2026-10-08 21:07:47.742\tgpu-lg-cmc-h-h200-2314.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:989\tINFO\tCheckpoint saved",
+        "[2026-10-08T21:07:50+08:00] mose-width-g1-p1-1x8-1008-0227-1760-42442674-cfcd2 >> 2026-10-08 21:07:50.428\tgpu-lg-cmc-h-h200-2314.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:763\tINFO\tTraining complete"
+      ],
+      "status": "Succeeded",
+      "observed_at": "2026-10-08T23:51:03+08:00",
+      "counts_dict": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "progress_percent": 100
+    },
+    {
+      "variant": "du",
+      "job_id": "xtuner-dense-ud-r1632-rms-1x8-p1-1008-2016-482868",
+      "log_lines": 60,
+      "latest_step": 3039,
+      "latest_metrics": {
+        "step": 3030,
+        "eta": "12h39m",
+        "at": "2026-10-08T23:53:37+08:00",
+        "ce": 2.736
+      },
+      "training_complete": false,
+      "completed_at": null,
+      "final_checkpoint_saved": false,
+      "checkpoint_saved_at": null,
+      "errors": [],
+      "proof": [],
+      "status": "Running",
+      "observed_at": "2026-10-08T23:51:04+08:00",
+      "counts_dict": {
+        "active": 1,
+        "succeeded": 0,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "progress_percent": 21.24
+    },
+    {
+      "variant": "dg",
+      "job_id": "xtuner-dense-gd-r1632-rms-1x8-p1-1008-2017-3-25bd7",
+      "log_lines": 130,
+      "latest_step": 2999,
+      "latest_metrics": {
+        "step": 2990,
+        "eta": "12h41m",
+        "at": "2026-10-08T23:50:45+08:00",
+        "ce": 2.722
+      },
+      "training_complete": false,
+      "completed_at": null,
+      "final_checkpoint_saved": false,
+      "checkpoint_saved_at": null,
+      "errors": [],
+      "proof": [],
+      "status": "Running",
+      "observed_at": "2026-10-08T23:51:06+08:00",
+      "counts_dict": {
+        "active": 1,
+        "succeeded": 0,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "progress_percent": 20.96
+    },
+    {
+      "variant": "dug",
+      "job_id": "xtuner-dense-ugd-r1632-rms-1x8-p1-1008-2020-9e8f7",
+      "log_lines": 160,
+      "latest_step": 2996,
+      "latest_metrics": {
+        "step": 2990,
+        "eta": "12h44m",
+        "at": "2026-10-08T23:51:52+08:00",
+        "ce": 2.735
+      },
+      "training_complete": false,
+      "completed_at": null,
+      "final_checkpoint_saved": false,
+      "checkpoint_saved_at": null,
+      "errors": [],
+      "proof": [],
+      "status": "Running",
+      "observed_at": "2026-10-08T23:51:07+08:00",
+      "counts_dict": {
+        "active": 1,
+        "succeeded": 0,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "progress_percent": 20.94
+    }
+  ],
+  "completed": 5,
+  "running": 3,
+  "queued": 0
+}

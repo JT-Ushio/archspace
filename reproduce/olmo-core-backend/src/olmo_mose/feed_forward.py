@@ -309,6 +309,8 @@ class MoSESwiGLUConfig(FeedForwardConfig):
     down_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu
     rms_norm_learnable_weight: bool = False
     share_gate_up_subspace: bool = True
+    share_linear_gate_up_subspace: Optional[bool] = None
+    share_nonlinear_gate_up_subspace: Optional[bool] = None
     down_output_rotation: DownOutputRotation = DownOutputRotation.none
     down_rotation_groups: int = 32
     down_rotation_a_max: float = 0.5
@@ -326,6 +328,10 @@ class MoSESwiGLUConfig(FeedForwardConfig):
             raise OLMoConfigurationError("rms_norm_learnable_weight must be a boolean")
         if not isinstance(self.share_gate_up_subspace, bool):
             raise OLMoConfigurationError("share_gate_up_subspace must be a boolean")
+        for name in ("share_linear_gate_up_subspace", "share_nonlinear_gate_up_subspace"):
+            value = getattr(self, name)
+            if value is not None and not isinstance(value, bool):
+                raise OLMoConfigurationError(f"{name} must be a boolean or None")
 
         if self.name != FeedForwardType.default:
             raise OLMoConfigurationError(
@@ -347,10 +353,18 @@ class MoSESwiGLUConfig(FeedForwardConfig):
             down_r1=self.down_r1, down_r2=self.down_r2,
             down_nonlinearity=self.down_nonlinearity, bias=self.bias, d_model=d_model)
         hidden_size = self.hidden_size
-        gate_up_u_count = 1 if self.share_gate_up_subspace else 2
-        params = (self.r1 + self.r2) * (
-            gate_up_u_count * d_model + 2 * hidden_size
+        share_linear = (
+            self.share_gate_up_subspace
+            if self.share_linear_gate_up_subspace is None
+            else self.share_linear_gate_up_subspace
         )
+        share_nonlinear = (
+            self.share_gate_up_subspace
+            if self.share_nonlinear_gate_up_subspace is None
+            else self.share_nonlinear_gate_up_subspace
+        )
+        params = self.r1 * ((1 if share_linear else 2) * d_model + 2 * hidden_size)
+        params += self.r2 * ((1 if share_nonlinear else 2) * d_model + 2 * hidden_size)
         if self.bias:
             params += 2 * hidden_size
 
@@ -362,7 +376,7 @@ class MoSESwiGLUConfig(FeedForwardConfig):
             params += d_model
         if self.rms_norm_learnable_weight:
             if self.r2 > 0:
-                if self.share_gate_up_subspace:
+                if share_nonlinear:
                     if _uses_rms_norm(self.gate_nonlinearity) or _uses_rms_norm(
                         self.up_nonlinearity
                     ):
@@ -427,6 +441,8 @@ class MoSESwiGLU(nn.Module):
         down_nonlinearity: MoSENonlinearity = MoSENonlinearity.silu,
         rms_norm_learnable_weight: bool = False,
         share_gate_up_subspace: bool = True,
+        share_linear_gate_up_subspace: Optional[bool] = None,
+        share_nonlinear_gate_up_subspace: Optional[bool] = None,
         down_output_rotation: DownOutputRotation = DownOutputRotation.none,
         down_rotation_groups: int = 32,
         down_rotation_a_max: float = 0.5,
@@ -455,6 +471,13 @@ class MoSESwiGLU(nn.Module):
             raise OLMoConfigurationError("share_gate_up_subspace must be a boolean")
         self.rms_norm_learnable_weight = rms_norm_learnable_weight
         self.share_gate_up_subspace = share_gate_up_subspace
+        for name, value in (
+            ("share_linear_gate_up_subspace", share_linear_gate_up_subspace),
+            ("share_nonlinear_gate_up_subspace", share_nonlinear_gate_up_subspace),
+        ):
+            if value is not None and not isinstance(value, bool):
+                raise OLMoConfigurationError(f"{name} must be a boolean or None")
+            setattr(self, name, share_gate_up_subspace if value is None else value)
         self.down_output_rotation = validate_output_rotation(
             down_output_rotation, down_rotation_groups, down_rotation_a_max,
             down_r1=down_r1, down_r2=down_r2,
@@ -468,7 +491,7 @@ class MoSESwiGLU(nn.Module):
         self.gate_linear_u = None
         self.up_linear_u = None
         if r1 > 0:
-            if share_gate_up_subspace:
+            if self.share_linear_gate_up_subspace:
                 self.linear_u = nn.Linear(d_model, r1, **linear_kwargs)
             else:
                 self.gate_linear_u = nn.Linear(d_model, r1, **linear_kwargs)
@@ -486,14 +509,14 @@ class MoSESwiGLU(nn.Module):
         self.gate_nonlinear_norm = None
         self.up_nonlinear_norm = None
         if r2 > 0:
-            if share_gate_up_subspace:
+            if self.share_nonlinear_gate_up_subspace:
                 self.nonlinear_u = nn.Linear(d_model, r2, **linear_kwargs)
             else:
                 self.gate_nonlinear_u = nn.Linear(d_model, r2, **linear_kwargs)
                 self.up_nonlinear_u = nn.Linear(d_model, r2, **linear_kwargs)
             self.gate_nonlinear_v = nn.Linear(r2, hidden_size, **linear_kwargs)
             self.up_nonlinear_v = nn.Linear(r2, hidden_size, **linear_kwargs)
-            if share_gate_up_subspace:
+            if self.share_nonlinear_gate_up_subspace:
                 if _uses_rms_norm(self.gate_nonlinearity) or _uses_rms_norm(
                     self.up_nonlinearity
                 ):
@@ -660,7 +683,7 @@ class MoSESwiGLU(nn.Module):
                 rms_norm=gate_nonlinear_norm,
             )
             if (
-                self.share_gate_up_subspace
+                self.share_nonlinear_gate_up_subspace
                 and self.up_nonlinearity == self.gate_nonlinearity
             ):
                 up_nonlinear_latent = gate_nonlinear_latent

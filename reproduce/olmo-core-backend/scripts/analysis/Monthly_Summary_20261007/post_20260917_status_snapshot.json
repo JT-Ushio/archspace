@@ -1,0 +1,85 @@
+{
+  "observed_at_hkt": "2026-10-07 14:26 HKT",
+  "proofs": {
+    "f4": {
+      "job_id": "mose-ffn-f4-r1-p1-1x8-pool-1007-0257-f50a-58255159",
+      "status": "Running",
+      "counts": {
+        "active": 1,
+        "succeeded": 0,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "latest": {
+        "step": 13650,
+        "eta": "33m",
+        "grad": 0.0098,
+        "ce": 2.529
+      },
+      "observed_at": "2026-10-07T14:26:10.838052+08:00"
+    },
+    "f5": {
+      "job_id": "mose-ffn-f5-r1-p1-1x8-pool-1007-0257-2198-70783152",
+      "status": "Running",
+      "counts": {
+        "active": 1,
+        "succeeded": 0,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "latest": {
+        "step": 13640,
+        "eta": "34m",
+        "grad": 0.0119,
+        "ce": 2.476
+      },
+      "observed_at": "2026-10-07T14:26:10.729394+08:00"
+    },
+    "a1": {
+      "job_id": "mose-attn-a1-r1-p1-1x8-pool-1007-0128-5292-1-78ab4",
+      "status": "Succeeded",
+      "counts": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "observed_at": "2026-10-07T14:26:10.942373+08:00",
+      "final_step": 14306,
+      "final_checkpoint_saved": true,
+      "completion_lines": [
+        "10-07 14:26:07 [INFO]   |- task t0: 1 replicas {'active': 0, 'succeeded': 1, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+        "[2026-10-07T13:49:47+08:00] mose-attn-a1-r1-p1-1x8-pool-1007-0128-5292-1-78ab4-cfcd2 >> 2026-10-07 13:49:47.710\tgpu-lg-cmc-h-h200-0805.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:969\tINFO\tSaving checkpoint for step 14306 to '/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-attn-budget-a1-r832-ug336-down352-unshared-qk-silu-down-rms-fp8-30b/stage1/step14306'...",
+        "[2026-10-07T13:49:49+08:00] mose-attn-a1-r1-p1-1x8-pool-1007-0128-5292-1-78ab4-cfcd2 >> 2026-10-07 13:49:49.620\tgpu-lg-cmc-h-h200-0805.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:989\tINFO\tCheckpoint saved",
+        "[2026-10-07T13:49:52+08:00] mose-attn-a1-r1-p1-1x8-pool-1007-0128-5292-1-78ab4-cfcd2 >> 2026-10-07 13:49:52.248\tgpu-lg-cmc-h-h200-0805.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:763\tINFO\tTraining complete"
+      ]
+    },
+    "a2": {
+      "job_id": "mose-attn-a2-r1-p1-1x8-pool-1007-0128-b35f-2-1cf16",
+      "status": "Succeeded",
+      "counts": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "observed_at": "2026-10-07T14:26:10.936327+08:00",
+      "final_step": 14306,
+      "final_checkpoint_saved": true,
+      "completion_lines": [
+        "10-07 14:26:07 [INFO]   |- task t0: 1 replicas {'active': 0, 'succeeded': 1, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+        "[2026-10-07T13:46:42+08:00] mose-attn-a2-r1-p1-1x8-pool-1007-0128-b35f-2-1cf16-cfcd2 >> 2026-10-07 13:46:42.311\tgpu-lg-cmc-h-h200-0793.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:969\tINFO\tSaving checkpoint for step 14306 to '/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-attn-budget-a2-r832-ug320-down448-shared-qk-silu-down-rms-fp8-30b/stage1/step14306'...",
+        "[2026-10-07T13:46:44+08:00] mose-attn-a2-r1-p1-1x8-pool-1007-0128-b35f-2-1cf16-cfcd2 >> 2026-10-07 13:46:44.068\tgpu-lg-cmc-h-h200-0793.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:989\tINFO\tCheckpoint saved",
+        "[2026-10-07T13:46:46+08:00] mose-attn-a2-r1-p1-1x8-pool-1007-0128-b35f-2-1cf16-cfcd2 >> 2026-10-07 13:46:46.670\tgpu-lg-cmc-h-h200-0793.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:763\tINFO\tTraining complete"
+      ]
+    }
+  }
+}

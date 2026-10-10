@@ -1,0 +1,510 @@
+[
+  {
+    "variant": "completed-pair-mask-check",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-eval-mask-pair-r1-p1-1x8-pool-1007-0342-d825",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/run_completed_pair.sh",
+    "workload": "Read-only full LM reevaluation of completed P0qk/F3qk checkpoints; legacy and target masks on identical forwards; no trainer.fit or optimizer steps",
+    "manifest": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/cases.json",
+    "capacity_prediction": {
+      "partition": "pool",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-07T03:42:46.297357+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：1",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261007_034246.log"
+    },
+    "local_validation": "5 aligned-mask tests passed59.99s including padding/prefix/missing final labels and nonmutating in-place distributed collection; Python compile/bash-n passed",
+    "job_id": "mose-eval-mask-pair-r1-p1-1x8-pool-1007-0342-54a01",
+    "completion_verified": {
+      "state": "Succeeded",
+      "counters": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "observed_at": "2026-10-07T03:49:19.770824+08:00",
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/completed_pair_observation.log",
+      "outputs": {
+        "p0qk": {
+          "sha256": "7f68009c493ecae076d7c24b3715c0746f907cc6a3beeade69298e5cd86b1b69",
+          "path": "reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/P0QK_FINAL_CHECKPOINT_LM.json",
+          "corrected_macro_ce": 2.736911957914179,
+          "legacy_macro_ce_same_forward": 2.7300468899986963,
+          "valid_tokens": 5874543,
+          "legacy_tokens": 5893039
+        },
+        "f3qk": {
+          "sha256": "7ffd4ffa177f365f5394ed9748c48f702bd4c2f05316f3feb83439f170adc617",
+          "path": "reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/F3QK_FINAL_CHECKPOINT_LM.json",
+          "corrected_macro_ce": 2.7371753562580454,
+          "legacy_macro_ce_same_forward": 2.7303109602494673,
+          "valid_tokens": 5874543,
+          "legacy_tokens": 5893039
+        }
+      }
+    }
+  },
+  {
+    "variant": "reference-path-resolve",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ref-paths-r1-p1-1x8-pool-1007-0354-07cc",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/run_resolve_references.sh",
+    "workload": "Read-only archived C0/C2/C6 offline W&B config + complete history + final checkpoint metadata resolution; no root guesses or training; CPU analysis in scheduled 8GPU allocation",
+    "capacity_prediction": {
+      "partition": "pool",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-07T03:54:39.144440+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：1",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261007_035439.log"
+    },
+    "local_validation": "Config nested merge/run-stage identity/checkpoint metadata guards passed; Python compile/bash-n passed",
+    "job_id": "mose-ref-paths-r1-p1-1x8-pool-1007-0354-07cc-88d55",
+    "completion_verified": {
+      "state": "Succeeded",
+      "counters": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "observed_at": "2026-10-07T03:56:29.938188+08:00",
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/reference_paths_observation.log",
+      "sha256": "372760096482e436ce0b9fb3e677d2e887e699a32af4f63871c72cd53b42eb90"
+    }
+  },
+  {
+    "variant": "completed-reference-trio",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-eval-ref-trio-r1-p1-1x8-pool-1007-0359-b668",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/run_reference_trio.sh",
+    "workload": "Read-only C0/C2/C6 final14306 LM reevaluation, 8 distributed ranks; actual saved paths/metadata resolver proved; corrected vs legacy on same forward",
+    "manifest": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/reference_cases.json",
+    "capacity_prediction": {
+      "partition": "pool",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-07T03:59:32.005519+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：1",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261007_035932.log"
+    },
+    "local_validation": "5 alignment tests previously passed; reference checksum/terminal proof/source binding and raw compatibility guards passed; Python compile/bash-n passed",
+    "job_id": "mose-eval-ref-trio-r1-p1-1x8-pool-1007-0359-618bb",
+    "completion_verified": {
+      "state": "Succeeded",
+      "counters": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "observed_at": "2026-10-07T04:07:38.051866+08:00",
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/reference_trio_completion.log",
+      "outputs": {
+        "c0": {
+          "sha256": "b472276ba02a18e21d9dbfb4771d8b55bf7e9680ebf3771bbce427e756673b5c",
+          "path": "reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/C0_FINAL_CHECKPOINT_LM.json",
+          "corrected_macro_ce": 2.7388659715652466,
+          "legacy_macro_ce_same_forward": 2.731997988440774,
+          "valid_tokens": 5874543
+        },
+        "c2": {
+          "sha256": "cc737b165f45b932396abec937246d77889b9053e54d3f0c44be14b0382a3862",
+          "path": "reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/C2_FINAL_CHECKPOINT_LM.json",
+          "corrected_macro_ce": 2.73268140446056,
+          "legacy_macro_ce_same_forward": 2.72582284970717,
+          "valid_tokens": 5874543
+        },
+        "c6": {
+          "sha256": "1035d7fb00070d691d5234082f0df602f8aac14c89ace0ab8b145abbf9f3c394",
+          "path": "reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/C6_FINAL_CHECKPOINT_LM.json",
+          "corrected_macro_ce": 2.734855153343894,
+          "legacy_macro_ce_same_forward": 2.7279978557066484,
+          "valid_tokens": 5874543
+        }
+      }
+    }
+  },
+  {
+    "variant": "ffn-qk-final-pair",
+    "partition": "arch",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-eval-ffn-qk-r1-p1-1x8-arch-1007-0528-631c",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/run_ffn_qk_pair.sh",
+    "workload": "Read-only final14306 F4qk/F5qk unified legacy/corrected LM evaluation,8 ranks; original recipe and full checkpoint metadata guard, no train/save/optimizer",
+    "manifest": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/ffn_qk_cases.json",
+    "capacity_prediction": {
+      "partition": "arch",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-07T05:28:12.985249+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：1",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_arch_1_20261007_052812.log"
+    },
+    "local_validation": "Prior5 alignment tests passed; new exact raw completion paths+original recipes validated; wrapper bash-n passed; no evaluation logic changes",
+    "job_id": "mose-eval-ffn-qk-r1-p1-1x8-arch-1007-0528-63-fc7d7",
+    "latest_observation": {
+      "state": "Succeeded",
+      "counters": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "exit_code": 0,
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/ffn_qk_pair_observation.log"
+    },
+    "completion_verified": {
+      "state": "Succeeded",
+      "counters": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "observed_at": "2026-10-07T05:33:33.048417+08:00",
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/ffn_qk_pair_observation.log",
+      "outputs": {
+        "f4qk": {
+          "sha256": "66535befb316dcc2bd03c8d8b46d58517638d077d844df6e7decfeaa575af920",
+          "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/F4QK_FINAL_CHECKPOINT_LM.json",
+          "corrected_macro_ce": 2.7458770275115967,
+          "legacy_macro_ce_same_forward": 2.7389948151328345,
+          "valid_tokens": 5874543,
+          "legacy_tokens": 5893039
+        },
+        "f5qk": {
+          "sha256": "4390b97a22fddea5f1a9067181c1af6f1fcf44777b6cd08687178a0b1dc01742",
+          "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/F5QK_FINAL_CHECKPOINT_LM.json",
+          "corrected_macro_ce": 2.7389250776984473,
+          "legacy_macro_ce_same_forward": 2.7320537133650347,
+          "valid_tokens": 5874543,
+          "legacy_tokens": 5893039
+        }
+      }
+    }
+  },
+  {
+    "variant": "original-dense-path-resolve",
+    "partition": "arch",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-resolve-dense-r1-p1-1x8-arch-1007-0537-e64a",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/run_resolve_dense.sh",
+    "workload": "Read-only originalDense resumed W&B config/history + actual final metadata resolution; source scheduler ID unavailable explicitly; CPU inside scheduled allocation",
+    "capacity_prediction": {
+      "partition": "arch",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-07T05:36:46.994741+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：1",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_arch_1_20261007_053646.log"
+    },
+    "local_validation": "New resolution identity/checksum/terminal/history guard tests5passed0.16s; scripts compile and bash-n passed; no live training edits",
+    "job_id": "mose-resolve-dense-r1-p1-1x8-arch-1007-0537-4cee7",
+    "latest_observation": {
+      "state": "Succeeded",
+      "counters": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/dense_path_observation.log"
+    },
+    "completion_verified": {
+      "state": "Succeeded",
+      "counters": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "observed_at": "2026-10-07T05:38:57.866317+08:00",
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/dense_path_observation.log",
+      "sha256": "a9ededb696ca3e7be6f3985d2966e494a41b4cddabf4eff28d4fe677c7a6bbe0",
+      "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/DENSE_CHECKPOINT.json"
+    }
+  },
+  {
+    "variant": "original-dense-final-lm",
+    "partition": "arch",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-eval-dense-r1-p1-1x8-arch-1007-0539-5a2e",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/run_dense_final.sh",
+    "workload": "Read-only final14306 originalDense unified target/legacy LM validation; recipe/seed and1484916736 params guarded, same32768 microbatch/8ranks/data; no train/save/optimizer",
+    "manifest": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/dense_case.json",
+    "capacity_prediction": {
+      "partition": "arch",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-07T05:39:10.384029+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：1",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_arch_1_20261007_053910.log"
+    },
+    "local_validation": "New source guard5passed0.16s; actual completed resolver hash and identity validated; wrapper bash-n passed; original recipe matched actual checkpoint metadata in resolver",
+    "job_id": "mose-eval-dense-r1-p1-1x8-arch-1007-0539-5a2-5fbc0",
+    "latest_observation": {
+      "state": "Succeeded",
+      "counters": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/dense_final_observation.log"
+    },
+    "completion_verified": {
+      "state": "Succeeded",
+      "counters": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "observed_at": "2026-10-07T05:57:39.572552+08:00",
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/dense_final_observation.log",
+      "sha256": "8015dc2a756b57b5f417d8dc0c4d0b487c3c77c5565863c5663d3136cd093614",
+      "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/DENSE_FINAL_CHECKPOINT_LM.json",
+      "corrected_macro_ce": 2.627212025902488,
+      "legacy_macro_ce_same_forward": 2.620586709542708,
+      "valid_tokens": 5874543,
+      "legacy_tokens": 5893039
+    }
+  },
+  {
+    "variant": "c0-c6-seed-final-lm",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-eval-seed-c0c6-r1-p1-1x8-pool-1007-0958-0b51",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/run_c0_c6_seed_final.sh",
+    "workload": "Read-only final14306 corrected/legacy LM reevaluation forC0/C6 seeds12537/12538; actual original recipes/model/seed metadata guards;8ranks/micro32768, no train/save/optimizer",
+    "manifest": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/c0_c6_seed_cases.json",
+    "capacity_prediction": {
+      "partition": "pool",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-07T09:58:11.550699+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：1",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261007_095811.log"
+    },
+    "local_validation": "All4 exact final checkpoints/current terminal proofs/seed recipes verified; unchanged tested evaluator/evidence guards; new4-case wrapper bash-n passed",
+    "job_id": "mose-eval-seed-c0c6-r1-p1-1x8-pool-1007-0958-9a0c4",
+    "latest_observation": {
+      "state": "Succeeded",
+      "counters": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/c0_c6_seed_observation.log",
+      "observed_at": "2026-10-07T10:29:41.989147+08:00"
+    },
+    "completion_verified": {
+      "state": "Succeeded",
+      "counters": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/c0_c6_seed_observation.log",
+      "observed_at": "2026-10-07T10:29:41.989147+08:00",
+      "outputs": {
+        "c0s2": {
+          "sha256": "8c654db62cf9c8acd4feb229bdec3c11ca63c45fda837ef90864c9b335e21f8e",
+          "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/C0S2_FINAL_CHECKPOINT_LM.json",
+          "corrected_macro_ce": 2.74260582707145,
+          "legacy_macro_ce_same_forward": 2.7357317967848345,
+          "valid_tokens": 5874543,
+          "legacy_tokens": 5893039
+        },
+        "c6s2": {
+          "sha256": "12122a7389ed177f719a92bcb590f57ef22c3f042e2fb3dde99c3ac9e7af57c9",
+          "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/C6S2_FINAL_CHECKPOINT_LM.json",
+          "corrected_macro_ce": 2.7345668619329278,
+          "legacy_macro_ce_same_forward": 2.727710398760709,
+          "valid_tokens": 5874543,
+          "legacy_tokens": 5893039
+        },
+        "c0s3": {
+          "sha256": "503786a43c0f66775a7ef8bf934b2e311af7c564c3f9175d0dd24e7bdf325b5f",
+          "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/C0S3_FINAL_CHECKPOINT_LM.json",
+          "corrected_macro_ce": 2.7386726791208442,
+          "legacy_macro_ce_same_forward": 2.7317991798574273,
+          "valid_tokens": 5874543,
+          "legacy_tokens": 5893039
+        },
+        "c6s3": {
+          "sha256": "2781b70cf84175d3c0cdf243b379864e03fcc2b3c6988d75389a6f9759588f41",
+          "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/C6S3_FINAL_CHECKPOINT_LM.json",
+          "corrected_macro_ce": 2.7346012592315674,
+          "legacy_macro_ce_same_forward": 2.727740157734264,
+          "valid_tokens": 5874543,
+          "legacy_tokens": 5893039
+        }
+      }
+    }
+  },
+  {
+    "variant": "all-seed-train-and-c2-final-lm",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-seed-confirm-r1-p1-1x8-pool-1007-1228-6243",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/run_all_seed_train_and_c2_final.sh",
+    "workload": "Read-only complete6 C0/C2/C6 init12537/12538 Train CE histories, then actualfinal14306 C2 checkpoints forcorrected11-source LM evaluation; sharedsingle8GPU allocation, no train/optimizer/save/W&B",
+    "manifest": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/c2_seed_cases.json",
+    "train_manifest": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/completed_seed_segments.json",
+    "capacity_prediction": {
+      "partition": "pool",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-07T12:27:00.698126+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：1",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261007_122700.log"
+    },
+    "local_validation": "All6 source attempts Succeeded/active0/final14306 saved, exactsegments/configs/seeds/budget checked; both C2 rawcheckpoint proofs validated locally; unchanged exporter/evaluator guards; all3 wrappers bash-n passed",
+    "job_id": "mose-seed-confirm-r1-p1-1x8-pool-1007-1228-6-a9b14",
+    "latest_observation": {
+      "state": "Succeeded",
+      "counters": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "exit_code": 0,
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/all_seed_train_c2_final_observation.log",
+      "observed_at": "2026-10-07T12:36:07.267478+08:00"
+    },
+    "completion_verified": {
+      "state": "Succeeded",
+      "counters": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "exit_code": 0,
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/all_seed_train_c2_final_observation.log",
+      "observed_at": "2026-10-07T12:36:07.267478+08:00",
+      "outputs": {
+        "all_seed_train_ce": {
+          "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/ALL_SEED_FULL_TRAIN_CE.json",
+          "sha256": "b1a5bffc082ef1404d5b63418c15f04f14dda858514eaea12b95d7f5c1c72327"
+        },
+        "c2s2": {
+          "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/C2S2_FINAL_CHECKPOINT_LM.json",
+          "sha256": "d5ecaf4551535da3ba67ce63939989d928666d8af219a4557438d1a5161bfdc7",
+          "corrected_macro_ce": 2.7330860658125444,
+          "legacy_macro_ce_same_forward": 2.726228724826466,
+          "valid_tokens": 5874543,
+          "legacy_tokens": 5893039
+        },
+        "c2s3": {
+          "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/C2S3_FINAL_CHECKPOINT_LM.json",
+          "sha256": "7e1211e3e9702606ef0456af970b03b3959046d0b7c00ec54784d22a9cf78742",
+          "corrected_macro_ce": 2.7334730841896753,
+          "legacy_macro_ce_same_forward": 2.7266138033433394,
+          "valid_tokens": 5874543,
+          "legacy_tokens": 5893039
+        }
+      }
+    }
+  }
+]

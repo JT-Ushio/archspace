@@ -1,0 +1,73 @@
+{
+  "checkpoint_step": 14306,
+  "macro_sources": 11,
+  "num_params": 797050880,
+  "n_pairs": 2,
+  "pairs": [
+    {
+      "init_seed": 12537,
+      "data_seed": 34521,
+      "c0": 2.74260582707145,
+      "c6": 2.7345668619329278,
+      "c6_minus_c0": -0.008038965138522425
+    },
+    {
+      "init_seed": 12538,
+      "data_seed": 34521,
+      "c0": 2.7386726791208442,
+      "c6": 2.7346012592315674,
+      "c6_minus_c0": -0.004071419889276839
+    }
+  ],
+  "mean_c6_minus_c0": -0.006055192513899632,
+  "original_seed12536_included": false,
+  "scope": "Corrected target-label mask, fixed validation data and paired initialization seeds; no significance claim",
+  "evaluation_job_id": "mose-eval-seed-c0c6-r1-p1-1x8-pool-1007-0958-9a0c4",
+  "completion_verified": {
+    "state": "Succeeded",
+    "counters": {
+      "active": 0,
+      "succeeded": 1,
+      "failed": 0,
+      "created_failed": 0,
+      "pending": 0,
+      "stopped": 0
+    },
+    "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/c0_c6_seed_observation.log",
+    "observed_at": "2026-10-07T10:29:41.989147+08:00",
+    "outputs": {
+      "c0s2": {
+        "sha256": "8c654db62cf9c8acd4feb229bdec3c11ca63c45fda837ef90864c9b335e21f8e",
+        "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/C0S2_FINAL_CHECKPOINT_LM.json",
+        "corrected_macro_ce": 2.74260582707145,
+        "legacy_macro_ce_same_forward": 2.7357317967848345,
+        "valid_tokens": 5874543,
+        "legacy_tokens": 5893039
+      },
+      "c6s2": {
+        "sha256": "12122a7389ed177f719a92bcb590f57ef22c3f042e2fb3dde99c3ac9e7af57c9",
+        "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/C6S2_FINAL_CHECKPOINT_LM.json",
+        "corrected_macro_ce": 2.7345668619329278,
+        "legacy_macro_ce_same_forward": 2.727710398760709,
+        "valid_tokens": 5874543,
+        "legacy_tokens": 5893039
+      },
+      "c0s3": {
+        "sha256": "503786a43c0f66775a7ef8bf934b2e311af7c564c3f9175d0dd24e7bdf325b5f",
+        "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/C0S3_FINAL_CHECKPOINT_LM.json",
+        "corrected_macro_ce": 2.7386726791208442,
+        "legacy_macro_ce_same_forward": 2.7317991798574273,
+        "valid_tokens": 5874543,
+        "legacy_tokens": 5893039
+      },
+      "c6s3": {
+        "sha256": "2781b70cf84175d3c0cdf243b379864e03fcc2b3c6988d75389a6f9759588f41",
+        "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/C6S3_FINAL_CHECKPOINT_LM.json",
+        "corrected_macro_ce": 2.7346012592315674,
+        "legacy_macro_ce_same_forward": 2.727740157734264,
+        "valid_tokens": 5874543,
+        "legacy_tokens": 5893039
+      }
+    }
+  }
+}

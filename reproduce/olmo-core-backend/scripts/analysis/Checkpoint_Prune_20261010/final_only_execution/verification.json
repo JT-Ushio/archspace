@@ -1,0 +1,13 @@
+{
+  "verified_at": "2026-10-10T14:45:30.032314+00:00",
+  "root": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE",
+  "deleted_count_verified": 700,
+  "retained_final_count_verified": 85,
+  "preserved_exception_checkpoint_count": 99,
+  "before_logical_bytes": 7944356195298,
+  "after_logical_bytes": 1695262095445,
+  "directory_logical_reduction_bytes": 6249094099853,
+  "filesystem_available_bytes": 49526521987072,
+  "filesystem_total_bytes": 285078454272000,
+  "all_checks_passed": true
+}

@@ -215,8 +215,13 @@ match, and when their learnable RMSNorm-weight topology is identical.
 OLMo's built-in Hugging Face converter does not encode custom channel-control functions and
 does not map MoSE U/V weights or the optional nonlinear RMSNorm weights. Do not use it for these
 checkpoints: native controlled checkpoints would be exported as ordinary SwiGLU, while MoSE
-conversion fails on unmapped keys. A dedicated HF architecture and converter are required later
-for publication.
+conversion fails on unmapped keys. Use the unified exporter and standalone HF runtime in
+[`scripts/convert/`](scripts/convert/README.md), which preserves the registered architecture,
+activations and sharing. The guide covers single/batch export, forward-contract differences and
+explicit numerical validation. The October 8 CFP structural audit passed 89 configurations.
+The five Dense/single-point models and fourteen rank512/C0–C8 models have since been exported;
+see the conversion manifests for per-model evidence. Numerical native/HF forward comparison
+remains recorded as `not_run`; export and benchmark completion do not establish that equivalence.
 
 The supplied recipe uses HSDP, and every two-dimensional U/V weight is assigned to Muon. MoSE
 tensor parallelism is intentionally rejected because its two-stage shared projections require a

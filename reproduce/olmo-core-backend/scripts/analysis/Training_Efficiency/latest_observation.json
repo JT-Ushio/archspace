@@ -1,0 +1,42 @@
+{
+  "variant": "dense-c0-c6-training-step",
+  "partition": "pool",
+  "nodes": 1,
+  "gpus_per_node": 8,
+  "priority": 1,
+  "job_name": "mose-eff-step-r1-p1-1x8-pool-1007-0406-44a9",
+  "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Training_Efficiency/run_benchmark.sh",
+  "workload": "Isolated Dense/C0/C6 synthetic full training-step efficiency; same8GPU node, FP8/Muon/globalbatch retained, matched micro32768;5warmup+10measured steps each; no checkpoint read/write or quality claim",
+  "capacity_prediction": {
+    "partition": "pool",
+    "nodes": 1,
+    "exit_code": 0,
+    "observed_at": "2026-10-07T04:06:54.116575+08:00",
+    "schedulable": true,
+    "summary": [
+      "📌 任务调度核心状态：✅ 任务可调度",
+      "  - 总副本数量：1",
+      "  - 可调度数量：1",
+      "  - 不可调度数量：0"
+    ],
+    "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261007_040654.log"
+  },
+  "local_validation": "Python compile/bash-n passed; actual budgets/batch/finite CE+gradients enforced during GPU execution",
+  "job_id": "mose-eff-step-r1-p1-1x8-pool-1007-0406-44a9-70355",
+  "status": "Succeeded",
+  "counts": "{'active': 0, 'succeeded': 1, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+  "latest": null,
+  "segments": [],
+  "events": [
+    "[2026-10-07T04:07:31+08:00] mose-eff-step-r1-p1-1x8-pool-1007-0406-44a9-70355-cfcd2 >> 2026-10-07 04:07:31.631\tgpu-lg-cmc-h-h200-2314.host.h.pjlab.org.cn:0\tolmo_core.distributed.parallel:246\tINFO\tBuilt 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+    "[2026-10-07T04:07:32+08:00] mose-eff-step-r1-p1-1x8-pool-1007-0406-44a9-70355-cfcd2 >> 2026-10-07 04:07:32.431\tgpu-lg-cmc-h-h200-2314.host.h.pjlab.org.cn:0\tolmo_core.train.train_module.transformer.common:169\tINFO\tApplied FSDP to the model with 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+    "[2026-10-07T04:09:47+08:00] mose-eff-step-r1-p1-1x8-pool-1007-0406-44a9-70355-cfcd2 >> 2026-10-07 04:09:47.373\tgpu-lg-cmc-h-h200-2314.host.h.pjlab.org.cn:0\tolmo_core.distributed.parallel:246\tINFO\tBuilt 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+    "[2026-10-07T04:09:48+08:00] mose-eff-step-r1-p1-1x8-pool-1007-0406-44a9-70355-cfcd2 >> 2026-10-07 04:09:48.264\tgpu-lg-cmc-h-h200-2314.host.h.pjlab.org.cn:0\tolmo_core.train.train_module.transformer.common:169\tINFO\tApplied FSDP to the model with 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+    "[2026-10-07T04:12:10+08:00] mose-eff-step-r1-p1-1x8-pool-1007-0406-44a9-70355-cfcd2 >> 2026-10-07 04:12:10.698\tgpu-lg-cmc-h-h200-2314.host.h.pjlab.org.cn:0\tolmo_core.distributed.parallel:246\tINFO\tBuilt 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+    "[2026-10-07T04:12:11+08:00] mose-eff-step-r1-p1-1x8-pool-1007-0406-44a9-70355-cfcd2 >> 2026-10-07 04:12:11.573\tgpu-lg-cmc-h-h200-2314.host.h.pjlab.org.cn:0\tolmo_core.train.train_module.transformer.common:169\tINFO\tApplied FSDP to the model with 2D device mesh with shape (dp_replicate=1, dp_shard=8)"
+  ],
+  "observation_exit_code": 0,
+  "observed_at": "2026-10-07T04:22:18.262088+08:00",
+  "observation_basis": "Current scheduler status and job logs",
+  "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Training_Efficiency/completion_observation.log"
+}

@@ -1,0 +1,64 @@
+[
+  {
+    "variant": "a1",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-attn-a1-r1-p1-1x8-pool-1007-0128-5292",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Attention_Rank_Reallocation/run_a1.sh",
+    "init_seed": 12536,
+    "data_seed": 34521,
+    "num_params": 797050880,
+    "attention_rank": 832,
+    "ug_rank": 336,
+    "down_rank": 352,
+    "share_gate_up_subspace": false,
+    "capacity_prediction": {
+      "partition": "pool",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-07T01:28:31.634932+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：1",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261007_012831.log"
+    },
+    "local_validation": "Actual meta module budgets and unchanged recipe1passed166.67s; 8/16/32GPU batch divisibility; launchers bash-n passed"
+  },
+  {
+    "variant": "a2",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-attn-a2-r1-p1-1x8-pool-1007-0128-b35f",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Attention_Rank_Reallocation/run_a2.sh",
+    "init_seed": 12536,
+    "data_seed": 34521,
+    "num_params": 797050880,
+    "attention_rank": 832,
+    "ug_rank": 320,
+    "down_rank": 448,
+    "share_gate_up_subspace": true,
+    "capacity_prediction": {
+      "partition": "pool",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-07T01:28:45.571830+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：1",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261007_012845.log"
+    },
+    "local_validation": "Actual meta module budgets and unchanged recipe1passed166.67s; 8/16/32GPU batch divisibility; launchers bash-n passed"
+  }
+]

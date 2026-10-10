@@ -1,0 +1,16 @@
+{
+  "f4qk": {
+    "source_job_id": "mose-ffn-f4qk-r1-p1-2x8-arch-1006-2300-6d41-46be5",
+    "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ffn-budget-f4qk-ug400-down816-shared-qk-silu-ug-linear-down-rms-fp8-30b/stage1/step14306",
+    "completion_proof": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/completion_f4qk.log",
+    "config_path": "cfps/BS256_Seq8K_30B_WSD_FP8/FFN_Rank_Reallocation/f4qk.py",
+    "num_params": 797050880
+  },
+  "f5qk": {
+    "source_job_id": "mose-ffn-f5qk-r1-p1-2x8-arch-1006-2300-f278-d8613",
+    "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ffn-budget-f5qk-ug560-down528-shared-qk-silu-ug-linear-down-rms-fp8-30b/stage1/step14306",
+    "completion_proof": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/completion_f5qk.log",
+    "config_path": "cfps/BS256_Seq8K_30B_WSD_FP8/FFN_Rank_Reallocation/f5qk.py",
+    "num_params": 797050880
+  }
+}

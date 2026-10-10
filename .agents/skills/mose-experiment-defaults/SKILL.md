@@ -1,6 +1,6 @@
 ---
 name: mose-experiment-defaults
-description: Apply Shijiayang's default hyperparameters when designing or editing MoSE/OLMo-core pretraining experiments in archspace-MoSE, unless the user explicitly overrides them. Includes schedule and comparison conventions.
+description: Apply Shijiayang's default hyperparameters when designing or editing MoSE/OLMo-core pretraining experiments in archspace-MoSE, unless the user explicitly overrides them. Includes schedule, comparison conventions and HF export support for architecture changes.
 ---
 
 # MoSE experiment defaults
@@ -31,3 +31,5 @@ Periodic checkpoint triggers are approximate due to step rounding. Startup/final
 Use distinct experiment directories and unique run names/save paths for new ablations. Keep old experiment results intact. Record resolved configs and seeds. For three-way Down-SiLU/Identity/RMSNorm ablations, use the existing down_nonlinear_u/v branch; Identity returns its input without changing matrices, parameter names or initialization.
 
 For comparisons, align by actual optimizer steps/tokens and match schedules. Standard logs currently expose CE/PPL; BPB requires byte counts of exactly the scored original text and cannot be obtained as CE/log(2) alone. Preserve anomalous rows and report sensitivity analyses explicitly.
+
+When adding a new architecture or changing model forward behavior, read [mose-hf-export](../mose-hf-export/SKILL.md). Every new architecture must include its HF adapter and matching standalone inference support through the unified exporter, plus validation code. New rank/width/activation combinations reuse the existing family module. If the user defers numerical verification, write the checks and explicitly record `not_run`; do not treat a meta audit as numerical validation.

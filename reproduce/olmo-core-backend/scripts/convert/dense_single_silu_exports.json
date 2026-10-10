@@ -1,0 +1,97 @@
+{
+  "status": "complete",
+  "completed_at": "2026-10-08T11:55:22.802383+00:00",
+  "output_root": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/dense-single-silu-step14306-20261008",
+  "exports": [
+    {
+      "label": "dense",
+      "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/dense-single-silu-step14306-20261008/dense-step14306",
+      "parameters": 1484916736,
+      "weight_shards": 7,
+      "weight_bytes": 5939666944,
+      "dtypes": [
+        "float32"
+      ],
+      "completed_at": "2026-10-08T11:53:42.416285+00:00",
+      "numerical_validation": "not_run",
+      "gpu_benchmark": {
+        "status": "complete",
+        "num_tasks": 192,
+        "job_id": "xtuner-olmes-easy-dense-r2-1008-2132-7821394"
+      }
+    },
+    {
+      "label": "q",
+      "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/dense-single-silu-step14306-20261008/q-step14306",
+      "parameters": 1484916736,
+      "weight_shards": 7,
+      "weight_bytes": 5939666944,
+      "dtypes": [
+        "float32"
+      ],
+      "completed_at": "2026-10-08T11:54:06.031567+00:00",
+      "numerical_validation": "not_run",
+      "gpu_benchmark": {
+        "status": "complete",
+        "num_tasks": 192,
+        "job_id": "xtuner-olmes-easy-q-r2-1008-2132-9164594"
+      }
+    },
+    {
+      "label": "k",
+      "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/dense-single-silu-step14306-20261008/k-step14306",
+      "parameters": 1484916736,
+      "weight_shards": 7,
+      "weight_bytes": 5939666944,
+      "dtypes": [
+        "float32"
+      ],
+      "completed_at": "2026-10-08T11:54:30.395472+00:00",
+      "numerical_validation": "not_run",
+      "gpu_benchmark": {
+        "status": "complete",
+        "num_tasks": 192,
+        "job_id": "xtuner-olmes-easy-k-r2-1008-2132-10507094"
+      }
+    },
+    {
+      "label": "up",
+      "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/dense-single-silu-step14306-20261008/up-step14306",
+      "parameters": 1483868160,
+      "weight_shards": 7,
+      "weight_bytes": 5935472640,
+      "dtypes": [
+        "float32"
+      ],
+      "completed_at": "2026-10-08T11:54:58.318150+00:00",
+      "numerical_validation": "not_run",
+      "gpu_benchmark": {
+        "status": "complete",
+        "num_tasks": 192,
+        "job_id": "xtuner-olmes-easy-up-r2-1008-2132-11809105"
+      }
+    },
+    {
+      "label": "gate",
+      "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/dense-single-silu-step14306-20261008/gate-step14306",
+      "parameters": 1483868160,
+      "weight_shards": 7,
+      "weight_bytes": 5935472640,
+      "dtypes": [
+        "float32"
+      ],
+      "completed_at": "2026-10-08T11:55:22.797393+00:00",
+      "numerical_validation": "not_run",
+      "gpu_benchmark": {
+        "status": "complete",
+        "num_tasks": 192,
+        "job_id": "xtuner-olmes-easy-gate-r2-1008-2132-13070245"
+      }
+    }
+  ],
+  "numerical_validation": "not_run",
+  "benchmarks": "olmes_base_easy_complete",
+  "benchmark_job_ledger": "scripts/eval/OLMES_Easy/dense_single_silu_eval_jobs.json",
+  "benchmark_results": "scripts/eval/OLMES_Easy/results/dense_single_silu_20261008/GPU_RESULTS.md",
+  "gpu_benchmark_verified_at": "2026-10-08T21:48:49+08:00"
+}

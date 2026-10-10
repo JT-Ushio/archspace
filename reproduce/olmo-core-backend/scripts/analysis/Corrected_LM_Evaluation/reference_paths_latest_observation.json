@@ -1,0 +1,39 @@
+{
+  "variant": "reference-path-resolve",
+  "partition": "pool",
+  "nodes": 1,
+  "gpus_per_node": 8,
+  "priority": 1,
+  "job_name": "mose-ref-paths-r1-p1-1x8-pool-1007-0354-07cc",
+  "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/run_resolve_references.sh",
+  "workload": "Read-only archived C0/C2/C6 offline W&B config + complete history + final checkpoint metadata resolution; no root guesses or training; CPU analysis in scheduled 8GPU allocation",
+  "capacity_prediction": {
+    "partition": "pool",
+    "nodes": 1,
+    "exit_code": 0,
+    "observed_at": "2026-10-07T03:54:39.144440+08:00",
+    "schedulable": true,
+    "summary": [
+      "📌 任务调度核心状态：✅ 任务可调度",
+      "  - 总副本数量：1",
+      "  - 可调度数量：1",
+      "  - 不可调度数量：0"
+    ],
+    "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261007_035439.log"
+  },
+  "local_validation": "Config nested merge/run-stage identity/checkpoint metadata guards passed; Python compile/bash-n passed",
+  "job_id": "mose-ref-paths-r1-p1-1x8-pool-1007-0354-07cc-88d55",
+  "status": "Succeeded",
+  "counts": "{'active': 0, 'succeeded': 1, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+  "latest": null,
+  "segments": [
+    "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20260930_172412-olmo3-1b-r512matched-c0-k-silu-down-rms-fp8-30b",
+    "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20260930_174903-olmo3-1b-r512matched-c2-k-silu-down-rms-gateup-fp8-30b",
+    "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261001_133931-olmo3-1b-r512matched-c6-qk-silu-down-rms-gateup-fp8-30b"
+  ],
+  "events": [],
+  "observation_exit_code": 0,
+  "observed_at": "2026-10-07T03:56:29.938188+08:00",
+  "observation_basis": "Current scheduler status and job logs",
+  "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/reference_paths_observation.log"
+}

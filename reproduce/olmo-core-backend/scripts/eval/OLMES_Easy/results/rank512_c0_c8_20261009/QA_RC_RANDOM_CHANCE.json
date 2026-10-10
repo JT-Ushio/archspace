@@ -1,0 +1,708 @@
+{
+  "suite": "olmo3:base_easy:qa_rc",
+  "num_top_level_groups": 21,
+  "num_leaf_tasks": 83,
+  "chance_accuracy": 0.28182550820119195,
+  "lambada_assumption": "Open-vocabulary final-word prediction approximated as zero",
+  "aggregation": "Same recursive equal-weight macro as benchmark results",
+  "source_output": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/olmo3_outputs/evals/olmes/rank512-c0-c8-step14306-20261009/cola",
+  "top_level_groups": {
+    "arc:rc::olmes:full": 0.2501588816684095,
+    "basic_skills:rc::olmes": 0.20250218738202558,
+    "coqa:rc::gen2mc:xlarge": 0.25,
+    "csqa:rc::olmes:full": 0.19999999999999563,
+    "drop:rc::gen2mc:xlarge": 0.25,
+    "hellaswag:rc::olmes:full": 0.25,
+    "jeopardy:rc::gen2mc:xlarge": 0.25,
+    "lab_bench_dbqa": 0.25,
+    "lab_bench_protocolqa": 0.23234126984126974,
+    "lambada": 0.0,
+    "medmcqa:rc::none": 0.25,
+    "medqa_en:rc::none": 0.19999999999999535,
+    "mmlu:rc::olmes": 0.25,
+    "naturalqs:rc::gen2mc:xlarge": 0.25,
+    "piqa:rc::olmes:full": 0.5,
+    "qasper_yesno:rc::olmes": 0.5,
+    "sciq:rc::olmo3": 0.25,
+    "sciriff_yesno:rc::olmes": 0.5,
+    "socialiqa:rc::olmes:full": 0.3333333333333354,
+    "squad:rc::gen2mc:xlarge": 0.25,
+    "winogrande:rc::olmes:full": 0.5
+  },
+  "tasks": {
+    "mmlu_high_school_geography:rc::olmes": {
+      "chance": 0.25,
+      "samples": 198,
+      "choice_count_histogram": {
+        "4": 198
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_miscellaneous:rc::olmes": {
+      "chance": 0.25,
+      "samples": 783,
+      "choice_count_histogram": {
+        "4": 783
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "piqa:rc::olmes:full": {
+      "chance": 0.5,
+      "samples": 1838,
+      "choice_count_histogram": {
+        "2": 1838
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_conceptual_physics:rc::olmes": {
+      "chance": 0.25,
+      "samples": 235,
+      "choice_count_histogram": {
+        "4": 235
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_marketing:rc::olmes": {
+      "chance": 0.25,
+      "samples": 234,
+      "choice_count_histogram": {
+        "4": 234
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "drop:rc::gen2mc:xlarge": {
+      "chance": 0.25,
+      "samples": 8380,
+      "choice_count_histogram": {
+        "4": 8380
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_machine_learning:rc::olmes": {
+      "chance": 0.25,
+      "samples": 112,
+      "choice_count_histogram": {
+        "4": 112
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "basic_skills_coding:rc::olmes": {
+      "chance": 0.20004940711462157,
+      "samples": 1012,
+      "choice_count_histogram": {
+        "5": 1011,
+        "4": 1
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "arc_challenge:rc::olmes:full": {
+      "chance": 0.2501564277588168,
+      "samples": 1172,
+      "choice_count_histogram": {
+        "4": 1165,
+        "3": 4,
+        "5": 3
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "basic_skills_pattern:rc::olmes": {
+      "chance": 0.249438202247191,
+      "samples": 534,
+      "choice_count_histogram": {
+        "4": 528,
+        "5": 6
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_prehistory:rc::olmes": {
+      "chance": 0.25,
+      "samples": 324,
+      "choice_count_histogram": {
+        "4": 324
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_computer_security:rc::olmes": {
+      "chance": 0.25,
+      "samples": 100,
+      "choice_count_histogram": {
+        "4": 100
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_college_mathematics:rc::olmes": {
+      "chance": 0.25,
+      "samples": 100,
+      "choice_count_histogram": {
+        "4": 100
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_high_school_world_history:rc::olmes": {
+      "chance": 0.25,
+      "samples": 237,
+      "choice_count_histogram": {
+        "4": 237
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_professional_medicine:rc::olmes": {
+      "chance": 0.25,
+      "samples": 272,
+      "choice_count_histogram": {
+        "4": 272
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_sociology:rc::olmes": {
+      "chance": 0.25,
+      "samples": 201,
+      "choice_count_histogram": {
+        "4": 201
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "medqa_en:rc::none": {
+      "chance": 0.19999999999999535,
+      "samples": 1273,
+      "choice_count_histogram": {
+        "5": 1273
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_human_aging:rc::olmes": {
+      "chance": 0.25,
+      "samples": 223,
+      "choice_count_histogram": {
+        "4": 223
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_elementary_mathematics:rc::olmes": {
+      "chance": 0.25,
+      "samples": 378,
+      "choice_count_histogram": {
+        "4": 378
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_world_religions:rc::olmes": {
+      "chance": 0.25,
+      "samples": 171,
+      "choice_count_histogram": {
+        "4": 171
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "basic_skills_string_operations:rc::olmes": {
+      "chance": 0.20485370522285562,
+      "samples": 1219,
+      "choice_count_histogram": {
+        "5": 1099,
+        "4": 119,
+        "6": 1
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_high_school_computer_science:rc::olmes": {
+      "chance": 0.25,
+      "samples": 100,
+      "choice_count_histogram": {
+        "4": 100
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "basic_skills_logical_reasoning:rc::olmes": {
+      "chance": 0.25,
+      "samples": 1118,
+      "choice_count_histogram": {
+        "4": 1118
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "basic_skills_arithmetic:rc::olmes": {
+      "chance": 0.0999999999999984,
+      "samples": 1047,
+      "choice_count_histogram": {
+        "10": 1047
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "socialiqa:rc::olmes:full": {
+      "chance": 0.3333333333333354,
+      "samples": 1954,
+      "choice_count_histogram": {
+        "3": 1954
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "lab_bench_dbqa": {
+      "chance": 0.25,
+      "samples": 520,
+      "choice_count_histogram": {
+        "4": 520
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_high_school_us_history:rc::olmes": {
+      "chance": 0.25,
+      "samples": 204,
+      "choice_count_histogram": {
+        "4": 204
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_high_school_statistics:rc::olmes": {
+      "chance": 0.25,
+      "samples": 216,
+      "choice_count_histogram": {
+        "4": 216
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "hellaswag:rc::olmes:full": {
+      "chance": 0.25,
+      "samples": 10042,
+      "choice_count_histogram": {
+        "4": 10042
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "lambada": {
+      "chance": 0.0,
+      "basis": "Approximate zero for open-vocabulary final-word prediction",
+      "samples": 5153
+    },
+    "coqa:rc::gen2mc:xlarge": {
+      "chance": 0.25,
+      "samples": 7728,
+      "choice_count_histogram": {
+        "4": 7728
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "naturalqs:rc::gen2mc:xlarge": {
+      "chance": 0.25,
+      "samples": 3293,
+      "choice_count_histogram": {
+        "4": 3293
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_moral_disputes:rc::olmes": {
+      "chance": 0.25,
+      "samples": 346,
+      "choice_count_histogram": {
+        "4": 346
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "basic_skills_common_knowledge:rc::olmes": {
+      "chance": 0.2106718097074868,
+      "samples": 1037,
+      "choice_count_histogram": {
+        "4": 224,
+        "5": 809,
+        "6": 4
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "sciriff_yesno:rc::olmes": {
+      "chance": 0.5,
+      "samples": 1582,
+      "choice_count_histogram": {
+        "2": 1582
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_international_law:rc::olmes": {
+      "chance": 0.25,
+      "samples": 121,
+      "choice_count_histogram": {
+        "4": 121
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_abstract_algebra:rc::olmes": {
+      "chance": 0.25,
+      "samples": 100,
+      "choice_count_histogram": {
+        "4": 100
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "medmcqa:rc::none": {
+      "chance": 0.25,
+      "samples": 4183,
+      "choice_count_histogram": {
+        "4": 4183
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_college_chemistry:rc::olmes": {
+      "chance": 0.25,
+      "samples": 100,
+      "choice_count_histogram": {
+        "4": 100
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_high_school_microeconomics:rc::olmes": {
+      "chance": 0.25,
+      "samples": 238,
+      "choice_count_histogram": {
+        "4": 238
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_clinical_knowledge:rc::olmes": {
+      "chance": 0.25,
+      "samples": 265,
+      "choice_count_histogram": {
+        "4": 265
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "sciq:rc::olmo3": {
+      "chance": 0.25,
+      "samples": 1000,
+      "choice_count_histogram": {
+        "4": 1000
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "arc_easy:rc::olmes:full": {
+      "chance": 0.25016133557800224,
+      "samples": 2376,
+      "choice_count_histogram": {
+        "4": 2365,
+        "3": 7,
+        "5": 4
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_professional_law:rc::olmes": {
+      "chance": 0.25,
+      "samples": 1534,
+      "choice_count_histogram": {
+        "4": 1534
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "winogrande:rc::olmes:full": {
+      "chance": 0.5,
+      "samples": 1267,
+      "choice_count_histogram": {
+        "2": 1267
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_moral_scenarios:rc::olmes": {
+      "chance": 0.25,
+      "samples": 895,
+      "choice_count_histogram": {
+        "4": 895
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_public_relations:rc::olmes": {
+      "chance": 0.25,
+      "samples": 110,
+      "choice_count_histogram": {
+        "4": 110
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_high_school_european_history:rc::olmes": {
+      "chance": 0.25,
+      "samples": 165,
+      "choice_count_histogram": {
+        "4": 165
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_electrical_engineering:rc::olmes": {
+      "chance": 0.25,
+      "samples": 145,
+      "choice_count_histogram": {
+        "4": 145
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_high_school_chemistry:rc::olmes": {
+      "chance": 0.25,
+      "samples": 203,
+      "choice_count_histogram": {
+        "4": 203
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_us_foreign_policy:rc::olmes": {
+      "chance": 0.25,
+      "samples": 100,
+      "choice_count_histogram": {
+        "4": 100
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_professional_accounting:rc::olmes": {
+      "chance": 0.25,
+      "samples": 282,
+      "choice_count_histogram": {
+        "4": 282
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_jurisprudence:rc::olmes": {
+      "chance": 0.25,
+      "samples": 108,
+      "choice_count_histogram": {
+        "4": 108
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_astronomy:rc::olmes": {
+      "chance": 0.25,
+      "samples": 152,
+      "choice_count_histogram": {
+        "4": 152
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_high_school_macroeconomics:rc::olmes": {
+      "chance": 0.25,
+      "samples": 390,
+      "choice_count_histogram": {
+        "4": 390
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "qasper_yesno:rc::olmes": {
+      "chance": 0.5,
+      "samples": 319,
+      "choice_count_histogram": {
+        "2": 319
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_professional_psychology:rc::olmes": {
+      "chance": 0.25,
+      "samples": 612,
+      "choice_count_histogram": {
+        "4": 612
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "lab_bench_protocolqa": {
+      "chance": 0.23234126984126974,
+      "samples": 108,
+      "choice_count_histogram": {
+        "4": 77,
+        "5": 21,
+        "6": 9,
+        "7": 1
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_nutrition:rc::olmes": {
+      "chance": 0.25,
+      "samples": 306,
+      "choice_count_histogram": {
+        "4": 306
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_college_physics:rc::olmes": {
+      "chance": 0.25,
+      "samples": 102,
+      "choice_count_histogram": {
+        "4": 102
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_college_computer_science:rc::olmes": {
+      "chance": 0.25,
+      "samples": 100,
+      "choice_count_histogram": {
+        "4": 100
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_high_school_mathematics:rc::olmes": {
+      "chance": 0.25,
+      "samples": 270,
+      "choice_count_histogram": {
+        "4": 270
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_virology:rc::olmes": {
+      "chance": 0.25,
+      "samples": 166,
+      "choice_count_histogram": {
+        "4": 166
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "squad:rc::gen2mc:xlarge": {
+      "chance": 0.25,
+      "samples": 10205,
+      "choice_count_histogram": {
+        "4": 10205
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "csqa:rc::olmes:full": {
+      "chance": 0.19999999999999563,
+      "samples": 1221,
+      "choice_count_histogram": {
+        "5": 1221
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_college_biology:rc::olmes": {
+      "chance": 0.25,
+      "samples": 144,
+      "choice_count_histogram": {
+        "4": 144
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_logical_fallacies:rc::olmes": {
+      "chance": 0.25,
+      "samples": 163,
+      "choice_count_histogram": {
+        "4": 163
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_security_studies:rc::olmes": {
+      "chance": 0.25,
+      "samples": 245,
+      "choice_count_histogram": {
+        "4": 245
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_anatomy:rc::olmes": {
+      "chance": 0.25,
+      "samples": 135,
+      "choice_count_histogram": {
+        "4": 135
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_medical_genetics:rc::olmes": {
+      "chance": 0.25,
+      "samples": 100,
+      "choice_count_histogram": {
+        "4": 100
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_high_school_physics:rc::olmes": {
+      "chance": 0.25,
+      "samples": 151,
+      "choice_count_histogram": {
+        "4": 151
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_college_medicine:rc::olmes": {
+      "chance": 0.25,
+      "samples": 173,
+      "choice_count_histogram": {
+        "4": 173
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_global_facts:rc::olmes": {
+      "chance": 0.25,
+      "samples": 100,
+      "choice_count_histogram": {
+        "4": 100
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_human_sexuality:rc::olmes": {
+      "chance": 0.25,
+      "samples": 131,
+      "choice_count_histogram": {
+        "4": 131
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_formal_logic:rc::olmes": {
+      "chance": 0.25,
+      "samples": 126,
+      "choice_count_histogram": {
+        "4": 126
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_econometrics:rc::olmes": {
+      "chance": 0.25,
+      "samples": 114,
+      "choice_count_histogram": {
+        "4": 114
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "jeopardy:rc::gen2mc:xlarge": {
+      "chance": 0.25,
+      "samples": 2099,
+      "choice_count_histogram": {
+        "4": 2099
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_management:rc::olmes": {
+      "chance": 0.25,
+      "samples": 103,
+      "choice_count_histogram": {
+        "4": 103
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_high_school_biology:rc::olmes": {
+      "chance": 0.25,
+      "samples": 310,
+      "choice_count_histogram": {
+        "4": 310
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_high_school_psychology:rc::olmes": {
+      "chance": 0.25,
+      "samples": 545,
+      "choice_count_histogram": {
+        "4": 545
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_business_ethics:rc::olmes": {
+      "chance": 0.25,
+      "samples": 100,
+      "choice_count_histogram": {
+        "4": 100
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_high_school_government_and_politics:rc::olmes": {
+      "chance": 0.25,
+      "samples": 193,
+      "choice_count_histogram": {
+        "4": 193
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    },
+    "mmlu_philosophy:rc::olmes": {
+      "chance": 0.25,
+      "samples": 311,
+      "choice_count_histogram": {
+        "4": 311
+      },
+      "basis": "Uniform random selection among actual evaluated choices"
+    }
+  }
+}

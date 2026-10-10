@@ -1,0 +1,138 @@
+[
+  {
+    "variant": "a1",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-attn-a1-r1-p1-1x8-pool-1007-0128-5292",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Attention_Rank_Reallocation/run_a1.sh",
+    "init_seed": 12536,
+    "data_seed": 34521,
+    "num_params": 797050880,
+    "attention_rank": 832,
+    "ug_rank": 336,
+    "down_rank": 352,
+    "share_gate_up_subspace": false,
+    "capacity_prediction": {
+      "partition": "pool",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-07T01:28:31.634932+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：1",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261007_012831.log"
+    },
+    "local_validation": "Actual meta module budgets and unchanged recipe1passed166.67s; 8/16/32GPU batch divisibility; launchers bash-n passed",
+    "job_id": "mose-attn-a1-r1-p1-1x8-pool-1007-0128-5292-1-78ab4",
+    "latest_observation": {
+      "status": "Succeeded",
+      "counts": "{'active': 0, 'succeeded': 1, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+      "observed_at": "2026-10-07T16:22:11.199730+08:00",
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Attention_Rank_Reallocation/completion_a1.log"
+    },
+    "startup_verified": {
+      "mesh_1x8": true,
+      "step0_saved": true,
+      "finite_training_ce": true,
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Attention_Rank_Reallocation/startup_a1_verified.log",
+      "observed_errors": [],
+      "step0_saved_log": "[2026-10-07T01:31:27+08:00] mose-attn-a1-r1-p1-1x8-pool-1007-0128-5292-1-78ab4-cfcd2 >> 2026-10-07 01:31:27.483\tgpu-lg-cmc-h-h200-0805.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:1030\tINFO\tCheckpoint for step 0 saved successfully",
+      "fresh_init_verified": true,
+      "dry_run_complete": true
+    },
+    "wandb_segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261007_013128-olmo3-1b-attn-budget-a1-r832-ug336-down352-unshared-qk-silu-down-rms-fp8-30b",
+    "completion_verified": {
+      "state": "Succeeded",
+      "counters": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "final_step": 14306,
+      "final_checkpoint_saved": true,
+      "observed_at": "2026-10-07T16:22:11.199730+08:00",
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Attention_Rank_Reallocation/completion_a1.log"
+    },
+    "wandb_sync_verified": {
+      "finished": true,
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Attention_Rank_Reallocation/sync_a1_observation.log"
+    }
+  },
+  {
+    "variant": "a2",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-attn-a2-r1-p1-1x8-pool-1007-0128-b35f",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Attention_Rank_Reallocation/run_a2.sh",
+    "init_seed": 12536,
+    "data_seed": 34521,
+    "num_params": 797050880,
+    "attention_rank": 832,
+    "ug_rank": 320,
+    "down_rank": 448,
+    "share_gate_up_subspace": true,
+    "capacity_prediction": {
+      "partition": "pool",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-07T01:28:45.571830+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：1",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261007_012845.log"
+    },
+    "local_validation": "Actual meta module budgets and unchanged recipe1passed166.67s; 8/16/32GPU batch divisibility; launchers bash-n passed",
+    "job_id": "mose-attn-a2-r1-p1-1x8-pool-1007-0128-b35f-2-1cf16",
+    "latest_observation": {
+      "status": "Succeeded",
+      "counts": "{'active': 0, 'succeeded': 1, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+      "observed_at": "2026-10-07T16:22:10.972767+08:00",
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Attention_Rank_Reallocation/completion_a2.log"
+    },
+    "startup_verified": {
+      "mesh_1x8": true,
+      "step0_saved": true,
+      "finite_training_ce": true,
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Attention_Rank_Reallocation/startup_a2_verified.log",
+      "observed_errors": [],
+      "step0_saved_log": "[2026-10-07T01:31:27+08:00] mose-attn-a2-r1-p1-1x8-pool-1007-0128-b35f-2-1cf16-cfcd2 >> 2026-10-07 01:31:27.106\tgpu-lg-cmc-h-h200-0793.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:1030\tINFO\tCheckpoint for step 0 saved successfully",
+      "fresh_init_verified": true,
+      "dry_run_complete": true
+    },
+    "wandb_segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261007_013127-olmo3-1b-attn-budget-a2-r832-ug320-down448-shared-qk-silu-down-rms-fp8-30b",
+    "completion_verified": {
+      "state": "Succeeded",
+      "counters": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "final_step": 14306,
+      "final_checkpoint_saved": true,
+      "observed_at": "2026-10-07T16:22:10.972767+08:00",
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Attention_Rank_Reallocation/completion_a2.log"
+    },
+    "wandb_sync_verified": {
+      "finished": true,
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Attention_Rank_Reallocation/sync_a2_observation.log"
+    }
+  }
+]

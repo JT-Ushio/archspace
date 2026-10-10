@@ -1,0 +1,14 @@
+{
+  "partition": "pool",
+  "nodes": 1,
+  "exit_code": 0,
+  "observed_at": "2026-10-07T09:58:11.550699+08:00",
+  "schedulable": true,
+  "summary": [
+    "📌 任务调度核心状态：✅ 任务可调度",
+    "  - 总副本数量：1",
+    "  - 可调度数量：1",
+    "  - 不可调度数量：0"
+  ],
+  "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261007_095811.log"
+}

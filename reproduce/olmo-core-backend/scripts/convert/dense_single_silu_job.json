@@ -1,0 +1,105 @@
+{
+  "job_id": "xtuner-mose-hf-single-silu-1008-1949-86104329",
+  "job_name": "xtuner-mose-hf-single-silu-1008-1949",
+  "submitted_at": "2026-10-08T19:49:46+08:00",
+  "submission_confirmed": true,
+  "namespace": "ailab-llmagent",
+  "charged_group": "llmagent_gpu",
+  "partition": "agent",
+  "nodes": 1,
+  "gpus_per_node": 8,
+  "priority": 1,
+  "cpu": 32,
+  "memory_mib": 262144,
+  "launcher": "scripts/convert/run_dense_single_silu_agent_8gpu.sh",
+  "step": 14306,
+  "dtype": "auto",
+  "checkpoint_root": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE",
+  "output_root": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/dense-single-silu-step14306-20261008",
+  "numerical_validation": "not_run",
+  "benchmarks": "not_selected",
+  "status": "succeeded",
+  "exports": [
+    "dense",
+    "q",
+    "k",
+    "up",
+    "gate"
+  ],
+  "last_scheduler_check": "2026-10-08T19:55:52+08:00",
+  "replicas": {
+    "active": 0,
+    "succeeded": 1,
+    "failed": 0,
+    "pending": 0,
+    "stopped": 0
+  },
+  "node": "gpu-lg-cmc-h-h200-1670.host.h.pjlab.org.cn",
+  "export_status": "complete",
+  "exports_complete_at": "2026-10-08T11:55:22.802383+00:00",
+  "export_results": [
+    {
+      "label": "dense",
+      "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/dense-single-silu-step14306-20261008/dense-step14306",
+      "parameters": 1484916736,
+      "weight_shards": 7,
+      "weight_bytes": 5939666944,
+      "dtypes": [
+        "float32"
+      ],
+      "completed_at": "2026-10-08T11:53:42.416285+00:00",
+      "numerical_validation": "not_run"
+    },
+    {
+      "label": "q",
+      "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/dense-single-silu-step14306-20261008/q-step14306",
+      "parameters": 1484916736,
+      "weight_shards": 7,
+      "weight_bytes": 5939666944,
+      "dtypes": [
+        "float32"
+      ],
+      "completed_at": "2026-10-08T11:54:06.031567+00:00",
+      "numerical_validation": "not_run"
+    },
+    {
+      "label": "k",
+      "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/dense-single-silu-step14306-20261008/k-step14306",
+      "parameters": 1484916736,
+      "weight_shards": 7,
+      "weight_bytes": 5939666944,
+      "dtypes": [
+        "float32"
+      ],
+      "completed_at": "2026-10-08T11:54:30.395472+00:00",
+      "numerical_validation": "not_run"
+    },
+    {
+      "label": "up",
+      "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/dense-single-silu-step14306-20261008/up-step14306",
+      "parameters": 1483868160,
+      "weight_shards": 7,
+      "weight_bytes": 5935472640,
+      "dtypes": [
+        "float32"
+      ],
+      "completed_at": "2026-10-08T11:54:58.318150+00:00",
+      "numerical_validation": "not_run"
+    },
+    {
+      "label": "gate",
+      "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/dense-single-silu-step14306-20261008/gate-step14306",
+      "parameters": 1483868160,
+      "weight_shards": 7,
+      "weight_bytes": 5935472640,
+      "dtypes": [
+        "float32"
+      ],
+      "completed_at": "2026-10-08T11:55:22.797393+00:00",
+      "numerical_validation": "not_run"
+    }
+  ],
+  "weight_bytes": 29689946112,
+  "artifacts_readable": true,
+  "output_directory_mode": "0755"
+}

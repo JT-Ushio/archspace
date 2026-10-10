@@ -1,0 +1,306 @@
+[
+  {
+    "variant": "p2",
+    "partition": "arch",
+    "nodes": 4,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ug-p2-r1-p1-4x8-arch-1006-1123-f1d4",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p2.sh",
+    "submission_state": "retired-terminal",
+    "time": "2026-10-06T11:24:52.074376+08:00",
+    "job_id": "mose-ug-p2-r1-p1-4x8-arch-1006-1123-f1d4-96742035",
+    "terminal_confirmation": {
+      "state": "Failed",
+      "counters": {
+        "active": 0,
+        "succeeded": 0,
+        "failed": 4,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      }
+    }
+  },
+  {
+    "variant": "p3",
+    "partition": "arch",
+    "nodes": 2,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ug-p3-r1-p1-2x8-arch-1006-1123-5b87",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p3.sh",
+    "submission_state": "retired-stopped",
+    "time": "2026-10-06T11:25:30.192714+08:00",
+    "job_id": "mose-ug-p3-r1-p1-2x8-arch-1006-1123-5b87-34699678"
+  },
+  {
+    "variant": "p0",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ug-p0-r1-p1-1x8-pool-1006-1123-7104",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p0.sh",
+    "submission_state": "rejected-before-submit",
+    "time": "2026-10-06T11:25:36.045439+08:00",
+    "reason": "gpu_run rejects namespace pool before invoking rjob; supported pool alias is archp"
+  },
+  {
+    "variant": "p0",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ug-p0-r1-p1-1x8-pool-1006-1123-7104",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p0.sh",
+    "submission_state": "confirmed",
+    "time": "2026-10-06T11:26:13.093839+08:00",
+    "job_id": "mose-ug-p0-r1-p1-1x8-pool-1006-1123-7104-77485485"
+  },
+  {
+    "variant": "p1",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ug-p1-r1-p1-1x8-pool-1006-1123-6d50",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p1.sh",
+    "submission_state": "retired-terminal",
+    "time": "2026-10-06T11:26:18.800288+08:00",
+    "job_id": "mose-ug-p1-r1-p1-1x8-pool-1006-1123-6d50-83419854",
+    "terminal_confirmation": {
+      "state": "Failed",
+      "counters": {
+        "active": 0,
+        "succeeded": 0,
+        "failed": 1,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      }
+    }
+  },
+  {
+    "variant": "p4",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ug-p4-r1-p1-1x8-pool-1006-1123-1580",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p4.sh",
+    "submission_state": "retired-terminal",
+    "time": "2026-10-06T11:26:24.681162+08:00",
+    "job_id": "mose-ug-p4-r1-p1-1x8-pool-1006-1123-1580-89006511",
+    "terminal_confirmation": {
+      "state": "Failed",
+      "counters": {
+        "active": 0,
+        "succeeded": 0,
+        "failed": 1,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      }
+    }
+  },
+  {
+    "variant": "p3",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ug-p3-r2-p1-1x8-pool-1006-1128-e927",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p3.sh",
+    "submission_state": "retired-terminal",
+    "time": "2026-10-06T11:28:45.878981+08:00",
+    "job_id": "mose-ug-p3-r2-p1-1x8-pool-1006-1128-e927-30519513",
+    "terminal_confirmation": {
+      "state": "Failed",
+      "counters": {
+        "active": 0,
+        "succeeded": 0,
+        "failed": 1,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      }
+    }
+  },
+  {
+    "variant": "p1",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-recover-p1-r2-p1-1x8-pool-1006-1204-efa2",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p1.sh",
+    "submission_state": "retired-terminal",
+    "time": "2026-10-06T12:04:24.662096+08:00",
+    "job_id": "mose-recover-p1-r2-p1-1x8-pool-1006-1204-efa-886b9",
+    "terminal_confirmation": {
+      "state": "Failed",
+      "counters": {
+        "active": 0,
+        "succeeded": 0,
+        "failed": 1,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      }
+    }
+  },
+  {
+    "variant": "p4",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-recover-p4-r2-p1-1x8-pool-1006-1207-0d3e",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p4.sh",
+    "submission_state": "confirmed",
+    "time": "2026-10-06T12:07:04.346154+08:00",
+    "job_id": "mose-recover-p4-r2-p1-1x8-pool-1006-1207-0d3-44098"
+  },
+  {
+    "variant": "p3",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-recover-p3-r3-p1-1x8-pool-1006-1228-c382",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p3.sh",
+    "submission_state": "confirmed",
+    "time": "2026-10-06T12:28:49.402477+08:00",
+    "job_id": "mose-recover-p3-r3-p1-1x8-pool-1006-1228-c38-15484"
+  },
+  {
+    "variant": "p2qk",
+    "partition": "arch",
+    "nodes": 4,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ug-p2qk-r1-p1-4x8-arch-1006-1347-8485",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p2qk.sh",
+    "submission_state": "confirmed",
+    "time": "2026-10-06T13:47:53.104785+08:00",
+    "job_id": "mose-ug-p2qk-r1-p1-4x8-arch-1006-1347-8485-7-afb90"
+  },
+  {
+    "variant": "p2",
+    "partition": "arch",
+    "nodes": 2,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-recover-p2-r2-p1-2x8-arch-1006-1355-0002",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p2_storage_resume.sh",
+    "submission_state": "retired-terminal",
+    "time": "2026-10-06T13:55:33.260245+08:00",
+    "job_id": "mose-recover-p2-r2-p1-2x8-arch-1006-1355-000-c0361",
+    "terminal_confirmation": {
+      "state": "Stopped",
+      "counters": {
+        "active": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 2
+      }
+    }
+  },
+  {
+    "variant": "p1",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-recover-p1-r3-p1-1x8-pool-1006-1358-5ee1",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p1_storage_resume.sh",
+    "submission_state": "confirmed",
+    "time": "2026-10-06T13:58:40.692043+08:00",
+    "job_id": "mose-recover-p1-r3-p1-1x8-pool-1006-1358-5ee-ff2d5"
+  },
+  {
+    "variant": "p0qk",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ug-p0qk-r1-p1-1x8-pool-1006-1347-459e",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p0qk.sh",
+    "submission_state": "confirmed",
+    "time": "2026-10-06T13:58:46.395233+08:00",
+    "job_id": "mose-ug-p0qk-r1-p1-1x8-pool-1006-1347-459e-3-74da9"
+  },
+  {
+    "variant": "p2",
+    "partition": "arch",
+    "nodes": 2,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-recover-p2-r3-p1-2x8-arch-1006-1409-7a81",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p2_storage_resume.sh",
+    "submission_state": "confirmed",
+    "time": "2026-10-06T14:09:27.500278+08:00",
+    "job_id": "mose-recover-p2-r3-p1-2x8-arch-1006-1409-7a8-a7469"
+  },
+  {
+    "variant": "p3qk",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ug-p3qk-r1-p1-1x8-pool-1006-2111-2dcc",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p3qk.sh",
+    "init_seed": 12536,
+    "data_seed": 34521,
+    "num_params": 797050880,
+    "capacity_prediction": {
+      "partition": "pool",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-06T21:11:09.288317+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：1",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261006_211109.log"
+    },
+    "submission_state": "confirmed",
+    "time": "2026-10-06T21:11:09.306220+08:00",
+    "job_id": "mose-ug-p3qk-r1-p1-1x8-pool-1006-2111-2dcc-7-ec6b7"
+  },
+  {
+    "variant": "p4qk",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ug-p4qk-r1-p1-1x8-pool-1006-2111-0416",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p4qk.sh",
+    "init_seed": 12536,
+    "data_seed": 34521,
+    "num_params": 797050880,
+    "capacity_prediction": {
+      "partition": "pool",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-06T21:11:22.682763+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：1",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261006_211122.log"
+    },
+    "submission_state": "confirmed",
+    "time": "2026-10-06T21:11:22.698667+08:00",
+    "job_id": "mose-ug-p4qk-r1-p1-1x8-pool-1006-2111-0416-8-5686b"
+  }
+]

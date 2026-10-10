@@ -1,0 +1,395 @@
+[
+  {
+    "variant": "du",
+    "target": "up",
+    "job_name": "xtuner-dense-ud-r1632-rms-1x8-p1-1008-2016",
+    "job_id": "xtuner-dense-ud-r1632-rms-1x8-p1-1008-2016-482868",
+    "submitted_at": "2026-10-08T20:16:40+08:00",
+    "namespace": "ailab-llmarchitecture",
+    "charged_group": "llmarchitecture_gpu_pool",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "parameters": 1482819584,
+    "run_name": "olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b",
+    "launcher": "scripts/train/Dense_FFN_Linear_RMS/run_up_linear_down_rms.sh",
+    "status": "Succeeded",
+    "init_seed": 12536,
+    "data_seed": 34521,
+    "numerical_hf_validation": "not_run",
+    "last_scheduler_observation": {
+      "job_id": "xtuner-dense-ud-r1632-rms-1x8-p1-1008-2016-482868",
+      "status": "Running",
+      "observed_at": "2026-10-08T23:51:04+08:00",
+      "counts_dict": {
+        "active": 1,
+        "succeeded": 0,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      }
+    },
+    "submission_state": "confirmed",
+    "monitor_interval_seconds": 1800,
+    "last_observation": {
+      "variant": "du",
+      "job_id": "xtuner-dense-ud-r1632-rms-1x8-p1-1008-2016-482868",
+      "namespace": "ailab-llmarchitecture",
+      "status": "Succeeded",
+      "counts_dict": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "latest_step": 14306,
+      "latest_metrics": {
+        "step": 14300,
+        "eta": "1m",
+        "at": "2026-10-09T12:27:36+08:00",
+        "ce": 2.4
+      },
+      "training_complete": true,
+      "completed_at": "2026-10-09T12:28:09+08:00",
+      "final_checkpoint_saved": true,
+      "checkpoint_saved_at": "2026-10-09T12:28:06+08:00",
+      "final_checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b/stage1/step14306",
+      "proof": [
+        "[2026-10-09T12:28:03+08:00] xtuner-dense-ud-r1632-rms-1x8-p1-1008-2016-482868-cfcd2 >> 2026-10-09 12:28:03.671\tgpu-lg-cmc-h-h200-1141.host.h.pjlab.org.cn:0\tolmo_core.train.callbacks.console_logger:61\tINFO\t[step=14306/14306,epoch=1]",
+        "[2026-10-09T12:28:04+08:00] xtuner-dense-ud-r1632-rms-1x8-p1-1008-2016-482868-cfcd2 >> 2026-10-09 12:28:04.857\tgpu-lg-cmc-h-h200-1141.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:969\tINFO\tSaving checkpoint for step 14306 to '/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b/stage1/step14306'...",
+        "[2026-10-09T12:28:06+08:00] xtuner-dense-ud-r1632-rms-1x8-p1-1008-2016-482868-cfcd2 >> 2026-10-09 12:28:06.753\tgpu-lg-cmc-h-h200-1141.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:989\tINFO\tCheckpoint saved",
+        "[2026-10-09T12:28:09+08:00] xtuner-dense-ud-r1632-rms-1x8-p1-1008-2016-482868-cfcd2 >> 2026-10-09 12:28:09.178\tgpu-lg-cmc-h-h200-1141.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:763\tINFO\tTraining complete"
+      ],
+      "errors": [],
+      "observed_at": "2026-10-09T04:42:29.398423+00:00",
+      "progress_percent": 100.0,
+      "completion_verified": true,
+      "log_file": "monitor_snapshots/monitor_20261009_1241/du.log"
+    },
+    "training_progress_verified": {
+      "step": 3039,
+      "latest_console_metrics": {
+        "step": 3030,
+        "eta": "12h39m",
+        "at": "2026-10-08T23:53:37+08:00",
+        "ce": 2.736
+      },
+      "errors_in_retrieved_tail": [],
+      "observed_at": "2026-10-08T23:55:00+08:00"
+    },
+    "completion_verified": {
+      "variant": "du",
+      "job_id": "xtuner-dense-ud-r1632-rms-1x8-p1-1008-2016-482868",
+      "namespace": "ailab-llmarchitecture",
+      "status": "Succeeded",
+      "counts_dict": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "latest_step": 14306,
+      "latest_metrics": {
+        "step": 14300,
+        "eta": "1m",
+        "at": "2026-10-09T12:27:36+08:00",
+        "ce": 2.4
+      },
+      "training_complete": true,
+      "completed_at": "2026-10-09T12:28:09+08:00",
+      "final_checkpoint_saved": true,
+      "checkpoint_saved_at": "2026-10-09T12:28:06+08:00",
+      "final_checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b/stage1/step14306",
+      "proof": [
+        "[2026-10-09T12:28:03+08:00] xtuner-dense-ud-r1632-rms-1x8-p1-1008-2016-482868-cfcd2 >> 2026-10-09 12:28:03.671\tgpu-lg-cmc-h-h200-1141.host.h.pjlab.org.cn:0\tolmo_core.train.callbacks.console_logger:61\tINFO\t[step=14306/14306,epoch=1]",
+        "[2026-10-09T12:28:04+08:00] xtuner-dense-ud-r1632-rms-1x8-p1-1008-2016-482868-cfcd2 >> 2026-10-09 12:28:04.857\tgpu-lg-cmc-h-h200-1141.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:969\tINFO\tSaving checkpoint for step 14306 to '/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b/stage1/step14306'...",
+        "[2026-10-09T12:28:06+08:00] xtuner-dense-ud-r1632-rms-1x8-p1-1008-2016-482868-cfcd2 >> 2026-10-09 12:28:06.753\tgpu-lg-cmc-h-h200-1141.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:989\tINFO\tCheckpoint saved",
+        "[2026-10-09T12:28:09+08:00] xtuner-dense-ud-r1632-rms-1x8-p1-1008-2016-482868-cfcd2 >> 2026-10-09 12:28:09.178\tgpu-lg-cmc-h-h200-1141.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:763\tINFO\tTraining complete"
+      ],
+      "errors": [],
+      "observed_at": "2026-10-09T04:42:29.398423+00:00",
+      "progress_percent": 100.0,
+      "completion_verified": true,
+      "log_file": "monitor_snapshots/monitor_20261009_1241/du.log"
+    },
+    "wandb_sync": {
+      "verified_at": "2026-10-09T05:28:01.154Z",
+      "segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261008_202844-olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b",
+      "run_name": "olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b",
+      "run_url": "https://wandb.ai/archspace/MoSE/runs/olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b",
+      "method": "wandb_sjy",
+      "pid": 2451559,
+      "finished_syncing": true,
+      "synced_marker": true,
+      "status": "complete"
+    }
+  },
+  {
+    "variant": "dg",
+    "target": "gate",
+    "job_name": "xtuner-dense-gd-r1632-rms-1x8-p1-1008-2017",
+    "job_id": "xtuner-dense-gd-r1632-rms-1x8-p1-1008-2017-3-25bd7",
+    "submitted_at": "2026-10-08T20:17:12+08:00",
+    "namespace": "ailab-llmarchitecture",
+    "charged_group": "llmarchitecture_gpu_pool",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "parameters": 1482819584,
+    "run_name": "olmo3-1b-dense-nearmatched-gate-linear-r1632-down-rms-r1632-fp8-30b",
+    "launcher": "scripts/train/Dense_FFN_Linear_RMS/run_gate_linear_down_rms.sh",
+    "status": "Succeeded",
+    "init_seed": 12536,
+    "data_seed": 34521,
+    "numerical_hf_validation": "not_run",
+    "last_scheduler_observation": {
+      "job_id": "xtuner-dense-gd-r1632-rms-1x8-p1-1008-2017-3-25bd7",
+      "status": "Running",
+      "observed_at": "2026-10-08T23:51:06+08:00",
+      "counts_dict": {
+        "active": 1,
+        "succeeded": 0,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      }
+    },
+    "submission_state": "confirmed",
+    "monitor_interval_seconds": 1800,
+    "last_observation": {
+      "variant": "dg",
+      "job_id": "xtuner-dense-gd-r1632-rms-1x8-p1-1008-2017-3-25bd7",
+      "namespace": "ailab-llmarchitecture",
+      "status": "Succeeded",
+      "counts_dict": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "latest_step": 14306,
+      "latest_metrics": {
+        "step": 14300,
+        "eta": "1m",
+        "at": "2026-10-09T12:32:29+08:00",
+        "ce": 2.394
+      },
+      "training_complete": true,
+      "completed_at": "2026-10-09T12:33:02+08:00",
+      "final_checkpoint_saved": true,
+      "checkpoint_saved_at": "2026-10-09T12:32:59+08:00",
+      "final_checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-dense-nearmatched-gate-linear-r1632-down-rms-r1632-fp8-30b/stage1/step14306",
+      "proof": [
+        "[2026-10-09T12:32:55+08:00] xtuner-dense-gd-r1632-rms-1x8-p1-1008-2017-3-25bd7-cfcd2 >> 2026-10-09 12:32:55.679\tgpu-lg-cmc-h-h200-0030.host.h.pjlab.org.cn:0\tolmo_core.train.callbacks.console_logger:61\tINFO\t[step=14306/14306,epoch=1]",
+        "[2026-10-09T12:32:57+08:00] xtuner-dense-gd-r1632-rms-1x8-p1-1008-2017-3-25bd7-cfcd2 >> 2026-10-09 12:32:57.541\tgpu-lg-cmc-h-h200-0030.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:969\tINFO\tSaving checkpoint for step 14306 to '/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-dense-nearmatched-gate-linear-r1632-down-rms-r1632-fp8-30b/stage1/step14306'...",
+        "[2026-10-09T12:32:59+08:00] xtuner-dense-gd-r1632-rms-1x8-p1-1008-2017-3-25bd7-cfcd2 >> 2026-10-09 12:32:59.964\tgpu-lg-cmc-h-h200-0030.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:989\tINFO\tCheckpoint saved",
+        "[2026-10-09T12:33:02+08:00] xtuner-dense-gd-r1632-rms-1x8-p1-1008-2017-3-25bd7-cfcd2 >> 2026-10-09 12:33:02.410\tgpu-lg-cmc-h-h200-0030.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:763\tINFO\tTraining complete"
+      ],
+      "errors": [],
+      "observed_at": "2026-10-09T04:42:29.398423+00:00",
+      "progress_percent": 100.0,
+      "completion_verified": true,
+      "log_file": "monitor_snapshots/monitor_20261009_1241/dg.log"
+    },
+    "training_progress_verified": {
+      "step": 2999,
+      "latest_console_metrics": {
+        "step": 2990,
+        "eta": "12h41m",
+        "at": "2026-10-08T23:50:45+08:00",
+        "ce": 2.722
+      },
+      "errors_in_retrieved_tail": [],
+      "observed_at": "2026-10-08T23:55:00+08:00"
+    },
+    "completion_verified": {
+      "variant": "dg",
+      "job_id": "xtuner-dense-gd-r1632-rms-1x8-p1-1008-2017-3-25bd7",
+      "namespace": "ailab-llmarchitecture",
+      "status": "Succeeded",
+      "counts_dict": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "latest_step": 14306,
+      "latest_metrics": {
+        "step": 14300,
+        "eta": "1m",
+        "at": "2026-10-09T12:32:29+08:00",
+        "ce": 2.394
+      },
+      "training_complete": true,
+      "completed_at": "2026-10-09T12:33:02+08:00",
+      "final_checkpoint_saved": true,
+      "checkpoint_saved_at": "2026-10-09T12:32:59+08:00",
+      "final_checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-dense-nearmatched-gate-linear-r1632-down-rms-r1632-fp8-30b/stage1/step14306",
+      "proof": [
+        "[2026-10-09T12:32:55+08:00] xtuner-dense-gd-r1632-rms-1x8-p1-1008-2017-3-25bd7-cfcd2 >> 2026-10-09 12:32:55.679\tgpu-lg-cmc-h-h200-0030.host.h.pjlab.org.cn:0\tolmo_core.train.callbacks.console_logger:61\tINFO\t[step=14306/14306,epoch=1]",
+        "[2026-10-09T12:32:57+08:00] xtuner-dense-gd-r1632-rms-1x8-p1-1008-2017-3-25bd7-cfcd2 >> 2026-10-09 12:32:57.541\tgpu-lg-cmc-h-h200-0030.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:969\tINFO\tSaving checkpoint for step 14306 to '/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-dense-nearmatched-gate-linear-r1632-down-rms-r1632-fp8-30b/stage1/step14306'...",
+        "[2026-10-09T12:32:59+08:00] xtuner-dense-gd-r1632-rms-1x8-p1-1008-2017-3-25bd7-cfcd2 >> 2026-10-09 12:32:59.964\tgpu-lg-cmc-h-h200-0030.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:989\tINFO\tCheckpoint saved",
+        "[2026-10-09T12:33:02+08:00] xtuner-dense-gd-r1632-rms-1x8-p1-1008-2017-3-25bd7-cfcd2 >> 2026-10-09 12:33:02.410\tgpu-lg-cmc-h-h200-0030.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:763\tINFO\tTraining complete"
+      ],
+      "errors": [],
+      "observed_at": "2026-10-09T04:42:29.398423+00:00",
+      "progress_percent": 100.0,
+      "completion_verified": true,
+      "log_file": "monitor_snapshots/monitor_20261009_1241/dg.log"
+    },
+    "wandb_sync": {
+      "verified_at": "2026-10-09T05:33:24.032Z",
+      "segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261008_202849-olmo3-1b-dense-nearmatched-gate-linear-r1632-down-rms-r1632-fp8-30b",
+      "run_name": "olmo3-1b-dense-nearmatched-gate-linear-r1632-down-rms-r1632-fp8-30b",
+      "run_url": "https://wandb.ai/archspace/MoSE/runs/olmo3-1b-dense-nearmatched-gate-linear-r1632-down-rms-r1632-fp8-30b",
+      "method": "wandb_sjy",
+      "pid": 2451749,
+      "finished_syncing": true,
+      "synced_marker": true,
+      "status": "complete"
+    }
+  },
+  {
+    "variant": "dug",
+    "target": "up_gate",
+    "job_name": "xtuner-dense-ugd-r1632-rms-1x8-p1-1008-2020",
+    "job_id": "xtuner-dense-ugd-r1632-rms-1x8-p1-1008-2020-9e8f7",
+    "submitted_at": "2026-10-08T20:20:32+08:00",
+    "namespace": "ailab-llmarchitecture",
+    "charged_group": "llmarchitecture_gpu_pool",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "parameters": 1481771008,
+    "run_name": "olmo3-1b-dense-nearmatched-up-gate-linear-r1632-down-rms-r1632-fp8-30b",
+    "launcher": "scripts/train/Dense_FFN_Linear_RMS/run_up_gate_linear_down_rms.sh",
+    "status": "Succeeded",
+    "init_seed": 12536,
+    "data_seed": 34521,
+    "numerical_hf_validation": "not_run",
+    "last_scheduler_observation": {
+      "job_id": "xtuner-dense-ugd-r1632-rms-1x8-p1-1008-2020-9e8f7",
+      "status": "Running",
+      "observed_at": "2026-10-08T23:51:07+08:00",
+      "counts_dict": {
+        "active": 1,
+        "succeeded": 0,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      }
+    },
+    "submission_state": "confirmed",
+    "monitor_interval_seconds": 1800,
+    "last_observation": {
+      "variant": "dug",
+      "job_id": "xtuner-dense-ugd-r1632-rms-1x8-p1-1008-2020-9e8f7",
+      "namespace": "ailab-llmarchitecture",
+      "status": "Succeeded",
+      "counts_dict": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "latest_step": 14306,
+      "latest_metrics": {
+        "step": 14300,
+        "eta": "1m",
+        "at": "2026-10-09T12:36:26+08:00",
+        "ce": 2.401
+      },
+      "training_complete": true,
+      "completed_at": "2026-10-09T12:36:59+08:00",
+      "final_checkpoint_saved": true,
+      "checkpoint_saved_at": "2026-10-09T12:36:56+08:00",
+      "final_checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-dense-nearmatched-up-gate-linear-r1632-down-rms-r1632-fp8-30b/stage1/step14306",
+      "proof": [
+        "[2026-10-09T12:36:53+08:00] xtuner-dense-ugd-r1632-rms-1x8-p1-1008-2020-9e8f7-cfcd2 >> 2026-10-09 12:36:53.163\tgpu-lg-cmc-h-h200-0079.host.h.pjlab.org.cn:0\tolmo_core.train.callbacks.console_logger:61\tINFO\t[step=14306/14306,epoch=1]",
+        "[2026-10-09T12:36:54+08:00] xtuner-dense-ugd-r1632-rms-1x8-p1-1008-2020-9e8f7-cfcd2 >> 2026-10-09 12:36:54.586\tgpu-lg-cmc-h-h200-0079.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:969\tINFO\tSaving checkpoint for step 14306 to '/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-dense-nearmatched-up-gate-linear-r1632-down-rms-r1632-fp8-30b/stage1/step14306'...",
+        "[2026-10-09T12:36:56+08:00] xtuner-dense-ugd-r1632-rms-1x8-p1-1008-2020-9e8f7-cfcd2 >> 2026-10-09 12:36:56.669\tgpu-lg-cmc-h-h200-0079.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:989\tINFO\tCheckpoint saved",
+        "[2026-10-09T12:36:59+08:00] xtuner-dense-ugd-r1632-rms-1x8-p1-1008-2020-9e8f7-cfcd2 >> 2026-10-09 12:36:59.246\tgpu-lg-cmc-h-h200-0079.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:763\tINFO\tTraining complete"
+      ],
+      "errors": [],
+      "observed_at": "2026-10-09T04:42:29.398423+00:00",
+      "progress_percent": 100.0,
+      "completion_verified": true,
+      "log_file": "monitor_snapshots/monitor_20261009_1241/dug.log"
+    },
+    "training_progress_verified": {
+      "step": 2996,
+      "latest_console_metrics": {
+        "step": 2990,
+        "eta": "12h44m",
+        "at": "2026-10-08T23:51:52+08:00",
+        "ce": 2.735
+      },
+      "errors_in_retrieved_tail": [],
+      "observed_at": "2026-10-08T23:55:00+08:00"
+    },
+    "completion_verified": {
+      "variant": "dug",
+      "job_id": "xtuner-dense-ugd-r1632-rms-1x8-p1-1008-2020-9e8f7",
+      "namespace": "ailab-llmarchitecture",
+      "status": "Succeeded",
+      "counts_dict": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "latest_step": 14306,
+      "latest_metrics": {
+        "step": 14300,
+        "eta": "1m",
+        "at": "2026-10-09T12:36:26+08:00",
+        "ce": 2.401
+      },
+      "training_complete": true,
+      "completed_at": "2026-10-09T12:36:59+08:00",
+      "final_checkpoint_saved": true,
+      "checkpoint_saved_at": "2026-10-09T12:36:56+08:00",
+      "final_checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-dense-nearmatched-up-gate-linear-r1632-down-rms-r1632-fp8-30b/stage1/step14306",
+      "proof": [
+        "[2026-10-09T12:36:53+08:00] xtuner-dense-ugd-r1632-rms-1x8-p1-1008-2020-9e8f7-cfcd2 >> 2026-10-09 12:36:53.163\tgpu-lg-cmc-h-h200-0079.host.h.pjlab.org.cn:0\tolmo_core.train.callbacks.console_logger:61\tINFO\t[step=14306/14306,epoch=1]",
+        "[2026-10-09T12:36:54+08:00] xtuner-dense-ugd-r1632-rms-1x8-p1-1008-2020-9e8f7-cfcd2 >> 2026-10-09 12:36:54.586\tgpu-lg-cmc-h-h200-0079.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:969\tINFO\tSaving checkpoint for step 14306 to '/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-dense-nearmatched-up-gate-linear-r1632-down-rms-r1632-fp8-30b/stage1/step14306'...",
+        "[2026-10-09T12:36:56+08:00] xtuner-dense-ugd-r1632-rms-1x8-p1-1008-2020-9e8f7-cfcd2 >> 2026-10-09 12:36:56.669\tgpu-lg-cmc-h-h200-0079.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:989\tINFO\tCheckpoint saved",
+        "[2026-10-09T12:36:59+08:00] xtuner-dense-ugd-r1632-rms-1x8-p1-1008-2020-9e8f7-cfcd2 >> 2026-10-09 12:36:59.246\tgpu-lg-cmc-h-h200-0079.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:763\tINFO\tTraining complete"
+      ],
+      "errors": [],
+      "observed_at": "2026-10-09T04:42:29.398423+00:00",
+      "progress_percent": 100.0,
+      "completion_verified": true,
+      "log_file": "monitor_snapshots/monitor_20261009_1241/dug.log"
+    },
+    "wandb_sync": {
+      "verified_at": "2026-10-09T05:33:25.136Z",
+      "segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261008_202850-olmo3-1b-dense-nearmatched-up-gate-linear-r1632-down-rms-r1632-fp8-30b",
+      "run_name": "olmo3-1b-dense-nearmatched-up-gate-linear-r1632-down-rms-r1632-fp8-30b",
+      "run_url": "https://wandb.ai/archspace/MoSE/runs/olmo3-1b-dense-nearmatched-up-gate-linear-r1632-down-rms-r1632-fp8-30b",
+      "method": "wandb_sjy",
+      "pid": 2451774,
+      "finished_syncing": true,
+      "synced_marker": true,
+      "status": "complete"
+    }
+  }
+]

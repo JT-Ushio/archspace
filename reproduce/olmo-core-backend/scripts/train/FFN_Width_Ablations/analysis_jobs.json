@@ -1,0 +1,49 @@
+[
+  {
+    "variant": "completed-five-analysis",
+    "job_id": "xtuner-width-gate-analysis-r1-1009-0040-10561557",
+    "submitted_at": "2026-10-09T00:36:50+08:00",
+    "namespace": "ailab-llmarchitecture",
+    "charged_group": "llmarchitecture_gpu_pool",
+    "partition": "pool",
+    "gpu_run_alias": "archp",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "status": "Stopped",
+    "launcher": "run_completed_analysis.sh",
+    "source_variants": [
+      "w1",
+      "w1qk",
+      "w1m",
+      "w2",
+      "g1"
+    ],
+    "output": "analysis/completed_20261009",
+    "scope": "Read completed W&B histories and independently evaluate final checkpoints with corrected/legacy masks; no training or source checkpoint saves",
+    "authorization_basis": "User requested analysis of the five completed experiments; existing pool 1x8 resource and autonomous submission instructions",
+    "submission_note": "pool alias was rejected before job creation; supported archp alias selects the requested architecture pool",
+    "stop_requested_at": "2026-10-09T00:50:27+08:00",
+    "stop_reason": "User explicitly requested no evaluation, only final-period Train CE analysis",
+    "terminal_verified": {
+      "state": "Stopped",
+      "observed_at": "2026-10-09T00:53:00+08:00",
+      "counters": {
+        "active": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 1
+      }
+    },
+    "train_history_analysis_complete": true,
+    "checkpoint_evaluation_complete": false,
+    "evaluation_restarted": false,
+    "completed_evaluation_cases": [
+      "w1"
+    ],
+    "report_scope": "Train CE only; partial evaluation result retained but excluded",
+    "report": "COMPLETED_RESULTS_20261009.md"
+  }
+]

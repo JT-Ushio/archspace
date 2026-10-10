@@ -1,0 +1,180 @@
+[
+  {
+    "variant": "f1",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-recover-f1-r2-p1-1x8-pool-1006-1207-08d8",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/run_f1.sh"
+  },
+  {
+    "variant": "f2",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-recover-f2-r2-p1-1x8-pool-1006-1213-0e18",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/run_f2.sh"
+  },
+  {
+    "variant": "f3",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-recover-f3-r2-p1-1x8-pool-1006-1213-ccc5",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/run_f3.sh"
+  },
+  {
+    "variant": "f3qk",
+    "partition": "arch",
+    "nodes": 4,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ffn-f3qk-r1-p1-4x8-arch-1006-1923-76a7",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/run_f3qk.sh"
+  },
+  {
+    "variant": "f1qk",
+    "partition": "arch",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ffn-f1qk-r2-p1-1x8-arch-1006-1937-bfde",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/run_f1qk.sh"
+  },
+  {
+    "variant": "f2qk",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ffn-f2qk-r1-p1-1x8-pool-1006-1922-88d3",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/run_f2qk.sh"
+  },
+  {
+    "variant": "f4qk",
+    "partition": "arch",
+    "nodes": 2,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ffn-f4qk-r1-p1-2x8-arch-1006-2300-6d41",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/run_f4qk.sh",
+    "init_seed": 12536,
+    "data_seed": 34521,
+    "num_params": 797050880,
+    "ug_rank": 400,
+    "down_rank": 816,
+    "share_gate_up_subspace": true,
+    "capacity_prediction": {
+      "partition": "arch",
+      "nodes": 2,
+      "exit_code": 0,
+      "observed_at": "2026-10-06T23:02:16.494924+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：2",
+        "  - 可调度数量：2",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_arch_2_20261006_230216.log"
+    },
+    "local_validation": "Actual meta parameter counts, Q/K-only recipe changes and world-size8/16/32 batch divisibility: 2 passed in376.57s; shell syntax passed"
+  },
+  {
+    "variant": "f5qk",
+    "partition": "arch",
+    "nodes": 2,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ffn-f5qk-r1-p1-2x8-arch-1006-2300-f278",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/run_f5qk.sh",
+    "init_seed": 12536,
+    "data_seed": 34521,
+    "num_params": 797050880,
+    "ug_rank": 560,
+    "down_rank": 528,
+    "share_gate_up_subspace": true,
+    "capacity_prediction": {
+      "partition": "arch",
+      "nodes": 2,
+      "exit_code": 0,
+      "observed_at": "2026-10-06T23:03:00.919052+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：2",
+        "  - 可调度数量：2",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_arch_2_20261006_230300.log"
+    },
+    "local_validation": "Actual meta parameter counts, Q/K-only recipe changes and world-size8/16/32 batch divisibility: 2 passed in376.57s; shell syntax passed"
+  },
+  {
+    "variant": "f4",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ffn-f4-r1-p1-1x8-pool-1007-0257-f50a",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/run_f4.sh",
+    "init_seed": 12536,
+    "data_seed": 34521,
+    "num_params": 797050880,
+    "ug_rank": 400,
+    "down_rank": 816,
+    "share_gate_up_subspace": true,
+    "capacity_prediction": {
+      "partition": "pool",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-07T02:57:32.713981+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：1",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261007_025732.log"
+    },
+    "control_for": "f4qk",
+    "allocation_limit": "arch16/32 prediction unavailable; pool8 counterpart differs from existing arch16 QK run; preserve this limit in comparisons",
+    "local_validation": "Previously registered all-five models/QK recipe and actualmeta budgets2passed376.57s; new launchers bash-n/entrypointscompile passed; aligned F4/F5 final-window metric test1passed10.26s"
+  },
+  {
+    "variant": "f5",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ffn-f5-r1-p1-1x8-pool-1007-0257-2198",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/run_f5.sh",
+    "init_seed": 12536,
+    "data_seed": 34521,
+    "num_params": 797050880,
+    "ug_rank": 560,
+    "down_rank": 528,
+    "share_gate_up_subspace": true,
+    "capacity_prediction": {
+      "partition": "pool",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-07T02:57:46.573541+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：1",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261007_025746.log"
+    },
+    "control_for": "f5qk",
+    "allocation_limit": "arch16/32 prediction unavailable; pool8 counterpart differs from existing arch16 QK run; preserve this limit in comparisons",
+    "local_validation": "Previously registered all-five models/QK recipe and actualmeta budgets2passed376.57s; new launchers bash-n/entrypointscompile passed; aligned F4/F5 final-window metric test1passed10.26s"
+  }
+]

@@ -230,3 +230,26 @@ reproduce/olmo-core-backend/scripts/analysis/Initialization_Analysis/snapshots/
 reproduce/olmo-core-backend/scripts/analysis/QK_Combination_Analysis/results/
 tools/
 wandb/
+
+# Reproducible analyses and compact experiment evidence.
+!reproduce/olmo-core-backend/scripts/analysis/Checkpoint_Prune_20261010/
+!reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/
+!reproduce/olmo-core-backend/scripts/analysis/Monthly_Summary_20261007/
+!reproduce/olmo-core-backend/scripts/analysis/Migration_20261010/
+!reproduce/olmo-core-backend/scripts/analysis/Training_Efficiency/
+!reproduce/olmo-core-backend/scripts/analysis/ABLATION_BEST_CONFIGS_20260930.md
+!reproduce/olmo-core-backend/scripts/analysis/MOSE_PROGRESS_BRIEF_20260922.md
+!reproduce/olmo-core-backend/scripts/analysis/Down_Checkpoint_Analysis/
+reproduce/olmo-core-backend/scripts/analysis/Down_Checkpoint_Analysis/*
+!reproduce/olmo-core-backend/scripts/analysis/Down_Checkpoint_Analysis/*.py
+!reproduce/olmo-core-backend/scripts/analysis/Down_Checkpoint_Analysis/*.md
+!reproduce/olmo-core-backend/scripts/analysis/Down_Identity_Ablations/
+reproduce/olmo-core-backend/scripts/analysis/Down_Identity_Ablations/*
+!reproduce/olmo-core-backend/scripts/analysis/Down_Identity_Ablations/results_four_runs/
+reproduce/olmo-core-backend/scripts/analysis/Down_Identity_Ablations/results_four_runs/*
+!reproduce/olmo-core-backend/scripts/analysis/Down_Identity_Ablations/results_four_runs/*_metadata.json
+
+# Process-local locks are not experiment artifacts.
+**/monitor.lock
+**/poll.lock
+**/cleanup.lock

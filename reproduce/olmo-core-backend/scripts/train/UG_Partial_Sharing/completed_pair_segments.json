@@ -1,0 +1,15 @@
+{
+  "p2": {
+    "job_id": "mose-recover-p2-r3-p1-2x8-arch-1006-1409-7a8-a7469",
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_112756-olmo3-1b-ug-partial-p2-s480-p80-linear-down-rms-fp8-30b",
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_141212-olmo3-1b-ug-partial-p2-s480-p80-linear-down-rms-fp8-30b"
+    ]
+  },
+  "p2qk": {
+    "job_id": "mose-ug-p2qk-r1-p1-4x8-arch-1006-1347-8485-7-afb90",
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_135053-olmo3-1b-ug-partial-p2qk-s480-p80-linear-qk-silu-down-rms-fp8-30b"
+    ]
+  }
+}

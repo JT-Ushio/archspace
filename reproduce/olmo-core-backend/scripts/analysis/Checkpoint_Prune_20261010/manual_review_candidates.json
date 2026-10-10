@@ -1,0 +1,84 @@
+{
+  "observed_at": "2026-10-10T14:11:01.312541+00:00",
+  "mode": "read_only_no_deletion",
+  "candidate_logical_bytes": 24771358204,
+  "candidates": [
+    {
+      "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/Olmo3-CoLA/olmo3-1b-cola-r512/stage1/step9000",
+      "retain": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/Olmo3-CoLA/olmo3-1b-cola-r512/stage1/step10000",
+      "logical_bytes": 8037952436,
+      "review_status": "manual_review_only",
+      "verified_terminal_evidence": false,
+      "checks": {
+        "candidate": {
+          "config_exists": true,
+          "config_read_error": "PermissionError",
+          "metadata_exists": true,
+          "distcp_file_count": 512,
+          "minimally_complete": false,
+          "load_validation": "not_run"
+        },
+        "retained": {
+          "config_exists": true,
+          "config_read_error": "PermissionError",
+          "metadata_exists": true,
+          "distcp_file_count": 512,
+          "minimally_complete": false,
+          "load_validation": "not_run"
+        }
+      },
+      "deletion_performed": false,
+      "requirements_before_deletion": [
+        "verify_retained_checkpoint_readability_and_loadability",
+        "confirm_no_resume_or_midpoint_analysis_need",
+        "confirm_no_copy_or_training_in_progress"
+      ]
+    },
+    {
+      "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/olmo3-1b-SiTU-up-5e-3/stage1/step25000",
+      "retain": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/olmo3-1b-SiTU-up-5e-3/stage1/step75080",
+      "logical_bytes": 13535216389,
+      "review_status": "manual_review_only",
+      "verified_terminal_evidence": false,
+      "checks": {
+        "candidate": {
+          "config_exists": true,
+          "config_read_error": "PermissionError",
+          "metadata_exists": true,
+          "distcp_file_count": 256,
+          "minimally_complete": false,
+          "load_validation": "not_run"
+        },
+        "retained": {
+          "config_exists": true,
+          "config_read_error": "PermissionError",
+          "metadata_exists": true,
+          "distcp_file_count": 256,
+          "minimally_complete": false,
+          "load_validation": "not_run"
+        }
+      },
+      "deletion_performed": false,
+      "requirements_before_deletion": [
+        "verify_retained_checkpoint_readability_and_loadability",
+        "confirm_no_resume_or_midpoint_analysis_need",
+        "confirm_no_copy_or_training_in_progress"
+      ]
+    },
+    {
+      "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009/cola-step14306",
+      "retain": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/cola-step14306",
+      "logical_bytes": 3198189379,
+      "review_status": "manual_review_only",
+      "metadata_comparison": "matched",
+      "payload_sha256": "not_run_permission_denied",
+      "deletion_performed": false,
+      "evidence_file": "duplicate_cola_review.json",
+      "requirements_before_deletion": [
+        "verify_retained_export_loadability",
+        "confirm_no_copy_or_export_in_progress"
+      ]
+    }
+  ],
+  "note": "These advisory candidates are not approved deletions. Original native configs cannot be read here."
+}

@@ -1,0 +1,109 @@
+{
+  "observed_at_hkt": "2026-10-07T16:36:59.457628+08:00",
+  "end_step": 14306,
+  "full_30b_histories_complete": true,
+  "common_excluded_steps": [
+    12516
+  ],
+  "clean_full_n": 14305,
+  "tail_start": 13307,
+  "clean_tail_n": 1000,
+  "primary_metric": "common_clean_last1000_mean",
+  "runs": {
+    "F4": {
+      "run_id": "olmo3-1b-ffn-budget-f4-ug400-down816-shared-linear-rms-fp8-30b",
+      "run_name": "olmo3-1b-ffn-budget-f4-ug400-down816-shared-linear-rms-fp8-30b",
+      "wandb_url": "https://wandb.ai/archspace/MoSE/runs/olmo3-1b-ffn-budget-f4-ug400-down816-shared-linear-rms-fp8-30b",
+      "wandb_state": "finished",
+      "source": "W&B API scan_history; no sampling",
+      "history_file": "f4_full_history.json",
+      "history_sha256": "1769d0d054800710756a0603bfad610f8af7385faa877d318cb248323590499a",
+      "rows_in_window": 14306,
+      "nonpositive_steps": [],
+      "raw_full_mean": 2.7999700483001897,
+      "raw_last1000_mean": 2.4866195352077485,
+      "common_clean_full_mean": 2.7999867461436865,
+      "common_clean_last1000_mean": 2.4866195352077485,
+      "final_raw": 2.5155160427093506,
+      "delta_vs_c6": 0.011856568574905246
+    },
+    "F5": {
+      "run_id": "olmo3-1b-ffn-budget-f5-ug560-down528-shared-linear-rms-fp8-30b",
+      "run_name": "olmo3-1b-ffn-budget-f5-ug560-down528-shared-linear-rms-fp8-30b",
+      "wandb_url": "https://wandb.ai/archspace/MoSE/runs/olmo3-1b-ffn-budget-f5-ug560-down528-shared-linear-rms-fp8-30b",
+      "wandb_state": "finished",
+      "source": "W&B API scan_history; no sampling",
+      "history_file": "f5_full_history.json",
+      "history_sha256": "d00061ebb84e2443551b88b109f2507b1222c4a7de862e2465d24ff2a3256555",
+      "rows_in_window": 14306,
+      "nonpositive_steps": [],
+      "raw_full_mean": 2.797471287466172,
+      "raw_last1000_mean": 2.4840291571617126,
+      "common_clean_full_mean": 2.7974879812835938,
+      "common_clean_last1000_mean": 2.4840291571617126,
+      "final_raw": 2.513763427734375,
+      "delta_vs_c6": 0.009266190528869345
+    },
+    "C0": {
+      "run_id": "olmo3-1b-r512matched-c0-k-silu-down-rms-fp8-30b",
+      "run_name": "olmo3-1b-r512matched-c0-k-silu-down-rms-fp8-30b",
+      "wandb_url": "https://wandb.ai/archspace/MoSE/runs/olmo3-1b-r512matched-c0-k-silu-down-rms-fp8-30b",
+      "wandb_state": "finished",
+      "source": "W&B API scan_history; no sampling",
+      "history_file": "c0_full_history.json",
+      "history_sha256": "13f75818696f3b8796460d84826e35ac4df83da15063ba57765775b4e18be5c5",
+      "rows_in_window": 14306,
+      "nonpositive_steps": [],
+      "raw_full_mean": 2.7932971508439963,
+      "raw_last1000_mean": 2.4789784088134765,
+      "common_clean_full_mean": 2.793313974852497,
+      "common_clean_last1000_mean": 2.4789784088134765,
+      "final_raw": 2.508265495300293,
+      "delta_vs_c6": 0.0042154421806333
+    },
+    "C2": {
+      "run_id": "olmo3-1b-r512matched-c2-k-silu-down-rms-gateup-fp8-30b",
+      "run_name": "olmo3-1b-r512matched-c2-k-silu-down-rms-gateup-fp8-30b",
+      "wandb_url": "https://wandb.ai/archspace/MoSE/runs/olmo3-1b-r512matched-c2-k-silu-down-rms-gateup-fp8-30b",
+      "wandb_state": "finished",
+      "source": "W&B API scan_history; no sampling",
+      "history_file": "c2_full_history.json",
+      "history_sha256": "fa495c2c2cfa9ba0f621e0b48b6b4b9528837b0aa637859d733e84d4da56801d",
+      "rows_in_window": 14306,
+      "nonpositive_steps": [],
+      "raw_full_mean": 2.7912818476084844,
+      "raw_last1000_mean": 2.4756679832935333,
+      "common_clean_full_mean": 2.7912987135374143,
+      "common_clean_last1000_mean": 2.4756679832935333,
+      "final_raw": 2.5054001808166504,
+      "delta_vs_c6": 0.0009050166606900945
+    },
+    "C6": {
+      "run_id": "olmo3-1b-r512matched-c6-qk-silu-down-rms-gateup-fp8-30b",
+      "run_name": "olmo3-1b-r512matched-c6-qk-silu-down-rms-gateup-fp8-30b",
+      "wandb_url": "https://wandb.ai/archspace/MoSE/runs/olmo3-1b-r512matched-c6-qk-silu-down-rms-gateup-fp8-30b",
+      "wandb_state": "finished",
+      "source": "W&B API scan_history; no sampling",
+      "history_file": "c6_full_history.json",
+      "history_sha256": "69a922e557125559c7a22c9ed92d4e93460b68c1c6ae49ee1fec7540afa77a94",
+      "rows_in_window": 14306,
+      "nonpositive_steps": [
+        12516
+      ],
+      "raw_full_mean": 2.78921211077486,
+      "raw_last1000_mean": 2.4747629666328432,
+      "common_clean_full_mean": 2.7894070923974237,
+      "common_clean_last1000_mean": 2.4747629666328432,
+      "final_raw": 2.504258632659912,
+      "delta_vs_c6": 0.0
+    }
+  },
+  "scope": "Single initialization seed12536, data seed34521; descriptive architecture comparison",
+  "ranking": [
+    "C6",
+    "C2",
+    "C0",
+    "F5",
+    "F4"
+  ]
+}

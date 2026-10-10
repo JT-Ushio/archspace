@@ -1,0 +1,17 @@
+{
+  "partition": "arch",
+  "nodes": 2,
+  "exit_code": 0,
+  "observed_at": "2026-10-08T18:41:16.780809+08:00",
+  "valid_prediction": true,
+  "reported_replicas": 2,
+  "schedulable": false,
+  "error": null,
+  "summary": [
+    "📌 任务调度核心状态：❌ 任务不可调度",
+    "  - 总副本数量：2",
+    "  - 可调度数量：0",
+    "  - 不可调度数量：2"
+  ],
+  "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/capacity_arch_20261008_184116.log"
+}

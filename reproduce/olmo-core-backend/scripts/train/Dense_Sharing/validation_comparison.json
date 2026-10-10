@@ -1,0 +1,23 @@
+{
+  "step": 14000,
+  "sources": [
+    "eval/lm/c4_en-validation/CE loss",
+    "eval/lm/dolma_books-validation/CE loss",
+    "eval/lm/dolma_common-crawl-validation/CE loss",
+    "eval/lm/dolma_pes2o-validation/CE loss",
+    "eval/lm/dolma_reddit-validation/CE loss",
+    "eval/lm/dolma_stack-validation/CE loss",
+    "eval/lm/dolma_wiki-validation/CE loss",
+    "eval/lm/ice-validation/CE loss",
+    "eval/lm/m2d2_s2orc-validation/CE loss",
+    "eval/lm/pile-validation/CE loss",
+    "eval/lm/wikitext_103-validation/CE loss"
+  ],
+  "runs": {
+    "Dense": 2.626223466613076,
+    "S1": 2.6360761360688643,
+    "S2": 2.6269384080713447,
+    "S3": 2.637110395865007
+  },
+  "method": "Equal-weight mean over identical11 validation sources; chronological resume segments; train statistics independently reproduced"
+}

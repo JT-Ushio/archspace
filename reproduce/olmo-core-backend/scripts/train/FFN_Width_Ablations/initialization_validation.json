@@ -1,0 +1,2706 @@
+{
+  "observed_at_hkt": "2026-10-08T02:20:31.214274+08:00",
+  "variants": [
+    "w1",
+    "w1qk"
+  ],
+  "device": "cpu",
+  "layers": 16,
+  "experiment_init_seed": 12536,
+  "model_weight_init_seed": 0,
+  "data_seed": 34521,
+  "method": "torch.equal on every real full-model parameter and registered buffer",
+  "all_parameters_elementwise_equal": true,
+  "all_buffers_elementwise_equal": true,
+  "parameter_tensor_count": 275,
+  "parameter_element_count": 797050880,
+  "buffer_tensor_count": 0,
+  "scope": "CPU FP32 weights before FP8/FSDP; actual GPU step0 checkpoints not checked",
+  "parameters": [
+    {
+      "name": "embeddings.weight",
+      "shape": [
+        100352,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 205520896,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.0.attention.w_q.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.0.attention.w_q.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.0.attention.w_k.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.0.attention.w_k.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.0.attention.w_v.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.0.attention.w_v.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.0.attention.w_out.v.weight",
+      "shape": [
+        496,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.0.attention.w_out.u.weight",
+      "shape": [
+        2048,
+        496
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.0.attention.q_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.0.attention.k_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.0.attention_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.0.feed_forward.nonlinear_u.weight",
+      "shape": [
+        736,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1507328,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.0.feed_forward.gate_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.0.feed_forward.up_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.0.feed_forward.down_nonlinear_u.weight",
+      "shape": [
+        640,
+        6144
+      ],
+      "dtype": "torch.float32",
+      "numel": 3932160,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.0.feed_forward.down_nonlinear_v.weight",
+      "shape": [
+        2048,
+        640
+      ],
+      "dtype": "torch.float32",
+      "numel": 1310720,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.0.feed_forward_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.1.attention.w_q.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.1.attention.w_q.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.1.attention.w_k.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.1.attention.w_k.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.1.attention.w_v.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.1.attention.w_v.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.1.attention.w_out.v.weight",
+      "shape": [
+        496,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.1.attention.w_out.u.weight",
+      "shape": [
+        2048,
+        496
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.1.attention.q_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.1.attention.k_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.1.attention_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.1.feed_forward.nonlinear_u.weight",
+      "shape": [
+        736,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1507328,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.1.feed_forward.gate_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.1.feed_forward.up_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.1.feed_forward.down_nonlinear_u.weight",
+      "shape": [
+        640,
+        6144
+      ],
+      "dtype": "torch.float32",
+      "numel": 3932160,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.1.feed_forward.down_nonlinear_v.weight",
+      "shape": [
+        2048,
+        640
+      ],
+      "dtype": "torch.float32",
+      "numel": 1310720,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.1.feed_forward_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.2.attention.w_q.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.2.attention.w_q.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.2.attention.w_k.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.2.attention.w_k.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.2.attention.w_v.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.2.attention.w_v.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.2.attention.w_out.v.weight",
+      "shape": [
+        496,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.2.attention.w_out.u.weight",
+      "shape": [
+        2048,
+        496
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.2.attention.q_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.2.attention.k_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.2.attention_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.2.feed_forward.nonlinear_u.weight",
+      "shape": [
+        736,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1507328,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.2.feed_forward.gate_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.2.feed_forward.up_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.2.feed_forward.down_nonlinear_u.weight",
+      "shape": [
+        640,
+        6144
+      ],
+      "dtype": "torch.float32",
+      "numel": 3932160,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.2.feed_forward.down_nonlinear_v.weight",
+      "shape": [
+        2048,
+        640
+      ],
+      "dtype": "torch.float32",
+      "numel": 1310720,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.2.feed_forward_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.3.attention.w_q.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.3.attention.w_q.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.3.attention.w_k.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.3.attention.w_k.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.3.attention.w_v.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.3.attention.w_v.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.3.attention.w_out.v.weight",
+      "shape": [
+        496,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.3.attention.w_out.u.weight",
+      "shape": [
+        2048,
+        496
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.3.attention.q_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.3.attention.k_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.3.attention_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.3.feed_forward.nonlinear_u.weight",
+      "shape": [
+        736,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1507328,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.3.feed_forward.gate_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.3.feed_forward.up_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.3.feed_forward.down_nonlinear_u.weight",
+      "shape": [
+        640,
+        6144
+      ],
+      "dtype": "torch.float32",
+      "numel": 3932160,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.3.feed_forward.down_nonlinear_v.weight",
+      "shape": [
+        2048,
+        640
+      ],
+      "dtype": "torch.float32",
+      "numel": 1310720,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.3.feed_forward_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.4.attention.w_q.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.4.attention.w_q.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.4.attention.w_k.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.4.attention.w_k.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.4.attention.w_v.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.4.attention.w_v.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.4.attention.w_out.v.weight",
+      "shape": [
+        496,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.4.attention.w_out.u.weight",
+      "shape": [
+        2048,
+        496
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.4.attention.q_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.4.attention.k_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.4.attention_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.4.feed_forward.nonlinear_u.weight",
+      "shape": [
+        736,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1507328,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.4.feed_forward.gate_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.4.feed_forward.up_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.4.feed_forward.down_nonlinear_u.weight",
+      "shape": [
+        640,
+        6144
+      ],
+      "dtype": "torch.float32",
+      "numel": 3932160,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.4.feed_forward.down_nonlinear_v.weight",
+      "shape": [
+        2048,
+        640
+      ],
+      "dtype": "torch.float32",
+      "numel": 1310720,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.4.feed_forward_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.5.attention.w_q.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.5.attention.w_q.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.5.attention.w_k.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.5.attention.w_k.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.5.attention.w_v.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.5.attention.w_v.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.5.attention.w_out.v.weight",
+      "shape": [
+        496,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.5.attention.w_out.u.weight",
+      "shape": [
+        2048,
+        496
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.5.attention.q_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.5.attention.k_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.5.attention_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.5.feed_forward.nonlinear_u.weight",
+      "shape": [
+        736,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1507328,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.5.feed_forward.gate_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.5.feed_forward.up_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.5.feed_forward.down_nonlinear_u.weight",
+      "shape": [
+        640,
+        6144
+      ],
+      "dtype": "torch.float32",
+      "numel": 3932160,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.5.feed_forward.down_nonlinear_v.weight",
+      "shape": [
+        2048,
+        640
+      ],
+      "dtype": "torch.float32",
+      "numel": 1310720,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.5.feed_forward_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.6.attention.w_q.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.6.attention.w_q.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.6.attention.w_k.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.6.attention.w_k.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.6.attention.w_v.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.6.attention.w_v.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.6.attention.w_out.v.weight",
+      "shape": [
+        496,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.6.attention.w_out.u.weight",
+      "shape": [
+        2048,
+        496
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.6.attention.q_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.6.attention.k_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.6.attention_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.6.feed_forward.nonlinear_u.weight",
+      "shape": [
+        736,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1507328,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.6.feed_forward.gate_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.6.feed_forward.up_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.6.feed_forward.down_nonlinear_u.weight",
+      "shape": [
+        640,
+        6144
+      ],
+      "dtype": "torch.float32",
+      "numel": 3932160,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.6.feed_forward.down_nonlinear_v.weight",
+      "shape": [
+        2048,
+        640
+      ],
+      "dtype": "torch.float32",
+      "numel": 1310720,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.6.feed_forward_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.7.attention.w_q.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.7.attention.w_q.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.7.attention.w_k.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.7.attention.w_k.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.7.attention.w_v.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.7.attention.w_v.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.7.attention.w_out.v.weight",
+      "shape": [
+        496,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.7.attention.w_out.u.weight",
+      "shape": [
+        2048,
+        496
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.7.attention.q_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.7.attention.k_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.7.attention_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.7.feed_forward.nonlinear_u.weight",
+      "shape": [
+        736,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1507328,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.7.feed_forward.gate_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.7.feed_forward.up_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.7.feed_forward.down_nonlinear_u.weight",
+      "shape": [
+        640,
+        6144
+      ],
+      "dtype": "torch.float32",
+      "numel": 3932160,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.7.feed_forward.down_nonlinear_v.weight",
+      "shape": [
+        2048,
+        640
+      ],
+      "dtype": "torch.float32",
+      "numel": 1310720,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.7.feed_forward_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.8.attention.w_q.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.8.attention.w_q.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.8.attention.w_k.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.8.attention.w_k.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.8.attention.w_v.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.8.attention.w_v.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.8.attention.w_out.v.weight",
+      "shape": [
+        496,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.8.attention.w_out.u.weight",
+      "shape": [
+        2048,
+        496
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.8.attention.q_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.8.attention.k_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.8.attention_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.8.feed_forward.nonlinear_u.weight",
+      "shape": [
+        736,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1507328,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.8.feed_forward.gate_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.8.feed_forward.up_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.8.feed_forward.down_nonlinear_u.weight",
+      "shape": [
+        640,
+        6144
+      ],
+      "dtype": "torch.float32",
+      "numel": 3932160,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.8.feed_forward.down_nonlinear_v.weight",
+      "shape": [
+        2048,
+        640
+      ],
+      "dtype": "torch.float32",
+      "numel": 1310720,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.8.feed_forward_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.9.attention.w_q.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.9.attention.w_q.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.9.attention.w_k.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.9.attention.w_k.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.9.attention.w_v.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.9.attention.w_v.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.9.attention.w_out.v.weight",
+      "shape": [
+        496,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.9.attention.w_out.u.weight",
+      "shape": [
+        2048,
+        496
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.9.attention.q_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.9.attention.k_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.9.attention_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.9.feed_forward.nonlinear_u.weight",
+      "shape": [
+        736,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1507328,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.9.feed_forward.gate_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.9.feed_forward.up_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.9.feed_forward.down_nonlinear_u.weight",
+      "shape": [
+        640,
+        6144
+      ],
+      "dtype": "torch.float32",
+      "numel": 3932160,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.9.feed_forward.down_nonlinear_v.weight",
+      "shape": [
+        2048,
+        640
+      ],
+      "dtype": "torch.float32",
+      "numel": 1310720,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.9.feed_forward_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.10.attention.w_q.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.10.attention.w_q.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.10.attention.w_k.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.10.attention.w_k.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.10.attention.w_v.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.10.attention.w_v.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.10.attention.w_out.v.weight",
+      "shape": [
+        496,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.10.attention.w_out.u.weight",
+      "shape": [
+        2048,
+        496
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.10.attention.q_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.10.attention.k_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.10.attention_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.10.feed_forward.nonlinear_u.weight",
+      "shape": [
+        736,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1507328,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.10.feed_forward.gate_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.10.feed_forward.up_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.10.feed_forward.down_nonlinear_u.weight",
+      "shape": [
+        640,
+        6144
+      ],
+      "dtype": "torch.float32",
+      "numel": 3932160,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.10.feed_forward.down_nonlinear_v.weight",
+      "shape": [
+        2048,
+        640
+      ],
+      "dtype": "torch.float32",
+      "numel": 1310720,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.10.feed_forward_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.11.attention.w_q.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.11.attention.w_q.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.11.attention.w_k.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.11.attention.w_k.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.11.attention.w_v.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.11.attention.w_v.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.11.attention.w_out.v.weight",
+      "shape": [
+        496,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.11.attention.w_out.u.weight",
+      "shape": [
+        2048,
+        496
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.11.attention.q_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.11.attention.k_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.11.attention_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.11.feed_forward.nonlinear_u.weight",
+      "shape": [
+        736,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1507328,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.11.feed_forward.gate_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.11.feed_forward.up_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.11.feed_forward.down_nonlinear_u.weight",
+      "shape": [
+        640,
+        6144
+      ],
+      "dtype": "torch.float32",
+      "numel": 3932160,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.11.feed_forward.down_nonlinear_v.weight",
+      "shape": [
+        2048,
+        640
+      ],
+      "dtype": "torch.float32",
+      "numel": 1310720,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.11.feed_forward_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.12.attention.w_q.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.12.attention.w_q.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.12.attention.w_k.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.12.attention.w_k.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.12.attention.w_v.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.12.attention.w_v.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.12.attention.w_out.v.weight",
+      "shape": [
+        496,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.12.attention.w_out.u.weight",
+      "shape": [
+        2048,
+        496
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.12.attention.q_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.12.attention.k_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.12.attention_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.12.feed_forward.nonlinear_u.weight",
+      "shape": [
+        736,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1507328,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.12.feed_forward.gate_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.12.feed_forward.up_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.12.feed_forward.down_nonlinear_u.weight",
+      "shape": [
+        640,
+        6144
+      ],
+      "dtype": "torch.float32",
+      "numel": 3932160,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.12.feed_forward.down_nonlinear_v.weight",
+      "shape": [
+        2048,
+        640
+      ],
+      "dtype": "torch.float32",
+      "numel": 1310720,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.12.feed_forward_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.13.attention.w_q.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.13.attention.w_q.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.13.attention.w_k.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.13.attention.w_k.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.13.attention.w_v.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.13.attention.w_v.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.13.attention.w_out.v.weight",
+      "shape": [
+        496,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.13.attention.w_out.u.weight",
+      "shape": [
+        2048,
+        496
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.13.attention.q_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.13.attention.k_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.13.attention_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.13.feed_forward.nonlinear_u.weight",
+      "shape": [
+        736,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1507328,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.13.feed_forward.gate_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.13.feed_forward.up_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.13.feed_forward.down_nonlinear_u.weight",
+      "shape": [
+        640,
+        6144
+      ],
+      "dtype": "torch.float32",
+      "numel": 3932160,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.13.feed_forward.down_nonlinear_v.weight",
+      "shape": [
+        2048,
+        640
+      ],
+      "dtype": "torch.float32",
+      "numel": 1310720,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.13.feed_forward_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.14.attention.w_q.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.14.attention.w_q.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.14.attention.w_k.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.14.attention.w_k.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.14.attention.w_v.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.14.attention.w_v.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.14.attention.w_out.v.weight",
+      "shape": [
+        496,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.14.attention.w_out.u.weight",
+      "shape": [
+        2048,
+        496
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.14.attention.q_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.14.attention.k_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.14.attention_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.14.feed_forward.nonlinear_u.weight",
+      "shape": [
+        736,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1507328,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.14.feed_forward.gate_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.14.feed_forward.up_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.14.feed_forward.down_nonlinear_u.weight",
+      "shape": [
+        640,
+        6144
+      ],
+      "dtype": "torch.float32",
+      "numel": 3932160,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.14.feed_forward.down_nonlinear_v.weight",
+      "shape": [
+        2048,
+        640
+      ],
+      "dtype": "torch.float32",
+      "numel": 1310720,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.14.feed_forward_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.15.attention.w_q.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.15.attention.w_q.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.15.attention.w_k.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.15.attention.w_k.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.15.attention.w_v.v.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.15.attention.w_v.u.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "dtype": "torch.float32",
+      "numel": 1048576,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.15.attention.w_out.v.weight",
+      "shape": [
+        496,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.15.attention.w_out.u.weight",
+      "shape": [
+        2048,
+        496
+      ],
+      "dtype": "torch.float32",
+      "numel": 1015808,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.15.attention.q_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.15.attention.k_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.15.attention_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.15.feed_forward.nonlinear_u.weight",
+      "shape": [
+        736,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 1507328,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.15.feed_forward.gate_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.15.feed_forward.up_nonlinear_v.weight",
+      "shape": [
+        6144,
+        736
+      ],
+      "dtype": "torch.float32",
+      "numel": 4521984,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.15.feed_forward.down_nonlinear_u.weight",
+      "shape": [
+        640,
+        6144
+      ],
+      "dtype": "torch.float32",
+      "numel": 3932160,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.15.feed_forward.down_nonlinear_v.weight",
+      "shape": [
+        2048,
+        640
+      ],
+      "dtype": "torch.float32",
+      "numel": 1310720,
+      "elementwise_equal": true
+    },
+    {
+      "name": "blocks.15.feed_forward_norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "lm_head.norm.weight",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 2048,
+      "elementwise_equal": true
+    },
+    {
+      "name": "lm_head.w_out.weight",
+      "shape": [
+        100352,
+        2048
+      ],
+      "dtype": "torch.float32",
+      "numel": 205520896,
+      "elementwise_equal": true
+    }
+  ]
+}

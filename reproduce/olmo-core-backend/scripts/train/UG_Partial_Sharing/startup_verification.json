@@ -1,0 +1,109 @@
+[
+  {
+    "variant": "p2",
+    "partition": "arch",
+    "nodes": 4,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ug-p2-r1-p1-4x8-arch-1006-1123-f1d4",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p2.sh",
+    "job_id": "mose-ug-p2-r1-p1-4x8-arch-1006-1123-f1d4-96742035",
+    "status": "Running",
+    "counts": "{'active': 4, 'succeeded': 0, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+    "latest": {
+      "step": 30,
+      "eta": "3h6m",
+      "grad": 1.566,
+      "ce": 8.871
+    },
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_112756-olmo3-1b-ug-partial-p2-s480-p80-linear-down-rms-fp8-30b"
+    ],
+    "events": [
+      "[2026-10-06T11:25:40+08:00] mose-ug-p2-r1-p1-4x8-arch-1006-1123-f1d4-96742035-c4ca4 >> 2026-10-06 11:25:40.156\tgpu-lg-cmc-h-h200-2280.host.h.pjlab.org.cn:0\tolmo_core.train.train_module.transformer.common:169\tINFO\tApplied FSDP to the model with 2D device mesh with shape (dp_replicate=4, dp_shard=8)"
+    ],
+    "observation_exit_code": 0
+  },
+  {
+    "variant": "p0",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ug-p0-r1-p1-1x8-pool-1006-1123-7104",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p0.sh",
+    "job_id": "mose-ug-p0-r1-p1-1x8-pool-1006-1123-7104-77485485",
+    "status": "Running",
+    "counts": "{'active': 1, 'succeeded': 0, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+    "latest": null,
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_112904-olmo3-1b-ug-partial-p0-s0-p512-linear-down-rms-fp8-30b"
+    ],
+    "events": [
+      "[2026-10-06T11:26:53+08:00] mose-ug-p0-r1-p1-1x8-pool-1006-1123-7104-77485485-cfcd2 >> 2026-10-06 11:26:53.422\tgpu-lg-cmc-h-h200-0793.host.h.pjlab.org.cn:0\tolmo_core.distributed.parallel:246\tINFO\tBuilt 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+      "[2026-10-06T11:26:54+08:00] mose-ug-p0-r1-p1-1x8-pool-1006-1123-7104-77485485-cfcd2 >> 2026-10-06 11:26:54.827\tgpu-lg-cmc-h-h200-0793.host.h.pjlab.org.cn:0\tolmo_core.train.train_module.transformer.common:169\tINFO\tApplied FSDP to the model with 2D device mesh with shape (dp_replicate=1, dp_shard=8)"
+    ],
+    "observation_exit_code": 0
+  },
+  {
+    "variant": "p1",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ug-p1-r1-p1-1x8-pool-1006-1123-6d50",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p1.sh",
+    "job_id": "mose-ug-p1-r1-p1-1x8-pool-1006-1123-6d50-83419854",
+    "status": "Running",
+    "counts": "{'active': 1, 'succeeded': 0, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+    "latest": null,
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_112914-olmo3-1b-ug-partial-p1-s560-p0-linear-down-rms-fp8-30b"
+    ],
+    "events": [
+      "[2026-10-06T11:27:00+08:00] mose-ug-p1-r1-p1-1x8-pool-1006-1123-6d50-83419854-cfcd2 >> 2026-10-06 11:27:00.622\tgpu-lg-cmc-h-h200-2284.host.h.pjlab.org.cn:0\tolmo_core.distributed.parallel:246\tINFO\tBuilt 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+      "[2026-10-06T11:27:02+08:00] mose-ug-p1-r1-p1-1x8-pool-1006-1123-6d50-83419854-cfcd2 >> 2026-10-06 11:27:02.116\tgpu-lg-cmc-h-h200-2284.host.h.pjlab.org.cn:0\tolmo_core.train.train_module.transformer.common:169\tINFO\tApplied FSDP to the model with 2D device mesh with shape (dp_replicate=1, dp_shard=8)"
+    ],
+    "observation_exit_code": 0
+  },
+  {
+    "variant": "p4",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ug-p4-r1-p1-1x8-pool-1006-1123-1580",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p4.sh",
+    "job_id": "mose-ug-p4-r1-p1-1x8-pool-1006-1123-1580-89006511",
+    "status": "Running",
+    "counts": "{'active': 1, 'succeeded': 0, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+    "latest": null,
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_112920-olmo3-1b-ug-partial-p4-s160-p368-linear-down-rms-fp8-30b"
+    ],
+    "events": [
+      "[2026-10-06T11:27:09+08:00] mose-ug-p4-r1-p1-1x8-pool-1006-1123-1580-89006511-cfcd2 >> 2026-10-06 11:27:09.635\tgpu-l-lg-cmc-h-h200-0039.host.h.pjlab.org.cn:0\tolmo_core.distributed.parallel:246\tINFO\tBuilt 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+      "[2026-10-06T11:27:11+08:00] mose-ug-p4-r1-p1-1x8-pool-1006-1123-1580-89006511-cfcd2 >> 2026-10-06 11:27:11.090\tgpu-l-lg-cmc-h-h200-0039.host.h.pjlab.org.cn:0\tolmo_core.train.train_module.transformer.common:169\tINFO\tApplied FSDP to the model with 2D device mesh with shape (dp_replicate=1, dp_shard=8)"
+    ],
+    "observation_exit_code": 0
+  },
+  {
+    "variant": "p3",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ug-p3-r2-p1-1x8-pool-1006-1128-e927",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p3.sh",
+    "job_id": "mose-ug-p3-r2-p1-1x8-pool-1006-1128-e927-30519513",
+    "status": "Running",
+    "counts": "{'active': 1, 'succeeded': 0, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+    "latest": null,
+    "segments": [],
+    "events": [
+      "[2026-10-06T11:29:11+08:00] mose-ug-p3-r2-p1-1x8-pool-1006-1128-e927-30519513-cfcd2 >> 2026-10-06 11:29:11.613\tgpu-lg-cmc-h-h200-2223.host.h.pjlab.org.cn:0\tolmo_core.distributed.parallel:246\tINFO\tBuilt 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+      "[2026-10-06T11:29:13+08:00] mose-ug-p3-r2-p1-1x8-pool-1006-1128-e927-30519513-cfcd2 >> 2026-10-06 11:29:13.083\tgpu-lg-cmc-h-h200-2223.host.h.pjlab.org.cn:0\tolmo_core.train.train_module.transformer.common:169\tINFO\tApplied FSDP to the model with 2D device mesh with shape (dp_replicate=1, dp_shard=8)"
+    ],
+    "observation_exit_code": 0
+  }
+]

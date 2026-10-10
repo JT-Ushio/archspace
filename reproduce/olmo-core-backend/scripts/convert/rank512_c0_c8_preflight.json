@@ -1,0 +1,805 @@
+{
+  "job_id": "xtuner-mose-hf-r512-c0-c8-1009-r1-76211050",
+  "user_paused": true,
+  "numerical_validation": "not_run",
+  "models": [
+    {
+      "label": "cola",
+      "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-down-activation-silu-fp8-30b/stage1/step14306",
+      "status_at_stop": "exported",
+      "source": {
+        "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-down-activation-silu-fp8-30b/stage1/step14306",
+        "state_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-down-activation-silu-fp8-30b/stage1/step14306/model_and_optim",
+        "source_config_sha256": "8602351c321d0bd8814cd3ac69f1e413bae473b48565801e90af348f278dfd5d",
+        "dcp_metadata_sha256": "4093e47a27a2738c8c2306f40ac20a999b75e40659daadae77aa8621fe1443ab",
+        "step": 14306
+      },
+      "structural_audit": {
+        "state_keys": 291,
+        "unique_parameters": 797050880,
+        "sharing_groups": 0,
+        "native_forward": "(input_ids: torch.Tensor, *, input_embeddings: Optional[torch.Tensor] = None, labels: Optional[torch.Tensor] = None, ignore_index: int = -100, loss_reduction: Literal['mean', 'sum', 'none'] = 'mean', z_loss_multiplier: Optional[float] = None, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, return_logits: Optional[bool] = None, logits_to_keep: Union[int, torch.Tensor] = 0, **kwargs) -> Union[torch.Tensor, olmo_core.nn.lm_head.LMOutputWithLoss]",
+        "hf_forward": "(input_ids=None, attention_mask=None, position_ids=None, past_key_values=None, inputs_embeds=None, labels=None, use_cache=None, output_attentions=None, output_hidden_states=None, return_dict=None, cache_position=None, logits_to_keep=0, **kwargs)",
+        "module_classes": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+          "olmo_mose.attention.LowRankAttention": 16,
+          "olmo_mose.attention.NonlinearLowRankProjection": 64,
+          "torch.nn.modules.linear.Linear": 224,
+          "olmo_core.nn.layer_norm.RMSNorm": 64,
+          "olmo_mose.feed_forward.MoSESwiGLU": 16
+        },
+        "module_forward_signatures": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": "(self, x: torch.Tensor, *, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, **kwargs) -> torch.Tensor",
+          "olmo_mose.attention.LowRankAttention": "(self, x: torch.Tensor, cu_doc_lens: Optional[torch.Tensor] = None, cu_doc_lens_q: Optional[torch.Tensor] = None, cu_doc_lens_k: Optional[torch.Tensor] = None, max_doc_len: Optional[int] = None, max_doc_len_q: Optional[int] = None, max_doc_len_k: Optional[int] = None, local_k_slice: Optional[slice] = None, pos_sin: Optional[torch.Tensor] = None, pos_cos: Optional[torch.Tensor] = None, freqs_cis: Optional[torch.Tensor] = None, cache_leftpad: Optional[torch.Tensor] = None) -> torch.Tensor",
+          "olmo_mose.attention.NonlinearLowRankProjection": "(self, x: torch.Tensor) -> torch.Tensor",
+          "torch.nn.modules.linear.Linear": "(self, input: torch.Tensor) -> torch.Tensor",
+          "olmo_core.nn.layer_norm.RMSNorm": "(self, x: torch.Tensor) -> torch.Tensor",
+          "olmo_mose.feed_forward.MoSESwiGLU": "(self, x: torch.Tensor) -> torch.Tensor"
+        },
+        "input_mapping": {
+          "input_ids": "input_ids",
+          "input_embeddings": "inputs_embeds",
+          "logits_to_keep": "logits_to_keep"
+        },
+        "label_contract": "Native labels are shifted; HF labels are unshifted (-100 ignored)",
+        "unsupported_native_inputs": [
+          "doc_lens",
+          "cu_doc_lens",
+          "max_doc_len",
+          "local_k_slice",
+          "pos_sin",
+          "pos_cos",
+          "freqs_cis",
+          "cache_leftpad",
+          "context_parallelism",
+          "z_loss_multiplier",
+          "loss_div_factor"
+        ],
+        "structural_check": "passed",
+        "numerical_check": "not_run"
+      },
+      "error": null
+    },
+    {
+      "label": "full_linear",
+      "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-all-lowrank-linear-fp8-30b/stage1/step14306",
+      "status_at_stop": "converting",
+      "source": {
+        "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-all-lowrank-linear-fp8-30b/stage1/step14306",
+        "state_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-all-lowrank-linear-fp8-30b/stage1/step14306/model_and_optim",
+        "source_config_sha256": "9760614a98e77078dc7132a1e3fedd8b95f07f19bb752a11d63873ca85b3ec6c",
+        "dcp_metadata_sha256": "e7fd9c61fd01287b32ce3399744096f01499689752f7203505e83127a27709b3",
+        "step": 14306
+      },
+      "structural_audit": {
+        "state_keys": 291,
+        "unique_parameters": 797050880,
+        "sharing_groups": 0,
+        "native_forward": "(input_ids: torch.Tensor, *, input_embeddings: Optional[torch.Tensor] = None, labels: Optional[torch.Tensor] = None, ignore_index: int = -100, loss_reduction: Literal['mean', 'sum', 'none'] = 'mean', z_loss_multiplier: Optional[float] = None, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, return_logits: Optional[bool] = None, logits_to_keep: Union[int, torch.Tensor] = 0, **kwargs) -> Union[torch.Tensor, olmo_core.nn.lm_head.LMOutputWithLoss]",
+        "hf_forward": "(input_ids=None, attention_mask=None, position_ids=None, past_key_values=None, inputs_embeds=None, labels=None, use_cache=None, output_attentions=None, output_hidden_states=None, return_dict=None, cache_position=None, logits_to_keep=0, **kwargs)",
+        "module_classes": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+          "olmo_mose.attention.LowRankAttention": 16,
+          "olmo_mose.attention.NonlinearLowRankProjection": 64,
+          "torch.nn.modules.linear.Linear": 224,
+          "olmo_core.nn.layer_norm.RMSNorm": 64,
+          "olmo_mose.feed_forward.MoSESwiGLU": 16
+        },
+        "module_forward_signatures": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": "(self, x: torch.Tensor, *, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, **kwargs) -> torch.Tensor",
+          "olmo_mose.attention.LowRankAttention": "(self, x: torch.Tensor, cu_doc_lens: Optional[torch.Tensor] = None, cu_doc_lens_q: Optional[torch.Tensor] = None, cu_doc_lens_k: Optional[torch.Tensor] = None, max_doc_len: Optional[int] = None, max_doc_len_q: Optional[int] = None, max_doc_len_k: Optional[int] = None, local_k_slice: Optional[slice] = None, pos_sin: Optional[torch.Tensor] = None, pos_cos: Optional[torch.Tensor] = None, freqs_cis: Optional[torch.Tensor] = None, cache_leftpad: Optional[torch.Tensor] = None) -> torch.Tensor",
+          "olmo_mose.attention.NonlinearLowRankProjection": "(self, x: torch.Tensor) -> torch.Tensor",
+          "torch.nn.modules.linear.Linear": "(self, input: torch.Tensor) -> torch.Tensor",
+          "olmo_core.nn.layer_norm.RMSNorm": "(self, x: torch.Tensor) -> torch.Tensor",
+          "olmo_mose.feed_forward.MoSESwiGLU": "(self, x: torch.Tensor) -> torch.Tensor"
+        },
+        "input_mapping": {
+          "input_ids": "input_ids",
+          "input_embeddings": "inputs_embeds",
+          "logits_to_keep": "logits_to_keep"
+        },
+        "label_contract": "Native labels are shifted; HF labels are unshifted (-100 ignored)",
+        "unsupported_native_inputs": [
+          "doc_lens",
+          "cu_doc_lens",
+          "max_doc_len",
+          "local_k_slice",
+          "pos_sin",
+          "pos_cos",
+          "freqs_cis",
+          "cache_leftpad",
+          "context_parallelism",
+          "z_loss_multiplier",
+          "loss_div_factor"
+        ],
+        "structural_check": "passed",
+        "numerical_check": "not_run"
+      },
+      "error": null
+    },
+    {
+      "label": "rms_down",
+      "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-down-activation-rms-fp8-30b/stage1/step14306",
+      "status_at_stop": "ready",
+      "source": {
+        "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-down-activation-rms-fp8-30b/stage1/step14306",
+        "state_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-down-activation-rms-fp8-30b/stage1/step14306/model_and_optim",
+        "source_config_sha256": "b6619830fa1b50bd831a8ee6a3ae8cc163ed04a33a9635f5a45987f2e38dd5c9",
+        "dcp_metadata_sha256": "69c2026a86b9b1698c553a1d9d166c2787974ab66b2f62098e1f2bdfbcc936a7",
+        "step": 14306
+      },
+      "structural_audit": {
+        "state_keys": 291,
+        "unique_parameters": 797050880,
+        "sharing_groups": 0,
+        "native_forward": "(input_ids: torch.Tensor, *, input_embeddings: Optional[torch.Tensor] = None, labels: Optional[torch.Tensor] = None, ignore_index: int = -100, loss_reduction: Literal['mean', 'sum', 'none'] = 'mean', z_loss_multiplier: Optional[float] = None, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, return_logits: Optional[bool] = None, logits_to_keep: Union[int, torch.Tensor] = 0, **kwargs) -> Union[torch.Tensor, olmo_core.nn.lm_head.LMOutputWithLoss]",
+        "hf_forward": "(input_ids=None, attention_mask=None, position_ids=None, past_key_values=None, inputs_embeds=None, labels=None, use_cache=None, output_attentions=None, output_hidden_states=None, return_dict=None, cache_position=None, logits_to_keep=0, **kwargs)",
+        "module_classes": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+          "olmo_mose.attention.LowRankAttention": 16,
+          "olmo_mose.attention.NonlinearLowRankProjection": 64,
+          "torch.nn.modules.linear.Linear": 224,
+          "olmo_core.nn.layer_norm.RMSNorm": 80,
+          "olmo_mose.feed_forward.MoSESwiGLU": 16
+        },
+        "module_forward_signatures": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": "(self, x: torch.Tensor, *, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, **kwargs) -> torch.Tensor",
+          "olmo_mose.attention.LowRankAttention": "(self, x: torch.Tensor, cu_doc_lens: Optional[torch.Tensor] = None, cu_doc_lens_q: Optional[torch.Tensor] = None, cu_doc_lens_k: Optional[torch.Tensor] = None, max_doc_len: Optional[int] = None, max_doc_len_q: Optional[int] = None, max_doc_len_k: Optional[int] = None, local_k_slice: Optional[slice] = None, pos_sin: Optional[torch.Tensor] = None, pos_cos: Optional[torch.Tensor] = None, freqs_cis: Optional[torch.Tensor] = None, cache_leftpad: Optional[torch.Tensor] = None) -> torch.Tensor",
+          "olmo_mose.attention.NonlinearLowRankProjection": "(self, x: torch.Tensor) -> torch.Tensor",
+          "torch.nn.modules.linear.Linear": "(self, input: torch.Tensor) -> torch.Tensor",
+          "olmo_core.nn.layer_norm.RMSNorm": "(self, x: torch.Tensor) -> torch.Tensor",
+          "olmo_mose.feed_forward.MoSESwiGLU": "(self, x: torch.Tensor) -> torch.Tensor"
+        },
+        "input_mapping": {
+          "input_ids": "input_ids",
+          "input_embeddings": "inputs_embeds",
+          "logits_to_keep": "logits_to_keep"
+        },
+        "label_contract": "Native labels are shifted; HF labels are unshifted (-100 ignored)",
+        "unsupported_native_inputs": [
+          "doc_lens",
+          "cu_doc_lens",
+          "max_doc_len",
+          "local_k_slice",
+          "pos_sin",
+          "pos_cos",
+          "freqs_cis",
+          "cache_leftpad",
+          "context_parallelism",
+          "z_loss_multiplier",
+          "loss_div_factor"
+        ],
+        "structural_check": "passed",
+        "numerical_check": "not_run"
+      },
+      "error": null
+    },
+    {
+      "label": "q_only",
+      "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-all-linear-q-only-silu-fp8-30b/stage1/step14306",
+      "status_at_stop": "ready",
+      "source": {
+        "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-all-linear-q-only-silu-fp8-30b/stage1/step14306",
+        "state_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-all-linear-q-only-silu-fp8-30b/stage1/step14306/model_and_optim",
+        "source_config_sha256": "f8966650a51c3f196d3f92fa8493b08b9bf93861c450058beb73fb0b9e120a71",
+        "dcp_metadata_sha256": "a0cd0f9c594c656e4b42b821d34a5ca52b2a859a93b47d4b2ba552d52ea90efc",
+        "step": 14306
+      },
+      "structural_audit": {
+        "state_keys": 291,
+        "unique_parameters": 797050880,
+        "sharing_groups": 0,
+        "native_forward": "(input_ids: torch.Tensor, *, input_embeddings: Optional[torch.Tensor] = None, labels: Optional[torch.Tensor] = None, ignore_index: int = -100, loss_reduction: Literal['mean', 'sum', 'none'] = 'mean', z_loss_multiplier: Optional[float] = None, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, return_logits: Optional[bool] = None, logits_to_keep: Union[int, torch.Tensor] = 0, **kwargs) -> Union[torch.Tensor, olmo_core.nn.lm_head.LMOutputWithLoss]",
+        "hf_forward": "(input_ids=None, attention_mask=None, position_ids=None, past_key_values=None, inputs_embeds=None, labels=None, use_cache=None, output_attentions=None, output_hidden_states=None, return_dict=None, cache_position=None, logits_to_keep=0, **kwargs)",
+        "module_classes": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+          "olmo_mose.attention.LowRankAttention": 16,
+          "olmo_mose.attention.NonlinearLowRankProjection": 64,
+          "torch.nn.modules.linear.Linear": 224,
+          "olmo_core.nn.layer_norm.RMSNorm": 64,
+          "olmo_mose.feed_forward.MoSESwiGLU": 16
+        },
+        "module_forward_signatures": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": "(self, x: torch.Tensor, *, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, **kwargs) -> torch.Tensor",
+          "olmo_mose.attention.LowRankAttention": "(self, x: torch.Tensor, cu_doc_lens: Optional[torch.Tensor] = None, cu_doc_lens_q: Optional[torch.Tensor] = None, cu_doc_lens_k: Optional[torch.Tensor] = None, max_doc_len: Optional[int] = None, max_doc_len_q: Optional[int] = None, max_doc_len_k: Optional[int] = None, local_k_slice: Optional[slice] = None, pos_sin: Optional[torch.Tensor] = None, pos_cos: Optional[torch.Tensor] = None, freqs_cis: Optional[torch.Tensor] = None, cache_leftpad: Optional[torch.Tensor] = None) -> torch.Tensor",
+          "olmo_mose.attention.NonlinearLowRankProjection": "(self, x: torch.Tensor) -> torch.Tensor",
+          "torch.nn.modules.linear.Linear": "(self, input: torch.Tensor) -> torch.Tensor",
+          "olmo_core.nn.layer_norm.RMSNorm": "(self, x: torch.Tensor) -> torch.Tensor",
+          "olmo_mose.feed_forward.MoSESwiGLU": "(self, x: torch.Tensor) -> torch.Tensor"
+        },
+        "input_mapping": {
+          "input_ids": "input_ids",
+          "input_embeddings": "inputs_embeds",
+          "logits_to_keep": "logits_to_keep"
+        },
+        "label_contract": "Native labels are shifted; HF labels are unshifted (-100 ignored)",
+        "unsupported_native_inputs": [
+          "doc_lens",
+          "cu_doc_lens",
+          "max_doc_len",
+          "local_k_slice",
+          "pos_sin",
+          "pos_cos",
+          "freqs_cis",
+          "cache_leftpad",
+          "context_parallelism",
+          "z_loss_multiplier",
+          "loss_div_factor"
+        ],
+        "structural_check": "passed",
+        "numerical_check": "not_run"
+      },
+      "error": null
+    },
+    {
+      "label": "k_only",
+      "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-all-linear-k-only-silu-fp8-30b/stage1/step14306",
+      "status_at_stop": "ready",
+      "source": {
+        "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-all-linear-k-only-silu-fp8-30b/stage1/step14306",
+        "state_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-all-linear-k-only-silu-fp8-30b/stage1/step14306/model_and_optim",
+        "source_config_sha256": "784c599d9761666ca883210bd80870dd544721e55d37afb927b8d3291eb02c93",
+        "dcp_metadata_sha256": "064cb2d3c5f9774858f6efad3c65f074c65fef4eb24155dd7553f17d64fa09df",
+        "step": 14306
+      },
+      "structural_audit": {
+        "state_keys": 291,
+        "unique_parameters": 797050880,
+        "sharing_groups": 0,
+        "native_forward": "(input_ids: torch.Tensor, *, input_embeddings: Optional[torch.Tensor] = None, labels: Optional[torch.Tensor] = None, ignore_index: int = -100, loss_reduction: Literal['mean', 'sum', 'none'] = 'mean', z_loss_multiplier: Optional[float] = None, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, return_logits: Optional[bool] = None, logits_to_keep: Union[int, torch.Tensor] = 0, **kwargs) -> Union[torch.Tensor, olmo_core.nn.lm_head.LMOutputWithLoss]",
+        "hf_forward": "(input_ids=None, attention_mask=None, position_ids=None, past_key_values=None, inputs_embeds=None, labels=None, use_cache=None, output_attentions=None, output_hidden_states=None, return_dict=None, cache_position=None, logits_to_keep=0, **kwargs)",
+        "module_classes": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+          "olmo_mose.attention.LowRankAttention": 16,
+          "olmo_mose.attention.NonlinearLowRankProjection": 64,
+          "torch.nn.modules.linear.Linear": 224,
+          "olmo_core.nn.layer_norm.RMSNorm": 64,
+          "olmo_mose.feed_forward.MoSESwiGLU": 16
+        },
+        "module_forward_signatures": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": "(self, x: torch.Tensor, *, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, **kwargs) -> torch.Tensor",
+          "olmo_mose.attention.LowRankAttention": "(self, x: torch.Tensor, cu_doc_lens: Optional[torch.Tensor] = None, cu_doc_lens_q: Optional[torch.Tensor] = None, cu_doc_lens_k: Optional[torch.Tensor] = None, max_doc_len: Optional[int] = None, max_doc_len_q: Optional[int] = None, max_doc_len_k: Optional[int] = None, local_k_slice: Optional[slice] = None, pos_sin: Optional[torch.Tensor] = None, pos_cos: Optional[torch.Tensor] = None, freqs_cis: Optional[torch.Tensor] = None, cache_leftpad: Optional[torch.Tensor] = None) -> torch.Tensor",
+          "olmo_mose.attention.NonlinearLowRankProjection": "(self, x: torch.Tensor) -> torch.Tensor",
+          "torch.nn.modules.linear.Linear": "(self, input: torch.Tensor) -> torch.Tensor",
+          "olmo_core.nn.layer_norm.RMSNorm": "(self, x: torch.Tensor) -> torch.Tensor",
+          "olmo_mose.feed_forward.MoSESwiGLU": "(self, x: torch.Tensor) -> torch.Tensor"
+        },
+        "input_mapping": {
+          "input_ids": "input_ids",
+          "input_embeddings": "inputs_embeds",
+          "logits_to_keep": "logits_to_keep"
+        },
+        "label_contract": "Native labels are shifted; HF labels are unshifted (-100 ignored)",
+        "unsupported_native_inputs": [
+          "doc_lens",
+          "cu_doc_lens",
+          "max_doc_len",
+          "local_k_slice",
+          "pos_sin",
+          "pos_cos",
+          "freqs_cis",
+          "cache_leftpad",
+          "context_parallelism",
+          "z_loss_multiplier",
+          "loss_div_factor"
+        ],
+        "structural_check": "passed",
+        "numerical_check": "not_run"
+      },
+      "error": null
+    },
+    {
+      "label": "c0",
+      "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c0-k-silu-down-rms-fp8-30b/stage1/step14306",
+      "status_at_stop": "ready",
+      "source": {
+        "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c0-k-silu-down-rms-fp8-30b/stage1/step14306",
+        "state_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c0-k-silu-down-rms-fp8-30b/stage1/step14306/model_and_optim",
+        "source_config_sha256": "520df92aaadb4ed5844403a992e29642d546c6441aee00641a89ef9dfd9c4318",
+        "dcp_metadata_sha256": "0594de896516fc77d4e55bbd6f8c72c0202eb79e32eef4f9a6315ffacb29b208",
+        "step": 14306
+      },
+      "structural_audit": {
+        "state_keys": 291,
+        "unique_parameters": 797050880,
+        "sharing_groups": 0,
+        "native_forward": "(input_ids: torch.Tensor, *, input_embeddings: Optional[torch.Tensor] = None, labels: Optional[torch.Tensor] = None, ignore_index: int = -100, loss_reduction: Literal['mean', 'sum', 'none'] = 'mean', z_loss_multiplier: Optional[float] = None, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, return_logits: Optional[bool] = None, logits_to_keep: Union[int, torch.Tensor] = 0, **kwargs) -> Union[torch.Tensor, olmo_core.nn.lm_head.LMOutputWithLoss]",
+        "hf_forward": "(input_ids=None, attention_mask=None, position_ids=None, past_key_values=None, inputs_embeds=None, labels=None, use_cache=None, output_attentions=None, output_hidden_states=None, return_dict=None, cache_position=None, logits_to_keep=0, **kwargs)",
+        "module_classes": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+          "olmo_mose.attention.LowRankAttention": 16,
+          "olmo_mose.attention.NonlinearLowRankProjection": 64,
+          "torch.nn.modules.linear.Linear": 224,
+          "olmo_core.nn.layer_norm.RMSNorm": 80,
+          "olmo_mose.feed_forward.MoSESwiGLU": 16
+        },
+        "module_forward_signatures": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": "(self, x: torch.Tensor, *, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, **kwargs) -> torch.Tensor",
+          "olmo_mose.attention.LowRankAttention": "(self, x: torch.Tensor, cu_doc_lens: Optional[torch.Tensor] = None, cu_doc_lens_q: Optional[torch.Tensor] = None, cu_doc_lens_k: Optional[torch.Tensor] = None, max_doc_len: Optional[int] = None, max_doc_len_q: Optional[int] = None, max_doc_len_k: Optional[int] = None, local_k_slice: Optional[slice] = None, pos_sin: Optional[torch.Tensor] = None, pos_cos: Optional[torch.Tensor] = None, freqs_cis: Optional[torch.Tensor] = None, cache_leftpad: Optional[torch.Tensor] = None) -> torch.Tensor",
+          "olmo_mose.attention.NonlinearLowRankProjection": "(self, x: torch.Tensor) -> torch.Tensor",
+          "torch.nn.modules.linear.Linear": "(self, input: torch.Tensor) -> torch.Tensor",
+          "olmo_core.nn.layer_norm.RMSNorm": "(self, x: torch.Tensor) -> torch.Tensor",
+          "olmo_mose.feed_forward.MoSESwiGLU": "(self, x: torch.Tensor) -> torch.Tensor"
+        },
+        "input_mapping": {
+          "input_ids": "input_ids",
+          "input_embeddings": "inputs_embeds",
+          "logits_to_keep": "logits_to_keep"
+        },
+        "label_contract": "Native labels are shifted; HF labels are unshifted (-100 ignored)",
+        "unsupported_native_inputs": [
+          "doc_lens",
+          "cu_doc_lens",
+          "max_doc_len",
+          "local_k_slice",
+          "pos_sin",
+          "pos_cos",
+          "freqs_cis",
+          "cache_leftpad",
+          "context_parallelism",
+          "z_loss_multiplier",
+          "loss_div_factor"
+        ],
+        "structural_check": "passed",
+        "numerical_check": "not_run"
+      },
+      "error": null
+    },
+    {
+      "label": "c1",
+      "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c1-k-silu-down-rms-kv-fp8-30b/stage1/step14306",
+      "status_at_stop": "ready",
+      "source": {
+        "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c1-k-silu-down-rms-kv-fp8-30b/stage1/step14306",
+        "state_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c1-k-silu-down-rms-kv-fp8-30b/stage1/step14306/model_and_optim",
+        "source_config_sha256": "d701535e12db66ca420feacfa0ec47bf2d9cc7da4d3ca0fed175b2a485812005",
+        "dcp_metadata_sha256": "d2908036dda16a0f7cfa2ac52f8a0137eb8d16edc6ccc30795a38518436493d0",
+        "step": 14306
+      },
+      "structural_audit": {
+        "state_keys": 291,
+        "unique_parameters": 797050880,
+        "sharing_groups": 16,
+        "native_forward": "(input_ids: torch.Tensor, *, input_embeddings: Optional[torch.Tensor] = None, labels: Optional[torch.Tensor] = None, ignore_index: int = -100, loss_reduction: Literal['mean', 'sum', 'none'] = 'mean', z_loss_multiplier: Optional[float] = None, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, return_logits: Optional[bool] = None, logits_to_keep: Union[int, torch.Tensor] = 0, **kwargs) -> Union[torch.Tensor, olmo_core.nn.lm_head.LMOutputWithLoss]",
+        "hf_forward": "(input_ids=None, attention_mask=None, position_ids=None, past_key_values=None, inputs_embeds=None, labels=None, use_cache=None, output_attentions=None, output_hidden_states=None, return_dict=None, cache_position=None, logits_to_keep=0, **kwargs)",
+        "module_classes": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+          "olmo_mose.attention.LowRankAttention": 16,
+          "olmo_mose.attention.NonlinearLowRankProjection": 64,
+          "torch.nn.modules.linear.Linear": 224,
+          "olmo_core.nn.layer_norm.RMSNorm": 80,
+          "olmo_mose.feed_forward.MoSESwiGLU": 16
+        },
+        "module_forward_signatures": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": "(self, x: torch.Tensor, *, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, **kwargs) -> torch.Tensor",
+          "olmo_mose.attention.LowRankAttention": "(self, x: torch.Tensor, cu_doc_lens: Optional[torch.Tensor] = None, cu_doc_lens_q: Optional[torch.Tensor] = None, cu_doc_lens_k: Optional[torch.Tensor] = None, max_doc_len: Optional[int] = None, max_doc_len_q: Optional[int] = None, max_doc_len_k: Optional[int] = None, local_k_slice: Optional[slice] = None, pos_sin: Optional[torch.Tensor] = None, pos_cos: Optional[torch.Tensor] = None, freqs_cis: Optional[torch.Tensor] = None, cache_leftpad: Optional[torch.Tensor] = None) -> torch.Tensor",
+          "olmo_mose.attention.NonlinearLowRankProjection": "(self, x: torch.Tensor) -> torch.Tensor",
+          "torch.nn.modules.linear.Linear": "(self, input: torch.Tensor) -> torch.Tensor",
+          "olmo_core.nn.layer_norm.RMSNorm": "(self, x: torch.Tensor) -> torch.Tensor",
+          "olmo_mose.feed_forward.MoSESwiGLU": "(self, x: torch.Tensor) -> torch.Tensor"
+        },
+        "input_mapping": {
+          "input_ids": "input_ids",
+          "input_embeddings": "inputs_embeds",
+          "logits_to_keep": "logits_to_keep"
+        },
+        "label_contract": "Native labels are shifted; HF labels are unshifted (-100 ignored)",
+        "unsupported_native_inputs": [
+          "doc_lens",
+          "cu_doc_lens",
+          "max_doc_len",
+          "local_k_slice",
+          "pos_sin",
+          "pos_cos",
+          "freqs_cis",
+          "cache_leftpad",
+          "context_parallelism",
+          "z_loss_multiplier",
+          "loss_div_factor"
+        ],
+        "structural_check": "passed",
+        "numerical_check": "not_run"
+      },
+      "error": null
+    },
+    {
+      "label": "c2",
+      "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c2-k-silu-down-rms-gateup-fp8-30b/stage1/step14306",
+      "status_at_stop": "ready",
+      "source": {
+        "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c2-k-silu-down-rms-gateup-fp8-30b/stage1/step14306",
+        "state_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c2-k-silu-down-rms-gateup-fp8-30b/stage1/step14306/model_and_optim",
+        "source_config_sha256": "c1db012878aa0661b6989ee9d10bdc449a31bb0b2fc84c403339ad540bd0a33a",
+        "dcp_metadata_sha256": "87cb937484edd18e0c158e7195f797696b8f54afd508f198f3bea0e295217674",
+        "step": 14306
+      },
+      "structural_audit": {
+        "state_keys": 275,
+        "unique_parameters": 797050880,
+        "sharing_groups": 0,
+        "native_forward": "(input_ids: torch.Tensor, *, input_embeddings: Optional[torch.Tensor] = None, labels: Optional[torch.Tensor] = None, ignore_index: int = -100, loss_reduction: Literal['mean', 'sum', 'none'] = 'mean', z_loss_multiplier: Optional[float] = None, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, return_logits: Optional[bool] = None, logits_to_keep: Union[int, torch.Tensor] = 0, **kwargs) -> Union[torch.Tensor, olmo_core.nn.lm_head.LMOutputWithLoss]",
+        "hf_forward": "(input_ids=None, attention_mask=None, position_ids=None, past_key_values=None, inputs_embeds=None, labels=None, use_cache=None, output_attentions=None, output_hidden_states=None, return_dict=None, cache_position=None, logits_to_keep=0, **kwargs)",
+        "module_classes": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+          "olmo_mose.attention.LowRankAttention": 16,
+          "olmo_mose.attention.NonlinearLowRankProjection": 64,
+          "torch.nn.modules.linear.Linear": 208,
+          "olmo_core.nn.layer_norm.RMSNorm": 80,
+          "olmo_mose.feed_forward.MoSESwiGLU": 16
+        },
+        "module_forward_signatures": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": "(self, x: torch.Tensor, *, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, **kwargs) -> torch.Tensor",
+          "olmo_mose.attention.LowRankAttention": "(self, x: torch.Tensor, cu_doc_lens: Optional[torch.Tensor] = None, cu_doc_lens_q: Optional[torch.Tensor] = None, cu_doc_lens_k: Optional[torch.Tensor] = None, max_doc_len: Optional[int] = None, max_doc_len_q: Optional[int] = None, max_doc_len_k: Optional[int] = None, local_k_slice: Optional[slice] = None, pos_sin: Optional[torch.Tensor] = None, pos_cos: Optional[torch.Tensor] = None, freqs_cis: Optional[torch.Tensor] = None, cache_leftpad: Optional[torch.Tensor] = None) -> torch.Tensor",
+          "olmo_mose.attention.NonlinearLowRankProjection": "(self, x: torch.Tensor) -> torch.Tensor",
+          "torch.nn.modules.linear.Linear": "(self, input: torch.Tensor) -> torch.Tensor",
+          "olmo_core.nn.layer_norm.RMSNorm": "(self, x: torch.Tensor) -> torch.Tensor",
+          "olmo_mose.feed_forward.MoSESwiGLU": "(self, x: torch.Tensor) -> torch.Tensor"
+        },
+        "input_mapping": {
+          "input_ids": "input_ids",
+          "input_embeddings": "inputs_embeds",
+          "logits_to_keep": "logits_to_keep"
+        },
+        "label_contract": "Native labels are shifted; HF labels are unshifted (-100 ignored)",
+        "unsupported_native_inputs": [
+          "doc_lens",
+          "cu_doc_lens",
+          "max_doc_len",
+          "local_k_slice",
+          "pos_sin",
+          "pos_cos",
+          "freqs_cis",
+          "cache_leftpad",
+          "context_parallelism",
+          "z_loss_multiplier",
+          "loss_div_factor"
+        ],
+        "structural_check": "passed",
+        "numerical_check": "not_run"
+      },
+      "error": null
+    },
+    {
+      "label": "c3",
+      "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c3-k-silu-down-rms-kv-gateup-fp8-30b/stage1/step14306",
+      "status_at_stop": "ready",
+      "source": {
+        "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c3-k-silu-down-rms-kv-gateup-fp8-30b/stage1/step14306",
+        "state_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c3-k-silu-down-rms-kv-gateup-fp8-30b/stage1/step14306/model_and_optim",
+        "source_config_sha256": "3db156ea11d6161df2dd24ccdb861ddfbc19ed353bbaadb06769d5e3dc2ea022",
+        "dcp_metadata_sha256": "402bfbfac87d4960ed749cfc3217efc65341d659c1672b85b019e5d4c8cd1e13",
+        "step": 14306
+      },
+      "structural_audit": {
+        "state_keys": 275,
+        "unique_parameters": 797050880,
+        "sharing_groups": 16,
+        "native_forward": "(input_ids: torch.Tensor, *, input_embeddings: Optional[torch.Tensor] = None, labels: Optional[torch.Tensor] = None, ignore_index: int = -100, loss_reduction: Literal['mean', 'sum', 'none'] = 'mean', z_loss_multiplier: Optional[float] = None, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, return_logits: Optional[bool] = None, logits_to_keep: Union[int, torch.Tensor] = 0, **kwargs) -> Union[torch.Tensor, olmo_core.nn.lm_head.LMOutputWithLoss]",
+        "hf_forward": "(input_ids=None, attention_mask=None, position_ids=None, past_key_values=None, inputs_embeds=None, labels=None, use_cache=None, output_attentions=None, output_hidden_states=None, return_dict=None, cache_position=None, logits_to_keep=0, **kwargs)",
+        "module_classes": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+          "olmo_mose.attention.LowRankAttention": 16,
+          "olmo_mose.attention.NonlinearLowRankProjection": 64,
+          "torch.nn.modules.linear.Linear": 208,
+          "olmo_core.nn.layer_norm.RMSNorm": 80,
+          "olmo_mose.feed_forward.MoSESwiGLU": 16
+        },
+        "module_forward_signatures": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": "(self, x: torch.Tensor, *, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, **kwargs) -> torch.Tensor",
+          "olmo_mose.attention.LowRankAttention": "(self, x: torch.Tensor, cu_doc_lens: Optional[torch.Tensor] = None, cu_doc_lens_q: Optional[torch.Tensor] = None, cu_doc_lens_k: Optional[torch.Tensor] = None, max_doc_len: Optional[int] = None, max_doc_len_q: Optional[int] = None, max_doc_len_k: Optional[int] = None, local_k_slice: Optional[slice] = None, pos_sin: Optional[torch.Tensor] = None, pos_cos: Optional[torch.Tensor] = None, freqs_cis: Optional[torch.Tensor] = None, cache_leftpad: Optional[torch.Tensor] = None) -> torch.Tensor",
+          "olmo_mose.attention.NonlinearLowRankProjection": "(self, x: torch.Tensor) -> torch.Tensor",
+          "torch.nn.modules.linear.Linear": "(self, input: torch.Tensor) -> torch.Tensor",
+          "olmo_core.nn.layer_norm.RMSNorm": "(self, x: torch.Tensor) -> torch.Tensor",
+          "olmo_mose.feed_forward.MoSESwiGLU": "(self, x: torch.Tensor) -> torch.Tensor"
+        },
+        "input_mapping": {
+          "input_ids": "input_ids",
+          "input_embeddings": "inputs_embeds",
+          "logits_to_keep": "logits_to_keep"
+        },
+        "label_contract": "Native labels are shifted; HF labels are unshifted (-100 ignored)",
+        "unsupported_native_inputs": [
+          "doc_lens",
+          "cu_doc_lens",
+          "max_doc_len",
+          "local_k_slice",
+          "pos_sin",
+          "pos_cos",
+          "freqs_cis",
+          "cache_leftpad",
+          "context_parallelism",
+          "z_loss_multiplier",
+          "loss_div_factor"
+        ],
+        "structural_check": "passed",
+        "numerical_check": "not_run"
+      },
+      "error": null
+    },
+    {
+      "label": "c4",
+      "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c4-attention-silu-down-rms-kv-fp8-30b/stage1/step14306",
+      "status_at_stop": "ready",
+      "source": {
+        "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c4-attention-silu-down-rms-kv-fp8-30b/stage1/step14306",
+        "state_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c4-attention-silu-down-rms-kv-fp8-30b/stage1/step14306/model_and_optim",
+        "source_config_sha256": "f0392a720d7606383c03e0e2cc92358d652ab6779f46a9f3f679cdddfccc6f6f",
+        "dcp_metadata_sha256": "7a6b95c59bfd7aaae00c1923fc0db607ed705ee140c52d8ccb28244ac96205eb",
+        "step": 14306
+      },
+      "structural_audit": {
+        "state_keys": 291,
+        "unique_parameters": 797050880,
+        "sharing_groups": 16,
+        "native_forward": "(input_ids: torch.Tensor, *, input_embeddings: Optional[torch.Tensor] = None, labels: Optional[torch.Tensor] = None, ignore_index: int = -100, loss_reduction: Literal['mean', 'sum', 'none'] = 'mean', z_loss_multiplier: Optional[float] = None, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, return_logits: Optional[bool] = None, logits_to_keep: Union[int, torch.Tensor] = 0, **kwargs) -> Union[torch.Tensor, olmo_core.nn.lm_head.LMOutputWithLoss]",
+        "hf_forward": "(input_ids=None, attention_mask=None, position_ids=None, past_key_values=None, inputs_embeds=None, labels=None, use_cache=None, output_attentions=None, output_hidden_states=None, return_dict=None, cache_position=None, logits_to_keep=0, **kwargs)",
+        "module_classes": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+          "olmo_mose.attention.LowRankAttention": 16,
+          "olmo_mose.attention.NonlinearLowRankProjection": 64,
+          "torch.nn.modules.linear.Linear": 224,
+          "olmo_core.nn.layer_norm.RMSNorm": 80,
+          "olmo_mose.feed_forward.MoSESwiGLU": 16
+        },
+        "module_forward_signatures": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": "(self, x: torch.Tensor, *, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, **kwargs) -> torch.Tensor",
+          "olmo_mose.attention.LowRankAttention": "(self, x: torch.Tensor, cu_doc_lens: Optional[torch.Tensor] = None, cu_doc_lens_q: Optional[torch.Tensor] = None, cu_doc_lens_k: Optional[torch.Tensor] = None, max_doc_len: Optional[int] = None, max_doc_len_q: Optional[int] = None, max_doc_len_k: Optional[int] = None, local_k_slice: Optional[slice] = None, pos_sin: Optional[torch.Tensor] = None, pos_cos: Optional[torch.Tensor] = None, freqs_cis: Optional[torch.Tensor] = None, cache_leftpad: Optional[torch.Tensor] = None) -> torch.Tensor",
+          "olmo_mose.attention.NonlinearLowRankProjection": "(self, x: torch.Tensor) -> torch.Tensor",
+          "torch.nn.modules.linear.Linear": "(self, input: torch.Tensor) -> torch.Tensor",
+          "olmo_core.nn.layer_norm.RMSNorm": "(self, x: torch.Tensor) -> torch.Tensor",
+          "olmo_mose.feed_forward.MoSESwiGLU": "(self, x: torch.Tensor) -> torch.Tensor"
+        },
+        "input_mapping": {
+          "input_ids": "input_ids",
+          "input_embeddings": "inputs_embeds",
+          "logits_to_keep": "logits_to_keep"
+        },
+        "label_contract": "Native labels are shifted; HF labels are unshifted (-100 ignored)",
+        "unsupported_native_inputs": [
+          "doc_lens",
+          "cu_doc_lens",
+          "max_doc_len",
+          "local_k_slice",
+          "pos_sin",
+          "pos_cos",
+          "freqs_cis",
+          "cache_leftpad",
+          "context_parallelism",
+          "z_loss_multiplier",
+          "loss_div_factor"
+        ],
+        "structural_check": "passed",
+        "numerical_check": "not_run"
+      },
+      "error": null
+    },
+    {
+      "label": "c5",
+      "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c5-q-silu-down-rms-gateup-fp8-30b/stage1/step14306",
+      "status_at_stop": "ready",
+      "source": {
+        "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c5-q-silu-down-rms-gateup-fp8-30b/stage1/step14306",
+        "state_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c5-q-silu-down-rms-gateup-fp8-30b/stage1/step14306/model_and_optim",
+        "source_config_sha256": "de7a38df41db1c9e3f13326df7cdcc49d4de42ebab0561a0b71326682123a29b",
+        "dcp_metadata_sha256": "9ad4693507d94aba24a342d96a9554af194744639bd0c1ffca097488163ff5e4",
+        "step": 14306
+      },
+      "structural_audit": {
+        "state_keys": 275,
+        "unique_parameters": 797050880,
+        "sharing_groups": 0,
+        "native_forward": "(input_ids: torch.Tensor, *, input_embeddings: Optional[torch.Tensor] = None, labels: Optional[torch.Tensor] = None, ignore_index: int = -100, loss_reduction: Literal['mean', 'sum', 'none'] = 'mean', z_loss_multiplier: Optional[float] = None, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, return_logits: Optional[bool] = None, logits_to_keep: Union[int, torch.Tensor] = 0, **kwargs) -> Union[torch.Tensor, olmo_core.nn.lm_head.LMOutputWithLoss]",
+        "hf_forward": "(input_ids=None, attention_mask=None, position_ids=None, past_key_values=None, inputs_embeds=None, labels=None, use_cache=None, output_attentions=None, output_hidden_states=None, return_dict=None, cache_position=None, logits_to_keep=0, **kwargs)",
+        "module_classes": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+          "olmo_mose.attention.LowRankAttention": 16,
+          "olmo_mose.attention.NonlinearLowRankProjection": 64,
+          "torch.nn.modules.linear.Linear": 208,
+          "olmo_core.nn.layer_norm.RMSNorm": 80,
+          "olmo_mose.feed_forward.MoSESwiGLU": 16
+        },
+        "module_forward_signatures": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": "(self, x: torch.Tensor, *, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, **kwargs) -> torch.Tensor",
+          "olmo_mose.attention.LowRankAttention": "(self, x: torch.Tensor, cu_doc_lens: Optional[torch.Tensor] = None, cu_doc_lens_q: Optional[torch.Tensor] = None, cu_doc_lens_k: Optional[torch.Tensor] = None, max_doc_len: Optional[int] = None, max_doc_len_q: Optional[int] = None, max_doc_len_k: Optional[int] = None, local_k_slice: Optional[slice] = None, pos_sin: Optional[torch.Tensor] = None, pos_cos: Optional[torch.Tensor] = None, freqs_cis: Optional[torch.Tensor] = None, cache_leftpad: Optional[torch.Tensor] = None) -> torch.Tensor",
+          "olmo_mose.attention.NonlinearLowRankProjection": "(self, x: torch.Tensor) -> torch.Tensor",
+          "torch.nn.modules.linear.Linear": "(self, input: torch.Tensor) -> torch.Tensor",
+          "olmo_core.nn.layer_norm.RMSNorm": "(self, x: torch.Tensor) -> torch.Tensor",
+          "olmo_mose.feed_forward.MoSESwiGLU": "(self, x: torch.Tensor) -> torch.Tensor"
+        },
+        "input_mapping": {
+          "input_ids": "input_ids",
+          "input_embeddings": "inputs_embeds",
+          "logits_to_keep": "logits_to_keep"
+        },
+        "label_contract": "Native labels are shifted; HF labels are unshifted (-100 ignored)",
+        "unsupported_native_inputs": [
+          "doc_lens",
+          "cu_doc_lens",
+          "max_doc_len",
+          "local_k_slice",
+          "pos_sin",
+          "pos_cos",
+          "freqs_cis",
+          "cache_leftpad",
+          "context_parallelism",
+          "z_loss_multiplier",
+          "loss_div_factor"
+        ],
+        "structural_check": "passed",
+        "numerical_check": "not_run"
+      },
+      "error": null
+    },
+    {
+      "label": "c6",
+      "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c6-qk-silu-down-rms-gateup-fp8-30b/stage1/step14306",
+      "status_at_stop": "ready",
+      "source": {
+        "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c6-qk-silu-down-rms-gateup-fp8-30b/stage1/step14306",
+        "state_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c6-qk-silu-down-rms-gateup-fp8-30b/stage1/step14306/model_and_optim",
+        "source_config_sha256": "24571dbc3b3b21a9716f4eaca4954852a2e90cf56eef4071389cf2843b533cb5",
+        "dcp_metadata_sha256": "ad3c667fdc3875e698cea909c94be71d2adb8aedded6cfcd7f276b34e46413ef",
+        "step": 14306
+      },
+      "structural_audit": {
+        "state_keys": 275,
+        "unique_parameters": 797050880,
+        "sharing_groups": 0,
+        "native_forward": "(input_ids: torch.Tensor, *, input_embeddings: Optional[torch.Tensor] = None, labels: Optional[torch.Tensor] = None, ignore_index: int = -100, loss_reduction: Literal['mean', 'sum', 'none'] = 'mean', z_loss_multiplier: Optional[float] = None, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, return_logits: Optional[bool] = None, logits_to_keep: Union[int, torch.Tensor] = 0, **kwargs) -> Union[torch.Tensor, olmo_core.nn.lm_head.LMOutputWithLoss]",
+        "hf_forward": "(input_ids=None, attention_mask=None, position_ids=None, past_key_values=None, inputs_embeds=None, labels=None, use_cache=None, output_attentions=None, output_hidden_states=None, return_dict=None, cache_position=None, logits_to_keep=0, **kwargs)",
+        "module_classes": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+          "olmo_mose.attention.LowRankAttention": 16,
+          "olmo_mose.attention.NonlinearLowRankProjection": 64,
+          "torch.nn.modules.linear.Linear": 208,
+          "olmo_core.nn.layer_norm.RMSNorm": 80,
+          "olmo_mose.feed_forward.MoSESwiGLU": 16
+        },
+        "module_forward_signatures": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": "(self, x: torch.Tensor, *, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, **kwargs) -> torch.Tensor",
+          "olmo_mose.attention.LowRankAttention": "(self, x: torch.Tensor, cu_doc_lens: Optional[torch.Tensor] = None, cu_doc_lens_q: Optional[torch.Tensor] = None, cu_doc_lens_k: Optional[torch.Tensor] = None, max_doc_len: Optional[int] = None, max_doc_len_q: Optional[int] = None, max_doc_len_k: Optional[int] = None, local_k_slice: Optional[slice] = None, pos_sin: Optional[torch.Tensor] = None, pos_cos: Optional[torch.Tensor] = None, freqs_cis: Optional[torch.Tensor] = None, cache_leftpad: Optional[torch.Tensor] = None) -> torch.Tensor",
+          "olmo_mose.attention.NonlinearLowRankProjection": "(self, x: torch.Tensor) -> torch.Tensor",
+          "torch.nn.modules.linear.Linear": "(self, input: torch.Tensor) -> torch.Tensor",
+          "olmo_core.nn.layer_norm.RMSNorm": "(self, x: torch.Tensor) -> torch.Tensor",
+          "olmo_mose.feed_forward.MoSESwiGLU": "(self, x: torch.Tensor) -> torch.Tensor"
+        },
+        "input_mapping": {
+          "input_ids": "input_ids",
+          "input_embeddings": "inputs_embeds",
+          "logits_to_keep": "logits_to_keep"
+        },
+        "label_contract": "Native labels are shifted; HF labels are unshifted (-100 ignored)",
+        "unsupported_native_inputs": [
+          "doc_lens",
+          "cu_doc_lens",
+          "max_doc_len",
+          "local_k_slice",
+          "pos_sin",
+          "pos_cos",
+          "freqs_cis",
+          "cache_leftpad",
+          "context_parallelism",
+          "z_loss_multiplier",
+          "loss_div_factor"
+        ],
+        "structural_check": "passed",
+        "numerical_check": "not_run"
+      },
+      "error": null
+    },
+    {
+      "label": "c7",
+      "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c7-qk-silu-ug-silu-down-rms-gateup-fp8-30b/stage1/step14306",
+      "status_at_stop": "ready",
+      "source": {
+        "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c7-qk-silu-ug-silu-down-rms-gateup-fp8-30b/stage1/step14306",
+        "state_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c7-qk-silu-ug-silu-down-rms-gateup-fp8-30b/stage1/step14306/model_and_optim",
+        "source_config_sha256": "f1b4fd163019022e0edd6f9af11cce94e7a88317f1c4c3c78dd709e324cb7ca6",
+        "dcp_metadata_sha256": "b9be9151c95bad8d818a826a3718444237befa63f5b967f740da95bb155a1394",
+        "step": 14306
+      },
+      "structural_audit": {
+        "state_keys": 275,
+        "unique_parameters": 797050880,
+        "sharing_groups": 0,
+        "native_forward": "(input_ids: torch.Tensor, *, input_embeddings: Optional[torch.Tensor] = None, labels: Optional[torch.Tensor] = None, ignore_index: int = -100, loss_reduction: Literal['mean', 'sum', 'none'] = 'mean', z_loss_multiplier: Optional[float] = None, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, return_logits: Optional[bool] = None, logits_to_keep: Union[int, torch.Tensor] = 0, **kwargs) -> Union[torch.Tensor, olmo_core.nn.lm_head.LMOutputWithLoss]",
+        "hf_forward": "(input_ids=None, attention_mask=None, position_ids=None, past_key_values=None, inputs_embeds=None, labels=None, use_cache=None, output_attentions=None, output_hidden_states=None, return_dict=None, cache_position=None, logits_to_keep=0, **kwargs)",
+        "module_classes": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+          "olmo_mose.attention.LowRankAttention": 16,
+          "olmo_mose.attention.NonlinearLowRankProjection": 64,
+          "torch.nn.modules.linear.Linear": 208,
+          "olmo_core.nn.layer_norm.RMSNorm": 80,
+          "olmo_mose.feed_forward.MoSESwiGLU": 16
+        },
+        "module_forward_signatures": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": "(self, x: torch.Tensor, *, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, **kwargs) -> torch.Tensor",
+          "olmo_mose.attention.LowRankAttention": "(self, x: torch.Tensor, cu_doc_lens: Optional[torch.Tensor] = None, cu_doc_lens_q: Optional[torch.Tensor] = None, cu_doc_lens_k: Optional[torch.Tensor] = None, max_doc_len: Optional[int] = None, max_doc_len_q: Optional[int] = None, max_doc_len_k: Optional[int] = None, local_k_slice: Optional[slice] = None, pos_sin: Optional[torch.Tensor] = None, pos_cos: Optional[torch.Tensor] = None, freqs_cis: Optional[torch.Tensor] = None, cache_leftpad: Optional[torch.Tensor] = None) -> torch.Tensor",
+          "olmo_mose.attention.NonlinearLowRankProjection": "(self, x: torch.Tensor) -> torch.Tensor",
+          "torch.nn.modules.linear.Linear": "(self, input: torch.Tensor) -> torch.Tensor",
+          "olmo_core.nn.layer_norm.RMSNorm": "(self, x: torch.Tensor) -> torch.Tensor",
+          "olmo_mose.feed_forward.MoSESwiGLU": "(self, x: torch.Tensor) -> torch.Tensor"
+        },
+        "input_mapping": {
+          "input_ids": "input_ids",
+          "input_embeddings": "inputs_embeds",
+          "logits_to_keep": "logits_to_keep"
+        },
+        "label_contract": "Native labels are shifted; HF labels are unshifted (-100 ignored)",
+        "unsupported_native_inputs": [
+          "doc_lens",
+          "cu_doc_lens",
+          "max_doc_len",
+          "local_k_slice",
+          "pos_sin",
+          "pos_cos",
+          "freqs_cis",
+          "cache_leftpad",
+          "context_parallelism",
+          "z_loss_multiplier",
+          "loss_div_factor"
+        ],
+        "structural_check": "passed",
+        "numerical_check": "not_run"
+      },
+      "error": null
+    },
+    {
+      "label": "c8",
+      "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c8-linear-down-rms-gateup-fp8-30b/stage1/step14306",
+      "status_at_stop": "ready",
+      "source": {
+        "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c8-linear-down-rms-gateup-fp8-30b/stage1/step14306",
+        "state_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-r512matched-c8-linear-down-rms-gateup-fp8-30b/stage1/step14306/model_and_optim",
+        "source_config_sha256": "8be1fa396e46c5776a49dea9156b4d9c0ef474414ee9a4b4307804b0120793e0",
+        "dcp_metadata_sha256": "574c32629cbca2dd11ec602f8ca5b5066c577828614d18915896beca842700c6",
+        "step": 14306
+      },
+      "structural_audit": {
+        "state_keys": 275,
+        "unique_parameters": 797050880,
+        "sharing_groups": 0,
+        "native_forward": "(input_ids: torch.Tensor, *, input_embeddings: Optional[torch.Tensor] = None, labels: Optional[torch.Tensor] = None, ignore_index: int = -100, loss_reduction: Literal['mean', 'sum', 'none'] = 'mean', z_loss_multiplier: Optional[float] = None, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, return_logits: Optional[bool] = None, logits_to_keep: Union[int, torch.Tensor] = 0, **kwargs) -> Union[torch.Tensor, olmo_core.nn.lm_head.LMOutputWithLoss]",
+        "hf_forward": "(input_ids=None, attention_mask=None, position_ids=None, past_key_values=None, inputs_embeds=None, labels=None, use_cache=None, output_attentions=None, output_hidden_states=None, return_dict=None, cache_position=None, logits_to_keep=0, **kwargs)",
+        "module_classes": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+          "olmo_mose.attention.LowRankAttention": 16,
+          "olmo_mose.attention.NonlinearLowRankProjection": 64,
+          "torch.nn.modules.linear.Linear": 208,
+          "olmo_core.nn.layer_norm.RMSNorm": 80,
+          "olmo_mose.feed_forward.MoSESwiGLU": 16
+        },
+        "module_forward_signatures": {
+          "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": "(self, x: torch.Tensor, *, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, **kwargs) -> torch.Tensor",
+          "olmo_mose.attention.LowRankAttention": "(self, x: torch.Tensor, cu_doc_lens: Optional[torch.Tensor] = None, cu_doc_lens_q: Optional[torch.Tensor] = None, cu_doc_lens_k: Optional[torch.Tensor] = None, max_doc_len: Optional[int] = None, max_doc_len_q: Optional[int] = None, max_doc_len_k: Optional[int] = None, local_k_slice: Optional[slice] = None, pos_sin: Optional[torch.Tensor] = None, pos_cos: Optional[torch.Tensor] = None, freqs_cis: Optional[torch.Tensor] = None, cache_leftpad: Optional[torch.Tensor] = None) -> torch.Tensor",
+          "olmo_mose.attention.NonlinearLowRankProjection": "(self, x: torch.Tensor) -> torch.Tensor",
+          "torch.nn.modules.linear.Linear": "(self, input: torch.Tensor) -> torch.Tensor",
+          "olmo_core.nn.layer_norm.RMSNorm": "(self, x: torch.Tensor) -> torch.Tensor",
+          "olmo_mose.feed_forward.MoSESwiGLU": "(self, x: torch.Tensor) -> torch.Tensor"
+        },
+        "input_mapping": {
+          "input_ids": "input_ids",
+          "input_embeddings": "inputs_embeds",
+          "logits_to_keep": "logits_to_keep"
+        },
+        "label_contract": "Native labels are shifted; HF labels are unshifted (-100 ignored)",
+        "unsupported_native_inputs": [
+          "doc_lens",
+          "cu_doc_lens",
+          "max_doc_len",
+          "local_k_slice",
+          "pos_sin",
+          "pos_cos",
+          "freqs_cis",
+          "cache_leftpad",
+          "context_parallelism",
+          "z_loss_multiplier",
+          "loss_div_factor"
+        ],
+        "structural_check": "passed",
+        "numerical_check": "not_run"
+      },
+      "error": null
+    }
+  ]
+}

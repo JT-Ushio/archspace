@@ -1,0 +1,256 @@
+[
+  {
+    "variant": "l1",
+    "run_name": "olmo3-1b-ffn-residual-l1-m8192-r512-unshared-linear-down-rms-fp8-30b",
+    "parameters": 797050880,
+    "partition": "pool",
+    "namespace": "ailab-llmarchitecture",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ffnres-l1-p1-1x8-1009-1601-8558",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Residual_Bottlenecks/run_l1.sh",
+    "submission_allowed": true,
+    "submission_authorization": "User requested L1 and R0-R3, then explicitly confirmed no sharing; inherited pool8 low-priority training constraints.",
+    "job_id": "mose-ffnres-l1-p1-1x8-1009-1601-8558-1220497",
+    "status": "Succeeded",
+    "counts": "{'active': 0, 'succeeded': 1, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+    "latest": {
+      "step": 14300,
+      "ce": 2.505
+    },
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261009_161308-olmo3-1b-ffn-residual-l1-m8192-r512-unshared-linear-down-rms-fp8-30b",
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261009_161308-olmo3-1b-ffn-residual-l1-m8192-r512-unshared-linear-down-rms-fp8-30b/logs"
+    ],
+    "events": [
+      "[2026-10-10T04:24:51+08:00] mose-ffnres-l1-p1-1x8-1009-1601-8558-1220497-cfcd2 >> 2026-10-10 04:24:51.492\tgpu-lg-cmc-h-h200-0941.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:969\tINFO\tSaving checkpoint for step 14306 to '/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ffn-residual-l1-m8192-r512-unshared-linear-down-rms-fp8-30b/stage1/step14306'...",
+      "[2026-10-10T04:24:56+08:00] mose-ffnres-l1-p1-1x8-1009-1601-8558-1220497-cfcd2 >> 2026-10-10 04:24:56.449\tgpu-lg-cmc-h-h200-0941.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:763\tINFO\tTraining complete"
+    ],
+    "observation_exit_code": 0,
+    "observed_at": "2026-10-10T22:02:16.953802+08:00",
+    "observation_basis": "Current scheduler status and job logs",
+    "counts_dict": {
+      "active": 0,
+      "succeeded": 1,
+      "failed": 0,
+      "created_failed": 0,
+      "pending": 0,
+      "stopped": 0
+    },
+    "completion_verified": true,
+    "initialization_fingerprint": {
+      "parameter_elements": 797050880,
+      "parameter_sha256": "ca4894bbb03af58ea6be0a274cfaa69aaeab987539893be473de8ca7a2fa35d6",
+      "parameter_tensors": 291,
+      "scope": "all parameter bytes before dry-run and optimizer updates",
+      "step": 0
+    },
+    "latest_logged_step": 14306,
+    "startup_capture_saved": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Residual_Bottlenecks/startup_l1.log"
+  },
+  {
+    "variant": "r0",
+    "run_name": "olmo3-1b-ffn-residual-r0-m2048-r1280-unshared-linear-down-rms-fp8-30b",
+    "parameters": 797050880,
+    "partition": "pool",
+    "namespace": "ailab-llmarchitecture",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ffnres-r0-p1-1x8-1009-1601-2d86",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Residual_Bottlenecks/run_r0.sh",
+    "submission_allowed": true,
+    "submission_authorization": "User requested L1 and R0-R3, then explicitly confirmed no sharing; inherited pool8 low-priority training constraints.",
+    "job_id": "mose-ffnres-r0-p1-1x8-1009-1601-2d86-37284085",
+    "status": "Succeeded",
+    "counts": "{'active': 0, 'succeeded': 1, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+    "latest": {
+      "step": 14300,
+      "ce": 2.555
+    },
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261009_165202-olmo3-1b-ffn-residual-r0-m2048-r1280-unshared-linear-down-rms-fp8-30b",
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261009_165202-olmo3-1b-ffn-residual-r0-m2048-r1280-unshared-linear-down-rms-fp8-30b/logs"
+    ],
+    "events": [
+      "[2026-10-10T03:58:50+08:00] mose-ffnres-r0-p1-1x8-1009-1601-2d86-37284085-cfcd2 >> 2026-10-10 03:58:50.619\tgpu-lg-cmc-h-h200-0791.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:969\tINFO\tSaving checkpoint for step 14306 to '/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ffn-residual-r0-m2048-r1280-unshared-linear-down-rms-fp8-30b/stage1/step14306'...",
+      "[2026-10-10T03:58:55+08:00] mose-ffnres-r0-p1-1x8-1009-1601-2d86-37284085-cfcd2 >> 2026-10-10 03:58:55.169\tgpu-lg-cmc-h-h200-0791.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:763\tINFO\tTraining complete"
+    ],
+    "observation_exit_code": 0,
+    "observed_at": "2026-10-10T22:02:17.846006+08:00",
+    "observation_basis": "Current scheduler status and job logs",
+    "counts_dict": {
+      "active": 0,
+      "succeeded": 1,
+      "failed": 0,
+      "created_failed": 0,
+      "pending": 0,
+      "stopped": 0
+    },
+    "completion_verified": true,
+    "log_retrieval_pending": true,
+    "initialization_fingerprint": {
+      "parameter_elements": 797050880,
+      "parameter_sha256": "59560325ccbbe9d0b1084c0049b0e40af7a7429cfd0522aba04c644d71f9a7f8",
+      "parameter_tensors": 291,
+      "scope": "all parameter bytes before dry-run and optimizer updates",
+      "step": 0
+    },
+    "latest_logged_step": 14306,
+    "startup_capture_saved": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Residual_Bottlenecks/startup_r0.log"
+  },
+  {
+    "variant": "r1",
+    "run_name": "olmo3-1b-ffn-residual-r1-m2048-r1280-unshared-linear-down-rms-fp8-30b",
+    "parameters": 797050880,
+    "partition": "pool",
+    "namespace": "ailab-llmarchitecture",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ffnres-r1-p1-1x8-1009-1601-1eb9",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Residual_Bottlenecks/run_r1.sh",
+    "submission_allowed": true,
+    "submission_authorization": "User requested L1 and R0-R3, then explicitly confirmed no sharing; inherited pool8 low-priority training constraints.",
+    "job_id": "mose-ffnres-r1-p1-1x8-1009-1601-1eb9-88370018",
+    "status": "Succeeded",
+    "counts": "{'active': 0, 'succeeded': 1, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+    "latest": {
+      "step": 14300,
+      "ce": 2.63
+    },
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261009_165415-olmo3-1b-ffn-residual-r1-m2048-r1280-unshared-linear-down-rms-fp8-30b",
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261009_165415-olmo3-1b-ffn-residual-r1-m2048-r1280-unshared-linear-down-rms-fp8-30b/logs"
+    ],
+    "events": [
+      "[2026-10-10T06:49:04+08:00] mose-ffnres-r1-p1-1x8-1009-1601-1eb9-88370018-cfcd2 >> 2026-10-10 06:49:04.044\tgpu-lg-cmc-h-h200-0482.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:969\tINFO\tSaving checkpoint for step 14306 to '/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ffn-residual-r1-m2048-r1280-unshared-linear-down-rms-fp8-30b/stage1/step14306'...",
+      "[2026-10-10T06:49:08+08:00] mose-ffnres-r1-p1-1x8-1009-1601-1eb9-88370018-cfcd2 >> 2026-10-10 06:49:08.592\tgpu-lg-cmc-h-h200-0482.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:763\tINFO\tTraining complete"
+    ],
+    "observation_exit_code": 0,
+    "observed_at": "2026-10-10T22:02:18.421318+08:00",
+    "observation_basis": "Current scheduler status and job logs",
+    "counts_dict": {
+      "active": 0,
+      "succeeded": 1,
+      "failed": 0,
+      "created_failed": 0,
+      "pending": 0,
+      "stopped": 0
+    },
+    "completion_verified": true,
+    "log_retrieval_pending": true,
+    "initialization_fingerprint": {
+      "parameter_elements": 797050880,
+      "parameter_sha256": "59560325ccbbe9d0b1084c0049b0e40af7a7429cfd0522aba04c644d71f9a7f8",
+      "parameter_tensors": 291,
+      "scope": "all parameter bytes before dry-run and optimizer updates",
+      "step": 0
+    },
+    "latest_logged_step": 14306,
+    "startup_capture_saved": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Residual_Bottlenecks/startup_r1.log"
+  },
+  {
+    "variant": "r2",
+    "run_name": "olmo3-1b-ffn-residual-r2-m2048-r1280-unshared-linear-down-rms-fp8-30b",
+    "parameters": 797050880,
+    "partition": "pool",
+    "namespace": "ailab-llmarchitecture",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ffnres-r2-p1-1x8-1009-1601-3788",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Residual_Bottlenecks/run_r2.sh",
+    "submission_allowed": true,
+    "submission_authorization": "User requested L1 and R0-R3, then explicitly confirmed no sharing; inherited pool8 low-priority training constraints.",
+    "job_id": "mose-ffnres-r2-p1-1x8-1009-1601-3788-1295629",
+    "status": "Succeeded",
+    "counts": "{'active': 0, 'succeeded': 1, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+    "latest": {
+      "step": 14300,
+      "ce": 2.555
+    },
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261009_165648-olmo3-1b-ffn-residual-r2-m2048-r1280-unshared-linear-down-rms-fp8-30b",
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261009_165648-olmo3-1b-ffn-residual-r2-m2048-r1280-unshared-linear-down-rms-fp8-30b/logs"
+    ],
+    "events": [
+      "[2026-10-10T04:14:29+08:00] mose-ffnres-r2-p1-1x8-1009-1601-3788-1295629-cfcd2 >> 2026-10-10 04:14:29.036\tgpu-lg-cmc-h-h200-0873.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:969\tINFO\tSaving checkpoint for step 14306 to '/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ffn-residual-r2-m2048-r1280-unshared-linear-down-rms-fp8-30b/stage1/step14306'...",
+      "[2026-10-10T04:14:33+08:00] mose-ffnres-r2-p1-1x8-1009-1601-3788-1295629-cfcd2 >> 2026-10-10 04:14:33.437\tgpu-lg-cmc-h-h200-0873.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:763\tINFO\tTraining complete"
+    ],
+    "observation_exit_code": 0,
+    "observed_at": "2026-10-10T22:02:18.413689+08:00",
+    "observation_basis": "Current scheduler status and job logs",
+    "counts_dict": {
+      "active": 0,
+      "succeeded": 1,
+      "failed": 0,
+      "created_failed": 0,
+      "pending": 0,
+      "stopped": 0
+    },
+    "completion_verified": true,
+    "log_retrieval_pending": true,
+    "initialization_fingerprint": {
+      "parameter_elements": 797050880,
+      "parameter_sha256": "59560325ccbbe9d0b1084c0049b0e40af7a7429cfd0522aba04c644d71f9a7f8",
+      "parameter_tensors": 291,
+      "scope": "all parameter bytes before dry-run and optimizer updates",
+      "step": 0
+    },
+    "latest_logged_step": 14306,
+    "startup_capture_saved": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Residual_Bottlenecks/startup_r2.log"
+  },
+  {
+    "variant": "r3",
+    "run_name": "olmo3-1b-ffn-residual-r3-m2048-r1280-unshared-linear-down-rms-fp8-30b",
+    "parameters": 797050880,
+    "partition": "pool",
+    "namespace": "ailab-llmarchitecture",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ffnres-r3-p1-1x8-1009-1601-c6f0",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Residual_Bottlenecks/run_r3.sh",
+    "submission_allowed": true,
+    "submission_authorization": "User requested L1 and R0-R3, then explicitly confirmed no sharing; inherited pool8 low-priority training constraints.",
+    "job_id": "mose-ffnres-r3-p1-1x8-1009-1601-c6f0-34872256",
+    "status": "Succeeded",
+    "counts": "{'active': 0, 'succeeded': 1, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+    "latest": {
+      "step": 14300,
+      "ce": 2.631
+    },
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261009_170424-olmo3-1b-ffn-residual-r3-m2048-r1280-unshared-linear-down-rms-fp8-30b",
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261009_170424-olmo3-1b-ffn-residual-r3-m2048-r1280-unshared-linear-down-rms-fp8-30b/logs"
+    ],
+    "events": [
+      "[2026-10-10T04:25:52+08:00] mose-ffnres-r3-p1-1x8-1009-1601-c6f0-34872256-cfcd2 >> 2026-10-10 04:25:52.463\tgpu-lg-cmc-h-h200-0038.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:969\tINFO\tSaving checkpoint for step 14306 to '/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ffn-residual-r3-m2048-r1280-unshared-linear-down-rms-fp8-30b/stage1/step14306'...",
+      "[2026-10-10T04:25:57+08:00] mose-ffnres-r3-p1-1x8-1009-1601-c6f0-34872256-cfcd2 >> 2026-10-10 04:25:57.015\tgpu-lg-cmc-h-h200-0038.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:763\tINFO\tTraining complete"
+    ],
+    "observation_exit_code": 0,
+    "observed_at": "2026-10-10T22:02:17.822996+08:00",
+    "observation_basis": "Current scheduler status and job logs",
+    "counts_dict": {
+      "active": 0,
+      "succeeded": 1,
+      "failed": 0,
+      "created_failed": 0,
+      "pending": 0,
+      "stopped": 0
+    },
+    "completion_verified": true,
+    "log_retrieval_pending": true,
+    "initialization_fingerprint": {
+      "parameter_elements": 797050880,
+      "parameter_sha256": "59560325ccbbe9d0b1084c0049b0e40af7a7429cfd0522aba04c644d71f9a7f8",
+      "parameter_tensors": 291,
+      "scope": "all parameter bytes before dry-run and optimizer updates",
+      "step": 0
+    },
+    "latest_logged_step": 14306,
+    "startup_capture_saved": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Residual_Bottlenecks/startup_r3.log"
+  }
+]

@@ -1,0 +1,52 @@
+{
+  "observed_at": "2026-10-10T14:07:37.295777+00:00",
+  "root": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/olmo3-1b-SiTU-up-5e-3",
+  "mode": "read_only_no_deletion",
+  "checkpoint_count": 2,
+  "candidate_count": 0,
+  "candidate_logical_bytes": 0,
+  "candidate_allocated_bytes": 0,
+  "note": "Saved terminal evidence and filesystem layout are checked; recheck live jobs before approving deletion. File size is not guaranteed reclaimed space when hard links or snapshots exist.",
+  "checkpoints": [
+    {
+      "run_name": "olmo3-1b-SiTU-up-5e-3",
+      "stage": "stage1",
+      "step": 25000,
+      "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/olmo3-1b-SiTU-up-5e-3/stage1/step25000",
+      "action": "keep",
+      "reasons": [
+        "no_verified_terminal_run_or_readable_final_checkpoint",
+        "incomplete_or_unsupported_checkpoint_layout"
+      ],
+      "minimally_complete": false,
+      "logical_bytes": 13535216389,
+      "allocated_bytes": 13547471360,
+      "files": 276,
+      "symlinks": 0,
+      "multiply_linked_files": 0,
+      "errors": [],
+      "terminal_evidence_observed_at": null
+    },
+    {
+      "run_name": "olmo3-1b-SiTU-up-5e-3",
+      "stage": "stage1",
+      "step": 75080,
+      "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/olmo3-1b-SiTU-up-5e-3/stage1/step75080",
+      "action": "keep",
+      "reasons": [
+        "keep_step0_final_latest_or_key_midpoint",
+        "referenced_by_existing_record",
+        "no_verified_terminal_run_or_readable_final_checkpoint",
+        "incomplete_or_unsupported_checkpoint_layout"
+      ],
+      "minimally_complete": false,
+      "logical_bytes": 13535216393,
+      "allocated_bytes": 13547471360,
+      "files": 276,
+      "symlinks": 0,
+      "multiply_linked_files": 0,
+      "errors": [],
+      "terminal_evidence_observed_at": null
+    }
+  ]
+}

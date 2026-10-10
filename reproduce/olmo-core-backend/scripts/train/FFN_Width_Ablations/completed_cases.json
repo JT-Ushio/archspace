@@ -1,0 +1,77 @@
+{
+  "w1": {
+    "source_job_id": "mose-width-w1-p1-1x8-1008-0226-37ef-94920163",
+    "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ffn-width-w1-m6144-ug736-down640-c2-k-silu-down-rms-fp8-30b/stage1/step14306",
+    "completion_proof": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/completion_w1.log",
+    "config_path": "cfps/BS256_Seq8K_30B_WSD_FP8/FFN_Width_Ablations/w1.py",
+    "num_params": 797050880,
+    "init_seed": 12536,
+    "data_seed": 34521,
+    "training_allocation": {
+      "partition": "pool",
+      "nodes": 1,
+      "gpus_per_node": 8,
+      "priority": 1
+    }
+  },
+  "w1qk": {
+    "source_job_id": "mose-width-w1qk-p1-1x8-1008-0227-b83b-25485220",
+    "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ffn-width-w1qk-m6144-ug736-down640-c6-qk-silu-down-rms-fp8-30b/stage1/step14306",
+    "completion_proof": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/completion_w1qk.log",
+    "config_path": "cfps/BS256_Seq8K_30B_WSD_FP8/FFN_Width_Ablations/w1qk.py",
+    "num_params": 797050880,
+    "init_seed": 12536,
+    "data_seed": 34521,
+    "training_allocation": {
+      "partition": "pool",
+      "nodes": 1,
+      "gpus_per_node": 8,
+      "priority": 1
+    }
+  },
+  "w1m": {
+    "source_job_id": "mose-width-w1m-p1-1x8-1008-0227-cf64-30995519",
+    "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ffn-width-w1m-m6144-ug568-down520-c2-k-silu-down-rms-fp8-30b/stage1/step14306",
+    "completion_proof": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/completion_w1m.log",
+    "config_path": "cfps/BS256_Seq8K_30B_WSD_FP8/FFN_Width_Ablations/w1m.py",
+    "num_params": 742787072,
+    "init_seed": 12536,
+    "data_seed": 34521,
+    "training_allocation": {
+      "partition": "pool",
+      "nodes": 1,
+      "gpus_per_node": 8,
+      "priority": 1
+    }
+  },
+  "w2": {
+    "source_job_id": "mose-width-w2-p1-1x8-1008-0227-3754-36807631",
+    "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ffn-width-w2-m4096-ug976-down944-c2-k-silu-down-rms-fp8-30b/stage1/step14306",
+    "completion_proof": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/completion_w2.log",
+    "config_path": "cfps/BS256_Seq8K_30B_WSD_FP8/FFN_Width_Ablations/w2.py",
+    "num_params": 797050880,
+    "init_seed": 12536,
+    "data_seed": 34521,
+    "training_allocation": {
+      "partition": "pool",
+      "nodes": 1,
+      "gpus_per_node": 8,
+      "priority": 1
+    }
+  },
+  "g1": {
+    "source_job_id": "mose-width-g1-p1-1x8-1008-0227-1760-42442674",
+    "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-qk-adaptive-g1-c2-q0-k1-m8192-ug568-down520-down-rms-fp8-30b/stage1/step14306",
+    "completion_proof": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/completion_g1.log",
+    "config_path": "cfps/BS256_Seq8K_30B_WSD_FP8/FFN_Width_Ablations/g1.py",
+    "num_params": 797050912,
+    "init_seed": 12536,
+    "data_seed": 34521,
+    "training_allocation": {
+      "partition": "pool",
+      "nodes": 1,
+      "gpus_per_node": 8,
+      "priority": 1
+    }
+  }
+}

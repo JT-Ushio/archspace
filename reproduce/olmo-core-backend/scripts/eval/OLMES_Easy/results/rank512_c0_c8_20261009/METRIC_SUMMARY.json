@@ -1,0 +1,309 @@
+{
+  "created_at": "2026-10-08T20:31:00.321246+00:00",
+  "status": "complete",
+  "model_count": 14,
+  "tasks_per_model": 192,
+  "step": 14306,
+  "parameters_per_model": 797050880,
+  "suite_winners": {
+    "olmo3:base_easy:code_bpb": "c0",
+    "olmo3:base_easy:math_bpb": "c2",
+    "olmo3:base_easy:qa_rc": "c2",
+    "olmo3:base_easy:qa_bpb": "c2"
+  },
+  "dense_context": {
+    "parameters": 1484916736,
+    "job_id": "xtuner-olmes-easy-dense-r2-1008-2132-7821394",
+    "scores": {
+      "olmo3:base_easy:code_bpb": 0.5418237008281971,
+      "olmo3:base_easy:math_bpb": 0.682033527545972,
+      "olmo3:base_easy:qa_rc": 0.5060835816411404,
+      "olmo3:base_easy:qa_bpb": 1.0210728900252042
+    },
+    "task_hashes_match": true,
+    "same_parameter_budget": false
+  },
+  "models": {
+    "cola": {
+      "scores": {
+        "olmo3:base_easy:code_bpb": 0.5984992847225536,
+        "olmo3:base_easy:math_bpb": 0.7602275166011094,
+        "olmo3:base_easy:qa_rc": 0.46630873289557223,
+        "olmo3:base_easy:qa_bpb": 1.0969265697610315
+      },
+      "delta_vs_cola": {
+        "olmo3:base_easy:code_bpb": 0.0,
+        "olmo3:base_easy:math_bpb": 0.0,
+        "olmo3:base_easy:qa_rc": 0.0,
+        "olmo3:base_easy:qa_bpb": 0.0
+      },
+      "delta_vs_full_linear": {
+        "olmo3:base_easy:code_bpb": 0.007704784104136664,
+        "olmo3:base_easy:math_bpb": 0.01821660319825047,
+        "olmo3:base_easy:qa_rc": -0.0068379541512928466,
+        "olmo3:base_easy:qa_bpb": 0.006559100966170739
+      }
+    },
+    "full_linear": {
+      "scores": {
+        "olmo3:base_easy:code_bpb": 0.590794500618417,
+        "olmo3:base_easy:math_bpb": 0.742010913402859,
+        "olmo3:base_easy:qa_rc": 0.4731466870468651,
+        "olmo3:base_easy:qa_bpb": 1.0903674687948608
+      },
+      "delta_vs_cola": {
+        "olmo3:base_easy:code_bpb": -0.007704784104136664,
+        "olmo3:base_easy:math_bpb": -0.01821660319825047,
+        "olmo3:base_easy:qa_rc": 0.0068379541512928466,
+        "olmo3:base_easy:qa_bpb": -0.006559100966170739
+      },
+      "delta_vs_full_linear": {
+        "olmo3:base_easy:code_bpb": 0.0,
+        "olmo3:base_easy:math_bpb": 0.0,
+        "olmo3:base_easy:qa_rc": 0.0,
+        "olmo3:base_easy:qa_bpb": 0.0
+      }
+    },
+    "rms_down": {
+      "scores": {
+        "olmo3:base_easy:code_bpb": 0.5968081795143415,
+        "olmo3:base_easy:math_bpb": 0.7527984622573611,
+        "olmo3:base_easy:qa_rc": 0.468433499958008,
+        "olmo3:base_easy:qa_bpb": 1.093421761824163
+      },
+      "delta_vs_cola": {
+        "olmo3:base_easy:code_bpb": -0.0016911052082121403,
+        "olmo3:base_easy:math_bpb": -0.007429054343748298,
+        "olmo3:base_easy:qa_rc": 0.0021247670624357506,
+        "olmo3:base_easy:qa_bpb": -0.0035048079368684704
+      },
+      "delta_vs_full_linear": {
+        "olmo3:base_easy:code_bpb": 0.0060136788959245235,
+        "olmo3:base_easy:math_bpb": 0.010787548854502171,
+        "olmo3:base_easy:qa_rc": -0.004713187088857096,
+        "olmo3:base_easy:qa_bpb": 0.0030542930293022685
+      }
+    },
+    "q_only": {
+      "scores": {
+        "olmo3:base_easy:code_bpb": 0.5868882629206719,
+        "olmo3:base_easy:math_bpb": 0.7424469599302078,
+        "olmo3:base_easy:qa_rc": 0.46688362751390117,
+        "olmo3:base_easy:qa_bpb": 1.0857716576796612
+      },
+      "delta_vs_cola": {
+        "olmo3:base_easy:code_bpb": -0.011611021801881782,
+        "olmo3:base_easy:math_bpb": -0.017780556670901615,
+        "olmo3:base_easy:qa_rc": 0.0005748946183289361,
+        "olmo3:base_easy:qa_bpb": -0.011154912081370316
+      },
+      "delta_vs_full_linear": {
+        "olmo3:base_easy:code_bpb": -0.0039062376977451185,
+        "olmo3:base_easy:math_bpb": 0.0004360465273488545,
+        "olmo3:base_easy:qa_rc": -0.0062630595329639105,
+        "olmo3:base_easy:qa_bpb": -0.004595811115199577
+      }
+    },
+    "k_only": {
+      "scores": {
+        "olmo3:base_easy:code_bpb": 0.5925315351549488,
+        "olmo3:base_easy:math_bpb": 0.7417263905307928,
+        "olmo3:base_easy:qa_rc": 0.47051933435329785,
+        "olmo3:base_easy:qa_bpb": 1.0804484718955178
+      },
+      "delta_vs_cola": {
+        "olmo3:base_easy:code_bpb": -0.005967749567604819,
+        "olmo3:base_easy:math_bpb": -0.01850112607031662,
+        "olmo3:base_easy:qa_rc": 0.004210601457725616,
+        "olmo3:base_easy:qa_bpb": -0.016478097865513686
+      },
+      "delta_vs_full_linear": {
+        "olmo3:base_easy:code_bpb": 0.0017370345365318451,
+        "olmo3:base_easy:math_bpb": -0.0002845228720661508,
+        "olmo3:base_easy:qa_rc": -0.002627352693567231,
+        "olmo3:base_easy:qa_bpb": -0.009918996899342947
+      }
+    },
+    "c0": {
+      "scores": {
+        "olmo3:base_easy:code_bpb": 0.5833053092575311,
+        "olmo3:base_easy:math_bpb": 0.7414874481906807,
+        "olmo3:base_easy:qa_rc": 0.4693042041578581,
+        "olmo3:base_easy:qa_bpb": 1.0866659350341417
+      },
+      "delta_vs_cola": {
+        "olmo3:base_easy:code_bpb": -0.015193975465022547,
+        "olmo3:base_easy:math_bpb": -0.018740068410428745,
+        "olmo3:base_easy:qa_rc": 0.002995471262285887,
+        "olmo3:base_easy:qa_bpb": -0.010260634726889872
+      },
+      "delta_vs_full_linear": {
+        "olmo3:base_easy:code_bpb": -0.007489191360885883,
+        "olmo3:base_easy:math_bpb": -0.0005234652121782757,
+        "olmo3:base_easy:qa_rc": -0.0038424828890069596,
+        "olmo3:base_easy:qa_bpb": -0.0037015337607191334
+      }
+    },
+    "c1": {
+      "scores": {
+        "olmo3:base_easy:code_bpb": 0.594695406589949,
+        "olmo3:base_easy:math_bpb": 0.7434842163863679,
+        "olmo3:base_easy:qa_rc": 0.46954008084560106,
+        "olmo3:base_easy:qa_bpb": 1.0811413618668373
+      },
+      "delta_vs_cola": {
+        "olmo3:base_easy:code_bpb": -0.0038038781326046323,
+        "olmo3:base_easy:math_bpb": -0.016743300214741574,
+        "olmo3:base_easy:qa_rc": 0.003231347950028829,
+        "olmo3:base_easy:qa_bpb": -0.015785207894194242
+      },
+      "delta_vs_full_linear": {
+        "olmo3:base_easy:code_bpb": 0.0039009059715320316,
+        "olmo3:base_easy:math_bpb": 0.001473302983508895,
+        "olmo3:base_easy:qa_rc": -0.0036066062012640177,
+        "olmo3:base_easy:qa_bpb": -0.009226106928023503
+      }
+    },
+    "c2": {
+      "scores": {
+        "olmo3:base_easy:code_bpb": 0.5962928377029846,
+        "olmo3:base_easy:math_bpb": 0.7392989730072272,
+        "olmo3:base_easy:qa_rc": 0.4770364733696804,
+        "olmo3:base_easy:qa_bpb": 1.0750131011620674
+      },
+      "delta_vs_cola": {
+        "olmo3:base_easy:code_bpb": -0.002206447019569069,
+        "olmo3:base_easy:math_bpb": -0.020928543593882187,
+        "olmo3:base_easy:qa_rc": 0.010727740474108183,
+        "olmo3:base_easy:qa_bpb": -0.021913468598964148
+      },
+      "delta_vs_full_linear": {
+        "olmo3:base_easy:code_bpb": 0.005498337084567595,
+        "olmo3:base_easy:math_bpb": -0.002711940395631718,
+        "olmo3:base_easy:qa_rc": 0.003889786322815336,
+        "olmo3:base_easy:qa_bpb": -0.015354367632793409
+      }
+    },
+    "c3": {
+      "scores": {
+        "olmo3:base_easy:code_bpb": 0.5888030762659503,
+        "olmo3:base_easy:math_bpb": 0.7420639059489533,
+        "olmo3:base_easy:qa_rc": 0.46881064235193076,
+        "olmo3:base_easy:qa_bpb": 1.0909468152412818
+      },
+      "delta_vs_cola": {
+        "olmo3:base_easy:code_bpb": -0.00969620845660335,
+        "olmo3:base_easy:math_bpb": -0.018163610652156104,
+        "olmo3:base_easy:qa_rc": 0.002501909456358531,
+        "olmo3:base_easy:qa_bpb": -0.005979754519749747
+      },
+      "delta_vs_full_linear": {
+        "olmo3:base_easy:code_bpb": -0.0019914243524666864,
+        "olmo3:base_easy:math_bpb": 5.299254609436588e-05,
+        "olmo3:base_easy:qa_rc": -0.004336044694934316,
+        "olmo3:base_easy:qa_bpb": 0.0005793464464209919
+      }
+    },
+    "c4": {
+      "scores": {
+        "olmo3:base_easy:code_bpb": 0.5955544528112404,
+        "olmo3:base_easy:math_bpb": 0.7432465055888449,
+        "olmo3:base_easy:qa_rc": 0.4741499890680566,
+        "olmo3:base_easy:qa_bpb": 1.0821996776334442
+      },
+      "delta_vs_cola": {
+        "olmo3:base_easy:code_bpb": -0.002944831911313228,
+        "olmo3:base_easy:math_bpb": -0.01698101101226457,
+        "olmo3:base_easy:qa_rc": 0.007841256172484379,
+        "olmo3:base_easy:qa_bpb": -0.014726892127587377
+      },
+      "delta_vs_full_linear": {
+        "olmo3:base_easy:code_bpb": 0.004759952192823436,
+        "olmo3:base_easy:math_bpb": 0.001235592185985901,
+        "olmo3:base_easy:qa_rc": 0.0010033020211915322,
+        "olmo3:base_easy:qa_bpb": -0.008167791161416638
+      }
+    },
+    "c5": {
+      "scores": {
+        "olmo3:base_easy:code_bpb": 0.5900413005898046,
+        "olmo3:base_easy:math_bpb": 0.7420473607564516,
+        "olmo3:base_easy:qa_rc": 0.47018405450706624,
+        "olmo3:base_easy:qa_bpb": 1.0830948959143842
+      },
+      "delta_vs_cola": {
+        "olmo3:base_easy:code_bpb": -0.008457984132749008,
+        "olmo3:base_easy:math_bpb": -0.01818015584465782,
+        "olmo3:base_easy:qa_rc": 0.0038753216114940092,
+        "olmo3:base_easy:qa_bpb": -0.013831673846647297
+      },
+      "delta_vs_full_linear": {
+        "olmo3:base_easy:code_bpb": -0.0007532000286123441,
+        "olmo3:base_easy:math_bpb": 3.644735359265017e-05,
+        "olmo3:base_easy:qa_rc": -0.0029626325397988373,
+        "olmo3:base_easy:qa_bpb": -0.007272572880476558
+      }
+    },
+    "c6": {
+      "scores": {
+        "olmo3:base_easy:code_bpb": 0.5853675093854667,
+        "olmo3:base_easy:math_bpb": 0.740943387631877,
+        "olmo3:base_easy:qa_rc": 0.46971765790326203,
+        "olmo3:base_easy:qa_bpb": 1.0815153126195667
+      },
+      "delta_vs_cola": {
+        "olmo3:base_easy:code_bpb": -0.013131775337086982,
+        "olmo3:base_easy:math_bpb": -0.019284128969232484,
+        "olmo3:base_easy:qa_rc": 0.0034089250076898003,
+        "olmo3:base_easy:qa_bpb": -0.015411257141464851
+      },
+      "delta_vs_full_linear": {
+        "olmo3:base_easy:code_bpb": -0.005426991232950318,
+        "olmo3:base_easy:math_bpb": -0.001067525770982014,
+        "olmo3:base_easy:qa_rc": -0.0034290291436030462,
+        "olmo3:base_easy:qa_bpb": -0.008852156175294112
+      }
+    },
+    "c7": {
+      "scores": {
+        "olmo3:base_easy:code_bpb": 0.5882722127472128,
+        "olmo3:base_easy:math_bpb": 0.750393135773532,
+        "olmo3:base_easy:qa_rc": 0.474147320127404,
+        "olmo3:base_easy:qa_bpb": 1.0927052172719502
+      },
+      "delta_vs_cola": {
+        "olmo3:base_easy:code_bpb": -0.010227071975340896,
+        "olmo3:base_easy:math_bpb": -0.009834380827577482,
+        "olmo3:base_easy:qa_rc": 0.007838587231831784,
+        "olmo3:base_easy:qa_bpb": -0.004221352489081287
+      },
+      "delta_vs_full_linear": {
+        "olmo3:base_easy:code_bpb": -0.002522287871204232,
+        "olmo3:base_easy:math_bpb": 0.008382222370672987,
+        "olmo3:base_easy:qa_rc": 0.0010006330805389374,
+        "olmo3:base_easy:qa_bpb": 0.002337748477089452
+      }
+    },
+    "c8": {
+      "scores": {
+        "olmo3:base_easy:code_bpb": 0.5989174661915216,
+        "olmo3:base_easy:math_bpb": 0.7400022270984209,
+        "olmo3:base_easy:qa_rc": 0.4737253972153908,
+        "olmo3:base_easy:qa_bpb": 1.0854952860342868
+      },
+      "delta_vs_cola": {
+        "olmo3:base_easy:code_bpb": 0.000418181468967993,
+        "olmo3:base_easy:math_bpb": -0.020225289502688537,
+        "olmo3:base_easy:qa_rc": 0.007416664319818578,
+        "olmo3:base_easy:qa_bpb": -0.011431283726744734
+      },
+      "delta_vs_full_linear": {
+        "olmo3:base_easy:code_bpb": 0.008122965573104657,
+        "olmo3:base_easy:math_bpb": -0.0020086863044380676,
+        "olmo3:base_easy:qa_rc": 0.0005787101685257312,
+        "olmo3:base_easy:qa_bpb": -0.004872182760573995
+      }
+    }
+  },
+  "numerical_hf_validation": "not_run"
+}

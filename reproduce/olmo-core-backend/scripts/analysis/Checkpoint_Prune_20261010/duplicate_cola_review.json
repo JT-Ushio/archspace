@@ -1,0 +1,25 @@
+{
+  "old": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009/cola-step14306",
+  "keep": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/cola-step14306",
+  "metadata_fields_match": true,
+  "fields_compared": [
+    "checkpoint",
+    "source_config_sha256",
+    "dcp_metadata_sha256",
+    "step",
+    "stored_tensors",
+    "total_size",
+    "tensor_dtypes"
+  ],
+  "old_directory_inventory": {
+    "logical_bytes": 3198189379,
+    "allocated_bytes": 3199337984,
+    "files": 17,
+    "symlinks": 0,
+    "multiply_linked_files": 0,
+    "errors": []
+  },
+  "weight_payload_sha256_status": "not_run_permission_denied_on_old_shard",
+  "old_in_current_eval_models": false,
+  "deletion_performed": false
+}

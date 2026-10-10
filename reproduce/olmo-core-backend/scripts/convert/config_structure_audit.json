@@ -1,0 +1,1388 @@
+{
+  "date": "2026-10-08",
+  "scope": "Current cfps directory, serialized model configs, meta-only; no checkpoint tensors or forward execution",
+  "summary": {
+    "passed": 89,
+    "failed": 0,
+    "skipped": 0
+  },
+  "numerical_validation": "not_run",
+  "export_code_sha256": "7bb456f945bafa687b70c9d26cfd8f53755703ab3b2cc07b5eaa522e9967731b",
+  "forward_contract": {
+    "native_forward": "(input_ids: torch.Tensor, *, input_embeddings: Optional[torch.Tensor] = None, labels: Optional[torch.Tensor] = None, ignore_index: int = -100, loss_reduction: Literal['mean', 'sum', 'none'] = 'mean', z_loss_multiplier: Optional[float] = None, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, return_logits: Optional[bool] = None, logits_to_keep: Union[int, torch.Tensor] = 0, **kwargs) -> Union[torch.Tensor, olmo_core.nn.lm_head.LMOutputWithLoss]",
+    "hf_forward": "(input_ids=None, attention_mask=None, position_ids=None, past_key_values=None, inputs_embeds=None, labels=None, use_cache=None, output_attentions=None, output_hidden_states=None, return_dict=None, cache_position=None, logits_to_keep=0, **kwargs)",
+    "input_mapping": {
+      "input_ids": "input_ids",
+      "input_embeddings": "inputs_embeds",
+      "logits_to_keep": "logits_to_keep"
+    },
+    "label_contract": "Native labels are shifted; HF labels are unshifted (-100 ignored)",
+    "unsupported_native_inputs": [
+      "doc_lens",
+      "cu_doc_lens",
+      "max_doc_len",
+      "local_k_slice",
+      "pos_sin",
+      "pos_cos",
+      "freqs_cis",
+      "cache_leftpad",
+      "context_parallelism",
+      "z_loss_multiplier",
+      "loss_div_factor"
+    ]
+  },
+  "module_forward_signatures": {
+    "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": "(self, x: torch.Tensor, *, loss_div_factor: Union[torch.Tensor, float, NoneType] = None, **kwargs) -> torch.Tensor",
+    "olmo_mose.attention.LowRankAttention": "(self, x: torch.Tensor, cu_doc_lens: Optional[torch.Tensor] = None, cu_doc_lens_q: Optional[torch.Tensor] = None, cu_doc_lens_k: Optional[torch.Tensor] = None, max_doc_len: Optional[int] = None, max_doc_len_q: Optional[int] = None, max_doc_len_k: Optional[int] = None, local_k_slice: Optional[slice] = None, pos_sin: Optional[torch.Tensor] = None, pos_cos: Optional[torch.Tensor] = None, freqs_cis: Optional[torch.Tensor] = None, cache_leftpad: Optional[torch.Tensor] = None) -> torch.Tensor",
+    "olmo_mose.attention.NonlinearLowRankProjection": "(self, x: torch.Tensor) -> torch.Tensor",
+    "torch.nn.modules.linear.Linear": "(self, input: torch.Tensor) -> torch.Tensor",
+    "olmo_core.nn.layer_norm.RMSNorm": "(self, x: torch.Tensor) -> torch.Tensor",
+    "olmo_mose.feed_forward.MoSESwiGLU": "(self, x: torch.Tensor) -> torch.Tensor",
+    "olmo_core.nn.attention.Attention": "(self, x: torch.Tensor, cu_doc_lens: Optional[torch.Tensor] = None, cu_doc_lens_q: Optional[torch.Tensor] = None, cu_doc_lens_k: Optional[torch.Tensor] = None, max_doc_len: Optional[int] = None, max_doc_len_q: Optional[int] = None, max_doc_len_k: Optional[int] = None, local_k_slice: Optional[slice] = None, pos_sin: Optional[torch.Tensor] = None, pos_cos: Optional[torch.Tensor] = None, freqs_cis: Optional[torch.Tensor] = None, cache_leftpad: Optional[torch.Tensor] = None) -> torch.Tensor",
+    "olmo_mose.dense_shared_attention.DenseSharedKVAttention": "(self, x: torch.Tensor, cu_doc_lens: Optional[torch.Tensor] = None, cu_doc_lens_q: Optional[torch.Tensor] = None, cu_doc_lens_k: Optional[torch.Tensor] = None, max_doc_len: Optional[int] = None, max_doc_len_q: Optional[int] = None, max_doc_len_k: Optional[int] = None, local_k_slice: Optional[slice] = None, pos_sin: Optional[torch.Tensor] = None, pos_cos: Optional[torch.Tensor] = None, freqs_cis: Optional[torch.Tensor] = None, cache_leftpad: Optional[torch.Tensor] = None) -> torch.Tensor",
+    "olmo_core.nn.feed_forward.FeedForward": "(self, x: torch.Tensor) -> torch.Tensor",
+    "olmo_mose.dense_single_ffn.DenseSingleSiLUFFN": "(self, x: torch.Tensor) -> torch.Tensor",
+    "olmo_mose.dense_single_attention.DenseSingleSiLUAttention": "(self, x: torch.Tensor, cu_doc_lens: Optional[torch.Tensor] = None, cu_doc_lens_q: Optional[torch.Tensor] = None, cu_doc_lens_k: Optional[torch.Tensor] = None, max_doc_len: Optional[int] = None, max_doc_len_q: Optional[int] = None, max_doc_len_k: Optional[int] = None, local_k_slice: Optional[slice] = None, pos_sin: Optional[torch.Tensor] = None, pos_cos: Optional[torch.Tensor] = None, freqs_cis: Optional[torch.Tensor] = None, cache_leftpad: Optional[torch.Tensor] = None) -> torch.Tensor",
+    "olmo_mose.output_subspace.GroupedOutputRotation": "(self, y, z)",
+    "olmo_mose.adaptive_qk_attention.AdaptiveQKAttention": "(self, x: torch.Tensor, cu_doc_lens: Optional[torch.Tensor] = None, cu_doc_lens_q: Optional[torch.Tensor] = None, cu_doc_lens_k: Optional[torch.Tensor] = None, max_doc_len: Optional[int] = None, max_doc_len_q: Optional[int] = None, max_doc_len_k: Optional[int] = None, local_k_slice: Optional[slice] = None, pos_sin: Optional[torch.Tensor] = None, pos_cos: Optional[torch.Tensor] = None, freqs_cis: Optional[torch.Tensor] = None, cache_leftpad: Optional[torch.Tensor] = None) -> torch.Tensor",
+    "olmo_mose.adaptive_qk_attention.AdaptiveNonlinearityProjection": "(self, x: torch.Tensor) -> torch.Tensor"
+  },
+  "configs": [
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Activation_Ablations/OLMo3-1B-QKVO512-GateUp512-DownRMSNorm.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Activation_Ablations/OLMo3-1B-QKVO512-GateUp512-DownSiLU.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 64,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Activation_Ablations/OLMo3-1B-QKVO512-ORMS-GateUp512-DownRMSNorm.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 96,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Activation_Ablations/OLMo3-1B-QKVO512-ORMS-GateUp512-DownSiLU.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/AdamW_Down_Ablations/down_rms_adamw_fp8.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/AdamW_Down_Ablations/down_silu_adamw_fp8.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 64,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/All_Linear_Ablation/all_linear_fp8.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 64,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/All_Linear_Ablation/ffn_linear_attention_silu_fp8.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 64,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/All_Linear_Attention_SiLU_Ablations/k_only_silu_fp8.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 64,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/All_Linear_Attention_SiLU_Ablations/o_only_silu_fp8.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 64,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/All_Linear_Attention_SiLU_Ablations/q_only_silu_fp8.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 64,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/All_Linear_Attention_SiLU_Ablations/v_only_silu_fp8.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 64,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/All_Linear_QK_Combination/qk_silu_fp8.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 64,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/AttentionSharing_Ablations/kv_shared.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 763496448,
+      "sharing_groups": 16,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/AttentionSharing_Ablations/qk_shared.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 763496448,
+      "sharing_groups": 16,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/AttentionSharing_Ablations/qkv_shared.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 746719232,
+      "sharing_groups": 16,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/AttentionSharing_Ablations/up_gate_qk_shared.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 763496448,
+      "sharing_groups": 16,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/AttentionSharing_Ablations/up_gate_shared.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 780273664,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/AttentionSharing_ParameterMatched/kv.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 796788736,
+      "sharing_groups": 16,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/AttentionSharing_ParameterMatched/qk.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 796788736,
+      "sharing_groups": 16,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/AttentionSharing_ParameterMatched/qkv.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 16,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/AttentionSharing_ParameterMatched/up_gate.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 796788736,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/AttentionSharing_ParameterMatched/up_gate_qk.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 796526592,
+      "sharing_groups": 16,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Attention_Rank_Reallocation/a1.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Attention_Rank_Reallocation/a2.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/DenseMatched_MoSE/f0_unshared.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 1484392448,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/DenseMatched_MoSE/f1_kv_gateup_shared.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 1484392448,
+      "sharing_groups": 16,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Dense_Sharing/s1.py",
+      "status": "passed",
+      "state_keys": 195,
+      "unique_parameters": 1481246720,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_core.nn.attention.Attention": 16,
+        "torch.nn.modules.linear.Linear": 128,
+        "olmo_core.nn.layer_norm.RMSNorm": 64,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Dense_Sharing/s2.py",
+      "status": "passed",
+      "state_keys": 211,
+      "unique_parameters": 1484392448,
+      "sharing_groups": 16,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.dense_shared_attention.DenseSharedKVAttention": 16,
+        "torch.nn.modules.linear.Linear": 144,
+        "olmo_mose.attention.NonlinearLowRankProjection": 32,
+        "olmo_core.nn.layer_norm.RMSNorm": 64,
+        "olmo_core.nn.feed_forward.FeedForward": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Dense_Sharing/s3.py",
+      "status": "passed",
+      "state_keys": 227,
+      "unique_parameters": 1480722432,
+      "sharing_groups": 16,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.dense_shared_attention.DenseSharedKVAttention": 16,
+        "torch.nn.modules.linear.Linear": 160,
+        "olmo_mose.attention.NonlinearLowRankProjection": 32,
+        "olmo_core.nn.layer_norm.RMSNorm": 64,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Dense_Single_SiLU/gate_only_silu.py",
+      "status": "passed",
+      "state_keys": 195,
+      "unique_parameters": 1483868160,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_core.nn.attention.Attention": 16,
+        "torch.nn.modules.linear.Linear": 128,
+        "olmo_core.nn.layer_norm.RMSNorm": 64,
+        "olmo_mose.dense_single_ffn.DenseSingleSiLUFFN": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Dense_Single_SiLU/k_only_silu.py",
+      "status": "passed",
+      "state_keys": 195,
+      "unique_parameters": 1484916736,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.dense_single_attention.DenseSingleSiLUAttention": 16,
+        "torch.nn.modules.linear.Linear": 128,
+        "olmo_mose.attention.NonlinearLowRankProjection": 16,
+        "olmo_core.nn.layer_norm.RMSNorm": 64,
+        "olmo_core.nn.feed_forward.FeedForward": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Dense_Single_SiLU/q_only_silu.py",
+      "status": "passed",
+      "state_keys": 195,
+      "unique_parameters": 1484916736,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.dense_single_attention.DenseSingleSiLUAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 16,
+        "torch.nn.modules.linear.Linear": 128,
+        "olmo_core.nn.layer_norm.RMSNorm": 64,
+        "olmo_core.nn.feed_forward.FeedForward": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Dense_Single_SiLU/up_only_silu.py",
+      "status": "passed",
+      "state_keys": 195,
+      "unique_parameters": 1483868160,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_core.nn.attention.Attention": 16,
+        "torch.nn.modules.linear.Linear": 128,
+        "olmo_core.nn.layer_norm.RMSNorm": 64,
+        "olmo_mose.dense_single_ffn.DenseSingleSiLUFFN": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Down_Identity_Ablations/down_identity_fp8.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 64,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Down_Identity_Ablations/down_rms_fp8.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Down_Identity_Ablations/down_silu_fp8.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 64,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Down_Identity_Ablations/down_silu_rms_norm_fp8.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Down_Output_Subspace_Ablations/down_dynamic_fp8.py",
+      "status": "passed",
+      "state_keys": 307,
+      "unique_parameters": 797313024,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 64,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16,
+        "olmo_mose.output_subspace.GroupedOutputRotation": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Down_Output_Subspace_Ablations/down_dynamic_residual_fp8.py",
+      "status": "passed",
+      "state_keys": 323,
+      "unique_parameters": 797313536,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 64,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16,
+        "olmo_mose.output_subspace.GroupedOutputRotation": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Down_Output_Subspace_Ablations/down_identity_fp8.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 64,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Down_Output_Subspace_Ablations/down_static_fp8.py",
+      "status": "passed",
+      "state_keys": 307,
+      "unique_parameters": 797313024,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 64,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16,
+        "olmo_mose.output_subspace.GroupedOutputRotation": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/FFN_Rank_Reallocation/f1.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/FFN_Rank_Reallocation/f1qk.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/FFN_Rank_Reallocation/f2.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/FFN_Rank_Reallocation/f2qk.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/FFN_Rank_Reallocation/f3.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/FFN_Rank_Reallocation/f3qk.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/FFN_Rank_Reallocation/f4.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/FFN_Rank_Reallocation/f4qk.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/FFN_Rank_Reallocation/f5.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/FFN_Rank_Reallocation/f5qk.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/FFN_Width_Ablations/g1.py",
+      "status": "passed",
+      "state_keys": 307,
+      "unique_parameters": 797050912,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.adaptive_qk_attention.AdaptiveQKAttention": 16,
+        "olmo_mose.adaptive_qk_attention.AdaptiveNonlinearityProjection": 32,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_mose.attention.NonlinearLowRankProjection": 32,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/FFN_Width_Ablations/w1.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/FFN_Width_Ablations/w1m.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 742787072,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/FFN_Width_Ablations/w1qk.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/FFN_Width_Ablations/w2.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Initialization_Ablations/independent.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Initialization_Ablations/svd_scale_matched.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/OLMo3-1B-DenseBaseline.py",
+      "status": "passed",
+      "state_keys": 179,
+      "unique_parameters": 1484916736,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_core.nn.attention.Attention": 16,
+        "torch.nn.modules.linear.Linear": 112,
+        "olmo_core.nn.layer_norm.RMSNorm": 64,
+        "olmo_core.nn.feed_forward.FeedForward": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Precision_Ablations/down_rms_bf16.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Precision_Ablations/down_rms_fp8.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Precision_Ablations/down_silu_bf16.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 64,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Precision_Ablations/down_silu_fp8.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 64,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Rank512Matched_Combinations/c0_k_silu_down_rms.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Rank512Matched_Combinations/c1_k_silu_down_rms_kv.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 16,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Rank512Matched_Combinations/c2_k_silu_down_rms_gateup.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Rank512Matched_Combinations/c3_k_silu_down_rms_kv_gateup.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 797050880,
+      "sharing_groups": 16,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Rank512Matched_Combinations/c4_attention_silu_down_rms_kv.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 16,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Rank512Matched_Combinations/c5_q_silu_down_rms_gateup.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Rank512Matched_Combinations/c6_qk_silu_down_rms_gateup.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Rank512Matched_Combinations/c7_qk_silu_ug_silu_down_rms_gateup.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Rank512Matched_Combinations/c8_linear_down_rms_gateup.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Rank512_Seed_Replication/c0s2.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Rank512_Seed_Replication/c0s3.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Rank512_Seed_Replication/c2s2.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Rank512_Seed_Replication/c2s3.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Rank512_Seed_Replication/c6s2.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/Rank512_Seed_Replication/c6s3.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/UG_Partial_Sharing/p0.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/UG_Partial_Sharing/p0qk.py",
+      "status": "passed",
+      "state_keys": 291,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 224,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/UG_Partial_Sharing/p1.py",
+      "status": "passed",
+      "state_keys": 275,
+      "unique_parameters": 794429440,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 208,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/UG_Partial_Sharing/p2.py",
+      "status": "passed",
+      "state_keys": 339,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 272,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/UG_Partial_Sharing/p2qk.py",
+      "status": "passed",
+      "state_keys": 339,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 272,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/UG_Partial_Sharing/p3.py",
+      "status": "passed",
+      "state_keys": 339,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 272,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/UG_Partial_Sharing/p3qk.py",
+      "status": "passed",
+      "state_keys": 339,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 272,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/UG_Partial_Sharing/p4.py",
+      "status": "passed",
+      "state_keys": 339,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 272,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "BS256_Seq8K_30B_WSD_FP8/UG_Partial_Sharing/p4qk.py",
+      "status": "passed",
+      "state_keys": 339,
+      "unique_parameters": 797050880,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_mose.attention.LowRankAttention": 16,
+        "olmo_mose.attention.NonlinearLowRankProjection": 64,
+        "torch.nn.modules.linear.Linear": 272,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    },
+    {
+      "config": "mose_r1_0_r2_512_down_r1_0_down_r2_512_gate_silu_up_silu_down_rmsnorm/OLMo3-1B-stage1-mose-r1-0-r2-512-down-r1-0-down-r2-512-gate-silu-up-silu-down-rmsnorm-fp8.py",
+      "status": "passed",
+      "state_keys": 211,
+      "unique_parameters": 914491392,
+      "sharing_groups": 0,
+      "module_classes": {
+        "olmo_core.nn.transformer.block.ReorderedNormTransformerBlock": 16,
+        "olmo_core.nn.attention.Attention": 16,
+        "torch.nn.modules.linear.Linear": 144,
+        "olmo_core.nn.layer_norm.RMSNorm": 80,
+        "olmo_mose.feed_forward.MoSESwiGLU": 16
+      }
+    }
+  ]
+}

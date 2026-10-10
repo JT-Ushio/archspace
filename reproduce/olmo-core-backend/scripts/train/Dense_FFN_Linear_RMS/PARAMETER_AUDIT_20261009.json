@@ -1,0 +1,53 @@
+{
+  "scope": "Actual complete native meta models, not formula-only; no GPU allocation or forward evaluation",
+  "results": {
+    "dense": {
+      "actual_meta_parameters": 1484916736,
+      "config_num_params": 1484916736,
+      "ffn_parameters_per_layer": 50331648,
+      "input_rank": null,
+      "down_rank": null,
+      "all_parameters_meta": true,
+      "delta_vs_dense": 0,
+      "percent_vs_dense": 0.0
+    },
+    "du": {
+      "actual_meta_parameters": 1482819584,
+      "config_num_params": 1482819584,
+      "ffn_parameters_per_layer": 50200576,
+      "input_rank": 1632,
+      "down_rank": 1632,
+      "all_parameters_meta": true,
+      "delta_vs_dense": -2097152,
+      "percent_vs_dense": -0.14123027568867
+    },
+    "dg": {
+      "actual_meta_parameters": 1482819584,
+      "config_num_params": 1482819584,
+      "ffn_parameters_per_layer": 50200576,
+      "input_rank": 1632,
+      "down_rank": 1632,
+      "all_parameters_meta": true,
+      "delta_vs_dense": -2097152,
+      "percent_vs_dense": -0.14123027568867
+    },
+    "dug": {
+      "actual_meta_parameters": 1481771008,
+      "config_num_params": 1481771008,
+      "ffn_parameters_per_layer": 50135040,
+      "input_rank": 1632,
+      "down_rank": 1632,
+      "all_parameters_meta": true,
+      "delta_vs_dense": -3145728,
+      "percent_vs_dense": -0.21184541353300498
+    }
+  },
+  "checked_at": "2026-10-09T01:07:18.845651+08:00",
+  "meta_attention_fallback": "Flash3 falls back to Torch on this CPU host; projection shapes and parameter counts unchanged",
+  "configuration_sha256": {
+    "reproduce/olmo-core-backend/cfps/BS256_Seq8K_30B_WSD_FP8/OLMo3-1B-DenseBaseline.py": "4869e8feaebacc0e04a707832f58e6d809cd11fc3b8bdf6283117d8e264c6189",
+    "reproduce/olmo-core-backend/cfps/BS256_Seq8K_30B_WSD_FP8/Dense_FFN_Linear_RMS/_common.py": "2bccaea46ab2e7a11fc6ca3efc2fee0c22aebcfc2328ae3f12a98226755d670b",
+    "reproduce/olmo-core-backend/src/olmo_mose/dense_ffn_factorization.py": "a4a350a38bb15aa219edfb03ae0846cbd88040588b3ee219158f5973cb45f8c4"
+  },
+  "job_ledger_counts_match": true
+}

@@ -1,0 +1,10 @@
+{
+  "pid": 47633,
+  "interval_seconds": 1800,
+  "script": "monitor.py --loop",
+  "source": "Detached local observer restored after prior PID 8108 was confirmed absent; GPU jobs unchanged",
+  "started_at": "2026-10-08T18:41:08.749598+08:00",
+  "next_check_at": "2026-10-08T19:11:08.749598+08:00",
+  "output_log": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/observer_output.log",
+  "exec_session_id": null
+}

@@ -1,0 +1,173 @@
+{
+  "observed_at": "2026-10-08T20:12:33.568668+00:00",
+  "jobs": [
+    {
+      "job_id": "xtuner-olmes-r512-cola-1009-r1-13208296",
+      "status": "Succeeded",
+      "counts_dict": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      }
+    },
+    {
+      "job_id": "xtuner-olmes-r512-full-linear-1009-r1-19357813",
+      "status": "Succeeded",
+      "counts_dict": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      }
+    },
+    {
+      "job_id": "xtuner-olmes-r512-rms-down-1009-r1-31118239",
+      "status": "Succeeded",
+      "counts_dict": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      }
+    },
+    {
+      "job_id": "xtuner-olmes-r512-q-only-1009-r1-37316735",
+      "status": "Succeeded",
+      "counts_dict": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      }
+    },
+    {
+      "job_id": "xtuner-olmes-r512-k-only-1009-r1-43333412",
+      "status": "Succeeded",
+      "counts_dict": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      }
+    },
+    {
+      "job_id": "xtuner-olmes-r512-c0-1009-r1-49585598",
+      "status": "Succeeded",
+      "counts_dict": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      }
+    },
+    {
+      "job_id": "xtuner-olmes-r512-c1-1009-r1-53658682",
+      "status": "Succeeded",
+      "counts_dict": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      }
+    },
+    {
+      "job_id": "xtuner-olmes-r512-c2-1009-r1-59890567",
+      "status": "Succeeded",
+      "counts_dict": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      }
+    },
+    {
+      "job_id": "xtuner-olmes-r512-c3-1009-r1-66057528",
+      "status": "Succeeded",
+      "counts_dict": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      }
+    },
+    {
+      "job_id": "xtuner-olmes-r512-c4-1009-r1-76286092",
+      "status": "Running",
+      "counts_dict": {
+        "active": 1,
+        "succeeded": 0,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      }
+    },
+    {
+      "job_id": "xtuner-olmes-r512-c5-1009-r1-82354750",
+      "status": "Running",
+      "counts_dict": {
+        "active": 1,
+        "succeeded": 0,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      }
+    },
+    {
+      "job_id": "xtuner-olmes-r512-c6-1009-r1-88703232",
+      "status": "Running",
+      "counts_dict": {
+        "active": 1,
+        "succeeded": 0,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      }
+    },
+    {
+      "job_id": "xtuner-olmes-r512-c7-1009-r1-94721387",
+      "status": "Running",
+      "counts_dict": {
+        "active": 1,
+        "succeeded": 0,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      }
+    },
+    {
+      "job_id": "xtuner-olmes-r512-c8-1009-r1-24131493",
+      "status": "Running",
+      "counts_dict": {
+        "active": 1,
+        "succeeded": 0,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+[
+  {
+    "variant": "p2",
+    "partition": "arch",
+    "nodes": 2,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-recover-p2-r3-p1-2x8-arch-1006-1409-7a81",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p2_storage_resume.sh"
+  },
+  {
+    "variant": "p3",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-recover-p3-r3-p1-1x8-pool-1006-1228-c382",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p3.sh"
+  },
+  {
+    "variant": "p0",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ug-p0-r1-p1-1x8-pool-1006-1123-7104",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p0.sh"
+  },
+  {
+    "variant": "p1",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-recover-p1-r3-p1-1x8-pool-1006-1358-5ee1",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p1_storage_resume.sh"
+  },
+  {
+    "variant": "p4",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-recover-p4-r2-p1-1x8-pool-1006-1207-0d3e",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p4.sh"
+  },
+  {
+    "variant": "p2qk",
+    "partition": "arch",
+    "nodes": 4,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ug-p2qk-r1-p1-4x8-arch-1006-1347-8485",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p2qk.sh"
+  },
+  {
+    "variant": "p0qk",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ug-p0qk-r1-p1-1x8-pool-1006-1347-459e",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p0qk.sh"
+  },
+  {
+    "variant": "p3qk",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ug-p3qk-r1-p1-1x8-pool-1006-2111-2dcc",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p3qk.sh",
+    "init_seed": 12536,
+    "data_seed": 34521,
+    "num_params": 797050880,
+    "capacity_prediction": {
+      "partition": "pool",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-06T21:11:09.288317+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：1",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261006_211109.log"
+    }
+  },
+  {
+    "variant": "p4qk",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ug-p4qk-r1-p1-1x8-pool-1006-2111-0416",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p4qk.sh",
+    "init_seed": 12536,
+    "data_seed": 34521,
+    "num_params": 797050880,
+    "capacity_prediction": {
+      "partition": "pool",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-06T21:11:22.682763+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：1",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261006_211122.log"
+    }
+  }
+]

@@ -1,0 +1,612 @@
+{
+  "observed_at": "2026-10-10T15:57:50.486549+08:00",
+  "scope": "MoSE训练、统一HF转换、OLMES及相关历史OLMo产物；不包含GLM部署或其他人的任务",
+  "repository": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE",
+  "runtime_repository": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE",
+  "paths": [
+    {
+      "label": "MoSE完整工作树",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE",
+      "role": "训练、转换、评测脚本及报告",
+      "necessity": "必需",
+      "local_exists": true,
+      "is_symlink": false,
+      "link_target": null,
+      "evidence": "当前工作目录和各launcher",
+      "note": "包含大量未提交/未跟踪的新架构和实验；仅clone或复制Git已跟踪文件会丢失本轮实现。"
+    },
+    {
+      "label": "OLMo-core Muon源码",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace/OLMo-core-muon-fix",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace/OLMo-core-muon-fix",
+      "role": "训练与HF导出的外部源码",
+      "necessity": "必需",
+      "local_exists": true,
+      "is_symlink": false,
+      "link_target": null,
+      "evidence": "olmo环境editable .pth、转换launcher CORE_SRC",
+      "note": ""
+    },
+    {
+      "label": "官方OLMES源码",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace/olmes_official",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace/olmes_official",
+      "role": "OLMES评测实现和task suites",
+      "necessity": "必需",
+      "local_exists": true,
+      "is_symlink": false,
+      "link_target": null,
+      "evidence": "run_easy.sh OLMES_REPO、olmes环境editable finder",
+      "note": ""
+    },
+    {
+      "label": "训练/转换环境",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/conda_envs/olmo",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/conda_envs/olmo",
+      "role": "训练、原生checkpoint读取和HF导出",
+      "necessity": "必需",
+      "local_exists": true,
+      "is_symlink": false,
+      "link_target": null,
+      "evidence": "prepare_olmo_gpfs2.sh OLMO_ENV",
+      "note": "Python3.12；带conda-unpack；editable源码路径需要重新指向迁移后的OLMo-core。"
+    },
+    {
+      "label": "OLMES环境",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/conda_envs/olmes",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/conda_envs/olmes",
+      "role": "HF模型benchmark评测",
+      "necessity": "必需",
+      "local_exists": true,
+      "is_symlink": false,
+      "link_target": null,
+      "evidence": "run_easy.sh OLMES_ENV",
+      "note": "Python3.12；未发现bin/activate或conda-unpack；当前入口直接调用bin/python并设置PATH/PYTHONPATH。"
+    },
+    {
+      "label": "HF导出依赖覆盖目录",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/dense-single-silu-step14306-20261008/.hf-export-deps",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/dense-single-silu-step14306-20261008/.hf-export-deps",
+      "role": "统一HF导出的独立Transformers等依赖",
+      "necessity": "沿用现有导出入口时必需",
+      "local_exists": true,
+      "is_symlink": false,
+      "link_target": null,
+      "evidence": "run_rank512_cohort_agent_8gpu.sh DEPS_DIR",
+      "note": "隐藏目录，不能用只匹配非隐藏文件的复制方式遗漏。"
+    },
+    {
+      "label": "HF tokenizer素材",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/assets/dolma2-tokenizer",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/assets/dolma2-tokenizer",
+      "role": "所有本轮HF转换的本地tokenizer",
+      "necessity": "必需",
+      "local_exists": true,
+      "is_symlink": false,
+      "link_target": null,
+      "evidence": "convert launcher --tokenizer",
+      "note": ""
+    },
+    {
+      "label": "训练与LM验证数据根",
+      "local_path": "/mnt/ailab-llmfudan2/olmo3_data_root",
+      "runtime_path": "/mnt/ailab-llmfudan2/olmo3_data_root",
+      "role": "OLMo_mix_0625_150Bsample及v3-small LM验证",
+      "necessity": "训练/原生LM验证必需",
+      "local_exists": false,
+      "is_symlink": false,
+      "link_target": null,
+      "evidence": "prepare_olmo_gpfs2.sh DATA_DIR；_pretrain_common.py DataMix",
+      "note": "当前开发机未挂载；具体6915训练文件与11验证文件另列CSV。"
+    },
+    {
+      "label": "原生checkpoint当前根",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE",
+      "role": "全部近期训练权重、优化器、trainer状态与保存配置",
+      "necessity": "必需",
+      "local_exists": false,
+      "is_symlink": false,
+      "link_target": null,
+      "evidence": "prepare_olmo_gpfs2.sh CKPT_DIR；导出manifest",
+      "note": "当前开发机此别名不可见；GPU容器使用runtime_path，不能据本地exists=false判断文件丢失。"
+    },
+    {
+      "label": "原生checkpoint历史根",
+      "local_path": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/ckpts/Olmo3-MoSE",
+      "runtime_path": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/ckpts/Olmo3-MoSE",
+      "role": "迁移至GPFS2之前的保存位置",
+      "necessity": "旧实验完整归档时核对",
+      "local_exists": false,
+      "is_symlink": false,
+      "link_target": null,
+      "evidence": "历史训练记录中的绝对路径",
+      "note": "不假定与GPFS2 checkpoint根为同一份存储；需在可访问挂载上核对。"
+    },
+    {
+      "label": "个人旧CoLA checkpoint",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/Olmo3-CoLA",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/ckpts/Olmo3-CoLA",
+      "role": "较早CoLA两组原生checkpoint",
+      "necessity": "保留历史实验时需要",
+      "local_exists": true,
+      "is_symlink": false,
+      "link_target": null,
+      "evidence": "本地目录实查",
+      "note": ""
+    },
+    {
+      "label": "个人旧SiTU checkpoint",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/olmo3-1b-SiTU-up-5e-3",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/ckpts/olmo3-1b-SiTU-up-5e-3",
+      "role": "较早SiTU原生checkpoint",
+      "necessity": "保留历史实验时需要",
+      "local_exists": true,
+      "is_symlink": false,
+      "link_target": null,
+      "evidence": "本地目录实查",
+      "note": ""
+    },
+    {
+      "label": "HF权重总根",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface",
+      "role": "14份低秩、5份Dense单点及旧SiTU HF模型",
+      "necessity": "评测必需",
+      "local_exists": true,
+      "is_symlink": false,
+      "link_target": null,
+      "evidence": "转换结果及评测job ledger",
+      "note": ""
+    },
+    {
+      "label": "历史用户HF模块缓存",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/hf_home",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/hf_home",
+      "role": "旧HF动态模块缓存",
+      "necessity": "可重建",
+      "local_exists": true,
+      "is_symlink": false,
+      "link_target": null,
+      "evidence": "历史脚本引用与本地目录实查",
+      "note": "当前只有modules目录；不要与训练HF_HOME或OLMES缓存混淆。"
+    },
+    {
+      "label": "旧Cubit HF",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/olmo3_outputs/huggingface/olmo3-1b-cubit-fp8-5e-3-step75080",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/olmo3_outputs/huggingface/olmo3-1b-cubit-fp8-5e-3-step75080",
+      "role": "较早Cubit比较模型",
+      "necessity": "复现旧benchmark时需要",
+      "local_exists": true,
+      "is_symlink": false,
+      "link_target": null,
+      "evidence": "本地HF目录与历史评测输出",
+      "note": ""
+    },
+    {
+      "label": "OLMES数据和Hub缓存",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/olmes_cache/huggingface",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/olmes_cache/huggingface",
+      "role": "离线评测数据、Hub blobs/snapshots及HF缓存",
+      "necessity": "当前离线评测必需",
+      "local_exists": true,
+      "is_symlink": false,
+      "link_target": null,
+      "evidence": "run_easy.sh HF_HOME/HF_HUB_CACHE/HF_DATASETS_CACHE",
+      "note": "包含datasets、hub；modules和xet也可随目录保留。HF_HUB_OFFLINE/HF_DATASETS_OFFLINE/TRANSFORMERS_OFFLINE均为1。"
+    },
+    {
+      "label": "完整OLMES输出",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/olmo3_outputs/evals/olmes",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/olmo3_outputs/evals/olmes",
+      "role": "任务配置、hash、逐题prediction、metrics、DP8 worker日志",
+      "necessity": "保留结果/继续分析必需",
+      "local_exists": true,
+      "is_symlink": false,
+      "link_target": null,
+      "evidence": "评测job ledger local_output",
+      "note": "scoring_model内权重/runtime/tokenizer多为旧绝对路径软链接，迁移后需重建或改指向。"
+    },
+    {
+      "label": "训练工作目录与W&B离线段",
+      "local_path": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE",
+      "runtime_path": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE",
+      "role": "训练work_dir、配置、W&B本地原始记录和数据工作文件",
+      "necessity": "训练恢复/完整归档必需",
+      "local_exists": false,
+      "is_symlink": false,
+      "link_target": null,
+      "evidence": "prepare_olmo_gpfs2.sh WORK_DIR；实际offline段日志",
+      "note": "重点保留wandb/offline-run-*；即使W&B已上传，原始记录仍有归档价值。当前开发机未挂载。"
+    },
+    {
+      "label": "训练HF缓存",
+      "local_path": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/hf_home",
+      "runtime_path": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/hf_home",
+      "role": "训练及原生评估的tokenizer/Hub缓存",
+      "necessity": "离线运行时需要",
+      "local_exists": false,
+      "is_symlink": false,
+      "link_target": null,
+      "evidence": "prepare_olmo_gpfs2.sh HF_HOME",
+      "note": "不是OLMES的HF_HOME；两份缓存用途不同。当前开发机未挂载。"
+    },
+    {
+      "label": "历史stage3运行目录",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/olmo3_outputs/runs/olmo3-1b-setting2",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/olmo3_outputs/runs/olmo3-1b-setting2",
+      "role": "较早OLMo3 stage3运行记录/权重",
+      "necessity": "旧实验归档时需要",
+      "local_exists": true,
+      "is_symlink": false,
+      "link_target": null,
+      "evidence": "本地目录实查",
+      "note": ""
+    },
+    {
+      "label": "历史stage3数据工作缓存",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/olmo3_outputs/dataset-cache/olmo3-stage3",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/olmo3_outputs/dataset-cache/olmo3-stage3",
+      "role": "较早stage3索引与dataset工作缓存",
+      "necessity": "恢复旧stage3时核对",
+      "local_exists": true,
+      "is_symlink": false,
+      "link_target": null,
+      "evidence": "本地目录实查",
+      "note": ""
+    },
+    {
+      "label": "HCeph挂载辅助脚本",
+      "local_path": "/mnt/shared-storage-user/jitao/.local/bin/hceph_start",
+      "runtime_path": "/mnt/shared-storage-user/jitao/.local/bin/hceph_start",
+      "role": "当前训练launcher挂载共享数据",
+      "necessity": "在原平台启动时需要",
+      "local_exists": false,
+      "is_symlink": false,
+      "link_target": null,
+      "evidence": "训练launcher source HCEPH_START",
+      "note": "迁出原平台时应替换数据挂载方式，不把该路径当作模型或数据目录。"
+    },
+    {
+      "label": "旧训练MoSE环境",
+      "local_path": "/mnt/shared-storage-user/jitao/envs/MoSE",
+      "runtime_path": "/mnt/shared-storage-user/jitao/envs/MoSE",
+      "role": "legacy启动脚本环境",
+      "necessity": "复现legacy原入口时需要",
+      "local_exists": false,
+      "is_symlink": false,
+      "link_target": null,
+      "evidence": "legacy/*.sh conda activate",
+      "note": "当前新训练使用conda_envs/olmo；网关conda环境名MoSE的实际prefix本次未访问确认。"
+    },
+    {
+      "label": "旧转换olmo_core环境",
+      "local_path": "/mnt/shared-storage-user/shijiayang-p/anaconda3/envs/olmo_core",
+      "runtime_path": "/mnt/shared-storage-user/shijiayang-p/anaconda3/envs/olmo_core",
+      "role": "旧SiTU专用转换入口环境",
+      "necessity": "复现legacy原入口时需要",
+      "local_exists": false,
+      "is_symlink": false,
+      "link_target": null,
+      "evidence": "legacy/run_convert_SiTU_up_step75080_to_HF_rjob.sh",
+      "note": "当前统一转换使用conda_envs/olmo及.hf-export-deps。"
+    },
+    {
+      "label": "旧仓库软链接入口",
+      "local_path": "/mnt/shared-storage-user/shijiayang-p/archspace-MoSE",
+      "runtime_path": "/mnt/shared-storage-user/shijiayang-p/archspace-MoSE",
+      "role": "旧脚本中的仓库别名",
+      "necessity": "不单独复制；必要时重建入口",
+      "local_exists": true,
+      "is_symlink": true,
+      "link_target": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/",
+      "evidence": "本地readlink",
+      "note": "已确认指向当前REPO，避免把它误认为第二份代码。"
+    },
+    {
+      "label": "共享临时缓存",
+      "local_path": "/mnt/shared-storage-user/jitao/tmp_data",
+      "runtime_path": "/mnt/shared-storage-user/jitao/tmp_data",
+      "role": "旧TMPDIR/TEMP/TMP",
+      "necessity": "可重建",
+      "local_exists": false,
+      "is_symlink": false,
+      "link_target": null,
+      "evidence": "prepare_olmo_gpfs2.sh",
+      "note": "C9和残差新任务覆盖为节点/tmp；不是持久checkpoint。"
+    },
+    {
+      "label": "节点临时缓存",
+      "local_path": "/tmp",
+      "runtime_path": "/tmp",
+      "role": "mose-ffn-residual.*、mose-rank512.*、mose-olmes-easy.*、mose-hf-rank512.*",
+      "necessity": "可重建",
+      "local_exists": true,
+      "is_symlink": false,
+      "link_target": null,
+      "evidence": "各当前launcher mktemp",
+      "note": "编译缓存、临时解码模块等不需要迁移。"
+    }
+  ],
+  "data": {
+    "train": {
+      "mix_definition": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace/OLMo-core-muon-fix/src/olmo_core/data/mixes/OLMo-mix-0625-150Bsample.txt",
+      "entries": 6915,
+      "unique_paths": 6915,
+      "source_labels": 65,
+      "common_parent": "/mnt/ailab-llmfudan2/olmo3_data_root/preprocessed/dolma2-0625/v0.1-150b/allenai/dolma2-tokenizer"
+    },
+    "validation": {
+      "mix_definition": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace/OLMo-core-muon-fix/src/olmo_core/data/mixes/v3-small-ppl-validation.txt",
+      "entries": 11,
+      "unique_paths": 11,
+      "source_labels": 11,
+      "common_parent": "/mnt/ailab-llmfudan2/olmo3_data_root/eval-data/perplexity/v3_small_dolma2-tokenizer"
+    }
+  },
+  "hf_models": [
+    {
+      "cohort": "dense-single-silu-step14306-20261008",
+      "model": "dense-step14306",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/dense-single-silu-step14306-20261008/dense-step14306",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/dense-single-silu-step14306-20261008/dense-step14306",
+      "weight_shards": 7,
+      "weight_file_bytes": 5939687024,
+      "conversion_manifest": true,
+      "status": "preserve"
+    },
+    {
+      "cohort": "dense-single-silu-step14306-20261008",
+      "model": "gate-step14306",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/dense-single-silu-step14306-20261008/gate-step14306",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/dense-single-silu-step14306-20261008/gate-step14306",
+      "weight_shards": 7,
+      "weight_file_bytes": 5935494592,
+      "conversion_manifest": true,
+      "status": "preserve"
+    },
+    {
+      "cohort": "dense-single-silu-step14306-20261008",
+      "model": "k-step14306",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/dense-single-silu-step14306-20261008/k-step14306",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/dense-single-silu-step14306-20261008/k-step14306",
+      "weight_shards": 7,
+      "weight_file_bytes": 5939688872,
+      "conversion_manifest": true,
+      "status": "preserve"
+    },
+    {
+      "cohort": "dense-single-silu-step14306-20261008",
+      "model": "q-step14306",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/dense-single-silu-step14306-20261008/q-step14306",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/dense-single-silu-step14306-20261008/q-step14306",
+      "weight_shards": 7,
+      "weight_file_bytes": 5939688880,
+      "conversion_manifest": true,
+      "status": "preserve"
+    },
+    {
+      "cohort": "dense-single-silu-step14306-20261008",
+      "model": "up-step14306",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/dense-single-silu-step14306-20261008/up-step14306",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/dense-single-silu-step14306-20261008/up-step14306",
+      "weight_shards": 7,
+      "weight_file_bytes": 5935494592,
+      "conversion_manifest": true,
+      "status": "preserve"
+    },
+    {
+      "cohort": "olmo3-1b-situ-up-step75080",
+      "model": "olmo3-1b-situ-up-step75080",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/olmo3-1b-situ-up-step75080",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/olmo3-1b-situ-up-step75080",
+      "weight_shards": 1,
+      "weight_file_bytes": 2969248016,
+      "conversion_manifest": false,
+      "status": "preserve"
+    },
+    {
+      "cohort": "rank512-c0-c8-step14306-20261009",
+      "model": "cola-step14306",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009/cola-step14306",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009/cola-step14306",
+      "weight_shards": 4,
+      "weight_file_bytes": 3188237360,
+      "conversion_manifest": true,
+      "status": "historical_partial_duplicate"
+    },
+    {
+      "cohort": "rank512-c0-c8-step14306-20261009-r2",
+      "model": "c0-step14306",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/c0-step14306",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/c0-step14306",
+      "weight_shards": 4,
+      "weight_file_bytes": 3188237360,
+      "conversion_manifest": true,
+      "status": "preserve"
+    },
+    {
+      "cohort": "rank512-c0-c8-step14306-20261009-r2",
+      "model": "c1-step14306",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/c1-step14306",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/c1-step14306",
+      "weight_shards": 4,
+      "weight_file_bytes": 3188235568,
+      "conversion_manifest": true,
+      "status": "preserve"
+    },
+    {
+      "cohort": "rank512-c0-c8-step14306-20261009-r2",
+      "model": "c2-step14306",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/c2-step14306",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/c2-step14306",
+      "weight_shards": 4,
+      "weight_file_bytes": 3188235296,
+      "conversion_manifest": true,
+      "status": "preserve"
+    },
+    {
+      "cohort": "rank512-c0-c8-step14306-20261009-r2",
+      "model": "c3-step14306",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/c3-step14306",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/c3-step14306",
+      "weight_shards": 4,
+      "weight_file_bytes": 3188233504,
+      "conversion_manifest": true,
+      "status": "preserve"
+    },
+    {
+      "cohort": "rank512-c0-c8-step14306-20261009-r2",
+      "model": "c4-step14306",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/c4-step14306",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/c4-step14306",
+      "weight_shards": 4,
+      "weight_file_bytes": 3188235568,
+      "conversion_manifest": true,
+      "status": "preserve"
+    },
+    {
+      "cohort": "rank512-c0-c8-step14306-20261009-r2",
+      "model": "c5-step14306",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/c5-step14306",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/c5-step14306",
+      "weight_shards": 4,
+      "weight_file_bytes": 3188235296,
+      "conversion_manifest": true,
+      "status": "preserve"
+    },
+    {
+      "cohort": "rank512-c0-c8-step14306-20261009-r2",
+      "model": "c6-step14306",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/c6-step14306",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/c6-step14306",
+      "weight_shards": 4,
+      "weight_file_bytes": 3188235296,
+      "conversion_manifest": true,
+      "status": "preserve"
+    },
+    {
+      "cohort": "rank512-c0-c8-step14306-20261009-r2",
+      "model": "c7-step14306",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/c7-step14306",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/c7-step14306",
+      "weight_shards": 4,
+      "weight_file_bytes": 3188235296,
+      "conversion_manifest": true,
+      "status": "preserve"
+    },
+    {
+      "cohort": "rank512-c0-c8-step14306-20261009-r2",
+      "model": "c8-step14306",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/c8-step14306",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/c8-step14306",
+      "weight_shards": 4,
+      "weight_file_bytes": 3188235296,
+      "conversion_manifest": true,
+      "status": "preserve"
+    },
+    {
+      "cohort": "rank512-c0-c8-step14306-20261009-r2",
+      "model": "cola-step14306",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/cola-step14306",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/cola-step14306",
+      "weight_shards": 4,
+      "weight_file_bytes": 3188237360,
+      "conversion_manifest": true,
+      "status": "preserve"
+    },
+    {
+      "cohort": "rank512-c0-c8-step14306-20261009-r2",
+      "model": "full_linear-step14306",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/full_linear-step14306",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/full_linear-step14306",
+      "weight_shards": 4,
+      "weight_file_bytes": 3188237360,
+      "conversion_manifest": true,
+      "status": "preserve"
+    },
+    {
+      "cohort": "rank512-c0-c8-step14306-20261009-r2",
+      "model": "k_only-step14306",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/k_only-step14306",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/k_only-step14306",
+      "weight_shards": 4,
+      "weight_file_bytes": 3188237360,
+      "conversion_manifest": true,
+      "status": "preserve"
+    },
+    {
+      "cohort": "rank512-c0-c8-step14306-20261009-r2",
+      "model": "q_only-step14306",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/q_only-step14306",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/q_only-step14306",
+      "weight_shards": 4,
+      "weight_file_bytes": 3188237360,
+      "conversion_manifest": true,
+      "status": "preserve"
+    },
+    {
+      "cohort": "rank512-c0-c8-step14306-20261009-r2",
+      "model": "rms_down-step14306",
+      "local_path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/rms_down-step14306",
+      "runtime_path": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/ckpts/huggingface/rank512-c0-c8-step14306-20261009-r2/rms_down-step14306",
+      "weight_shards": 4,
+      "weight_file_bytes": 3188237360,
+      "conversion_manifest": true,
+      "status": "preserve"
+    }
+  ],
+  "checkpoint_run_count": 86,
+  "reference_files_scanned": null,
+  "absolute_reference_count": 4633,
+  "last_training_monitor_observed_at": "2026-10-09T21:45:21.935015+08:00",
+  "last_training_monitor_is_not_a_fresh_status_check": true,
+  "checkpoint_run_count_basis": "记录与训练脚本声明的run路径清单；不是磁盘checkpoint目录枚举，部分脚本可能尚未运行",
+  "directory_sizes_du_sh": [
+    {
+      "label": "MoSE完整工作树",
+      "du_sh": "12G",
+      "complete": true
+    },
+    {
+      "label": "OLMo-core Muon源码",
+      "du_sh": "79M",
+      "complete": true
+    },
+    {
+      "label": "官方OLMES源码",
+      "du_sh": "88M",
+      "complete": true
+    },
+    {
+      "label": "训练/转换环境",
+      "du_sh": "13G",
+      "complete": true
+    },
+    {
+      "label": "OLMES环境",
+      "du_sh": "15G",
+      "complete": true
+    },
+    {
+      "label": "OLMES数据和Hub缓存",
+      "du_sh": "10G",
+      "complete": true
+    },
+    {
+      "label": "HF权重总根",
+      "du_sh": "76G",
+      "complete": false
+    },
+    {
+      "label": "完整OLMES输出",
+      "du_sh": "14G",
+      "complete": true
+    }
+  ],
+  "size_note": "du -sh显示值为二进制单位且经过取整；HF根有一个旧失败转换临时目录不可读，76G是不含该目录的可读部分。原生checkpoint、训练数据、W&B/HF训练缓存未挂载，未统计容量。",
+  "training_container_image": "registry.h.pjlab.org.cn/ailab/ml-base:22.04-pjlab-20260323",
+  "reference_source_files_count": 430,
+  "reference_scan_note": "静态文本扫描；未对无匹配文件重复计数。精确引用及来源见absolute_path_references.csv。"
+}

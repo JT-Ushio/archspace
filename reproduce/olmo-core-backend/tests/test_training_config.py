@@ -17,6 +17,7 @@ from olmo_mose import (
 
 
 CFGS_DIR = Path(__file__).parents[1] / "cfgs"
+LEGACY_CFGS_DIR = Path(__file__).parents[1] / "legacy" / "cfgs"
 sys.path.insert(0, str(CFGS_DIR))
 
 from _models import build_mose_olmo3_1b, build_olmo3_1b  # noqa: E402
@@ -79,7 +80,7 @@ def test_dpskv4_experiment_entry_points(
         save_folder=str(tmp_path / "checkpoints"),
         name="dpskv4-entry-point",
     )
-    entry_point = runpy.run_path(str(CFGS_DIR / config_name))
+    entry_point = runpy.run_path(str(LEGACY_CFGS_DIR / config_name))
     config = entry_point["build_config"](opts, [])
     feed_forward = config.model.block.feed_forward
 
@@ -96,7 +97,7 @@ def test_situ_rms_up_experiment_entry_point(tmp_path: Path) -> None:
         save_folder=str(tmp_path / "checkpoints"),
         name="situ-rms-up-entry-point",
     )
-    entry_point = runpy.run_path(str(CFGS_DIR / "OLMo3-1B-stage1-situ-rms-up.py"))
+    entry_point = runpy.run_path(str(LEGACY_CFGS_DIR / "OLMo3-1B-stage1-situ-rms-up.py"))
     config = entry_point["build_config"](
         opts,
         ["model.block.feed_forward.rms_beta_scale=3.5"],

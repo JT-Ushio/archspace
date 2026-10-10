@@ -1,0 +1,30 @@
+[
+  {
+    "partition": "arch",
+    "nodes": 2,
+    "exit_code": 0,
+    "observed_at": "2026-10-06T21:10:45.331886+08:00",
+    "schedulable": false,
+    "summary": [
+      "📌 任务调度核心状态：❌ 任务不可调度",
+      "  - 总副本数量：2",
+      "  - 可调度数量：1",
+      "  - 不可调度数量：1"
+    ],
+    "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_arch_2_20261006_211045.log"
+  },
+  {
+    "partition": "pool",
+    "nodes": 1,
+    "exit_code": 0,
+    "observed_at": "2026-10-06T21:10:46.538167+08:00",
+    "schedulable": true,
+    "summary": [
+      "📌 任务调度核心状态：✅ 任务可调度",
+      "  - 总副本数量：1",
+      "  - 可调度数量：1",
+      "  - 不可调度数量：0"
+    ],
+    "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261006_211046.log"
+  }
+]

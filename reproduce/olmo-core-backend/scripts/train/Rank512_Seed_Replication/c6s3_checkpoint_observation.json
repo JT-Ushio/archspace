@@ -1,0 +1,58 @@
+{
+  "variant": "c6s3",
+  "partition": "pool",
+  "nodes": 1,
+  "gpus_per_node": 8,
+  "priority": 1,
+  "job_name": "mose-r512-c6s3-r1-p1-1x8-pool-1006-2108-31a7",
+  "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/run_c6s3.sh",
+  "init_seed": 12538,
+  "data_seed": 34521,
+  "num_params": 797050880,
+  "capacity_prediction": {
+    "partition": "pool",
+    "nodes": 1,
+    "exit_code": 0,
+    "schedulable": true,
+    "summary": [
+      "📌 任务调度核心状态：✅ 任务可调度",
+      "  - 总副本数量：1",
+      "  - 可调度数量：1",
+      "  - 不可调度数量：0"
+    ],
+    "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1.log"
+  },
+  "job_id": "mose-r512-c6s3-r1-p1-1x8-pool-1006-2108-31a7-fc86e",
+  "startup_verified": {
+    "variant": "c6s3",
+    "job_id": "mose-r512-c6s3-r1-p1-1x8-pool-1006-2108-31a7-fc86e",
+    "exit_code": 0,
+    "mesh": [
+      "(dp_replicate=1, dp_shard=8)"
+    ],
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_211118-olmo3-1b-r512matched-c6-seed12538-data34521-fp8-30b"
+    ],
+    "step0_saved": true,
+    "nonfinite_ce": false,
+    "oom": false,
+    "traceback": false,
+    "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/startup_c6s3.log",
+    "observed_at": "2026-10-06T21:25:49.445374+08:00",
+    "fresh_initialization": true
+  },
+  "wandb_segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_211118-olmo3-1b-r512matched-c6-seed12538-data34521-fp8-30b",
+  "status": "Running",
+  "counts": "{'active': 1, 'succeeded': 0, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+  "latest": {
+    "step": 12520,
+    "eta": "1h32m",
+    "grad": 0.0155,
+    "ce": 2.576
+  },
+  "segments": [],
+  "events": [],
+  "observation_exit_code": 0,
+  "observed_at": "2026-10-07T07:57:47.195264+08:00",
+  "observation_basis": "Current scheduler status and job logs"
+}

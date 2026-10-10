@@ -1,0 +1,14 @@
+{
+  "a1": {
+    "job_id": "mose-attn-a1-r1-p1-1x8-pool-1007-0128-5292-1-78ab4",
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261007_013128-olmo3-1b-attn-budget-a1-r832-ug336-down352-unshared-qk-silu-down-rms-fp8-30b"
+    ]
+  },
+  "a2": {
+    "job_id": "mose-attn-a2-r1-p1-1x8-pool-1007-0128-b35f-2-1cf16",
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261007_013127-olmo3-1b-attn-budget-a2-r832-ug320-down448-shared-qk-silu-down-rms-fp8-30b"
+    ]
+  }
+}

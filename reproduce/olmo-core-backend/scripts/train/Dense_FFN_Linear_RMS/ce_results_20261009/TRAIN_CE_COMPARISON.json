@@ -1,0 +1,53 @@
+{
+  "observed_at": "2026-10-09T05:40:58.926019+00:00",
+  "window": [
+    13307,
+    14306
+  ],
+  "rows_per_run": 1000,
+  "common_excluded_steps": [],
+  "clean_tail_n": 1000,
+  "source": "W&B API scan_history, complete last1000, no sampling",
+  "runs": {
+    "Dense": {
+      "run_name": "olmo3-1b-dense-baseline-bs256-seq8k-30b-wsd-fp8-5e-3",
+      "wandb_url": "https://wandb.ai/archspace/MoSE/runs/olmo3-1b-dense-baseline-bs256-seq8k-30b-wsd-fp8-5e-3",
+      "state": "failed",
+      "raw_last1000": 2.357587371349335,
+      "clean_last1000": 2.357587371349335,
+      "final_raw_ce": 2.388383150100708,
+      "tail_delta_vs_dense": 0.0,
+      "final_delta_vs_dense": 0.0
+    },
+    "DU": {
+      "run_name": "olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b",
+      "wandb_url": "https://wandb.ai/archspace/MoSE/runs/olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b",
+      "state": "finished",
+      "raw_last1000": 2.378748731136322,
+      "clean_last1000": 2.378748731136322,
+      "final_raw_ce": 2.4073946475982666,
+      "tail_delta_vs_dense": 0.021161359786987077,
+      "final_delta_vs_dense": 0.019011497497558594
+    },
+    "DG": {
+      "run_name": "olmo3-1b-dense-nearmatched-gate-linear-r1632-down-rms-r1632-fp8-30b",
+      "wandb_url": "https://wandb.ai/archspace/MoSE/runs/olmo3-1b-dense-nearmatched-gate-linear-r1632-down-rms-r1632-fp8-30b",
+      "state": "finished",
+      "raw_last1000": 2.372440192937851,
+      "clean_last1000": 2.372440192937851,
+      "final_raw_ce": 2.4011640548706055,
+      "tail_delta_vs_dense": 0.014852821588516196,
+      "final_delta_vs_dense": 0.012780904769897461
+    },
+    "DUG": {
+      "run_name": "olmo3-1b-dense-nearmatched-up-gate-linear-r1632-down-rms-r1632-fp8-30b",
+      "wandb_url": "https://wandb.ai/archspace/MoSE/runs/olmo3-1b-dense-nearmatched-up-gate-linear-r1632-down-rms-r1632-fp8-30b",
+      "state": "finished",
+      "raw_last1000": 2.3804808008670806,
+      "clean_last1000": 2.3804808008670806,
+      "final_raw_ce": 2.4080138206481934,
+      "tail_delta_vs_dense": 0.022893429517745645,
+      "final_delta_vs_dense": 0.01963067054748535
+    }
+  }
+}

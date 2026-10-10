@@ -1,0 +1,12 @@
+{
+  "variant": "c6-reference-eval",
+  "job_id": "mose-r512-c6-r1-p1-2x8-np-1001-1337-21978910",
+  "status": "UNKNOWN",
+  "counts": null,
+  "latest": null,
+  "segments": [],
+  "events": [],
+  "observation_exit_code": 0,
+  "observed_at": "2026-10-07T03:50:07.541069+08:00",
+  "observation_basis": "Current scheduler status and job logs"
+}

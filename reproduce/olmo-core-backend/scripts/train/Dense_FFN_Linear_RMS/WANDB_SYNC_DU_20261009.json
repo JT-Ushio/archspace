@@ -1,0 +1,32 @@
+{
+  "segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261008_202844-olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b",
+  "run_name": "olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b",
+  "verified_at": "2026-10-09T05:28:01.154Z",
+  "finished_syncing": true,
+  "synced_marker": true,
+  "log_lines": [
+    "wandb: [archspace/MoSE/olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b] setting up run olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b\r",
+    "wandb: [archspace/MoSE/olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b] View run olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b at https://wandb.ai/archspace/MoSE/runs/olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b\r",
+    "wandb: [archspace/MoSE/olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b] updating run metadata; uploading console lines 0-0\r",
+    "wandb: [archspace/MoSE/olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b] updating run metadata\r",
+    "wandb: [archspace/MoSE/olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b] updating run metadata; uploading history steps 0-2608, summary, console lines 0-8766\r",
+    "wandb: [archspace/MoSE/olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b] updating run metadata; uploading history steps 0-2608, summary, console lines 0-8766; uploading wandb-metadata.json; uploading requirements.txt\r",
+    "wandb: [archspace/MoSE/olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b] updating run metadata; uploading history steps 0-2608, summary, console lines 0-8766\r",
+    "wandb: [archspace/MoSE/olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b] uploading history steps 0-2608, summary, console lines 0-8766\r",
+    "wandb: [archspace/MoSE/olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b] uploading history steps 2609-5229, summary, console lines 8767-17618\r",
+    "wandb: [archspace/MoSE/olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b] uploading history steps 5230-7857, summary, console lines 17619-26538\r",
+    "wandb: [archspace/MoSE/olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b] uploading history steps 7858-10479, summary, console lines 26539-35359\r",
+    "wandb: [archspace/MoSE/olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b] uploading history steps 10480-13059, summary, console lines 35360-44404\r",
+    "wandb: [archspace/MoSE/olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b] uploading history steps 10480-13059, summary, console lines 35360-44404; updating run metadata\r",
+    "wandb: [archspace/MoSE/olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b] uploading history steps 10480-13059, summary, console lines 35360-44404\r",
+    "wandb: [archspace/MoSE/olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b] uploading history steps 10480-13059, summary, console lines 35360-44404; uploading output.log; uploading wandb-summary.json; uploading config.yaml\r",
+    "wandb: [archspace/MoSE/olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b] uploading history steps 10480-13059, summary, console lines 35360-44404; uploading output.log; uploading config.yaml\r",
+    "wandb: [archspace/MoSE/olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b] uploading history steps 10480-13059, summary, console lines 35360-44404; uploading output.log\r",
+    "wandb: [archspace/MoSE/olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b] uploading history steps 10480-13059, summary, console lines 35360-44404\r",
+    "wandb: [archspace/MoSE/olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b] uploading history steps 13060-14306, summary, console lines 44405-48785\r",
+    "wandb: [archspace/MoSE/olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b] Finished syncing /mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261008_202844-olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b\r"
+  ],
+  "run_url": "https://wandb.ai/archspace/MoSE/runs/olmo3-1b-dense-nearmatched-up-linear-r1632-down-rms-r1632-fp8-30b",
+  "method": "wandb_sjy",
+  "pid": 2451559
+}

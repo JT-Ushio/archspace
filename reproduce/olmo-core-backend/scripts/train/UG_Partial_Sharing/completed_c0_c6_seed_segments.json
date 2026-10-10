@@ -1,0 +1,26 @@
+{
+  "c0s2": {
+    "job_id": "mose-r512-c0s2-r1-p1-1x8-pool-1006-2106-ea9c-f2516",
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_210958-olmo3-1b-r512matched-c0-seed12537-data34521-fp8-30b"
+    ]
+  },
+  "c6s2": {
+    "job_id": "mose-r512-c6s2-r1-p1-1x8-pool-1006-2107-3d78-52e71",
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_211039-olmo3-1b-r512matched-c6-seed12537-data34521-fp8-30b"
+    ]
+  },
+  "c0s3": {
+    "job_id": "mose-r512-c0s3-r1-p1-1x8-pool-1006-2107-2f04-80461",
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_211054-olmo3-1b-r512matched-c0-seed12538-data34521-fp8-30b"
+    ]
+  },
+  "c6s3": {
+    "job_id": "mose-r512-c6s3-r1-p1-1x8-pool-1006-2108-31a7-fc86e",
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_211118-olmo3-1b-r512matched-c6-seed12538-data34521-fp8-30b"
+    ]
+  }
+}

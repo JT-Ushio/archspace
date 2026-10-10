@@ -1,0 +1,771 @@
+{
+  "checked_date": "2026-10-09",
+  "timezone": "Asia/Hong_Kong",
+  "read_only": true,
+  "probes": [
+    {
+      "partition": "arch",
+      "requested_nodes": 2,
+      "gpus_per_node": 8,
+      "observed_at": "2026-10-09T07:18:03.095Z",
+      "reported_replicas": 2,
+      "schedulable_replicas": 0,
+      "unschedulable_replicas": 2,
+      "valid": true,
+      "displayed_node_count": 60,
+      "displayed_nodes": [
+        {
+          "node": "gpu-lg-cmc-h-h200-0321.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 718.139,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2191.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2251.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2265.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2159.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2280.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2193.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2912.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2165.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2276.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2236.host.h.pjlab.org.cn",
+          "free_cpu": 36,
+          "free_mem_gib": 55.9081,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-l-lg-cmc-h-h200-0092.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-l-lg-cmc-h-h200-0012.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2267.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2254.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-1140.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 717.97,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-3104.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 717.97,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2241.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-l-lg-cmc-h-h200-0366.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1124.01,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2300.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-l-lg-cmc-h-h200-0094.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2211.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2288.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2263.host.h.pjlab.org.cn",
+          "free_cpu": 64,
+          "free_mem_gib": 1059.35,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2321.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-l-lg-cmc-h-h200-0026.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-l-lg-cmc-h-h200-0220.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-1106.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2239.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2270.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-1129.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1379.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-l-lg-cmc-h-h200-0005.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2275.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2316.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2171.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-1130.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2164.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-l-lg-cmc-h-h200-0149.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2150.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2234.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-1108.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2160.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-l-lg-cmc-h-h200-0001.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-1137.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 717.97,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-l-lg-cmc-h-h200-0234.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2268.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2210.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-0409.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 718.138,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2911.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2182.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2187.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-1107.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 717.97,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2261.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2177.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-l-lg-cmc-h-h200-0215.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-1847.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 718.139,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-1700.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 718.139,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-l-lg-cmc-h-h200-0235.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2298.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2281.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        }
+      ],
+      "command": "rjob submit --name=xtuner-capacity-1009-arch-2x8 --gpu=8 --memory=262144 --cpu=32 --charged-group=llmarchitecture_gpu --namespace=ailab-llmarchitecture --private-machine=group --task-type=normal --priority=1 --custom-resources brainpp.cn/fuse=1 --mount=gpfs://gpfs1/kuangjiahao-p:/mnt/shared-storage-user/kuangjiahao-p --mount=gpfs://gpfs1/wangjie3:/mnt/shared-storage-user/wangjie3 --mount=gpfs://gpfs1/jitao:/mnt/shared-storage-user/jitao --mount=gpfs://gpfs1/songdemin:/mnt/shared-storage-user/songdemin --mount=gpfs://gpfs1/agent-common-use:/mnt/shared-storage-user/agent-common-use --mount=gpfs://gpfs1/ailab-agent-combined:/mnt/shared-storage-user/ailab-agent-combined --mount=gpfs://gpfs1/shared-storage-ailab-llmfudan:/mnt/shared-storage-user/shared-storage-ailab-llmfudan --mount=gpfs://gpfs2/shared-storage-ailab-llmfudan-02:/mnt/shared-storage-gpfs2/shared-storage-ailab-llmfudan-02 --mount=gpfs://gpfs2/intern-pretrain-shared02:/mnt/shared-storage-gpfs2/intern-pretrain-shared02 --mount=gpfs://gpfs1/ailab-hs:/mnt/shared-storage-user/ailab-hs --mount=gpfs://gpfs1/auto-eval-pipeline:/mnt/shared-storage-user/auto-eval-pipeline --mount=gpfs://gpfs1/opencompass-shared:/mnt/shared-storage-user/opencompass-shared --mount=gpfs://gpfs2/gpfs2-shared-public:/mnt/shared-storage-gpfs2/gpfs2-shared-public --mount=gpfs://gpfs2/trustcyberdata:/mnt/shared-storage-gpfs2/trustcyberdata --image=registry.h.pjlab.org.cn/ailab/ml-base:22.04-pjlab-20260323 -P 2 -e DISTRIBUTED_JOB=true --host-network=true --custom-resources rdma/mlnx_shared=8 --custom-resources mellanox.com/mlnx_rdma=1 --predict-only=true -- /mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512Matched_Combinations/run_c9_q_silu_down_rms.sh",
+      "notes": "Displayed nodes are a subset, not a whole-cluster inventory."
+    },
+    {
+      "partition": "arch",
+      "requested_nodes": 4,
+      "gpus_per_node": 8,
+      "observed_at": "2026-10-09T07:18:09.202Z",
+      "reported_replicas": 4,
+      "schedulable_replicas": 0,
+      "unschedulable_replicas": 4,
+      "valid": true,
+      "displayed_node_count": 60,
+      "displayed_nodes": [
+        {
+          "node": "gpu-lg-cmc-h-h200-2270.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2265.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-l-lg-cmc-h-h200-0026.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2165.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2150.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2211.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-0409.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 718.138,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2159.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2234.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-l-lg-cmc-h-h200-0149.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-l-lg-cmc-h-h200-0094.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2263.host.h.pjlab.org.cn",
+          "free_cpu": 64,
+          "free_mem_gib": 1059.35,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2164.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2182.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-l-lg-cmc-h-h200-0215.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-l-lg-cmc-h-h200-0235.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-1108.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2276.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2275.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2236.host.h.pjlab.org.cn",
+          "free_cpu": 36,
+          "free_mem_gib": 55.9081,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-3104.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 717.97,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2288.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2281.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-1140.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 717.97,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2268.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2316.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-l-lg-cmc-h-h200-0220.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-l-lg-cmc-h-h200-0012.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2254.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2321.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-l-lg-cmc-h-h200-0092.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2267.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-1137.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 717.97,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2241.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-1130.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-1129.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1379.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-1847.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 718.139,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2912.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2251.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2160.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2210.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-l-lg-cmc-h-h200-0234.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2300.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-l-lg-cmc-h-h200-0366.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1124.01,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2911.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-1106.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-0321.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 718.139,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2191.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2280.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2298.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2193.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-l-lg-cmc-h-h200-0001.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-l-lg-cmc-h-h200-0005.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-1700.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 718.139,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2261.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 1123.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2187.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2239.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2171.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-1107.host.h.pjlab.org.cn",
+          "free_cpu": 80,
+          "free_mem_gib": 717.97,
+          "free_gpu": 0
+        },
+        {
+          "node": "gpu-lg-cmc-h-h200-2177.host.h.pjlab.org.cn",
+          "free_cpu": 112,
+          "free_mem_gib": 1635.85,
+          "free_gpu": 0
+        }
+      ],
+      "command": "rjob submit --name=xtuner-capacity-1009-arch-4x8 --gpu=8 --memory=262144 --cpu=32 --charged-group=llmarchitecture_gpu --namespace=ailab-llmarchitecture --private-machine=group --task-type=normal --priority=1 --custom-resources brainpp.cn/fuse=1 --mount=gpfs://gpfs1/kuangjiahao-p:/mnt/shared-storage-user/kuangjiahao-p --mount=gpfs://gpfs1/wangjie3:/mnt/shared-storage-user/wangjie3 --mount=gpfs://gpfs1/jitao:/mnt/shared-storage-user/jitao --mount=gpfs://gpfs1/songdemin:/mnt/shared-storage-user/songdemin --mount=gpfs://gpfs1/agent-common-use:/mnt/shared-storage-user/agent-common-use --mount=gpfs://gpfs1/ailab-agent-combined:/mnt/shared-storage-user/ailab-agent-combined --mount=gpfs://gpfs1/shared-storage-ailab-llmfudan:/mnt/shared-storage-user/shared-storage-ailab-llmfudan --mount=gpfs://gpfs2/shared-storage-ailab-llmfudan-02:/mnt/shared-storage-gpfs2/shared-storage-ailab-llmfudan-02 --mount=gpfs://gpfs2/intern-pretrain-shared02:/mnt/shared-storage-gpfs2/intern-pretrain-shared02 --mount=gpfs://gpfs1/ailab-hs:/mnt/shared-storage-user/ailab-hs --mount=gpfs://gpfs1/auto-eval-pipeline:/mnt/shared-storage-user/auto-eval-pipeline --mount=gpfs://gpfs1/opencompass-shared:/mnt/shared-storage-user/opencompass-shared --mount=gpfs://gpfs2/gpfs2-shared-public:/mnt/shared-storage-gpfs2/gpfs2-shared-public --mount=gpfs://gpfs2/trustcyberdata:/mnt/shared-storage-gpfs2/trustcyberdata --image=registry.h.pjlab.org.cn/ailab/ml-base:22.04-pjlab-20260323 -P 4 -e DISTRIBUTED_JOB=true --host-network=true --custom-resources rdma/mlnx_shared=8 --custom-resources mellanox.com/mlnx_rdma=1 --predict-only=true -- /mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512Matched_Combinations/run_c9_q_silu_down_rms.sh",
+      "notes": "Displayed nodes are a subset, not a whole-cluster inventory."
+    },
+    {
+      "partition": "pool",
+      "requested_nodes": 1,
+      "gpus_per_node": 8,
+      "observed_at": "2026-10-09T07:18:15.308Z",
+      "reported_replicas": 0,
+      "schedulable_replicas": 0,
+      "unschedulable_replicas": 0,
+      "valid": false,
+      "displayed_node_count": 0,
+      "displayed_nodes": [],
+      "command": "rjob submit --name=xtuner-capacity-1009-pool-1x8 --gpu=8 --memory=262144 --cpu=32 --charged-group=llmarchitecture_gpu_pool --namespace=ailab-llmarchitecture --private-machine=group --task-type=normal --priority=1 --custom-resources brainpp.cn/fuse=1 --mount=gpfs://gpfs1/kuangjiahao-p:/mnt/shared-storage-user/kuangjiahao-p --mount=gpfs://gpfs1/wangjie3:/mnt/shared-storage-user/wangjie3 --mount=gpfs://gpfs1/jitao:/mnt/shared-storage-user/jitao --mount=gpfs://gpfs1/songdemin:/mnt/shared-storage-user/songdemin --mount=gpfs://gpfs1/agent-common-use:/mnt/shared-storage-user/agent-common-use --mount=gpfs://gpfs1/ailab-agent-combined:/mnt/shared-storage-user/ailab-agent-combined --mount=gpfs://gpfs1/shared-storage-ailab-llmfudan:/mnt/shared-storage-user/shared-storage-ailab-llmfudan --mount=gpfs://gpfs2/shared-storage-ailab-llmfudan-02:/mnt/shared-storage-gpfs2/shared-storage-ailab-llmfudan-02 --mount=gpfs://gpfs2/intern-pretrain-shared02:/mnt/shared-storage-gpfs2/intern-pretrain-shared02 --mount=gpfs://gpfs1/ailab-hs:/mnt/shared-storage-user/ailab-hs --mount=gpfs://gpfs1/auto-eval-pipeline:/mnt/shared-storage-user/auto-eval-pipeline --mount=gpfs://gpfs1/opencompass-shared:/mnt/shared-storage-user/opencompass-shared --mount=gpfs://gpfs2/gpfs2-shared-public:/mnt/shared-storage-gpfs2/gpfs2-shared-public --mount=gpfs://gpfs2/trustcyberdata:/mnt/shared-storage-gpfs2/trustcyberdata --image=registry.h.pjlab.org.cn/ailab/ml-base:22.04-pjlab-20260323 -P 1 -e DISTRIBUTED_JOB=true --host-network=true --custom-resources rdma/mlnx_shared=8 --custom-resources mellanox.com/mlnx_rdma=1 --predict-only=true -- /mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512Matched_Combinations/run_c9_q_silu_down_rms.sh",
+      "notes": "Replica count mismatch; availability unknown."
+    }
+  ]
+}

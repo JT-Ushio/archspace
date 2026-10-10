@@ -14,11 +14,15 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest", "ruff==0.15.9"]
+hf = ["transformers>=4.57,<5", "safetensors>=0.4"]
 training = [
     "ai2-olmo-eval==0.9.0",
     "wandb",
     "dion @ git+https://github.com/microsoft/dion.git@27318de168a2487c4edc0adf36200556d713d871 ; sys_platform == 'linux'",
 ]
+
+[project.scripts]
+olmo-mose-to-hf = "olmo_mose.hf_export.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

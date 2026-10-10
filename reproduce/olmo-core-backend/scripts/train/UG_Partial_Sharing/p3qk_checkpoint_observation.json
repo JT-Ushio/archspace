@@ -1,0 +1,59 @@
+{
+  "variant": "p3qk",
+  "partition": "pool",
+  "nodes": 1,
+  "gpus_per_node": 8,
+  "priority": 1,
+  "job_name": "mose-ug-p3qk-r1-p1-1x8-pool-1006-2111-2dcc",
+  "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p3qk.sh",
+  "init_seed": 12536,
+  "data_seed": 34521,
+  "num_params": 797050880,
+  "capacity_prediction": {
+    "partition": "pool",
+    "nodes": 1,
+    "exit_code": 0,
+    "observed_at": "2026-10-06T21:11:09.288317+08:00",
+    "schedulable": true,
+    "summary": [
+      "📌 任务调度核心状态：✅ 任务可调度",
+      "  - 总副本数量：1",
+      "  - 可调度数量：1",
+      "  - 不可调度数量：0"
+    ],
+    "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261006_211109.log"
+  },
+  "job_id": "mose-ug-p3qk-r1-p1-1x8-pool-1006-2111-2dcc-7-ec6b7",
+  "startup_verified": {
+    "variant": "p3qk",
+    "job_id": "mose-ug-p3qk-r1-p1-1x8-pool-1006-2111-2dcc-7-ec6b7",
+    "exit_code": 0,
+    "mesh": [
+      "(dp_replicate=1, dp_shard=8)"
+    ],
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_211408-olmo3-1b-ug-partial-p3qk-s320-p224-linear-qk-silu-down-rms-fp8-30b"
+    ],
+    "step0_saved": true,
+    "nonfinite_ce": false,
+    "oom": false,
+    "traceback": false,
+    "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/startup_p3qk.log",
+    "observed_at": "2026-10-06T21:25:42.046154+08:00",
+    "fresh_initialization": true
+  },
+  "wandb_segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_211408-olmo3-1b-ug-partial-p3qk-s320-p224-linear-qk-silu-down-rms-fp8-30b",
+  "status": "Running",
+  "counts": "{'active': 1, 'succeeded': 0, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+  "latest": {
+    "step": 12520,
+    "eta": "1h36m",
+    "grad": 0.0146,
+    "ce": 2.581
+  },
+  "segments": [],
+  "events": [],
+  "observation_exit_code": 0,
+  "observed_at": "2026-10-07T08:27:31.655005+08:00",
+  "observation_basis": "Current scheduler status and job logs"
+}

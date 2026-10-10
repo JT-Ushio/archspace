@@ -1,0 +1,17 @@
+{
+  "partition": "pool",
+  "nodes": 1,
+  "exit_code": 0,
+  "observed_at": "2026-10-08T18:41:18.727839+08:00",
+  "valid_prediction": true,
+  "reported_replicas": 1,
+  "schedulable": false,
+  "error": null,
+  "summary": [
+    "📌 任务调度核心状态：❌ 任务不可调度",
+    "  - 总副本数量：1",
+    "  - 可调度数量：0",
+    "  - 不可调度数量：1"
+  ],
+  "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Width_Ablations/capacity_pool_20261008_184118.log"
+}

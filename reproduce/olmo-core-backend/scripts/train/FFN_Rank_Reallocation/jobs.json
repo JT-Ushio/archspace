@@ -1,0 +1,512 @@
+[
+  {
+    "variant": "f1",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-recover-f1-r2-p1-1x8-pool-1006-1207-08d8",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/run_f1.sh",
+    "job_id": "mose-recover-f1-r2-p1-1x8-pool-1006-1207-08d-af98d",
+    "wandb_segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_121016-olmo3-1b-ffn-budget-f1-ug384-down768-unshared-linear-rms-fp8-30b",
+    "completion_verified": {
+      "state": "Succeeded",
+      "counters": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "final_step": 14306,
+      "final_checkpoint_saved": true,
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/completion_f1.log",
+      "observed_at": "2026-10-07T00:29:00.994575+08:00"
+    }
+  },
+  {
+    "variant": "f2",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-recover-f2-r2-p1-1x8-pool-1006-1213-0e18",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/run_f2.sh",
+    "job_id": "mose-recover-f2-r2-p1-1x8-pool-1006-1213-0e1-bdefa",
+    "wandb_segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_121541-olmo3-1b-ffn-budget-f2-ug256-down1024-unshared-linear-rms-fp8-30b",
+    "completion_verified": {
+      "state": "Succeeded",
+      "counters": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "final_step": 14306,
+      "final_checkpoint_saved": true,
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/completion_f2.log",
+      "observed_at": "2026-10-07T00:29:01.003845+08:00"
+    }
+  },
+  {
+    "variant": "f3",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-recover-f3-r2-p1-1x8-pool-1006-1213-ccc5",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/run_f3.sh",
+    "job_id": "mose-recover-f3-r2-p1-1x8-pool-1006-1213-ccc-5d862",
+    "wandb_segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_121614-olmo3-1b-ffn-budget-f3-ug480-down672-shared-linear-rms-fp8-30b",
+    "completion_verified": {
+      "state": "Succeeded",
+      "counters": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "final_step": 14306,
+      "final_checkpoint_saved": true,
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/completion_f3.log",
+      "observed_at": "2026-10-07T00:29:01.011633+08:00"
+    }
+  },
+  {
+    "variant": "f3qk",
+    "partition": "arch",
+    "nodes": 4,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ffn-f3qk-r1-p1-4x8-arch-1006-1923-76a7",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/run_f3qk.sh",
+    "job_id": "mose-ffn-f3qk-r1-p1-4x8-arch-1006-1923-76a7-5350e",
+    "wandb_segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_192653-olmo3-1b-ffn-budget-f3qk-ug480-down672-shared-qk-silu-ug-linear-down-rms-fp8-30b",
+    "startup_verified": {
+      "status": "Running",
+      "counters": {
+        "active": 4,
+        "succeeded": 0,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "mesh": [
+        "dp_replicate=4, dp_shard=8"
+      ],
+      "checkpoint0_saved": true,
+      "last_step": 4280,
+      "ce": [
+        2.737
+      ],
+      "errors": [],
+      "finite_training_verified": true
+    },
+    "completion_verified": {
+      "state": "Succeeded",
+      "counters": {
+        "active": 0,
+        "succeeded": 4,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "final_step": 14306,
+      "final_checkpoint_saved": true,
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/completion_f3qk.log",
+      "observed_at": "2026-10-06T22:58:35.960620+08:00"
+    }
+  },
+  {
+    "variant": "f2qk",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ffn-f2qk-r1-p1-1x8-pool-1006-1922-88d3",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/run_f2qk.sh",
+    "job_id": "mose-ffn-f2qk-r1-p1-1x8-pool-1006-1922-88d3-ed4c5",
+    "startup_verified": {
+      "status": "Running",
+      "counters": {
+        "active": 1,
+        "succeeded": 0,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "mesh": [],
+      "checkpoint0_saved": true,
+      "last_step": 280,
+      "ce": [
+        4.295
+      ],
+      "errors": [],
+      "finite_training_verified": true
+    },
+    "wandb_segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_200818-olmo3-1b-ffn-budget-f2qk-ug256-down1024-unshared-qk-silu-ug-linear-down-rms-fp8-30b",
+    "completion_verified": {
+      "state": "Succeeded",
+      "counters": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "final_step": 14306,
+      "final_checkpoint_saved": true,
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/completion_f2qk.log",
+      "observed_at": "2026-10-07T08:27:33.474261+08:00"
+    }
+  },
+  {
+    "variant": "f1qk",
+    "partition": "arch",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ffn-f1qk-r2-p1-1x8-arch-1006-1937-bfde",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/run_f1qk.sh",
+    "job_id": "mose-ffn-f1qk-r2-p1-1x8-arch-1006-1937-bfde-3c52a",
+    "startup_verified": {
+      "exit_code": 0,
+      "status": "Running",
+      "counters": {
+        "active": 1,
+        "succeeded": 0,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "mesh": [
+        "dp_replicate=1, dp_shard=8"
+      ],
+      "checkpoint0_saved": true,
+      "last_step": 830,
+      "ce": [
+        3.185
+      ],
+      "errors": [],
+      "finite_training_verified": true
+    },
+    "wandb_segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_193938-olmo3-1b-ffn-budget-f1qk-ug384-down768-unshared-qk-silu-ug-linear-down-rms-fp8-30b",
+    "completion_verified": {
+      "state": "Succeeded",
+      "counters": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "final_step": 14306,
+      "final_checkpoint_saved": true,
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/completion_f1qk.log",
+      "observed_at": "2026-10-07T08:27:31.029044+08:00"
+    }
+  },
+  {
+    "variant": "f4qk",
+    "partition": "arch",
+    "nodes": 2,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ffn-f4qk-r1-p1-2x8-arch-1006-2300-6d41",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/run_f4qk.sh",
+    "init_seed": 12536,
+    "data_seed": 34521,
+    "num_params": 797050880,
+    "ug_rank": 400,
+    "down_rank": 816,
+    "share_gate_up_subspace": true,
+    "capacity_prediction": {
+      "partition": "arch",
+      "nodes": 2,
+      "exit_code": 0,
+      "observed_at": "2026-10-06T23:02:16.494924+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：2",
+        "  - 可调度数量：2",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_arch_2_20261006_230216.log"
+    },
+    "local_validation": "Actual meta parameter counts, Q/K-only recipe changes and world-size8/16/32 batch divisibility: 2 passed in376.57s; shell syntax passed",
+    "job_id": "mose-ffn-f4qk-r1-p1-2x8-arch-1006-2300-6d41-46be5",
+    "wandb_segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_230506-olmo3-1b-ffn-budget-f4qk-ug400-down816-shared-qk-silu-ug-linear-down-rms-fp8-30b",
+    "startup_verified": {
+      "status": "Running",
+      "counters": {
+        "active": 2,
+        "succeeded": 0,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "mesh": [
+        "dp_replicate=2, dp_shard=8"
+      ],
+      "step0_saved": true,
+      "last_step": {
+        "step": 70,
+        "eta": "5h50m",
+        "grad": 0.2944,
+        "ce": 7.31
+      },
+      "finite_ce": true,
+      "errors": [],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/startup_f4qk.log",
+      "observed_at": "2026-10-06T23:08:20.049523+08:00"
+    },
+    "completion_verified": {
+      "state": "Succeeded",
+      "counters": {
+        "active": 0,
+        "succeeded": 2,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "final_step": 14306,
+      "final_checkpoint_saved": true,
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/completion_f4qk.log",
+      "observed_at": "2026-10-07T05:27:06.958577+08:00"
+    }
+  },
+  {
+    "variant": "f5qk",
+    "partition": "arch",
+    "nodes": 2,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ffn-f5qk-r1-p1-2x8-arch-1006-2300-f278",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/run_f5qk.sh",
+    "init_seed": 12536,
+    "data_seed": 34521,
+    "num_params": 797050880,
+    "ug_rank": 560,
+    "down_rank": 528,
+    "share_gate_up_subspace": true,
+    "capacity_prediction": {
+      "partition": "arch",
+      "nodes": 2,
+      "exit_code": 0,
+      "observed_at": "2026-10-06T23:03:00.919052+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：2",
+        "  - 可调度数量：2",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_arch_2_20261006_230300.log"
+    },
+    "local_validation": "Actual meta parameter counts, Q/K-only recipe changes and world-size8/16/32 batch divisibility: 2 passed in376.57s; shell syntax passed",
+    "job_id": "mose-ffn-f5qk-r1-p1-2x8-arch-1006-2300-f278-d8613",
+    "wandb_segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_230543-olmo3-1b-ffn-budget-f5qk-ug560-down528-shared-qk-silu-ug-linear-down-rms-fp8-30b",
+    "startup_verified": {
+      "status": "Running",
+      "counters": {
+        "active": 2,
+        "succeeded": 0,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "mesh": [
+        "dp_replicate=2, dp_shard=8"
+      ],
+      "step0_saved": true,
+      "last_step": {
+        "step": 40,
+        "eta": "5h48m",
+        "grad": 0.9798,
+        "ce": 8.036
+      },
+      "finite_ce": true,
+      "errors": [],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/startup_f5qk.log",
+      "observed_at": "2026-10-06T23:08:20.098191+08:00"
+    },
+    "completion_verified": {
+      "state": "Succeeded",
+      "counters": {
+        "active": 0,
+        "succeeded": 2,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "final_step": 14306,
+      "final_checkpoint_saved": true,
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/completion_f5qk.log",
+      "observed_at": "2026-10-07T05:27:05.993491+08:00"
+    }
+  },
+  {
+    "variant": "f4",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ffn-f4-r1-p1-1x8-pool-1007-0257-f50a",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/run_f4.sh",
+    "init_seed": 12536,
+    "data_seed": 34521,
+    "num_params": 797050880,
+    "ug_rank": 400,
+    "down_rank": 816,
+    "share_gate_up_subspace": true,
+    "capacity_prediction": {
+      "partition": "pool",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-07T02:57:32.713981+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：1",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261007_025732.log"
+    },
+    "control_for": "f4qk",
+    "allocation_limit": "arch16/32 prediction unavailable; pool8 counterpart differs from existing arch16 QK run; preserve this limit in comparisons",
+    "local_validation": "Previously registered all-five models/QK recipe and actualmeta budgets2passed376.57s; new launchers bash-n/entrypointscompile passed; aligned F4/F5 final-window metric test1passed10.26s",
+    "job_id": "mose-ffn-f4-r1-p1-1x8-pool-1007-0257-f50a-58255159",
+    "latest_observation": {
+      "status": "Succeeded",
+      "counts": "{'active': 0, 'succeeded': 1, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+      "observed_at": "2026-10-07T16:28:00.336839+08:00",
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/completion_f4.log"
+    },
+    "wandb_segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261007_030034-olmo3-1b-ffn-budget-f4-ug400-down816-shared-linear-rms-fp8-30b",
+    "startup_verified": {
+      "mesh_1x8": true,
+      "fresh_init_verified": true,
+      "step0_saved": true,
+      "dry_run_complete": true,
+      "finite_training_ce": true,
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/startup_f4_verified.log",
+      "observed_training_errors": []
+    },
+    "completion_verified": {
+      "job_id": "mose-ffn-f4-r1-p1-1x8-pool-1007-0257-f50a-58255159",
+      "state": "Succeeded",
+      "counters": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "final_step": 14306,
+      "final_checkpoint_saved": true,
+      "observed_at": "2026-10-07T16:28:00.336839+08:00",
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/completion_f4.log",
+      "final_save_lines": [
+        "[2026-10-07T14:58:27+08:00] mose-ffn-f4-r1-p1-1x8-pool-1007-0257-f50a-58255159-cfcd2 >> 2026-10-07 14:58:27.367\tgpu-lg-cmc-h-h200-0822.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:969\tINFO\tSaving checkpoint for step 14306 to '/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ffn-budget-f4-ug400-down816-shared-linear-rms-fp8-30b/stage1/step14306'...",
+        "[2026-10-07T14:58:29+08:00] mose-ffn-f4-r1-p1-1x8-pool-1007-0257-f50a-58255159-cfcd2 >> 2026-10-07 14:58:29.322\tgpu-lg-cmc-h-h200-0822.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:989\tINFO\tCheckpoint saved",
+        "[2026-10-07T14:58:31+08:00] mose-ffn-f4-r1-p1-1x8-pool-1007-0257-f50a-58255159-cfcd2 >> 2026-10-07 14:58:31.916\tgpu-lg-cmc-h-h200-0822.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:763\tINFO\tTraining complete"
+      ]
+    },
+    "wandb_sync_verified": {
+      "observed_at": "2026-10-07T16:34:10.327103+08:00",
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/sync_f4_observation.log"
+    }
+  },
+  {
+    "variant": "f5",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ffn-f5-r1-p1-1x8-pool-1007-0257-2198",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/run_f5.sh",
+    "init_seed": 12536,
+    "data_seed": 34521,
+    "num_params": 797050880,
+    "ug_rank": 560,
+    "down_rank": 528,
+    "share_gate_up_subspace": true,
+    "capacity_prediction": {
+      "partition": "pool",
+      "nodes": 1,
+      "exit_code": 0,
+      "observed_at": "2026-10-07T02:57:46.573541+08:00",
+      "schedulable": true,
+      "summary": [
+        "📌 任务调度核心状态：✅ 任务可调度",
+        "  - 总副本数量：1",
+        "  - 可调度数量：1",
+        "  - 不可调度数量：0"
+      ],
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/Rank512_Seed_Replication/capacity_pool_1_20261007_025746.log"
+    },
+    "control_for": "f5qk",
+    "allocation_limit": "arch16/32 prediction unavailable; pool8 counterpart differs from existing arch16 QK run; preserve this limit in comparisons",
+    "local_validation": "Previously registered all-five models/QK recipe and actualmeta budgets2passed376.57s; new launchers bash-n/entrypointscompile passed; aligned F4/F5 final-window metric test1passed10.26s",
+    "job_id": "mose-ffn-f5-r1-p1-1x8-pool-1007-0257-2198-70783152",
+    "latest_observation": {
+      "status": "Succeeded",
+      "counts": "{'active': 0, 'succeeded': 1, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+      "observed_at": "2026-10-07T16:28:00.439223+08:00",
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/completion_f5.log"
+    },
+    "wandb_segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261007_030030-olmo3-1b-ffn-budget-f5-ug560-down528-shared-linear-rms-fp8-30b",
+    "startup_verified": {
+      "mesh_1x8": true,
+      "fresh_init_verified": true,
+      "step0_saved": true,
+      "dry_run_complete": true,
+      "finite_training_ce": true,
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/startup_f5_verified.log",
+      "observed_training_errors": []
+    },
+    "completion_verified": {
+      "job_id": "mose-ffn-f5-r1-p1-1x8-pool-1007-0257-2198-70783152",
+      "state": "Succeeded",
+      "counters": {
+        "active": 0,
+        "succeeded": 1,
+        "failed": 0,
+        "created_failed": 0,
+        "pending": 0,
+        "stopped": 0
+      },
+      "final_step": 14306,
+      "final_checkpoint_saved": true,
+      "observed_at": "2026-10-07T16:28:00.439223+08:00",
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/completion_f5.log",
+      "final_save_lines": [
+        "[2026-10-07T14:59:05+08:00] mose-ffn-f5-r1-p1-1x8-pool-1007-0257-2198-70783152-cfcd2 >> 2026-10-07 14:59:05.952\tgpu-l-lg-cmc-h-h200-0293.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:969\tINFO\tSaving checkpoint for step 14306 to '/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-ffn-budget-f5-ug560-down528-shared-linear-rms-fp8-30b/stage1/step14306'...",
+        "[2026-10-07T14:59:07+08:00] mose-ffn-f5-r1-p1-1x8-pool-1007-0257-2198-70783152-cfcd2 >> 2026-10-07 14:59:07.812\tgpu-l-lg-cmc-h-h200-0293.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:989\tINFO\tCheckpoint saved",
+        "[2026-10-07T14:59:10+08:00] mose-ffn-f5-r1-p1-1x8-pool-1007-0257-2198-70783152-cfcd2 >> 2026-10-07 14:59:10.326\tgpu-l-lg-cmc-h-h200-0293.host.h.pjlab.org.cn:0\tolmo_core.train.trainer:763\tINFO\tTraining complete"
+      ]
+    },
+    "wandb_sync_verified": {
+      "observed_at": "2026-10-07T16:36:12.793352+08:00",
+      "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/sync_f5_observation.log"
+    }
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "dense": {
+    "source_job_id": null,
+    "source_run_id": "olmo3-1b-dense-baseline-bs256-seq8k-30b-wsd-fp8-5e-3",
+    "source_segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20260902_120045-olmo3-1b-dense-baseline-bs256-seq8k-30b-wsd-fp8-5e-3",
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20260902_162134-olmo3-1b-dense-baseline-bs256-seq8k-30b-wsd-fp8-5e-3"
+    ],
+    "checkpoint": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/taoji/ckpts/Olmo3-MoSE/olmo3-1b-dense-baseline-bs256-seq8k-30b-wsd-fp8-5e-3/stage1/step14306",
+    "config_path": "cfps/BS256_Seq8K_30B_WSD_FP8/OLMo3-1B-DenseBaseline.py",
+    "num_params": 1484916736,
+    "completion_proof": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/DENSE_CHECKPOINT.json",
+    "proof_kind": "resolved_wandb_metadata",
+    "resolver_completion_ledger": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Corrected_LM_Evaluation/jobs.json"
+  }
+}

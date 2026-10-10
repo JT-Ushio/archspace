@@ -1,0 +1,239 @@
+{
+  "observed_at_hkt": "2026-10-07T16:36:59.457628+08:00",
+  "end_step": 14306,
+  "full_30b_histories_complete": true,
+  "common_excluded_steps": [
+    12516
+  ],
+  "clean_full_n": 14305,
+  "tail_start": 13307,
+  "clean_tail_n": 1000,
+  "primary_metric": "common_clean_last1000_mean",
+  "sources": [
+    {
+      "file": "scripts/train/UG_Partial_Sharing/P3_P4_QK_WITH_REFERENCES_FULL_TRAIN_CE.json",
+      "sha256": "9bc92440b4f0ab4a591b7c7a69154e823f57daa28abfd10aa8a09f4de7792ef2"
+    },
+    {
+      "file": "scripts/train/FFN_Rank_Reallocation/analysis/F4_F5_WITH_REFERENCES_FULL_TRAIN_CE.json",
+      "sha256": "57c85779255ee9ecf1738af135a1c731831bec66f21f9a117734505e033f450b"
+    }
+  ],
+  "runs": {
+    "F1": {
+      "rows_in_window": 14306,
+      "raw_full_mean": 2.7977535699308125,
+      "raw_last1000_mean": 2.4821420798301697,
+      "common_clean_full_mean": 2.7977703529319244,
+      "common_clean_last1000_mean": 2.4821420798301697,
+      "final_raw": 2.511244058609009,
+      "statistics_source": "scripts/train/UG_Partial_Sharing/P3_P4_QK_WITH_REFERENCES_FULL_TRAIN_CE.json",
+      "run_id": "olmo3-1b-ffn-budget-f1-ug384-down768-unshared-linear-rms-fp8-30b",
+      "run_name": "olmo3-1b-ffn-budget-f1-ug384-down768-unshared-linear-rms-fp8-30b",
+      "wandb_url": "https://wandb.ai/archspace/MoSE/runs/olmo3-1b-ffn-budget-f1-ug384-down768-unshared-linear-rms-fp8-30b",
+      "delta_vs_c6": 0.007379113197326426
+    },
+    "F1QK": {
+      "rows_in_window": 14306,
+      "raw_full_mean": 2.79726181861222,
+      "raw_last1000_mean": 2.4833805508613587,
+      "common_clean_full_mean": 2.7972786748880107,
+      "common_clean_last1000_mean": 2.4833805508613587,
+      "final_raw": 2.512535810470581,
+      "statistics_source": "scripts/train/UG_Partial_Sharing/P3_P4_QK_WITH_REFERENCES_FULL_TRAIN_CE.json",
+      "run_id": "olmo3-1b-ffn-budget-f1qk-ug384-down768-unshared-qk-silu-ug-linear-down-rms-fp8-30b",
+      "run_name": "olmo3-1b-ffn-budget-f1qk-ug384-down768-unshared-qk-silu-ug-linear-down-rms-fp8-30b",
+      "wandb_url": "https://wandb.ai/archspace/MoSE/runs/olmo3-1b-ffn-budget-f1qk-ug384-down768-unshared-qk-silu-ug-linear-down-rms-fp8-30b",
+      "delta_vs_c6": 0.00861758422851544
+    },
+    "F2": {
+      "rows_in_window": 14306,
+      "raw_full_mean": 2.812299426845549,
+      "raw_last1000_mean": 2.498585725069046,
+      "common_clean_full_mean": 2.812316114474993,
+      "common_clean_last1000_mean": 2.498585725069046,
+      "final_raw": 2.527404546737671,
+      "statistics_source": "scripts/train/UG_Partial_Sharing/P3_P4_QK_WITH_REFERENCES_FULL_TRAIN_CE.json",
+      "run_id": "olmo3-1b-ffn-budget-f2-ug256-down1024-unshared-linear-rms-fp8-30b",
+      "run_name": "olmo3-1b-ffn-budget-f2-ug256-down1024-unshared-linear-rms-fp8-30b",
+      "wandb_url": "https://wandb.ai/archspace/MoSE/runs/olmo3-1b-ffn-budget-f2-ug256-down1024-unshared-linear-rms-fp8-30b",
+      "delta_vs_c6": 0.02382275843620274
+    },
+    "F2QK": {
+      "rows_in_window": 14306,
+      "raw_full_mean": 2.807311563213172,
+      "raw_last1000_mean": 2.4942631132602693,
+      "common_clean_full_mean": 2.8073281909151953,
+      "common_clean_last1000_mean": 2.4942631132602693,
+      "final_raw": 2.524003267288208,
+      "statistics_source": "scripts/train/UG_Partial_Sharing/P3_P4_QK_WITH_REFERENCES_FULL_TRAIN_CE.json",
+      "run_id": "olmo3-1b-ffn-budget-f2qk-ug256-down1024-unshared-qk-silu-ug-linear-down-rms-fp8-30b",
+      "run_name": "olmo3-1b-ffn-budget-f2qk-ug256-down1024-unshared-qk-silu-ug-linear-down-rms-fp8-30b",
+      "wandb_url": "https://wandb.ai/archspace/MoSE/runs/olmo3-1b-ffn-budget-f2qk-ug256-down1024-unshared-qk-silu-ug-linear-down-rms-fp8-30b",
+      "delta_vs_c6": 0.01950014662742605
+    },
+    "F3": {
+      "rows_in_window": 14306,
+      "raw_full_mean": 2.7953228202046807,
+      "raw_last1000_mean": 2.4817817113399507,
+      "common_clean_full_mean": 2.795339498866567,
+      "common_clean_last1000_mean": 2.4817817113399507,
+      "final_raw": 2.510620594024658,
+      "statistics_source": "scripts/train/UG_Partial_Sharing/P3_P4_QK_WITH_REFERENCES_FULL_TRAIN_CE.json",
+      "run_id": "olmo3-1b-ffn-budget-f3-ug480-down672-shared-linear-rms-fp8-30b",
+      "run_name": "olmo3-1b-ffn-budget-f3-ug480-down672-shared-linear-rms-fp8-30b",
+      "wandb_url": "https://wandb.ai/archspace/MoSE/runs/olmo3-1b-ffn-budget-f3-ug480-down672-shared-linear-rms-fp8-30b",
+      "delta_vs_c6": 0.007018744707107505
+    },
+    "F3QK": {
+      "rows_in_window": 14306,
+      "raw_full_mean": 2.7912656287621673,
+      "raw_last1000_mean": 2.4774213426113127,
+      "common_clean_full_mean": 2.791282484823905,
+      "common_clean_last1000_mean": 2.4774213426113127,
+      "final_raw": 2.507214069366455,
+      "statistics_source": "scripts/train/UG_Partial_Sharing/P3_P4_QK_WITH_REFERENCES_FULL_TRAIN_CE.json",
+      "run_id": "olmo3-1b-ffn-budget-f3qk-ug480-down672-shared-qk-silu-ug-linear-down-rms-fp8-30b",
+      "run_name": "olmo3-1b-ffn-budget-f3qk-ug480-down672-shared-qk-silu-ug-linear-down-rms-fp8-30b",
+      "wandb_url": "https://wandb.ai/archspace/MoSE/runs/olmo3-1b-ffn-budget-f3qk-ug480-down672-shared-qk-silu-ug-linear-down-rms-fp8-30b",
+      "delta_vs_c6": 0.0026583759784695182
+    },
+    "F4QK": {
+      "rows_in_window": 14306,
+      "raw_full_mean": 2.799315310517808,
+      "raw_last1000_mean": 2.485783374786377,
+      "common_clean_full_mean": 2.7993320880424557,
+      "common_clean_last1000_mean": 2.485783374786377,
+      "final_raw": 2.5151455402374268,
+      "statistics_source": "scripts/train/UG_Partial_Sharing/P3_P4_QK_WITH_REFERENCES_FULL_TRAIN_CE.json",
+      "run_id": "olmo3-1b-ffn-budget-f4qk-ug400-down816-shared-qk-silu-ug-linear-down-rms-fp8-30b",
+      "run_name": "olmo3-1b-ffn-budget-f4qk-ug400-down816-shared-qk-silu-ug-linear-down-rms-fp8-30b",
+      "wandb_url": "https://wandb.ai/archspace/MoSE/runs/olmo3-1b-ffn-budget-f4qk-ug400-down816-shared-qk-silu-ug-linear-down-rms-fp8-30b",
+      "delta_vs_c6": 0.01102040815353389
+    },
+    "F5QK": {
+      "rows_in_window": 14306,
+      "raw_full_mean": 2.793755366021264,
+      "raw_last1000_mean": 2.4796132662296295,
+      "common_clean_full_mean": 2.793772201494752,
+      "common_clean_last1000_mean": 2.4796132662296295,
+      "final_raw": 2.509202241897583,
+      "statistics_source": "scripts/train/UG_Partial_Sharing/P3_P4_QK_WITH_REFERENCES_FULL_TRAIN_CE.json",
+      "run_id": "olmo3-1b-ffn-budget-f5qk-ug560-down528-shared-qk-silu-ug-linear-down-rms-fp8-30b",
+      "run_name": "olmo3-1b-ffn-budget-f5qk-ug560-down528-shared-qk-silu-ug-linear-down-rms-fp8-30b",
+      "wandb_url": "https://wandb.ai/archspace/MoSE/runs/olmo3-1b-ffn-budget-f5qk-ug560-down528-shared-qk-silu-ug-linear-down-rms-fp8-30b",
+      "delta_vs_c6": 0.004850299596786289
+    },
+    "P0": {
+      "rows_in_window": 14306,
+      "raw_full_mean": 2.7938585848336985,
+      "raw_last1000_mean": 2.480162245750427,
+      "common_clean_full_mean": 2.7938752892049865,
+      "common_clean_last1000_mean": 2.480162245750427,
+      "final_raw": 2.5091371536254883,
+      "statistics_source": "scripts/train/UG_Partial_Sharing/P3_P4_QK_WITH_REFERENCES_FULL_TRAIN_CE.json",
+      "run_id": "olmo3-1b-ug-partial-p0-s0-p512-linear-down-rms-fp8-30b",
+      "run_name": "olmo3-1b-ug-partial-p0-s0-p512-linear-down-rms-fp8-30b",
+      "wandb_url": "https://wandb.ai/archspace/MoSE/runs/olmo3-1b-ug-partial-p0-s0-p512-linear-down-rms-fp8-30b",
+      "delta_vs_c6": 0.005399279117583866
+    },
+    "P0QK": {
+      "rows_in_window": 14306,
+      "raw_full_mean": 2.7910731229918095,
+      "raw_last1000_mean": 2.4774100890159607,
+      "common_clean_full_mean": 2.7910898655621748,
+      "common_clean_last1000_mean": 2.4774100890159607,
+      "final_raw": 2.5071730613708496,
+      "statistics_source": "scripts/train/UG_Partial_Sharing/P3_P4_QK_WITH_REFERENCES_FULL_TRAIN_CE.json",
+      "run_id": "olmo3-1b-ug-partial-p0qk-s0-p512-linear-qk-silu-down-rms-fp8-30b",
+      "run_name": "olmo3-1b-ug-partial-p0qk-s0-p512-linear-qk-silu-down-rms-fp8-30b",
+      "wandb_url": "https://wandb.ai/archspace/MoSE/runs/olmo3-1b-ug-partial-p0qk-s0-p512-linear-qk-silu-down-rms-fp8-30b",
+      "delta_vs_c6": 0.002647122383117484
+    },
+    "C0": {
+      "rows_in_window": 14306,
+      "raw_full_mean": 2.7932971508439963,
+      "raw_last1000_mean": 2.4789784088134765,
+      "common_clean_full_mean": 2.793313974852497,
+      "common_clean_last1000_mean": 2.4789784088134765,
+      "final_raw": 2.508265495300293,
+      "statistics_source": "scripts/train/UG_Partial_Sharing/P3_P4_QK_WITH_REFERENCES_FULL_TRAIN_CE.json",
+      "run_id": "olmo3-1b-r512matched-c0-k-silu-down-rms-fp8-30b",
+      "run_name": "olmo3-1b-r512matched-c0-k-silu-down-rms-fp8-30b",
+      "wandb_url": "https://wandb.ai/archspace/MoSE/runs/olmo3-1b-r512matched-c0-k-silu-down-rms-fp8-30b",
+      "delta_vs_c6": 0.0042154421806333
+    },
+    "C2": {
+      "rows_in_window": 14306,
+      "raw_full_mean": 2.7912818476084844,
+      "raw_last1000_mean": 2.4756679832935333,
+      "common_clean_full_mean": 2.7912987135374143,
+      "common_clean_last1000_mean": 2.4756679832935333,
+      "final_raw": 2.5054001808166504,
+      "statistics_source": "scripts/train/UG_Partial_Sharing/P3_P4_QK_WITH_REFERENCES_FULL_TRAIN_CE.json",
+      "run_id": "olmo3-1b-r512matched-c2-k-silu-down-rms-gateup-fp8-30b",
+      "run_name": "olmo3-1b-r512matched-c2-k-silu-down-rms-gateup-fp8-30b",
+      "wandb_url": "https://wandb.ai/archspace/MoSE/runs/olmo3-1b-r512matched-c2-k-silu-down-rms-gateup-fp8-30b",
+      "delta_vs_c6": 0.0009050166606900945
+    },
+    "C6": {
+      "rows_in_window": 14306,
+      "raw_full_mean": 2.78921211077486,
+      "raw_last1000_mean": 2.4747629666328432,
+      "common_clean_full_mean": 2.7894070923974237,
+      "common_clean_last1000_mean": 2.4747629666328432,
+      "final_raw": 2.504258632659912,
+      "statistics_source": "scripts/train/UG_Partial_Sharing/P3_P4_QK_WITH_REFERENCES_FULL_TRAIN_CE.json",
+      "run_id": "olmo3-1b-r512matched-c6-qk-silu-down-rms-gateup-fp8-30b",
+      "run_name": "olmo3-1b-r512matched-c6-qk-silu-down-rms-gateup-fp8-30b",
+      "wandb_url": "https://wandb.ai/archspace/MoSE/runs/olmo3-1b-r512matched-c6-qk-silu-down-rms-gateup-fp8-30b",
+      "delta_vs_c6": 0.0
+    },
+    "F4": {
+      "rows_in_window": 14306,
+      "raw_full_mean": 2.7999700483001897,
+      "raw_last1000_mean": 2.4866195352077485,
+      "common_clean_full_mean": 2.7999867461436865,
+      "common_clean_last1000_mean": 2.4866195352077485,
+      "final_raw": 2.5155160427093506,
+      "statistics_source": "scripts/train/FFN_Rank_Reallocation/analysis/F4_F5_WITH_REFERENCES_FULL_TRAIN_CE.json",
+      "run_id": "olmo3-1b-ffn-budget-f4-ug400-down816-shared-linear-rms-fp8-30b",
+      "run_name": "olmo3-1b-ffn-budget-f4-ug400-down816-shared-linear-rms-fp8-30b",
+      "wandb_url": "https://wandb.ai/archspace/MoSE/runs/olmo3-1b-ffn-budget-f4-ug400-down816-shared-linear-rms-fp8-30b",
+      "delta_vs_c6": 0.011856568574905246
+    },
+    "F5": {
+      "rows_in_window": 14306,
+      "raw_full_mean": 2.797471287466172,
+      "raw_last1000_mean": 2.4840291571617126,
+      "common_clean_full_mean": 2.7974879812835938,
+      "common_clean_last1000_mean": 2.4840291571617126,
+      "final_raw": 2.513763427734375,
+      "statistics_source": "scripts/train/FFN_Rank_Reallocation/analysis/F4_F5_WITH_REFERENCES_FULL_TRAIN_CE.json",
+      "run_id": "olmo3-1b-ffn-budget-f5-ug560-down528-shared-linear-rms-fp8-30b",
+      "run_name": "olmo3-1b-ffn-budget-f5-ug560-down528-shared-linear-rms-fp8-30b",
+      "wandb_url": "https://wandb.ai/archspace/MoSE/runs/olmo3-1b-ffn-budget-f5-ug560-down528-shared-linear-rms-fp8-30b",
+      "delta_vs_c6": 0.009266190528869345
+    }
+  },
+  "scope": "Single initialization seed12536/data34521; tested allocations; hardware differences retained in jobs.json",
+  "ffn_ranking": [
+    "F3QK",
+    "F5QK",
+    "F3",
+    "F1",
+    "F1QK",
+    "F5",
+    "F4QK",
+    "F4",
+    "F2QK",
+    "F2"
+  ],
+  "qk_effects": {
+    "F1": 0.0012384710311890146,
+    "F2": -0.0043226118087766885,
+    "F3": -0.004360368728637987,
+    "F4": -0.0008361604213713569,
+    "F5": -0.004415890932083055
+  }
+}

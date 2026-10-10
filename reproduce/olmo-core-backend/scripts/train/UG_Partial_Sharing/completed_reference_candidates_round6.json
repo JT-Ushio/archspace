@@ -1,0 +1,93 @@
+{
+  "p0": {
+    "job_id": "mose-ug-p0-r1-p1-1x8-pool-1006-1123-7104-77485485",
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_112904-olmo3-1b-ug-partial-p0-s0-p512-linear-down-rms-fp8-30b"
+    ]
+  },
+  "p4": {
+    "job_id": "mose-recover-p4-r2-p1-1x8-pool-1006-1207-0d3-44098",
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_120940-olmo3-1b-ug-partial-p4-s160-p368-linear-down-rms-fp8-30b"
+    ]
+  },
+  "p3": {
+    "job_id": "mose-recover-p3-r3-p1-1x8-pool-1006-1228-c38-15484",
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_123139-olmo3-1b-ug-partial-p3-s320-p224-linear-down-rms-fp8-30b"
+    ]
+  },
+  "p2qk": {
+    "job_id": "mose-ug-p2qk-r1-p1-4x8-arch-1006-1347-8485-7-afb90",
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_135053-olmo3-1b-ug-partial-p2qk-s480-p80-linear-qk-silu-down-rms-fp8-30b"
+    ]
+  },
+  "p1": {
+    "job_id": "mose-recover-p1-r3-p1-1x8-pool-1006-1358-5ee-ff2d5",
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_140134-olmo3-1b-ug-partial-p1-s560-p0-linear-down-rms-fp8-30b"
+    ]
+  },
+  "p0qk": {
+    "job_id": "mose-ug-p0qk-r1-p1-1x8-pool-1006-1347-459e-3-74da9",
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_140141-olmo3-1b-ug-partial-p0qk-s0-p512-linear-qk-silu-down-rms-fp8-30b"
+    ]
+  },
+  "p2": {
+    "job_id": "mose-recover-p2-r3-p1-2x8-arch-1006-1409-7a8-a7469",
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_112756-olmo3-1b-ug-partial-p2-s480-p80-linear-down-rms-fp8-30b",
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_141212-olmo3-1b-ug-partial-p2-s480-p80-linear-down-rms-fp8-30b"
+    ]
+  },
+  "f1": {
+    "job_id": "mose-recover-f1-r2-p1-1x8-pool-1006-1207-08d-af98d",
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_121016-olmo3-1b-ffn-budget-f1-ug384-down768-unshared-linear-rms-fp8-30b"
+    ]
+  },
+  "f2": {
+    "job_id": "mose-recover-f2-r2-p1-1x8-pool-1006-1213-0e1-bdefa",
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_121541-olmo3-1b-ffn-budget-f2-ug256-down1024-unshared-linear-rms-fp8-30b"
+    ]
+  },
+  "f3": {
+    "job_id": "mose-recover-f3-r2-p1-1x8-pool-1006-1213-ccc-5d862",
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_121614-olmo3-1b-ffn-budget-f3-ug480-down672-shared-linear-rms-fp8-30b"
+    ]
+  },
+  "f3qk": {
+    "job_id": "mose-ffn-f3qk-r1-p1-4x8-arch-1006-1923-76a7-5350e",
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_192653-olmo3-1b-ffn-budget-f3qk-ug480-down672-shared-qk-silu-ug-linear-down-rms-fp8-30b"
+    ]
+  },
+  "f4qk": {
+    "job_id": "mose-ffn-f4qk-r1-p1-2x8-arch-1006-2300-6d41-46be5",
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_230506-olmo3-1b-ffn-budget-f4qk-ug400-down816-shared-qk-silu-ug-linear-down-rms-fp8-30b"
+    ]
+  },
+  "f5qk": {
+    "job_id": "mose-ffn-f5qk-r1-p1-2x8-arch-1006-2300-f278-d8613",
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_230543-olmo3-1b-ffn-budget-f5qk-ug560-down528-shared-qk-silu-ug-linear-down-rms-fp8-30b"
+    ]
+  },
+  "f1qk": {
+    "job_id": "mose-ffn-f1qk-r2-p1-1x8-arch-1006-1937-bfde-3c52a",
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_193938-olmo3-1b-ffn-budget-f1qk-ug384-down768-unshared-qk-silu-ug-linear-down-rms-fp8-30b"
+    ]
+  },
+  "f2qk": {
+    "job_id": "mose-ffn-f2qk-r1-p1-1x8-pool-1006-1922-88d3-ed4c5",
+    "segments": [
+      "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_200818-olmo3-1b-ffn-budget-f2qk-ug256-down1024-unshared-qk-silu-ug-linear-down-rms-fp8-30b"
+    ]
+  }
+}

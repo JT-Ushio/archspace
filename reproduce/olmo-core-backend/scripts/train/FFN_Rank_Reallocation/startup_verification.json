@@ -1,0 +1,59 @@
+[
+  {
+    "variant": "f1",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ffn-f1-r1-p1-1x8-pool-1006-1135-4cae",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/run_f1.sh",
+    "job_id": "mose-ffn-f1-r1-p1-1x8-pool-1006-1135-4cae-99748743",
+    "status": "Running",
+    "counts": "{'active': 1, 'succeeded': 0, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+    "latest": null,
+    "segments": [],
+    "events": [
+      "[2026-10-06T11:38:53+08:00] mose-ffn-f1-r1-p1-1x8-pool-1006-1135-4cae-99748743-cfcd2 >> 2026-10-06 11:38:53.586\tgpu-l-lg-cmc-h-h200-0146.host.h.pjlab.org.cn:0\tolmo_core.distributed.parallel:246\tINFO\tBuilt 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+      "[2026-10-06T11:38:55+08:00] mose-ffn-f1-r1-p1-1x8-pool-1006-1135-4cae-99748743-cfcd2 >> 2026-10-06 11:38:55.050\tgpu-l-lg-cmc-h-h200-0146.host.h.pjlab.org.cn:0\tolmo_core.train.train_module.transformer.common:169\tINFO\tApplied FSDP to the model with 2D device mesh with shape (dp_replicate=1, dp_shard=8)"
+    ],
+    "observation_exit_code": 0
+  },
+  {
+    "variant": "f2",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ffn-f2-r1-p1-1x8-pool-1006-1135-6c39",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/run_f2.sh",
+    "job_id": "mose-ffn-f2-r1-p1-1x8-pool-1006-1135-6c39-5628140",
+    "status": "Running",
+    "counts": "{'active': 1, 'succeeded': 0, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+    "latest": null,
+    "segments": [],
+    "events": [
+      "[2026-10-06T11:38:54+08:00] mose-ffn-f2-r1-p1-1x8-pool-1006-1135-6c39-5628140-cfcd2 >> 2026-10-06 11:38:54.117\tgpu-lg-cmc-h-h200-0873.host.h.pjlab.org.cn:0\tolmo_core.distributed.parallel:246\tINFO\tBuilt 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+      "[2026-10-06T11:38:55+08:00] mose-ffn-f2-r1-p1-1x8-pool-1006-1135-6c39-5628140-cfcd2 >> 2026-10-06 11:38:55.630\tgpu-lg-cmc-h-h200-0873.host.h.pjlab.org.cn:0\tolmo_core.train.train_module.transformer.common:169\tINFO\tApplied FSDP to the model with 2D device mesh with shape (dp_replicate=1, dp_shard=8)"
+    ],
+    "observation_exit_code": 0
+  },
+  {
+    "variant": "f3",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ffn-f3-r1-p1-1x8-pool-1006-1135-0526",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/FFN_Rank_Reallocation/run_f3.sh",
+    "job_id": "mose-ffn-f3-r1-p1-1x8-pool-1006-1135-0526-12030032",
+    "status": "Running",
+    "counts": "{'active': 1, 'succeeded': 0, 'failed': 0, 'created_failed': 0, 'pending': 0, 'stopped': 0}",
+    "latest": null,
+    "segments": [],
+    "events": [
+      "[2026-10-06T11:39:08+08:00] mose-ffn-f3-r1-p1-1x8-pool-1006-1135-0526-12030032-cfcd2 >> 2026-10-06 11:39:08.218\tgpu-lg-cmc-h-h200-3014.host.h.pjlab.org.cn:0\tolmo_core.distributed.parallel:246\tINFO\tBuilt 2D device mesh with shape (dp_replicate=1, dp_shard=8)",
+      "[2026-10-06T11:39:09+08:00] mose-ffn-f3-r1-p1-1x8-pool-1006-1135-0526-12030032-cfcd2 >> 2026-10-06 11:39:09.708\tgpu-lg-cmc-h-h200-3014.host.h.pjlab.org.cn:0\tolmo_core.train.train_module.transformer.common:169\tINFO\tApplied FSDP to the model with 2D device mesh with shape (dp_replicate=1, dp_shard=8)"
+    ],
+    "observation_exit_code": 0
+  }
+]

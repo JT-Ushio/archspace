@@ -1,0 +1,141 @@
+[
+  {
+    "variant": "p3",
+    "partition": "arch",
+    "nodes": 2,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ug-p3-r1-p1-2x8-arch-1006-1123-5b87",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p3.sh",
+    "job_id": "mose-ug-p3-r1-p1-2x8-arch-1006-1123-5b87-34699678",
+    "state": "Stopped",
+    "active": 0,
+    "stopped": 2,
+    "produced_wandb_segment": false
+  },
+  {
+    "variant": "p1",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ug-p1-r1-p1-1x8-pool-1006-1123-6d50",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p1.sh",
+    "job_id": "mose-ug-p1-r1-p1-1x8-pool-1006-1123-6d50-83419854",
+    "state": "Failed",
+    "counters": {
+      "active": 0,
+      "succeeded": 0,
+      "failed": 1,
+      "created_failed": 0,
+      "pending": 0,
+      "stopped": 0
+    },
+    "segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_112914-olmo3-1b-ug-partial-p1-s560-p0-linear-down-rms-fp8-30b"
+  },
+  {
+    "variant": "p4",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ug-p4-r1-p1-1x8-pool-1006-1123-1580",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p4.sh",
+    "job_id": "mose-ug-p4-r1-p1-1x8-pool-1006-1123-1580-89006511",
+    "state": "Failed",
+    "counters": {
+      "active": 0,
+      "succeeded": 0,
+      "failed": 1,
+      "created_failed": 0,
+      "pending": 0,
+      "stopped": 0
+    },
+    "segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_112920-olmo3-1b-ug-partial-p4-s160-p368-linear-down-rms-fp8-30b"
+  },
+  {
+    "variant": "p3",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ug-p3-r2-p1-1x8-pool-1006-1128-e927",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p3.sh",
+    "job_id": "mose-ug-p3-r2-p1-1x8-pool-1006-1128-e927-30519513",
+    "wandb_segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_113123-olmo3-1b-ug-partial-p3-s320-p224-linear-down-rms-fp8-30b",
+    "state": "Failed",
+    "counters": {
+      "active": 0,
+      "succeeded": 0,
+      "failed": 1,
+      "created_failed": 0,
+      "pending": 0,
+      "stopped": 0
+    },
+    "segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_113123-olmo3-1b-ug-partial-p3-s320-p224-linear-down-rms-fp8-30b"
+  },
+  {
+    "variant": "p2",
+    "partition": "arch",
+    "nodes": 4,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-ug-p2-r1-p1-4x8-arch-1006-1123-f1d4",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p2.sh",
+    "job_id": "mose-ug-p2-r1-p1-4x8-arch-1006-1123-f1d4-96742035",
+    "wandb_segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_112756-olmo3-1b-ug-partial-p2-s480-p80-linear-down-rms-fp8-30b",
+    "state": "Failed",
+    "counters": {
+      "active": 0,
+      "succeeded": 0,
+      "failed": 4,
+      "created_failed": 0,
+      "pending": 0,
+      "stopped": 0
+    },
+    "segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_112756-olmo3-1b-ug-partial-p2-s480-p80-linear-down-rms-fp8-30b"
+  },
+  {
+    "variant": "p1",
+    "partition": "pool",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-recover-p1-r2-p1-1x8-pool-1006-1204-efa2",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p1.sh",
+    "job_id": "mose-recover-p1-r2-p1-1x8-pool-1006-1204-efa-886b9",
+    "wandb_segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_120705-olmo3-1b-ug-partial-p1-s560-p0-linear-down-rms-fp8-30b",
+    "state": "Failed",
+    "counters": {
+      "active": 0,
+      "succeeded": 0,
+      "failed": 1,
+      "created_failed": 0,
+      "pending": 0,
+      "stopped": 0
+    },
+    "segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_120705-olmo3-1b-ug-partial-p1-s560-p0-linear-down-rms-fp8-30b"
+  },
+  {
+    "variant": "p2",
+    "partition": "arch",
+    "nodes": 2,
+    "gpus_per_node": 8,
+    "priority": 1,
+    "job_name": "mose-recover-p2-r2-p1-2x8-arch-1006-1355-0002",
+    "script": "/mnt/shared-storage-gpfs2/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/train/UG_Partial_Sharing/run_p2_storage_resume.sh",
+    "job_id": "mose-recover-p2-r2-p1-2x8-arch-1006-1355-000-c0361",
+    "wandb_segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_135817-olmo3-1b-ug-partial-p2-s480-p80-linear-down-rms-fp8-30b",
+    "trajectory_status": "exclude from quality comparison: unintended step0 restart; requested resume overrides were not forwarded",
+    "state": "Stopped",
+    "counters": {
+      "active": 0,
+      "succeeded": 0,
+      "failed": 0,
+      "created_failed": 0,
+      "pending": 0,
+      "stopped": 2
+    },
+    "segment": "/mnt/shared-storage-user/shared-storage-ailab-llmfudan/taoji/wandb/archspace/MoSE/wandb/offline-run-20261006_135817-olmo3-1b-ug-partial-p2-s480-p80-linear-down-rms-fp8-30b"
+  }
+]

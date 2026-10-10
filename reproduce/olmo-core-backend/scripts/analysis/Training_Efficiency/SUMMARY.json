@@ -1,0 +1,170 @@
+{
+  "job_id": "mose-eff-step-r1-p1-1x8-pool-1007-0406-44a9-70355",
+  "completion_verified": {
+    "state": "Succeeded",
+    "counters": {
+      "active": 0,
+      "succeeded": 1,
+      "failed": 0,
+      "created_failed": 0,
+      "pending": 0,
+      "stopped": 0
+    },
+    "observed_at": "2026-10-07T04:22:18.262088+08:00",
+    "proof": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Training_Efficiency/completion_observation.log",
+    "outputs": {
+      "dense": {
+        "sha256": "01e10ce9b69e5ad81a2de2866022e0a37845abf0c44403a4e382f6c2b7394789",
+        "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Training_Efficiency/DENSE_STEP_EFFICIENCY.json",
+        "mean_step_seconds": 3.6901754584163426,
+        "global_tokens_per_second": 568306.8525148133,
+        "peak_allocated_gib": 51.269081115722656
+      },
+      "c0": {
+        "sha256": "78f3db03f8c1316d71a39b29a90ba6c0632d6510e771fd4ca8fbb49eff016f6b",
+        "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Training_Efficiency/C0_STEP_EFFICIENCY.json",
+        "mean_step_seconds": 2.9016617611050606,
+        "global_tokens_per_second": 722741.7158371094,
+        "peak_allocated_gib": 56.48790740966797
+      },
+      "c6": {
+        "sha256": "679e08ba778533b0aaa6e01e95a1c2a484a0c7d0c25711d9f9a0cda79ce711bc",
+        "path": "/mnt/shared-storage-user/intern-pretrain-shared02/shijiayang-p/archspace-MoSE/reproduce/olmo-core-backend/scripts/analysis/Training_Efficiency/C6_STEP_EFFICIENCY.json",
+        "mean_step_seconds": 2.987916800938547,
+        "global_tokens_per_second": 701877.6424233951,
+        "peak_allocated_gib": 66.3050765991211
+      }
+    }
+  },
+  "runs": {
+    "dense": {
+      "case": "dense",
+      "num_params": 1484916736,
+      "world_size": 8,
+      "global_tokens_per_step": 2097152,
+      "sequence_length": 8192,
+      "microbatch_tokens_per_rank": 32768,
+      "microbatches_per_rank": 8,
+      "warmup_steps_excluded": 5,
+      "measured_steps": 10,
+      "max_rank_step_seconds": [
+        3.690290459431708,
+        3.6890853010118008,
+        3.683689001016319,
+        3.6863528341054916,
+        3.6933655133470893,
+        3.6856381548568606,
+        3.6912435898557305,
+        3.6880185436457396,
+        3.698855258524418,
+        3.6952159283682704
+      ],
+      "mean_step_seconds": 3.6901754584163426,
+      "median_step_seconds": 3.6896878802217543,
+      "global_tokens_per_second": 568306.8525148133,
+      "tokens_per_second_per_gpu": 71038.35656435166,
+      "max_rank_peak_allocated_bytes": 55049756672,
+      "max_rank_peak_reserved_bytes": 62128128000,
+      "gpu": "NVIDIA H200",
+      "gpu_total_memory_bytes": 150393585664,
+      "torch_version": "2.10.0+cu128",
+      "cuda_version": "12.8",
+      "init_seed": 12536,
+      "input_seed_per_rank": "34521 + rank",
+      "finite_ce_and_gradients": true,
+      "scope": "Synthetic full training+optimizer steps; no I/O/eval/checkpoint; compilation warmup excluded; no quality claim",
+      "historical_dense_microbatch": "65536; explicitly32768 here for comparison"
+    },
+    "c0": {
+      "case": "c0",
+      "num_params": 797050880,
+      "world_size": 8,
+      "global_tokens_per_step": 2097152,
+      "sequence_length": 8192,
+      "microbatch_tokens_per_rank": 32768,
+      "microbatches_per_rank": 8,
+      "warmup_steps_excluded": 5,
+      "measured_steps": 10,
+      "max_rank_step_seconds": [
+        2.896487361751497,
+        2.8946068873628974,
+        2.902459893375635,
+        2.8929299227893353,
+        2.902002655901015,
+        2.9070319766178727,
+        2.9016524720937014,
+        2.9069428090006113,
+        2.9073346434161067,
+        2.9051689887419343
+      ],
+      "mean_step_seconds": 2.9016617611050606,
+      "median_step_seconds": 2.902231274638325,
+      "global_tokens_per_second": 722741.7158371094,
+      "tokens_per_second_per_gpu": 90342.71447963867,
+      "max_rank_peak_allocated_bytes": 60653428736,
+      "max_rank_peak_reserved_bytes": 67599597568,
+      "gpu": "NVIDIA H200",
+      "gpu_total_memory_bytes": 150393585664,
+      "torch_version": "2.10.0+cu128",
+      "cuda_version": "12.8",
+      "init_seed": 12536,
+      "input_seed_per_rank": "34521 + rank",
+      "finite_ce_and_gradients": true,
+      "scope": "Synthetic full training+optimizer steps; no I/O/eval/checkpoint; compilation warmup excluded; no quality claim",
+      "historical_dense_microbatch": "65536; explicitly32768 here for comparison"
+    },
+    "c6": {
+      "case": "c6",
+      "num_params": 797050880,
+      "world_size": 8,
+      "global_tokens_per_step": 2097152,
+      "sequence_length": 8192,
+      "microbatch_tokens_per_rank": 32768,
+      "microbatches_per_rank": 8,
+      "warmup_steps_excluded": 5,
+      "measured_steps": 10,
+      "max_rank_step_seconds": [
+        2.989103172905743,
+        2.987221146002412,
+        2.98071266990155,
+        2.9825196573510766,
+        2.9809508258476853,
+        2.9929928723722696,
+        2.989073838107288,
+        2.984739353880286,
+        2.9959643529728055,
+        2.9958901200443506
+      ],
+      "mean_step_seconds": 2.987916800938547,
+      "median_step_seconds": 2.98814749205485,
+      "global_tokens_per_second": 701877.6424233951,
+      "tokens_per_second_per_gpu": 87734.70530292438,
+      "max_rank_peak_allocated_bytes": 71194533888,
+      "max_rank_peak_reserved_bytes": 78253129728,
+      "gpu": "NVIDIA H200",
+      "gpu_total_memory_bytes": 150393585664,
+      "torch_version": "2.10.0+cu128",
+      "cuda_version": "12.8",
+      "init_seed": 12536,
+      "input_seed_per_rank": "34521 + rank",
+      "finite_ce_and_gradients": true,
+      "scope": "Synthetic full training+optimizer steps; no I/O/eval/checkpoint; compilation warmup excluded; no quality claim",
+      "historical_dense_microbatch": "65536; explicitly32768 here for comparison"
+    }
+  },
+  "comparison_scope": "One H2008GPU node, synthetic inputs, actual complete training/optimizer steps, original FP8/Muon; no data I/O/evaluation/checkpoints and no quality claim",
+  "relative_to_dense": {
+    "dense": {
+      "throughput_ratio": 1.0,
+      "allocated_memory_ratio": 1.0
+    },
+    "c0": {
+      "throughput_ratio": 1.2717455590037436,
+      "allocated_memory_ratio": 1.1017928580027712
+    },
+    "c6": {
+      "throughput_ratio": 1.2350328688058536,
+      "allocated_memory_ratio": 1.2932760867989763
+    }
+  }
+}
